@@ -1,4 +1,4 @@
-a,
+/* a,
 :link,
 .link {
   --link-color: var(--primary-color);
@@ -6,7 +6,7 @@ a,
   color: var(--link-color);
   text-decoration: none;
   border-bottom: 1px solid var(--link-color);
-}
+} */
 
 a:hover,
 :link:hover,
@@ -21,8 +21,8 @@ a:hover,
 }
 
 .default-layout {
-  --default-layout-width: 600px;
+  --default-layout-width: 90%;
 
-  margin: 80px auto 0;
+  margin: 60px auto 0;
   max-width: var(--default-layout-width);
 }
