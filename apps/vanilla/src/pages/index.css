@@ -13,6 +13,15 @@
   display: inline-block;
 }
 
+.sort-container {
+  display: flex;
+  gap: 40px;
+}
+
+.sort {
+  max-width: 40%;
+}
+
 /*
 .data {
   height: 100px;
