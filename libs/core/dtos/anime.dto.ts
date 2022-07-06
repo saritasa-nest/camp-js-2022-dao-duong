@@ -1,12 +1,5 @@
 /** Aired DTO. */
-interface AiredDto {
-
-  /** Anime start date. */
-  readonly start: string;
-
-  /** Anime end date. */
-  readonly end: string;
-}
+import { AiredDto } from './aired.dto';
 
 /** Anime DTO. */
 export interface AnimeDto {
