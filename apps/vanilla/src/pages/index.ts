@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { getAnime } from '../composable/anime';
 window.onload = (): void => {
   initialRender();
@@ -53,6 +54,7 @@ const renderAnimeTable = async(offset: number): Promise<void> => {
   `;
   paginateButton(MAX_PAGE_LENGTH);
 };
+console.log(process.env);
 
 const state = {
   page: 1,
