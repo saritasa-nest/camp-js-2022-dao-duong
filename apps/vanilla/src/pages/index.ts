@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import { getAnime } from '../composable/anime';
 window.onload = (): void => {
   initialRender();
@@ -35,7 +34,7 @@ const renderAnimeTable = async(offset: number): Promise<void> => {
     `;
   });
   dataTable.innerHTML = `
-      <table class="responsive-table" >
+      <table class="responsive-table centered" >
         <thead>
           <tr>
               <th>Image</th>
@@ -54,7 +53,6 @@ const renderAnimeTable = async(offset: number): Promise<void> => {
   `;
   paginateButton(MAX_PAGE_LENGTH);
 };
-console.log(process.env);
 
 const state = {
   page: 1,
@@ -63,10 +61,10 @@ const state = {
 };
 
 /** Render pagination.
- * @param "pages": Number of total pages.
+ * @param pages Number of total pages.
  * */
 function paginateButton(pages: number): void {
-  let wrapper = document.getElementById('pagination-wrapper');
+  const wrapper: HTMLDivElement = document.getElementById('pagination-wrapper');
   wrapper.innerHTML = ``;
   let maxLeft = (state.page - Math.floor(state.window / 2));
   let maxRight = (state.page + Math.floor(state.window / 2));
