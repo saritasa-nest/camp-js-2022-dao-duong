@@ -1,4 +1,9 @@
-import { getAnime } from '../composable/anime';
+
+import { Anime } from '@js-camp/core/models/anime';
+import { Pagination } from '@js-camp/core/models/pagination';
+
+import { getAnime } from '../scripts/anime';
+
 window.onload = (): void => {
   initialRender();
 };
@@ -7,14 +12,14 @@ const OFFSET_INITIAL_VALUE = 10;
 let MAX_PAGE_LENGTH = 0;
 let OFFSET = 0;
 let TOTAL: number;
-const initialRender = (): void =>{
-  renderAnimeTable(OFFSET);
+const initialRender = (): void => {
+  renderAnimeTable();
 };
-const dayConverter = (date: string): Date => new Date(date);
+const dayConverter = (date: Date): Date => new Date(date);
 
 // Render anime table
-const renderAnimeTable = async(offset: number): Promise<void> => {
-  const data: IAnime = await getAnime(LIMIT, offset);
+const renderAnimeTable = async(): Promise<void> => {
+  const data: Pagination<Anime> = await getAnime(LIMIT, OFFSET);
   const dataTable = document.querySelector('.anime-table') ?? document.body;
   TOTAL = data.count;
   MAX_PAGE_LENGTH = TOTAL / LIMIT;
@@ -25,8 +30,8 @@ const renderAnimeTable = async(offset: number): Promise<void> => {
         <td>
           <img class="anime-image" src="${anime.image}" alt="Anime image">
         </td>
-        <td>${anime.title_eng}</td>
-        <td>${anime.title_jpn}</td>
+        <td>${anime.englishTitle}</td>
+        <td>${anime.japaneseTitle}</td>
         <td>${dayConverter(anime.aired.start).getFullYear()}</td>
         <td>${anime.type}</td>
         <td>${anime.status}</td>
@@ -56,7 +61,7 @@ const renderAnimeTable = async(offset: number): Promise<void> => {
 
 const state = {
   page: 1,
-  window: 5,
+  window: 9,
   active: 1,
 };
 
@@ -101,6 +106,7 @@ function paginateButton(pages: number): void {
     const currIndex = parseInt(element.getAttribute('index'), 10);
     state.page = currIndex;
     state.active = currIndex;
+
     if (OFFSET >= 0) {
       OFFSET = ((currIndex - 1) * OFFSET_INITIAL_VALUE);
       renderAnimeTable(OFFSET);
