@@ -3,3 +3,18 @@
 .title {
   color: var(--heading-color-1);
 }
+
+.anime-image {
+  width: 150px;
+  height: 150px;
+}
+
+#pagination-wrapper {
+  display: inline-block;
+}
+
+/*
+.data {
+  height: 100px;
+  width: 100%;
+} */
