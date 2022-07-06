@@ -16,10 +16,22 @@
       <div id="pagination-wrapper">
       </div>
     </ul>
+      <!-- Select section -->
+      <div class="sort-container">
+        <select id="sort-options" class="browser-default sort">
+          <option value="" disabled selected>Sort by</option>
+          <option value="1" class="sort-option">English Title</option>
+          <option value="2" class="sort-option">Aired Start</option>
+          <option value="3" class="sort-option">Status</option>
+        </select>
+        <select class="browser-default sort">
+          <option value="" disabled selected>Order</option>
+          <option value="1" class="sort-direction">Ascending</option>
+          <option value="2" class="sort-direction">Descending</option>
+        </select>
+      </div>
     <div class="anime-table">
     </div>
-
-
     <script type="module" src="./index.ts"></script>
   </body>
 </html>
