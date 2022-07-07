@@ -1,5 +1,5 @@
 import { OmitImmerable, Immerable } from './immerable';
-import { Aired } from './aired';
+import { DateRange } from './dateRange';
 
 /** Anime. */
 export class Anime extends Immerable {
@@ -16,7 +16,7 @@ export class Anime extends Immerable {
   public readonly japaneseTitle: string;
 
   /** Release and end dates. */
-  public readonly aired: Aired;
+  public readonly aired: DateRange;
 
   /** Anime type. */
   public readonly type: string;
