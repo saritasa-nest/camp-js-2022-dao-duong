@@ -2,18 +2,31 @@
 export interface SortSetting {
 
   /** Option for sort. */
-  option: string;
+  readonly option: string;
 
   /** Direction for sort. */
-  direction: string;
+  readonly direction: string;
 }
 
 /** Sort options. */
 export interface SortOption {
 
   /** Sort option text. */
-  text: string;
+  readonly text: string;
 
   /** Sort option value. */
-  value: string;
+  readonly value: string;
+}
+
+/** Options for pagination. */
+export interface PaginationOptions {
+
+  /** Number of items per request. */
+  readonly limit: number;
+
+  /**  */
+  readonly page: number;
+
+  /** Setting for sort features. */
+  readonly sortSettings: SortSetting;
 }
