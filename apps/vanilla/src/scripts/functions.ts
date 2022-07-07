@@ -2,9 +2,10 @@
 /** Convert response date object to readable format.
  * @param date Date data from response object.
  */
-export const dayConverter = (date: Date | null): number | string => {
+export const dayConverter = (date: Date | null): string => {
   if (date !== null) {
-    return new Date(date).getFullYear();
+    return (new Date(date).getFullYear())
+      .toString();
   }
   return 'None';
 };
