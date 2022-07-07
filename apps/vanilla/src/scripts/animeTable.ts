@@ -3,10 +3,11 @@ import { Pagination } from '@js-camp/core/models/pagination';
 
 import { dayConverter } from '../scripts/functions';
 
-import { paginateButton } from './pagination';
+import { renderPaginateButton } from './pagination';
 import { LIMIT } from './variables';
 
-/** Render anime table.
+/**
+ * Render anime table.
  * @param dataset Data for render.
  */
 export const renderAnimeTable = (dataset: Pagination<Anime>): void => {
@@ -46,5 +47,5 @@ export const renderAnimeTable = (dataset: Pagination<Anime>): void => {
     </table>
   `;
   const totalPages = dataset.count / LIMIT;
-  paginateButton(totalPages);
+  renderPaginateButton(totalPages);
 };
