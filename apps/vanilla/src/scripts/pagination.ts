@@ -6,10 +6,11 @@ import { renderAnimeTable } from './animeTable';
 
 import { getAnime } from './anime';
 
-/** Render pagination.
+/**
+ * Render pagination.
  * @param pages Number of total pages.
  * */
-export const paginateButton = (pages: number): void => {
+export const renderPaginateButton = (pages: number): void => {
   const wrapper: HTMLDivElement = document.getElementById('pagination-wrapper');
   wrapper.innerHTML = ``;
   let maxLeft = (PAGINATION_STATE.page - Math.floor(PAGINATION_STATE.window / 2));
