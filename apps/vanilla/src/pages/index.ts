@@ -1,4 +1,3 @@
-
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 
@@ -7,6 +6,7 @@ import { SORT_SETTINGS, LIMIT, PAGINATION_STATE } from '../scripts/variables';
 
 import { renderAnimeTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
+
 window.onload = (): void => {
   initialRender();
 };
