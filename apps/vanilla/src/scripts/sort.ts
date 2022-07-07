@@ -5,6 +5,7 @@ import { renderAnimeTable } from './animeTable';
 import { PAGINATION_STATE, SORT_SETTINGS, SORT_DIRECTION, SORT_OPTIONS, LIMIT } from './variables';
 import { getAnime } from './anime';
 import { changeDirectionState, hasSortOption } from './functions';
+import { PaginationOptions } from './interfaces';
 
 /**  Render sort options.*/
 export const renderSortOptions = (): void => {
@@ -30,7 +31,12 @@ export const renderSortOptions = (): void => {
         SORT_SETTINGS.direction = sortDirection.value;
         SORT_SETTINGS.option = sortOption.value;
         changeDirectionState(hasSortOption(SORT_SETTINGS.option));
-        const data: Pagination<Anime> = await getAnime(LIMIT, PAGINATION_STATE.page, SORT_SETTINGS);
+        const paginationOptions: PaginationOptions = {
+          limit: LIMIT,
+          page: PAGINATION_STATE.page,
+          sortSettings: SORT_SETTINGS,
+        };
+        const data: Pagination<Anime> = await getAnime(paginationOptions);
         renderAnimeTable(data);
       });
     });

@@ -5,6 +5,7 @@ import { PAGINATION_STATE, LIMIT, SORT_SETTINGS } from './variables';
 import { renderAnimeTable } from './animeTable';
 
 import { getAnime } from './anime';
+import { PaginationOptions } from './interfaces';
 
 /**
  * Render pagination.
@@ -49,7 +50,12 @@ export const renderPaginateButton = (pages: number): void => {
     const currIndex = parseInt(element.getAttribute('index'), 10);
     PAGINATION_STATE.page = currIndex;
     PAGINATION_STATE.active = currIndex;
-    const data: Pagination<Anime> = await getAnime(LIMIT, PAGINATION_STATE.page, SORT_SETTINGS);
+    const paginationOptions: PaginationOptions = {
+      limit: LIMIT,
+      page: PAGINATION_STATE.page,
+      sortSettings: SORT_SETTINGS,
+    };
+    const data: Pagination<Anime> = await getAnime(paginationOptions);
     renderAnimeTable(data);
   });
 });

@@ -6,13 +6,20 @@ import { SORT_SETTINGS, LIMIT, PAGINATION_STATE } from '../scripts/variables';
 
 import { renderAnimeTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
+import { PaginationOptions } from '../scripts/interfaces';
 
 window.onload = (): void => {
   initialRender();
 };
 
 const initialRender = async(): Promise<void> => {
-  const data: Pagination<Anime> = await getAnime(LIMIT, PAGINATION_STATE.page, SORT_SETTINGS);
+  const paginationOptions: PaginationOptions = {
+    limit: LIMIT,
+    page: PAGINATION_STATE.page,
+    sortSettings: SORT_SETTINGS,
+  };
+
+  const data: Pagination<Anime> = await getAnime(paginationOptions);
   renderAnimeTable(data);
   renderSortOptions();
 };
