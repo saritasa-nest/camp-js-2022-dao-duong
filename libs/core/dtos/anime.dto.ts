@@ -1,5 +1,22 @@
 /** Aired DTO. */
-import { AiredDto } from './aired.dto';
+import { DateRangeDto } from './dateRange.dto';
+
+/** Possible values for type. */
+export enum Type {
+  'TV',
+  'OVA',
+  'MOVIE',
+  'SPECIAL',
+  'ONA',
+  'MUSIC',
+}
+
+/** Possible values for status. */
+export enum Status {
+  'AIRING',
+  'FINISHED',
+  'NOT_YET_AIRED',
+}
 
 /** Anime DTO. */
 export interface AnimeDto {
@@ -23,11 +40,11 @@ export interface AnimeDto {
   readonly image: string;
 
   /** Anime aired date. */
-  readonly aired: AiredDto;
+  readonly aired: DateRangeDto;
 
   /** Anime Status. */
-  readonly status: string;
+  readonly status: Status;
 
   /** Anime type. */
-  readonly type: 'GENRES';
+  readonly type: Type;
 }

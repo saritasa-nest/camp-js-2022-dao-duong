@@ -1,3 +1,5 @@
+import { Type, Status } from '../dtos/anime.dto';
+
 import { OmitImmerable, Immerable } from './immerable';
 import { DateRange } from './dateRange';
 
@@ -19,10 +21,10 @@ export class Anime extends Immerable {
   public readonly aired: DateRange;
 
   /** Anime type. */
-  public readonly type: string;
+  public readonly type: Type;
 
   /** Anime status. */
-  public readonly status: string;
+  public readonly status: Status;
 
   public constructor(data: InitArgsAnime) {
     super();
