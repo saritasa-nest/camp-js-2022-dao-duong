@@ -49,9 +49,10 @@ export const renderPaginateButton = (pages: number): void => {
   const paginateButton = document.querySelectorAll('.pagination__item');
   paginateButton.forEach(element => {
   element.addEventListener('click', async(): Promise<void> => {
-    const currIndex = parseInt(element.getAttribute('index'), 10);
-    PAGINATION_STATE.page = currIndex;
-    PAGINATION_STATE.active = currIndex;
+    const currIndex = element.getAttribute('index');
+    assertNonNullish(currIndex);
+    PAGINATION_STATE.page = parseInt(currIndex, 10);
+    PAGINATION_STATE.active = parseInt(currIndex, 10);
     const paginationOptions: PaginationOptions = {
       limit: LIMIT,
       page: PAGINATION_STATE.page,
