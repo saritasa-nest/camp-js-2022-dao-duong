@@ -8,9 +8,9 @@ import { renderAnimeTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
 import { PaginationOptions } from '../scripts/interfaces';
 
-window.onload = (): void => {
+window.addEventListener('load', (): void => {
   initialRender();
-};
+});
 
 const initialRender = async(): Promise<void> => {
   const paginationOptions: PaginationOptions = {
