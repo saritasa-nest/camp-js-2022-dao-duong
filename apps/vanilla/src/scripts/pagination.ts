@@ -13,7 +13,7 @@ import { PaginationOptions } from './interfaces';
  * @param pages Number of total pages.
  * */
 export const renderPaginateButton = (pages: number): void => {
-  const wrapper = document.querySelector<HTMLDivElement>('#pagination-wrapper');
+  const wrapper = document.querySelector<HTMLDivElement>('.pagination');
   assertNonNullish(wrapper);
   wrapper.innerHTML = ``;
   let maxLeft = (PAGINATION_STATE.page - HALF_NUMBER_OF_PAGES);
@@ -35,21 +35,21 @@ export const renderPaginateButton = (pages: number): void => {
 
   for (let page = maxLeft; page <= maxRight; page++) {
     wrapper.innerHTML += `
-    <li index=${page} class="waves-effect paginate-number page ${PAGINATION_STATE.active === page ? 'active' : ''}"><a href="#!">
+    <li index=${page} class="waves-effect pagination__item ${PAGINATION_STATE.active === page ? 'active' : ''}"><a href="#!">
     ${page}
       </a>
     </li>`;
   }
   wrapper.innerHTML = `
-    <li id="left" index=1 class="waves-effect paginate page"><a>First</a></li>
+    <li index=${FIRST_PAGE} class="waves-effect pagination__item"><a>First</a></li>
     ${wrapper?.innerHTML}`;
 
   wrapper.innerHTML += `
-  <li id="left" index=${pages} class="waves-effect paginate page"><a>Last</a></li>`;
-  const paginateButton = document.querySelectorAll('.page');
+  <li index=${pages} class="waves-effect pagination__item"><a>Last</a></li>`;
+  const paginateButton = document.querySelectorAll('.pagination__item');
   paginateButton.forEach(element => {
   element.addEventListener('click', async(): Promise<void> => {
-    let currIndex = parseInt(element.getAttribute('index'));
+    const currIndex = parseInt(element.getAttribute('index'), 10);
     PAGINATION_STATE.page = currIndex;
     PAGINATION_STATE.active = currIndex;
     const paginationOptions: PaginationOptions = {
