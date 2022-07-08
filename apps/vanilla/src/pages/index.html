@@ -4,22 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./index.css" />
+    <title>Anime App</title>
   </head>
   <body class="default-layout">
     <h1 class="title">Main page ⚡</h1>
 
     <ul class="pagination">
-      <div id="pagination-wrapper">
-      </div>
+
     </ul>
       <!-- Select section -->
-    <div class="sort-wrapper">
-      <label for="sort-options">Sort by</label>
-      <select id="sort-option" class="browser-default sort">
-      </select>
-      <label for="sort-direction">Order</label>
-      <select id="sort-direction" class="browser-default sort">
-      </select>
+    <div class="sort">
+      <div class="sort__selectElement">
+        <span>Sort by</span>
+        <select class="browser-default select sort__options">
+        </select>
+      </div>
+      <div class="sort__selectElement">
+        <span>Order</span>
+        <select class="browser-default select sort__directions">
+        </select>
+      </div>
     </div>
     <div class="anime-table">
     </div>
