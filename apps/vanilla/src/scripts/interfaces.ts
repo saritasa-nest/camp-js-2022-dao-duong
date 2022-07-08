@@ -19,7 +19,7 @@ export interface SortOption {
 }
 
 /** Options for pagination. */
-export interface PaginationOptions {
+export interface PaginationConfig {
 
   /** Number of items per request. */
   readonly limit: number;
@@ -28,5 +28,18 @@ export interface PaginationOptions {
   readonly page: number;
 
   /** Setting for sort features. */
-  readonly sortSettings: SortSetting;
+  readonly ordering: SortSetting;
+}
+
+/** State for pagination. */
+export interface PaginationState {
+
+  /** Number of items per request. */
+  readonly page: number;
+
+  /** Number of pages to display. */
+  readonly displayPages: number;
+
+  /** Active page. */
+  readonly active: number;
 }
