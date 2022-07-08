@@ -1,9 +1,9 @@
 /** Aired time DTO. */
-export interface AiredDto {
+export interface DateRangeDto {
 
   /** Aired start, for example, "2014-12-20T17:30:50.416Z". */
-  readonly start: Date;
+  readonly start: string;
 
   /** Aired end, for example, "2014-12-20T17:30:50.416Z". */
-  readonly end: Date;
+  readonly end: string;
 }
