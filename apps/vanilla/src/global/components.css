@@ -1,3 +1,5 @@
+@import url("./variables.css");
+
 .links {
   display: flex;
   flex-wrap: wrap;
@@ -5,8 +7,6 @@
 }
 
 .default-layout {
-  --default-layout-width: 90%;
-
   margin: 60px auto 0;
   max-width: var(--default-layout-width);
 }
