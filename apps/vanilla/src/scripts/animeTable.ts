@@ -2,7 +2,7 @@ import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 
-import { dayConverter } from '../scripts/functions';
+import { dateConverter } from '../scripts/functions';
 
 import { renderPaginateButton } from './pagination';
 import { LIMIT } from './variables';
@@ -14,21 +14,18 @@ import { LIMIT } from './variables';
 export const renderAnimeTable = (dataset: Pagination<Anime>): void => {
   const dataTable = document.querySelector<HTMLDivElement>('.anime-table');
   assertNonNullish(dataTable);
-  let tableBody = ``;
-  dataset.results.forEach(anime => {
-    tableBody += `
-      <tr>
-        <td>
-          <img class="anime-image" src="${anime.image}" alt="Anime image">
-        </td>
-        <td>${anime.englishTitle}</td>
-        <td>${anime.japaneseTitle}</td>
-        <td>${dayConverter(anime.aired.start)}</td>
-        <td>${anime.type}</td>
-        <td>${anime.status}</td>
-      </tr>
-    `;
-  });
+  const tableBody = dataset.results.reduce((previousValue: string, currentValue: Anime): string => `${previousValue}
+    <tr>
+         <td>
+           <img class="anime-image" src="${currentValue.image}" alt="Anime image">
+         </td>
+         <td>${currentValue.englishTitle}</td>
+         <td>${currentValue.japaneseTitle}</td>
+         <td>${dateConverter(currentValue.aired.start)}</td>
+         <td>${currentValue.type}</td>
+         <td>${currentValue.status}</td>
+       </tr>
+    `, '');
   dataTable.innerHTML = `
       <table class="responsive-table centered highlight" >
         <thead>
