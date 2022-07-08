@@ -1,7 +1,8 @@
 import { Pagination } from '@js-camp/core/models/pagination';
 import { Anime } from '@js-camp/core/models/anime';
+import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 
-import { PAGINATION_STATE, LIMIT, SORT_SETTINGS } from './variables';
+import { PAGINATION_STATE, LIMIT, SORT_SETTINGS, FIRST_PAGE, HALF_NUMBER_OF_PAGES } from './variables';
 import { renderAnimeTable } from './animeTable';
 
 import { getAnime } from './anime';
@@ -12,21 +13,22 @@ import { PaginationOptions } from './interfaces';
  * @param pages Number of total pages.
  * */
 export const renderPaginateButton = (pages: number): void => {
-  const wrapper: HTMLDivElement = document.getElementById('pagination-wrapper');
+  const wrapper = document.querySelector<HTMLDivElement>('#pagination-wrapper');
+  assertNonNullish(wrapper);
   wrapper.innerHTML = ``;
-  let maxLeft = (PAGINATION_STATE.page - Math.floor(PAGINATION_STATE.window / 2));
-  let maxRight = (PAGINATION_STATE.page + Math.floor(PAGINATION_STATE.window / 2));
+  let maxLeft = (PAGINATION_STATE.page - HALF_NUMBER_OF_PAGES);
+  let maxRight = (PAGINATION_STATE.page + HALF_NUMBER_OF_PAGES);
 
-  if (maxLeft < 1) {
-    maxLeft = 1;
+  if (maxLeft < FIRST_PAGE) {
+    maxLeft = FIRST_PAGE;
     maxRight = PAGINATION_STATE.window;
   }
 
   if (maxRight > pages) {
-    maxLeft = pages - (PAGINATION_STATE.window - 1);
+    maxLeft = pages - (PAGINATION_STATE.window - FIRST_PAGE);
 
-    if (maxLeft < 1) {
-      maxLeft = 1;
+    if (maxLeft < FIRST_PAGE) {
+      maxLeft = FIRST_PAGE;
     }
     maxRight = pages;
   }
@@ -44,10 +46,10 @@ export const renderPaginateButton = (pages: number): void => {
 
   wrapper.innerHTML += `
   <li id="left" index=${pages} class="waves-effect paginate page"><a>Last</a></li>`;
-  const pageBtn = document.querySelectorAll('.page');
-  pageBtn.forEach(element => {
+  const paginateButton = document.querySelectorAll('.page');
+  paginateButton.forEach(element => {
   element.addEventListener('click', async(): Promise<void> => {
-    const currIndex = parseInt(element.getAttribute('index'), 10);
+    let currIndex = parseInt(element.getAttribute('index'));
     PAGINATION_STATE.page = currIndex;
     PAGINATION_STATE.active = currIndex;
     const paginationOptions: PaginationOptions = {
