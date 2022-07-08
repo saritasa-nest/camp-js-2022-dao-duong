@@ -1,4 +1,4 @@
-import { SortOption, SortSetting } from './interfaces';
+import { PaginationState, SortOption, SortSetting } from './interfaces';
 
 /** Initial page or first page.*/
 export const FIRST_PAGE = 1;
@@ -10,7 +10,7 @@ export const NUMBER_OF_PAGES = 9;
 export const HALF_NUMBER_OF_PAGES = Math.floor(NUMBER_OF_PAGES / 2);
 
 /** Number of items per request. */
-export const LIMIT = 20;
+export const LIMIT = 10;
 
 /** Available options for sorting. */
 export enum Ordering {
@@ -35,15 +35,15 @@ export const SORT_OPTIONS: readonly SortOption[] =
   ];
 
 /** Available direction for sorting options. */
-export const SORT_DIRECTION: readonly SortOption[] =
+export const SORT_DIRECTIONS: readonly SortOption[] =
   [
     { text: 'Ascending', value: '' },
     { text: 'Descending', value: '-' },
   ];
 
 /** Pagination state. */
-export const PAGINATION_STATE = {
+export const PAGINATION_STATE: PaginationState = {
   page: FIRST_PAGE,
-  window: NUMBER_OF_PAGES,
+  displayPages: NUMBER_OF_PAGES,
   active: FIRST_PAGE,
 };
