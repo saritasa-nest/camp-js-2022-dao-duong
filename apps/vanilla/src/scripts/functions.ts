@@ -4,9 +4,9 @@ import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
  * Convert response date object to readable format.
  * @param date Date data from response object.
  */
-export const dayConverter = (date: string | null): string => {
+export const dateConverter = (date: string | null): string => {
   if (date !== null) {
-    return (new Date(date).getFullYear())
+    return (new Date(date))
       .toString();
   }
   return 'None';
@@ -23,7 +23,7 @@ export const hasSortOption = (option: string): boolean => option !== '';
  * @param hasOption Whether has sort option enabled.
  */
 export const changeDirectionState = (hasOption: boolean): void => {
-  const sortDirection = document.querySelector<HTMLSelectElement>('#sort-direction');
+  const sortDirection = document.querySelector<HTMLSelectElement>('.sort__direction');
   assertNonNullish(sortDirection);
     if (hasOption) {
       sortDirection.disabled = false;
