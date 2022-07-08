@@ -1,5 +1,14 @@
 import { SortOption, SortSetting } from './interfaces';
 
+/** Initial page or first page.*/
+export const FIRST_PAGE = 1;
+
+/** Number of pages to display.*/
+export const NUMBER_OF_PAGES = 9;
+
+/** Number of items per request. */
+export const LIMIT = 20;
+
 /** Available options for sorting. */
 export enum Ordering {
   EnglishTitle = 'title_eng',
@@ -29,12 +38,9 @@ export const SORT_DIRECTION: readonly SortOption[] =
     { text: 'Descending', value: '-' },
   ];
 
-/** Number of items per request. */
-export const LIMIT = 20;
-
 /** Pagination state. */
 export const PAGINATION_STATE = {
-  page: 1,
-  window: 9,
-  active: 1,
+  page: FIRST_PAGE,
+  window: NUMBER_OF_PAGES,
+  active: FIRST_PAGE,
 };
