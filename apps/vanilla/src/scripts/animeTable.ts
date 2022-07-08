@@ -1,5 +1,6 @@
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
+import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 
 import { dayConverter } from '../scripts/functions';
 
@@ -11,8 +12,8 @@ import { LIMIT } from './variables';
  * @param dataset Data for render.
  */
 export const renderAnimeTable = (dataset: Pagination<Anime>): void => {
-  const dataTable: HTMLDivElement = document.querySelector('.anime-table') ?? document.body;
-
+  const dataTable = document.querySelector<HTMLDivElement>('.anime-table');
+  assertNonNullish(dataTable);
   let tableBody = ``;
   dataset.results.forEach(anime => {
     tableBody += `
