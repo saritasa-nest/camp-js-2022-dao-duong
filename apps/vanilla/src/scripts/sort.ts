@@ -1,8 +1,9 @@
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
+import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 
 import { renderAnimeTable } from './animeTable';
-import { PAGINATION_STATE, SORT_SETTINGS, SORT_DIRECTION, SORT_OPTIONS, LIMIT } from './variables';
+import { PAGINATION_STATE, SORT_SETTINGS, SORT_DIRECTION, SORT_OPTIONS, LIMIT, FIRST_PAGE } from './variables';
 import { getAnime } from './anime';
 import { changeDirectionState, hasSortOption } from './functions';
 import { PaginationOptions } from './interfaces';
@@ -10,9 +11,10 @@ import { PaginationOptions } from './interfaces';
 /**  Render sort options.*/
 export const renderSortOptions = (): void => {
   const sortOptions = document.querySelectorAll('.sort');
-  const sortOption: HTMLSelectElement = document.querySelector('#sort-option');
-  const sortDirection: HTMLSelectElement = document.querySelector('#sort-direction');
-  if (sortOption && sortDirection) {
+  const sortOption = document.querySelector<HTMLSelectElement>('#sort-option');
+  const sortDirection = document.querySelector<HTMLSelectElement>('#sort-direction');
+  assertNonNullish(sortOption);
+  assertNonNullish(sortDirection);
     sortOption.innerHTML = ``;
     sortDirection.innerHTML = ``;
 
@@ -26,8 +28,8 @@ export const renderSortOptions = (): void => {
     changeDirectionState(hasSortOption(SORT_SETTINGS.option));
     sortOptions.forEach(element => {
       element.addEventListener('change', async(): Promise<void> => {
-        PAGINATION_STATE.page = 1;
-        PAGINATION_STATE.active = 1;
+        PAGINATION_STATE.page = FIRST_PAGE;
+        PAGINATION_STATE.active = FIRST_PAGE;
         SORT_SETTINGS.direction = sortDirection.value;
         SORT_SETTINGS.option = sortOption.value;
         changeDirectionState(hasSortOption(SORT_SETTINGS.option));
@@ -40,5 +42,4 @@ export const renderSortOptions = (): void => {
         renderAnimeTable(data);
       });
     });
-}
 };
