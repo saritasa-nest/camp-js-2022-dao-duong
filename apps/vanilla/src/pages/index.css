@@ -5,19 +5,19 @@
 }
 
 .anime-image {
-  width: 150px;
-  height: 150px;
+  max-width: 150px;
+  max-height: 150px;
 }
 
-#pagination-wrapper {
+.pagination {
   display: inline-block;
 }
 
-.sort-wrapper {
+.sort {
   display: flex;
-  gap: 40px;
 }
 
-.sort {
+.sort__selectElement {
   max-width: 40%;
+  padding: 0 20px;
 }
