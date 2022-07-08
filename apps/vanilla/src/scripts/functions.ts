@@ -22,7 +22,7 @@ export const hasSortOption = (option: string): boolean => option !== '';
  * Change state of the order direction.
  * @param hasOption Whether has sort option enabled.
  */
-export const changeDirectionState = (hasOption: boolean): void => {
+export const setDirectionState = (hasOption: boolean): void => {
   const sortDirection = document.querySelector<HTMLSelectElement>('.sort__direction');
   assertNonNullish(sortDirection);
     if (hasOption) {
