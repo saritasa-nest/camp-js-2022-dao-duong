@@ -1,4 +1,4 @@
-import { PaginationState, SortOption, SortSetting } from './interfaces';
+import { SortOption } from './interfaces';
 
 /** Initial page or first page.*/
 export const FIRST_PAGE = 1;
@@ -19,12 +19,6 @@ export enum Ordering {
   AiredStart = 'aired__startswith',
 }
 
-/** Setting for sort. */
-export const SORT_SETTINGS: SortSetting = {
-  option: '',
-  direction: '',
-};
-
 /** Available value for sorting options. */
 export const SORT_OPTIONS: readonly SortOption[] =
   [
@@ -40,10 +34,3 @@ export const SORT_DIRECTIONS: readonly SortOption[] =
     { text: 'Ascending', value: '' },
     { text: 'Descending', value: '-' },
   ];
-
-/** Pagination state. */
-export const PAGINATION_STATE: PaginationState = {
-  page: FIRST_PAGE,
-  displayPages: NUMBER_OF_PAGES,
-  active: FIRST_PAGE,
-};
