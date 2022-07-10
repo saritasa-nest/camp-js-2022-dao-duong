@@ -1,13 +1,3 @@
-/** Sort setting. */
-export interface SortSetting {
-
-  /** Option for sort. */
-  readonly option: string;
-
-  /** Direction for sort. */
-  readonly direction: string;
-}
-
 /** Sort options. */
 export interface SortOption {
 
@@ -28,18 +18,5 @@ export interface PaginationConfig {
   readonly page: number;
 
   /** Setting for sort features. */
-  readonly ordering: SortSetting;
-}
-
-/** State for pagination. */
-export interface PaginationState {
-
-  /** Number of items per request. */
-  readonly page: number;
-
-  /** Number of pages to display. */
-  readonly displayPages: number;
-
-  /** Active page. */
-  readonly active: number;
+  readonly ordering: string;
 }
