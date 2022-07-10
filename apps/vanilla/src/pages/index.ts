@@ -2,7 +2,7 @@ import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 
 import { getAnime } from '../scripts/anime';
-import { SORT_SETTINGS, LIMIT, PAGINATION_STATE } from '../scripts/variables';
+import { LIMIT, FIRST_PAGE } from '../scripts/variables';
 
 import { renderAnimeTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
@@ -13,10 +13,12 @@ window.addEventListener('load', (): void => {
 });
 
 const initialRender = async(): Promise<void> => {
+  localStorage.setItem('active', FIRST_PAGE.toString());
+  localStorage.setItem('sort', '');
   const paginationConfig: PaginationConfig = {
     limit: LIMIT,
-    page: PAGINATION_STATE.page,
-    ordering: SORT_SETTINGS,
+    page: FIRST_PAGE,
+    ordering: '',
   };
 
   const data: Pagination<Anime> = await getAnime(paginationConfig);
