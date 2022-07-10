@@ -55,8 +55,6 @@ export const renderPaginateButton = (pages: number): void => {
       localStorage.setItem('active', currrentIndex);
       const sortSetting = localStorage.getItem('sort');
       assertNonNullish(sortSetting);
-
-      // currentPage = parseInt(currrentIndex, 10);
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: parseInt(currrentIndex, 10),
