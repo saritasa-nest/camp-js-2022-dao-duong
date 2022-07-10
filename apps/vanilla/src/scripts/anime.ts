@@ -14,9 +14,9 @@ import { PaginationConfig } from './interfaces';
  */
 export const getAnime = async({ limit, page, ordering }: PaginationConfig): Promise<Pagination<Anime>> => {
   const offset: number = limit * (page - 1);
-
+  const params = new URLSearchParams({ limit: limit.toString(), offset: offset.toString(), ordering });
   const { data } = await api.get<PaginationDto<AnimeDto>>(
-    `anime/anime/?limit=${limit}&offset=${offset}&ordering=${ordering.direction}${ordering.option}`,
+    `anime/anime/`, { params },
   );
   return PaginationMapper.fromDto<AnimeDto, Anime>(data, animeDto => AnimeMapper.fromDto(animeDto));
 };
