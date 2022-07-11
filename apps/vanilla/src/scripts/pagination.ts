@@ -1,12 +1,12 @@
 import { Pagination } from '@js-camp/core/models/pagination';
 import { Anime } from '@js-camp/core/models/anime';
 import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
+import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
 import { LIMIT, FIRST_PAGE, HALF_NUMBER_OF_PAGES, NUMBER_OF_PAGES } from './variables';
 import { renderAnimeTable } from './animeTable';
 
 import { getAnime } from './anime';
-import { PaginationConfig } from './interfaces';
 
 /**
  * Render pagination.
@@ -50,14 +50,14 @@ export const renderPaginateButton = (pages: number): void => {
   const paginateButton = document.querySelectorAll('.pagination__item');
   paginateButton.forEach(element => {
     element.addEventListener('click', async(): Promise<void> => {
-      const currrentIndex = element.getAttribute('index');
-      assertNonNullish(currrentIndex);
-      localStorage.setItem('active', currrentIndex);
+      const currentIndex = element.getAttribute('index');
+      assertNonNullish(currentIndex);
+      localStorage.setItem('active', currentIndex);
       const sortSetting = localStorage.getItem('sort');
       assertNonNullish(sortSetting);
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
-        page: parseInt(currrentIndex, 10),
+        page: parseInt(currentIndex, 10),
         ordering: sortSetting,
       };
       const data: Pagination<Anime> = await getAnime(paginationConfig);

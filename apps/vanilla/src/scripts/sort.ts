@@ -1,12 +1,12 @@
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
+import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
 import { renderAnimeTable } from './animeTable';
 import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT, FIRST_PAGE } from './variables';
 import { getAnime } from './anime';
 import { setDirectionState, hasSortOption } from './functions';
-import { PaginationConfig } from './interfaces';
 
 /**  Render sort options.*/
 export const renderSortOptions = (): void => {
