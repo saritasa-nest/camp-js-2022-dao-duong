@@ -2,7 +2,17 @@
 import { Register } from '@js-camp/core/models/register';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
+import { Url } from '../../scripts/constants';
+import { isAuthenticated } from '../../scripts/functions';
+import { navigate } from '../../scripts/navigation';
+
 import { AuthService } from '../../services/authService';
+
+window.addEventListener('load', () => {
+  if (isAuthenticated()) {
+    navigate(Url.Base);
+  }
+});
 
 const registerForm = document.querySelector<HTMLFormElement>('.form');
 assertNonNull(registerForm);
