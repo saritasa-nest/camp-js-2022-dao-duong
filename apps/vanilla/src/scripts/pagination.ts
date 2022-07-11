@@ -36,7 +36,7 @@ export function renderPaginateButton(pages: number): void {
 
   for (let page = maxLeft; page <= maxRight; page++) {
     wrapper.innerHTML += `
-    <li index=${page} class="waves-effect pagination__item ${page === currentPage ? 'active' : ''}">
+    <li index=${page} class="waves-effect pagination__item ${page === currentPage ? 'pagination__item-active' : ''}">
     ${page}
     </li>`;
   }

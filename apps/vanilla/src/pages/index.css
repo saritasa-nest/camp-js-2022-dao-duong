@@ -26,6 +26,7 @@
   width: 3rem;
 }
 
-.active {
+.pagination__item-active {
   color: var(--white-color);
+  background-color: var(--active-background-color);
 }
