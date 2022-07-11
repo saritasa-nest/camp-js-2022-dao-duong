@@ -7,10 +7,10 @@ import { renderAnimeTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
 
 window.addEventListener('load', (): void => {
-  initialRender();
+  initHomepage();
 });
 
-const initialRender = async(): Promise<void> => {
+const initHomepage = async(): Promise<void> => {
   localStorage.setItem('active', FIRST_PAGE.toString());
   localStorage.setItem('sort', '');
   const paginationConfig: PaginationConfig = {
