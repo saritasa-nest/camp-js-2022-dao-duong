@@ -17,10 +17,10 @@ export interface PaginationDto<T> {
 export interface PaginationOptionsDto {
 
   /** Number of items per request. */
-  readonly limit: number;
+  readonly limit: string;
 
   /** First items of requested data. */
-  readonly offset: number;
+  readonly offset: string;
 
   /** Ordering options. */
   readonly ordering: string;
