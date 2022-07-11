@@ -3,3 +3,7 @@
 .title {
   color: var(--heading-color-2);
 }
+
+.card__content {
+  padding-top: 40px;
+}
