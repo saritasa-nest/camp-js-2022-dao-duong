@@ -5,15 +5,15 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { Url } from '../../scripts/constants';
 
 import { isAuthenticated } from '../../scripts/functions';
-import { Helpers } from '../../scripts/helpers';
 import { navigate } from '../../scripts/navigation';
 import { AuthService } from '../../services/authService';
 
 const loginForm = document.querySelector<HTMLFormElement>('.form');
 
 window.addEventListener('load', () => {
-  Helpers.clearToken();
-  console.log(isAuthenticated());
+  if (isAuthenticated()) {
+    navigate(Url.Base);
+  }
 });
 
 assertNonNull(loginForm);
