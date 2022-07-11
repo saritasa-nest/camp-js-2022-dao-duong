@@ -10,7 +10,7 @@ import { setDirectionState, hasSortOption } from './functions';
 
 /**  Render sort options.*/
 export const renderSortOptions = (): void => {
-  const sortOptions = document.querySelectorAll('.sort__selectElement');
+  const sortOptions = document.querySelectorAll('.sort__select-element');
   const sortOption = document.querySelector<HTMLSelectElement>('.sort__option');
   const sortDirection = document.querySelector<HTMLSelectElement>('.sort__direction');
 
