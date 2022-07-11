@@ -17,5 +17,5 @@ export const getAnime = async({ limit, page, ordering }: PaginationConfig): Prom
   const { data } = await api.get<PaginationDto<AnimeDto>>(
     `anime/anime/`, { params },
   );
-  return PaginationMapper.fromDto<AnimeDto, Anime>(data, animeDto => AnimeMapper.fromDto(animeDto));
+  return PaginationMapper.fromDto(data, animeDto => AnimeMapper.fromDto(animeDto));
 };
