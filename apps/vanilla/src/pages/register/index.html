@@ -7,9 +7,41 @@
     <title>Vite App</title>
   </head>
   <body class="default-layout">
-    <h1 class="title">Register page 👋</h1>
+    <h1 class="title">Register page</h1>
     <div class="links">
       <a href="/">Take me to main page</a>
+    </div>
+    <div class="card__content">
+      <form class="row s12 form">
+        <div class="col s12">
+          <div class="input-field">
+            <input type="email" name="email" placeholder="Email">
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="input-field">
+            <input type="text" name="first_name" placeholder="First name">
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="input-field">
+            <input type="text" name="last_name" placeholder="Last name">
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="input-field">
+            <input type="password" name="password" minlength="8" placeholder="Password">
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="input-field">
+            <input type="password" name="confirm_password" placeholder="Confirm Password">
+          </div>
+        </div>
+        <div class="col s12 center">
+          <button type="submit" class="btn btn-large waves-effect waves-light blue btn_right">Register</button>
+        </div>
+      </form>
     </div>
     <script type="module" src="./register.ts"></script>
   </body>
