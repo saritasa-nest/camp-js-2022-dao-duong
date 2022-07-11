@@ -1,5 +1,3 @@
-import { Pagination } from '@js-camp/core/models/pagination';
-import { Anime } from '@js-camp/core/models/anime';
 import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
@@ -60,7 +58,7 @@ export const renderPaginateButton = (pages: number): void => {
         page: parseInt(currentIndex, 10),
         ordering: sortSetting,
       };
-      const data: Pagination<Anime> = await getAnime(paginationConfig);
+      const data = await getAnime(paginationConfig);
       renderAnimeTable(data);
     });
   });
