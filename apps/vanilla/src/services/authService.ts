@@ -36,4 +36,10 @@ export namespace AuthService {
   export function logout(): void {
     Helpers.clearToken();
   }
+
+  /** Test user.*/
+  export async function getUser(): Promise<void> {
+    const { data } = await api.get('/users/profile/', { headers: { Authorization: `Bearer ${StorageService.get(Token.Access)}` } });
+    console.log(data);
+  }
 }
