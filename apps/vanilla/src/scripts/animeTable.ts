@@ -11,7 +11,7 @@ import { LIMIT } from './variables';
  * Render anime table.
  * @param dataset Data for render.
  */
-export const renderAnimeTable = (dataset: Pagination<Anime>): void => {
+export function renderAnimeTable(dataset: Pagination<Anime>): void {
   const dataTable = document.querySelector<HTMLDivElement>('.anime-table');
   assertNonNullish(dataTable);
   const tableBody = dataset.results.reduce((previousValue: string, currentValue: Anime): string => `${previousValue}
@@ -46,4 +46,4 @@ export const renderAnimeTable = (dataset: Pagination<Anime>): void => {
   `;
   const totalPages = dataset.count / LIMIT;
   renderPaginateButton(totalPages);
-};
+}

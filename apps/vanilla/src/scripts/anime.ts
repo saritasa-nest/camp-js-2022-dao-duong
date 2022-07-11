@@ -12,10 +12,10 @@ import { api } from './API';
  * Get anime data from the server.
  * @param PaginationConfig Option for request parameters.
  */
-export const getAnime = async({ limit, page, ordering }: PaginationConfig): Promise<Pagination<Anime>> => {
+export async function getAnime({ limit, page, ordering }: PaginationConfig): Promise<Pagination<Anime>> {
   const params = PaginationMapper.toDto({ limit, page, ordering });
   const { data } = await api.get<PaginationDto<AnimeDto>>(
     `anime/anime/`, { params },
   );
   return PaginationMapper.fromDto(data, animeDto => AnimeMapper.fromDto(animeDto));
-};
+}

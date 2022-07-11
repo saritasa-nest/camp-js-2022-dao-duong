@@ -7,7 +7,7 @@ import { getAnime } from './anime';
 import { setDirectionState, hasSortOption } from './functions';
 
 /**  Render sort options.*/
-export const renderSortOptions = (): void => {
+export function renderSortOptions(): void {
   const sortOptions = document.querySelectorAll('.sort__select-element');
   const sortOption = document.querySelector<HTMLSelectElement>('.sort__option');
   const sortDirection = document.querySelector<HTMLSelectElement>('.sort__direction');
@@ -39,4 +39,4 @@ export const renderSortOptions = (): void => {
       renderAnimeTable(data);
     });
   });
-};
+}

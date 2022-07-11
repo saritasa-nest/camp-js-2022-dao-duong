@@ -10,7 +10,7 @@ import { getAnime } from './anime';
  * Render pagination.
  * @param pages Number of total pages.
  * */
-export const renderPaginateButton = (pages: number): void => {
+export function renderPaginateButton(pages: number): void {
   const pageValueFromStorage = localStorage.getItem('active');
   assertNonNullish(pageValueFromStorage);
   const currentPage = parseInt(pageValueFromStorage, 10);
@@ -62,4 +62,4 @@ export const renderPaginateButton = (pages: number): void => {
       renderAnimeTable(data);
     });
   });
-};
+}
