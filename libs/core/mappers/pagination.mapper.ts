@@ -1,4 +1,5 @@
-import { PaginationDto } from '../dtos/pagination.dto';
+import { PaginationDto, PaginationOptionsDto } from '../dtos/pagination.dto';
+import { PaginationConfig } from '../interfaces/pagination';
 import { Pagination } from '../models/pagination';
 
 export namespace PaginationMapper {
@@ -15,5 +16,18 @@ export namespace PaginationMapper {
       previous: dto.previous,
       results: dto.results.map(result => mapperFromDto(result)),
     });
+  }
+
+  /**
+   * Maps model to dto.
+   * @param config Pagination configuration.
+   */
+  export function toDto(config: PaginationConfig): PaginationOptionsDto {
+    const offset = (config.limit * (config.page - 1)).toString();
+    return {
+      limit: config.limit.toString(),
+      offset,
+      ordering: config.ordering,
+    } as PaginationOptionsDto;
   }
 }

@@ -13,7 +13,7 @@ import { api } from './API';
  * @param PaginationConfig Option for request parameters.
  */
 export const getAnime = async({ limit, page, ordering }: PaginationConfig): Promise<Pagination<Anime>> => {
-  const params = new URLSearchParams({ limit: limit.toString(), offset: (limit * (page - 1)).toString(), ordering });
+  const params = PaginationMapper.toDto({ limit, page, ordering });
   const { data } = await api.get<PaginationDto<AnimeDto>>(
     `anime/anime/`, { params },
   );
