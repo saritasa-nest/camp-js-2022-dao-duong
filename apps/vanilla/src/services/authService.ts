@@ -6,7 +6,8 @@ import { Register } from '@js-camp/core/models/register';
 import { User } from '@js-camp/core/models/user';
 
 import { api } from '../api/API';
-import { Token } from '../scripts/constants';
+import { Token, Url } from '../scripts/constants';
+import { navigate, renderErrorMessage } from '../scripts/functions';
 import { Helpers } from '../scripts/helpers';
 
 import { StorageService } from './storageService';
@@ -18,10 +19,15 @@ export namespace AuthService {
    * @param loginData Login data from login form.
    */
   export async function login(loginData: Login): Promise<void> {
-    const userLoginDto = LoginMapper.toDto(loginData);
-    const { data } = await api.post('/auth/login/', userLoginDto);
-    StorageService.set(Token.Refresh, data.refresh);
-    StorageService.set(Token.Access, data.access);
+    try {
+      const userLoginDto = LoginMapper.toDto(loginData);
+      const { data } = await api.post('/auth/login/', userLoginDto);
+      StorageService.set(Token.Refresh, data.refresh);
+      StorageService.set(Token.Access, data.access);
+      navigate(Url.Login);
+    } catch (error: unknown) {
+      renderErrorMessage(error);
+    }
   }
 
   /**
@@ -29,9 +35,13 @@ export namespace AuthService {
    * @param registerData Register data from register form.
    */
   export async function register(registerData: Register): Promise<void> {
-    const userRegisterDto = RegisterMapper.toDto(registerData);
-    const { data } = await api.post('/auth/register/', userRegisterDto);
-    Helpers.setToken(data);
+    try {
+      const userRegisterDto = RegisterMapper.toDto(registerData);
+      const { data } = await api.post('/auth/register/', userRegisterDto);
+      Helpers.setToken(data);
+    } catch (error: unknown) {
+      renderErrorMessage(error);
+    }
   }
 
   /** Logout service.*/

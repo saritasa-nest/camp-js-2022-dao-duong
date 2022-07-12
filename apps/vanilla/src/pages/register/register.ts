@@ -3,8 +3,7 @@ import { Register } from '@js-camp/core/models/register';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Url } from '../../scripts/constants';
-import { isAuthenticated } from '../../scripts/functions';
-import { navigate } from '../../scripts/navigation';
+import { isAuthenticated, validateConfirmPassword, navigate } from '../../scripts/functions';
 
 import { AuthService } from '../../services/authService';
 
@@ -20,17 +19,24 @@ registerForm.addEventListener('submit', event => {
   event.preventDefault();
   const emailTextInput = document.querySelector<HTMLInputElement>('input[name="email"]');
   assertNonNull(emailTextInput);
-  const firstNameTextInput = document.querySelector<HTMLInputElement>('input[name="first_name"]');
+  const firstNameTextInput = document.querySelector<HTMLInputElement>('input[name="first-name"]');
   assertNonNull(firstNameTextInput);
-  const lastNameTextInput = document.querySelector<HTMLInputElement>('input[name="last_name"]');
+  const lastNameTextInput = document.querySelector<HTMLInputElement>('input[name="last-name"]');
   assertNonNull(lastNameTextInput);
   const passwordTextInput = document.querySelector<HTMLInputElement>('input[name="password"]');
   assertNonNull(passwordTextInput);
-  const registerData: Register = {
+  const confirmPasswordTextInput = document.querySelector<HTMLInputElement>('input[name="confirm-password"]');
+  assertNonNull(confirmPasswordTextInput);
+  if (validateConfirmPassword(passwordTextInput.value, confirmPasswordTextInput.value)) {
+    const registerData: Register = {
     email: emailTextInput.value,
     firstName: firstNameTextInput.value,
     lastName: lastNameTextInput.value,
     password: passwordTextInput.value,
-  };
+    };
   AuthService.register(registerData);
+} else {
+  confirmPasswordTextInput.setCustomValidity('The password confirmation does not match!');
+  confirmPasswordTextInput.reportValidity();
+  }
 });

@@ -4,8 +4,7 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Url } from '../../scripts/constants';
 
-import { isAuthenticated } from '../../scripts/functions';
-import { navigate } from '../../scripts/navigation';
+import { isAuthenticated, navigate } from '../../scripts/functions';
 import { AuthService } from '../../services/authService';
 
 const loginForm = document.querySelector<HTMLFormElement>('.form');
@@ -28,5 +27,4 @@ loginForm.addEventListener('submit', async(event): Promise<void> => {
     password: passwordTextInput.value,
   };
   await AuthService.login(loginData);
-  navigate(Url.Base);
 });
