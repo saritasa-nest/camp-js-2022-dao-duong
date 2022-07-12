@@ -1,8 +1,7 @@
 /* eslint-disable import/order */
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { Url } from '../../scripts/constants';
-import { isAuthenticated, renderLogoutButton } from '../../scripts/functions';
-import { navigate } from '../../scripts/navigation';
+import { isAuthenticated, renderLogoutButton, navigate } from '../../scripts/functions';
 import { AuthService } from '../../services/authService';
 
 window.addEventListener('load', (): void => {
@@ -24,8 +23,8 @@ export async function renderUserProfile(): Promise<void> {
     <li>First Name: ${user.firstName}</li>
     <li>Last Name: ${user.lastName}</li>
     <li>Avatar: ${user.avatar}</li>
-    <li>Created: ${user.created}</li>
-    <li>Modified: ${user.modified}</li>
+    <li>Created at: ${user.created}</li>
+    <li>Modified at: ${user.modified}</li>
   </ul>
   `;
 }
