@@ -22,9 +22,10 @@ export namespace AuthService {
     try {
       const userLoginDto = LoginMapper.toDto(loginData);
       const { data } = await api.post('/auth/login/', userLoginDto);
-      StorageService.set(Token.Refresh, data.refresh);
-      StorageService.set(Token.Access, data.access);
-      navigate(Url.Login);
+      if (await AuthService.verifyToken(data.access)) {
+        Helpers.setToken(data);
+        navigate(Url.Login);
+      }
     } catch (error: unknown) {
       renderErrorMessage(error);
     }
@@ -38,7 +39,10 @@ export namespace AuthService {
     try {
       const userRegisterDto = RegisterMapper.toDto(registerData);
       const { data } = await api.post('/auth/register/', userRegisterDto);
-      Helpers.setToken(data);
+      if (await AuthService.verifyToken(data.access)) {
+        Helpers.setToken(data);
+        navigate(Url.Login);
+      }
     } catch (error: unknown) {
       renderErrorMessage(error);
     }
@@ -49,10 +53,25 @@ export namespace AuthService {
     Helpers.clearToken();
   }
 
-  /** Test user.*/
+  /** Get user.*/
   export async function getUser(): Promise<User> {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const { data } = await api.get('/users/profile/', { headers: { Authorization: `Bearer ${StorageService.get(Token.Access)}` } });
     return UserMapper.fromDto(data);
+  }
+
+  /**
+   * Verify token.
+   * @param accessToken The access token to verify.
+   */
+  export async function verifyToken(accessToken: string): Promise<boolean | void> {
+    try {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      const requestBody = JSON.stringify({ token: accessToken });
+      await api.post('/auth/token/verify/', requestBody);
+      return true;
+    } catch (error: unknown) {
+      renderErrorMessage(error);
+    }
   }
 }
