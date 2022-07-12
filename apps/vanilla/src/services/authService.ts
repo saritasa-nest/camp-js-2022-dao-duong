@@ -7,8 +7,10 @@ import { User } from '@js-camp/core/models/user';
 
 import { api } from '../api/API';
 import { Token, Url } from '../scripts/constants';
-import { navigate, renderErrorMessage } from '../scripts/functions';
+import { navigate } from '../scripts/functions';
 import { Helpers } from '../scripts/helpers';
+
+import { renderErrorMessage } from './errorService';
 
 import { StorageService } from './storageService';
 
@@ -22,10 +24,8 @@ export namespace AuthService {
     try {
       const userLoginDto = LoginMapper.toDto(loginData);
       const { data } = await api.post('/auth/login/', userLoginDto);
-      if (await AuthService.verifyToken(data.access)) {
-        Helpers.setToken(data);
-        navigate(Url.Login);
-      }
+      Helpers.setToken(data);
+      navigate(Url.Login);
     } catch (error: unknown) {
       renderErrorMessage(error);
     }
@@ -39,10 +39,8 @@ export namespace AuthService {
     try {
       const userRegisterDto = RegisterMapper.toDto(registerData);
       const { data } = await api.post('/auth/register/', userRegisterDto);
-      if (await AuthService.verifyToken(data.access)) {
-        Helpers.setToken(data);
-        navigate(Url.Login);
-      }
+      Helpers.setToken(data);
+      navigate(Url.Login);
     } catch (error: unknown) {
       renderErrorMessage(error);
     }
@@ -64,14 +62,13 @@ export namespace AuthService {
    * Verify token.
    * @param accessToken The access token to verify.
    */
-  export async function verifyToken(accessToken: string): Promise<boolean | void> {
+  export async function verifyToken(accessToken: string): Promise<boolean> {
     try {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      const requestBody = JSON.stringify({ token: accessToken });
-      await api.post('/auth/token/verify/', requestBody);
+      await api.post('/auth/token/verify/', { token: accessToken });
       return true;
     } catch (error: unknown) {
       renderErrorMessage(error);
+      return false;
     }
   }
 }
