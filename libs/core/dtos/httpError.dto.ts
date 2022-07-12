@@ -4,6 +4,7 @@ export interface ErrorDataDto {
   readonly last_name?: readonly string[];
   readonly avatar?: readonly string[];
   readonly password?: readonly string[];
+  readonly token?: readonly string[];
   readonly non_field_errors?: readonly string[];
 }
 
