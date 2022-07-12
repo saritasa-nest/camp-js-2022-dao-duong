@@ -21,7 +21,7 @@ export class User extends Immerable {
   /** User modified date. */
   public readonly modified: Date;
 
-  public constructor(data: PostInitArgs) {
+  public constructor(data: UserInitArgs) {
     super();
     this.email = data.email;
     this.firstName = data.firstName;
@@ -36,4 +36,4 @@ export class User extends Immerable {
   }
 }
 
-type PostInitArgs = OmitImmerable<User>;
+type UserInitArgs = OmitImmerable<User>;
