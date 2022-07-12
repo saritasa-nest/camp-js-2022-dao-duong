@@ -40,3 +40,9 @@
 .logout-btn:hover {
   background-color: var(--secondary-background-color);
 }
+
+.input-error {
+  display: block;
+  font-size: 14px;
+  color: var(--error-text-color);
+}
