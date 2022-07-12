@@ -9,8 +9,9 @@ import { AuthService } from '../../services/authService';
 
 const loginForm = document.querySelector<HTMLFormElement>('.form');
 
-window.addEventListener('load', () => {
-  if (isAuthenticated()) {
+window.addEventListener('load', async() => {
+  const isAuthen = await isAuthenticated();
+  if (isAuthen) {
     navigate(Url.Base);
   }
 });

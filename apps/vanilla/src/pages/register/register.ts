@@ -7,8 +7,9 @@ import { isAuthenticated, validateConfirmPassword, navigate } from '../../script
 
 import { AuthService } from '../../services/authService';
 
-window.addEventListener('load', () => {
-  if (isAuthenticated()) {
+window.addEventListener('load', async() => {
+  const isAuthen = await isAuthenticated();
+  if (isAuthen) {
     navigate(Url.Base);
   }
 });
