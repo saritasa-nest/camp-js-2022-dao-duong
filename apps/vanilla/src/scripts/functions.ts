@@ -62,50 +62,24 @@ function createErrorElement(errorElement: HTMLInputElement | HTMLFormElement, er
  */
 export function renderErrorMessage(error: unknown): void {
 
-  const errorMessage = getError(error);
+  const errorMessages = getError(error);
 
   // Render error message detail
   const inputForm = document.querySelector<HTMLFormElement>('.form');
   assertNonNull(inputForm);
-  createErrorElement(inputForm, errorMessage.detail);
+  createErrorElement(inputForm, errorMessages.detail);
+  for (const err in errorMessages.data) {
+    if (errorMessages.data[err]) {
+      const textInput = document.querySelector<HTMLInputElement>(`input[name="${err}"]`);
+      assertNonNull(textInput);
+      assertNonNull(errorMessages.data);
+      errorMessages.data[err].forEach(errorMessage => {
+        if (err === 'token' || err === 'non_field_errors') {
+        createErrorElement(inputForm, errorMessage);
 
-  // Render password error message
-  if (errorMessage.data?.password) {
-    const passwordTextInput = document.querySelector<HTMLInputElement>('input[name="password"]');
-    assertNonNull(passwordTextInput);
-    errorMessage.data?.password.forEach(err => createErrorElement(passwordTextInput, err));
-  }
-
-  // Render email error message
-  if (errorMessage.data?.email) {
-    const passwordTextInput = document.querySelector<HTMLInputElement>('input[name="email"]');
-    assertNonNull(passwordTextInput);
-    errorMessage.data?.email.forEach(err => createErrorElement(passwordTextInput, err));
-  }
-
-  // Render first name error message
-  if (errorMessage.data?.first_name) {
-    const firstNameTextInput = document.querySelector<HTMLInputElement>('input[name="first-name"]');
-    assertNonNull(firstNameTextInput);
-    errorMessage.data?.first_name.forEach(err => createErrorElement(firstNameTextInput, err));
-  }
-
-  // Render last name error message
-  if (errorMessage.data?.last_name) {
-    const lastNameTextInput = document.querySelector<HTMLInputElement>('input[name="last-name"]');
-    assertNonNull(lastNameTextInput);
-    errorMessage.data?.last_name.forEach(err => createErrorElement(lastNameTextInput, err));
-  }
-
-  // Render avatar error message
-  if (errorMessage.data?.avatar) {
-    const avatarTextInput = document.querySelector<HTMLInputElement>('input[name="avatar"]');
-    assertNonNull(avatarTextInput);
-    errorMessage.data?.avatar.forEach(err => createErrorElement(avatarTextInput, err));
-  }
-
-  // Render non field errors
-  if (errorMessage.data?.non_field_errors) {
-    errorMessage.data?.non_field_errors.forEach(err => createErrorElement(inputForm, err));
+        }
+        createErrorElement(textInput, errorMessage);
+});
+    }
   }
 }
