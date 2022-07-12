@@ -1,7 +1,10 @@
 :root {
-  /* Using html color names here only for showcase,
-   * you shouldn't be using color names in real projects. */
-  --heading-color-1: gold;
-  --heading-color-2: darksalmon;
-  --heading-color-3: powderblue;
+  --heading-color-1: #ffb57a;
+  --heading-color-2: #f16a00;
+  --heading-color-3: #7bf8ff;
+  --primary-text-color: #28195f;
+  --primary-text-contrast-color: #fff;
+  --primary-background-color: #f16a00;
+  --secondary-background-color: #6d5545;
+  --default-layout-width: 90%;
 }
