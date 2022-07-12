@@ -1,7 +1,9 @@
 import { LoginMapper } from '@js-camp/core/mappers/login.mapper';
 import { RegisterMapper } from '@js-camp/core/mappers/register.mapper';
+import { UserMapper } from '@js-camp/core/mappers/user.mapper';
 import { Login } from '@js-camp/core/models/login';
 import { Register } from '@js-camp/core/models/register';
+import { User } from '@js-camp/core/models/user';
 
 import { api } from '../api/API';
 import { Token } from '../scripts/constants';
@@ -38,8 +40,9 @@ export namespace AuthService {
   }
 
   /** Test user.*/
-  export async function getUser(): Promise<void> {
+  export async function getUser(): Promise<User> {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { data } = await api.get('/users/profile/', { headers: { Authorization: `Bearer ${StorageService.get(Token.Access)}` } });
-    console.log(data);
+    return UserMapper.fromDto(data);
   }
 }
