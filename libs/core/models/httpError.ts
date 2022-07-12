@@ -12,7 +12,7 @@ export class HttpError extends Immerable {
   public readonly code?: string;
 
   /** Name. */
-  public readonly data?: ErrorDataDto;
+  public readonly data?: ErrorDataDto[];
 
   public constructor(error: ErrorInitArgs) {
     super();

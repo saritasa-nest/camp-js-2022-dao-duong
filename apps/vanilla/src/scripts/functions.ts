@@ -69,7 +69,7 @@ export function renderErrorMessage(error: unknown): void {
   assertNonNull(inputForm);
   createErrorElement(inputForm, errorMessages.detail);
   for (const err in errorMessages.data) {
-    if (errorMessages.data[err]) {
+    if (Object.prototype.hasOwnProperty.call(errorMessages.data, err)) {
       const textInput = document.querySelector<HTMLInputElement>(`input[name="${err}"]`);
       assertNonNull(textInput);
       assertNonNull(errorMessages.data);
