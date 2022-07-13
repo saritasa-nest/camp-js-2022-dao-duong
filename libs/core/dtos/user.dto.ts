@@ -8,10 +8,10 @@ export interface UserDto {
   readonly first_name: string;
 
   /** User last name. */
-  readonly last_name: string;
+  readonly last_name: string | null;
 
   /** User password. */
-  readonly password: string;
+  readonly password: string | null;
 
   /** User avatar.*/
   readonly avatar: string | null;

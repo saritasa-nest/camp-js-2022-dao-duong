@@ -21,8 +21,8 @@ export async function renderUserProfile(): Promise<void> {
   profileSection.innerHTML = `
   <ul>
     <li>Email: ${user.email}</li>
-    <li>First Name: ${user.firstName}</li>
-    <li>Last Name: ${user.lastName}</li>
+    <li>First Name: ${user.firstName ? user.firstName : 'No first name available'}</li>
+    <li>Last Name: ${user.lastName ? user.lastName : 'No last name available'}</li>
     <li>Created at: ${user.created}</li>
     <li>Modified at: ${user.modified}</li>
     <li>Avatar: ${user.avatar ? `
