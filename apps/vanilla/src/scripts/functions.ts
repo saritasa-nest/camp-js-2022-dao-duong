@@ -8,7 +8,7 @@ import { Token, Url } from './constants';
 import { Helpers } from './helpers';
 
 /** Check whether the user authenticated or not.*/
-export async function isAuthenticated(): Promise<boolean> {
+export async function checkAuthentication(): Promise<boolean> {
   const token = StorageService.get<string>(Token.Access);
   if (token !== null) {
     const isVerify = await AuthService.verifyToken(token);
@@ -25,7 +25,7 @@ export function renderLogoutButton(): void {
   const { body } = document;
   body.innerHTML += `
     <nav class="navbar">
-      <button class="logout-btn btn_right">Logout</button>
+      <button class="logout-btn btn-right">Logout</button>
     </nav>
   `;
   const logoutButton = document.querySelector('.logout-btn');
