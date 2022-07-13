@@ -10,7 +10,7 @@ import { Token, Url } from '../scripts/constants';
 import { navigate } from '../scripts/functions';
 import { Helpers } from '../scripts/helpers';
 
-import { renderErrorMessage } from './errorService';
+import { ErrorService } from './errorService';
 
 import { StorageService } from './storageService';
 
@@ -27,7 +27,7 @@ export namespace AuthService {
       Helpers.setToken(data);
       navigate(Url.Login);
     } catch (error: unknown) {
-      renderErrorMessage(error);
+      ErrorService.renderErrorMessage(error);
     }
   }
 
@@ -42,7 +42,7 @@ export namespace AuthService {
       Helpers.setToken(data);
       navigate(Url.Login);
     } catch (error: unknown) {
-      renderErrorMessage(error);
+      ErrorService.renderErrorMessage(error);
     }
   }
 
@@ -67,7 +67,7 @@ export namespace AuthService {
       await api.post('/auth/token/verify/', { token: accessToken });
       return true;
     } catch (error: unknown) {
-      renderErrorMessage(error);
+      ErrorService.renderErrorMessage(error);
       return false;
     }
   }
