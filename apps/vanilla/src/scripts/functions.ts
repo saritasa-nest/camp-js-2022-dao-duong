@@ -51,3 +51,15 @@ export function navigate(url: Url): void {
 export function validateConfirmPassword(password: string, confirmPassword: string): boolean {
   return (password === confirmPassword);
 }
+
+/**
+ * Convert response date object to readable format.
+ * @param date Date data from response object.
+ */
+export function dateConverter(date: string | null): string {
+  if (date !== null) {
+    return (new Date(date))
+      .toString();
+  }
+  return 'None';
+}
