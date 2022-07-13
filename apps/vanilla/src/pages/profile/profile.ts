@@ -1,11 +1,12 @@
 /* eslint-disable import/order */
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { Url } from '../../scripts/constants';
-import { isAuthenticated, renderLogoutButton, navigate } from '../../scripts/functions';
+import { checkAuthentication, renderLogoutButton, navigate } from '../../scripts/functions';
 import { AuthService } from '../../services/authService';
 
-window.addEventListener('load', (): void => {
-  if (!isAuthenticated()) {
+window.addEventListener('load', async(): Promise<void> => {
+  const isAuthenticated = await checkAuthentication();
+  if (!isAuthenticated) {
     navigate(Url.Login);
   }
   renderLogoutButton();
@@ -22,9 +23,12 @@ export async function renderUserProfile(): Promise<void> {
     <li>Email: ${user.email}</li>
     <li>First Name: ${user.firstName}</li>
     <li>Last Name: ${user.lastName}</li>
-    <li>Avatar: ${user.avatar}</li>
     <li>Created at: ${user.created}</li>
     <li>Modified at: ${user.modified}</li>
+    <li>Avatar: ${user.avatar ? `
+      <img class="user-avatar" src="${user.avatar}" alt="User Avatar" />
+    ` : 'No avatar available'}
+    </li>
   </ul>
   `;
 }
