@@ -18,7 +18,7 @@ export namespace ErrorService{
 
   /** Remove all error text element.*/
   function removeAllErrorElement(): void {
-    const inputErrorElementList = document.querySelectorAll('.input-error');
+    const inputErrorElementList = document.querySelectorAll<HTMLElement>('.input-error');
     if (inputErrorElementList !== null) {
       inputErrorElementList.forEach(errorElement => errorElement.remove());
     }
