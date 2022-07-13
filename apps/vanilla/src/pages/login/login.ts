@@ -5,6 +5,7 @@ import { Url } from '../../scripts/constants';
 
 import { checkAuthentication, navigate } from '../../scripts/functions';
 import { AuthService } from '../../services/authService';
+import { ErrorService } from '../../services/errorService';
 
 const loginForm = document.querySelector<HTMLFormElement>('.form');
 
@@ -26,5 +27,10 @@ loginForm.addEventListener('submit', async(event): Promise<void> => {
     email: emailTextInput.value,
     password: passwordTextInput.value,
   };
-  await AuthService.login(loginData);
+  try {
+    await AuthService.login(loginData);
+    navigate(Url.Base);
+  } catch (error: unknown) {
+    ErrorService.renderErrorMessage(error);
+  }
 });

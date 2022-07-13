@@ -16,7 +16,7 @@ window.addEventListener('load', async() => {
 
 const registerForm = document.querySelector<HTMLFormElement>('.form');
 assertNonNull(registerForm);
-registerForm.addEventListener('submit', event => {
+registerForm.addEventListener('submit', async event => {
   event.preventDefault();
   const emailTextInput = document.querySelector<HTMLInputElement>('input[name="email"]');
   assertNonNull(emailTextInput);
@@ -35,7 +35,12 @@ registerForm.addEventListener('submit', event => {
     lastName: lastNameTextInput.value,
     password: passwordTextInput.value,
     };
-  AuthService.register(registerData);
+    try {
+      await AuthService.register(registerData);
+      navigate(Url.Base);
+      } catch (error: unknown) {
+      ErrorService.renderErrorMessage(error);
+      }
   } else {
       const confirmationErrorText = 'The password confirmation does not match';
       ErrorService.createErrorElement(confirmPasswordTextInput, confirmationErrorText);

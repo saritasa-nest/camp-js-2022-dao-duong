@@ -6,8 +6,7 @@ import { Register } from '@js-camp/core/models/register';
 import { User } from '@js-camp/core/models/user';
 
 import { api } from '../api/API';
-import { Token, Url } from '../scripts/constants';
-import { navigate } from '../scripts/functions';
+import { Token } from '../scripts/constants';
 import { Helpers } from '../scripts/helpers';
 
 import { ErrorService } from './errorService';
@@ -21,14 +20,9 @@ export namespace AuthService {
    * @param loginData Login data from login form.
    */
   export async function login(loginData: Login): Promise<void> {
-    try {
-      const userLoginDto = LoginMapper.toDto(loginData);
-      const { data } = await api.post('/auth/login/', userLoginDto);
-      Helpers.setToken(data);
-      navigate(Url.Login);
-    } catch (error: unknown) {
-      ErrorService.renderErrorMessage(error);
-    }
+    const userLoginDto = LoginMapper.toDto(loginData);
+    const { data } = await api.post('/auth/login/', userLoginDto);
+    Helpers.setToken(data);
   }
 
   /**
@@ -36,14 +30,9 @@ export namespace AuthService {
    * @param registerData Register data from register form.
    */
   export async function register(registerData: Register): Promise<void> {
-    try {
-      const userRegisterDto = RegisterMapper.toDto(registerData);
-      const { data } = await api.post('/auth/register/', userRegisterDto);
-      Helpers.setToken(data);
-      navigate(Url.Login);
-    } catch (error: unknown) {
-      ErrorService.renderErrorMessage(error);
-    }
+    const userRegisterDto = RegisterMapper.toDto(registerData);
+    const { data } = await api.post('/auth/register/', userRegisterDto);
+    Helpers.setToken(data);
   }
 
   /** Logout service.*/
