@@ -14,15 +14,16 @@
   padding-top: 40px;
 }
 
-.btn-right {
-  float: right;
-}
-
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+}
+
+.submit {
+  display: flex;
+  justify-content: space-between;
 }
 
 .logout-btn {
