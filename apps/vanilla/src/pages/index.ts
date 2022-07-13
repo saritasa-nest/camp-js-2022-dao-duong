@@ -1,4 +1,3 @@
-
 import { Url } from '../scripts/constants';
 import { checkAuthentication, navigate, renderLogoutButton } from '../scripts/functions';
 

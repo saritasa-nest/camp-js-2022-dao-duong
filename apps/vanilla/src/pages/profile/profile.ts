@@ -1,5 +1,5 @@
-/* eslint-disable import/order */
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
+
 import { Url } from '../../scripts/constants';
 import { checkAuthentication, renderLogoutButton, navigate, dateConverter } from '../../scripts/functions';
 import { AuthService } from '../../services/authService';
