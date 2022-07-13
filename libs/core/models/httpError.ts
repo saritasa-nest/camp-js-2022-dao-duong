@@ -5,14 +5,14 @@ import { Immerable, OmitImmerable } from './immerable';
 /** HttpError. */
 export class HttpError extends Immerable {
 
-  /** Id. */
+  /** Error detail. */
   public readonly detail: string;
 
-  /** Name. */
+  /** Error code. */
   public readonly code?: string;
 
-  /** Name. */
-  public readonly data?: ErrorDataDto[];
+  /** Error data. */
+  public readonly data?: ErrorDataDto;
 
   public constructor(error: ErrorInitArgs) {
     super();
