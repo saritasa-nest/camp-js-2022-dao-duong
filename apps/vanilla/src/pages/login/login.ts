@@ -4,14 +4,14 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Url } from '../../scripts/constants';
 
-import { isAuthenticated, navigate } from '../../scripts/functions';
+import { checkAuthentication, navigate } from '../../scripts/functions';
 import { AuthService } from '../../services/authService';
 
 const loginForm = document.querySelector<HTMLFormElement>('.form');
 
 window.addEventListener('load', async() => {
-  const isAuthen = await isAuthenticated();
-  if (isAuthen) {
+  const isAuthenticated = await checkAuthentication();
+  if (isAuthenticated) {
     navigate(Url.Base);
   }
 });

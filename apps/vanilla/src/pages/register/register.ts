@@ -3,13 +3,14 @@ import { Register } from '@js-camp/core/models/register';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Url } from '../../scripts/constants';
-import { isAuthenticated, validateConfirmPassword, navigate } from '../../scripts/functions';
+import { checkAuthentication, validateConfirmPassword, navigate } from '../../scripts/functions';
 
 import { AuthService } from '../../services/authService';
+import { ErrorService } from '../../services/errorService';
 
 window.addEventListener('load', async() => {
-  const isAuthen = await isAuthenticated();
-  if (isAuthen) {
+  const isAuthenticated = await checkAuthentication();
+  if (isAuthenticated) {
     navigate(Url.Base);
   }
 });
@@ -36,8 +37,8 @@ registerForm.addEventListener('submit', event => {
     password: passwordTextInput.value,
     };
   AuthService.register(registerData);
-} else {
-  confirmPasswordTextInput.setCustomValidity('The password confirmation does not match!');
-  confirmPasswordTextInput.reportValidity();
-  }
+  } else {
+      const confirmationErrorText = 'The password confirmation does not match';
+      ErrorService.createErrorElement(confirmPasswordTextInput, confirmationErrorText);
+    }
 });
