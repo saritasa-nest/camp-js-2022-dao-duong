@@ -25,7 +25,7 @@ export function renderLogoutButton(): void {
   const { body } = document;
   body.innerHTML += `
     <nav class="navbar">
-      <button class="logout-btn btn-right">Logout</button>
+      <button type="button" class="logout-btn btn-right">Logout</button>
     </nav>
   `;
   const logoutButton = document.querySelector('.logout-btn');
