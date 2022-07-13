@@ -7,10 +7,10 @@ export class User extends Immerable {
   public readonly email: string;
 
   /** User first name. */
-  public readonly firstName: string;
+  public readonly firstName: string | null;
 
   /** User last name. */
-  public readonly lastName: string;
+  public readonly lastName: string | null;
 
   /** User avatar. */
   public readonly avatar: string | null;
