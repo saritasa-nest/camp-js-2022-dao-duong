@@ -1,4 +1,3 @@
-// import { Register } from '@js-camp/core/models/register';
 import { Register } from '@js-camp/core/models/register';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
