@@ -26,7 +26,7 @@ export async function renderUserProfile(): Promise<void> {
     <li>Created at: ${user.created}</li>
     <li>Modified at: ${user.modified}</li>
     <li>Avatar: ${user.avatar ? `
-      <img class="user-avatar" src="${user.avatar}" alt="User Avatar" />
+      <img class="user-avatar" src="${user.avatar}" alt="${user.firstName}${user.lastName}" />
     ` : 'No avatar available'}
     </li>
   </ul>
