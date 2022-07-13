@@ -28,11 +28,7 @@ export class User extends Immerable {
     this.lastName = data.lastName;
     this.created = data.created;
     this.modified = data.modified;
-    if (data.avatar === null) {
-      this.avatar = 'No image available';
-    } else {
-      this.avatar = data.avatar;
-    }
+    this.avatar = data.avatar;
   }
 }
 
