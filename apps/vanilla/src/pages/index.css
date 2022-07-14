@@ -15,7 +15,6 @@
 
 .sort {
   display: flex;
-  width: 100%;
 }
 
 .sort__select-element,
