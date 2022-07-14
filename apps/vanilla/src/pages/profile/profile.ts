@@ -2,7 +2,7 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Url } from '../../scripts/constants';
 import { checkAuthentication, renderLogoutButton, navigate, dateConverter } from '../../scripts/functions';
-import { AuthService } from '../../services/authService';
+import { UserService } from '../../services/userService';
 
 window.addEventListener('load', async(): Promise<void> => {
   const isAuthenticated = await checkAuthentication();
@@ -15,7 +15,7 @@ window.addEventListener('load', async(): Promise<void> => {
 
 /** Render user profile. */
 export async function renderUserProfile(): Promise<void> {
-  const user = await AuthService.getUser();
+  const user = await UserService.getUser();
   const profileSection = document.querySelector('.profile');
   assertNonNull(profileSection);
   profileSection.innerHTML = `

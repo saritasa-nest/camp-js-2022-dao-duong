@@ -1,6 +1,6 @@
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
-import { getAnime } from '../scripts/anime';
+import { AnimeService } from '../services/animeService';
 import { LIMIT, FIRST_PAGE } from '../scripts/variables';
 
 import { renderAnimeTable } from '../scripts/animeTable';
@@ -26,7 +26,7 @@ const initHomepage = async(): Promise<void> => {
     page: FIRST_PAGE,
     ordering: '',
   };
-  const data = await getAnime(paginationConfig);
+  const data = await AnimeService.getAnime(paginationConfig);
   renderAnimeTable(data);
   renderSortOptions();
 };

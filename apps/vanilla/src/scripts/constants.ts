@@ -9,4 +9,5 @@ export enum Url{
   Base = '/',
   Login = '/login/',
   Register = '/register/',
+  Detail = '/detail/',
 }

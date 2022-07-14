@@ -1,9 +1,11 @@
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
+import { AnimeService } from '../services/animeService';
+
 import { renderAnimeTable } from './animeTable';
 import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT, FIRST_PAGE } from './variables';
-import { getAnime } from './anime';
+
 import { setDirectionState, hasSortOption } from './functions';
 
 /**  Render sort options.*/
@@ -35,7 +37,7 @@ export function renderSortOptions(): void {
         ordering: sortSetting,
       };
       setDirectionState(hasSortOption(sortOption.value));
-      const data = await getAnime(paginationConfig);
+      const data = await AnimeService.getAnime(paginationConfig);
       renderAnimeTable(data);
     });
   });

@@ -1,10 +1,10 @@
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
+import { AnimeService } from '../services/animeService';
+
 import { LIMIT, FIRST_PAGE, HALF_NUMBER_OF_PAGES, NUMBER_OF_PAGES } from './variables';
 import { renderAnimeTable } from './animeTable';
-
-import { getAnime } from './anime';
 
 /**
  * Render pagination.
@@ -58,7 +58,7 @@ export function renderPaginateButton(pages: number): void {
         page: parseInt(currentIndex, 10),
         ordering: sortSetting,
       };
-      const data = await getAnime(paginationConfig);
+      const data = await AnimeService.getAnime(paginationConfig);
       renderAnimeTable(data);
     });
   });
