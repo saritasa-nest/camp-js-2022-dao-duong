@@ -6,7 +6,7 @@ import { renderAnimeTable } from './animeTable';
 
 import { FILTERING_TYPES, FIRST_PAGE, LIMIT } from './variables';
 
-/**  Render filtering.*/
+/** Render filtering.*/
 export function renderFilterOptions(): void {
   const filterElement = document.querySelector<HTMLSelectElement>('.filter__select-type');
   assertNonNullish(filterElement);
