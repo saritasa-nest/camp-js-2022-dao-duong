@@ -11,7 +11,7 @@ export function renderFilterOptions(): void {
   const filterElement = document.querySelector<HTMLSelectElement>('.filter__select-type');
   assertNonNullish(filterElement);
   FILTERING_TYPES.forEach(type => {
-    filterElement.innerHTML += `<option value="${type}" class="type">${type}</option>`;
+    filterElement.innerHTML += `<option value="${type.value}" class="type">${type.text}</option>`;
   });
   filterElement.addEventListener('change', async(): Promise<void> => {
     localStorage.setItem('active', FIRST_PAGE.toString());

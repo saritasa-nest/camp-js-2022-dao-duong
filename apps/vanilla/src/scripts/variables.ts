@@ -1,4 +1,4 @@
-import { SortOption } from './interfaces';
+import { Option } from './interfaces';
 
 /** Initial page or first page.*/
 export const FIRST_PAGE = 1;
@@ -20,7 +20,7 @@ export enum Ordering {
 }
 
 /** Available value for sorting options. */
-export const SORT_OPTIONS: readonly SortOption[] =
+export const SORT_OPTIONS: readonly Option[] =
   [
     { text: 'Default', value: '' },
     { text: 'English Title', value: Ordering.EnglishTitle },
@@ -29,19 +29,20 @@ export const SORT_OPTIONS: readonly SortOption[] =
   ];
 
 /** Available direction for sorting options. */
-export const SORT_DIRECTIONS: readonly SortOption[] =
+export const SORT_DIRECTIONS: readonly Option[] =
   [
     { text: 'Ascending', value: '' },
     { text: 'Descending', value: '-' },
   ];
 
 /** Available type for filtering. */
-export const FILTERING_TYPES: readonly string[] =
+export const FILTERING_TYPES: readonly Option[] =
 [
-  'TV',
-  'OVA',
-  'MOVIE',
-  'SPECIAL',
-  'ONA',
-  'MUSIC',
+  { text: 'None', value: '' },
+  { text: 'Tv', value: 'TV' },
+  { text: 'Ova', value: 'OVA' },
+  { text: 'Movie', value: 'MOVIE' },
+  { text: 'Special', value: 'SPECIAL' },
+  { text: 'Ona', value: 'ONA' },
+  { text: 'Music', value: 'MUSIC' },
 ];
