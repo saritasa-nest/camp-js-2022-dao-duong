@@ -9,8 +9,13 @@ import { renderSortOptions } from '../scripts/sort';
 import { Url } from '../scripts/constants';
 import { checkAuthentication, navigate, renderLogoutButton } from '../scripts/functions';
 
-window.addEventListener('load', (): void => {
+window.addEventListener('load', async(): Promise<void> => {
+  const isAuthenticated = await checkAuthentication();
+  if (isAuthenticated === false) {
+    navigate(Url.Login);
+  }
   initHomepage();
+  renderLogoutButton();
 });
 
 const initHomepage = async(): Promise<void> => {
@@ -21,16 +26,7 @@ const initHomepage = async(): Promise<void> => {
     page: FIRST_PAGE,
     ordering: '',
   };
-
   const data = await getAnime(paginationConfig);
   renderAnimeTable(data);
   renderSortOptions();
 };
-
-window.addEventListener('load', async() => {
-  const isAuthenticated = await checkAuthentication();
-  if (isAuthenticated === false) {
-    navigate(Url.Login);
-  }
-  renderLogoutButton();
-});
