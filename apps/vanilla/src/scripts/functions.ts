@@ -39,7 +39,7 @@ export function setDirectionState(hasOption: boolean): void {
 }
 
 /** Reset data table options and filter.*/
-export function resetState(): void {
+export function resetTableState(): void {
   localStorage.setItem('active', FIRST_PAGE.toString());
   localStorage.setItem('sort', '');
   localStorage.setItem('type', '');
