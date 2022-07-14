@@ -6,6 +6,9 @@ import { LIMIT, FIRST_PAGE } from '../scripts/variables';
 import { renderAnimeTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
 
+import { Url } from '../scripts/constants';
+import { checkAuthentication, navigate, renderLogoutButton } from '../scripts/functions';
+
 window.addEventListener('load', (): void => {
   initHomepage();
 });
@@ -23,3 +26,11 @@ const initHomepage = async(): Promise<void> => {
   renderAnimeTable(data);
   renderSortOptions();
 };
+
+window.addEventListener('load', async() => {
+  const isAuthenticated = await checkAuthentication();
+  if (isAuthenticated === false) {
+    navigate(Url.Login);
+  }
+  renderLogoutButton();
+});

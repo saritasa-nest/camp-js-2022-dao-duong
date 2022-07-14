@@ -1,6 +1,6 @@
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { dateConverter } from '../scripts/functions';
 
@@ -13,7 +13,7 @@ import { LIMIT } from './variables';
  */
 export function renderAnimeTable(dataset: Pagination<Anime>): void {
   const dataTable = document.querySelector<HTMLDivElement>('.anime-table');
-  assertNonNullish(dataTable);
+  assertNonNull(dataTable);
   const tableBody = dataset.results.reduce((previousValue: string, currentValue: Anime): string => `${previousValue}
     <tr>
          <td>

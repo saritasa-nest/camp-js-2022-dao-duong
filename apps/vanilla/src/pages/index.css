@@ -1,4 +1,5 @@
 @import url("../global/index.css");
+@import url("../global/variables.css");
 
 .title {
   color: var(--heading-color-1);
@@ -27,6 +28,6 @@
 }
 
 .pagination__item-active {
-  color: var(--white-color);
+  color: var(--active-text-color);
   background-color: var(--active-background-color);
 }

@@ -1,4 +1,4 @@
-import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
 import { renderAnimeTable } from './animeTable';
@@ -12,8 +12,8 @@ export function renderSortOptions(): void {
   const sortOption = document.querySelector<HTMLSelectElement>('.sort__option');
   const sortDirection = document.querySelector<HTMLSelectElement>('.sort__direction');
 
-  assertNonNullish(sortOption);
-  assertNonNullish(sortDirection);
+  assertNonNull(sortOption);
+  assertNonNull(sortDirection);
   sortOption.innerHTML = ``;
   sortDirection.innerHTML = ``;
   SORT_OPTIONS.forEach(option => {

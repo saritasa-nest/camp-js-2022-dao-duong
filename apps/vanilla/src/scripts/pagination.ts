@@ -1,4 +1,4 @@
-import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
 import { LIMIT, FIRST_PAGE, HALF_NUMBER_OF_PAGES, NUMBER_OF_PAGES } from './variables';
@@ -12,10 +12,10 @@ import { getAnime } from './anime';
  * */
 export function renderPaginateButton(pages: number): void {
   const pageValueFromStorage = localStorage.getItem('active');
-  assertNonNullish(pageValueFromStorage);
+  assertNonNull(pageValueFromStorage);
   const currentPage = parseInt(pageValueFromStorage, 10);
   const wrapper = document.querySelector<HTMLDivElement>('.pagination');
-  assertNonNullish(wrapper);
+  assertNonNull(wrapper);
   wrapper.innerHTML = ``;
   let maxLeft = (currentPage - HALF_NUMBER_OF_PAGES);
   let maxRight = (currentPage + HALF_NUMBER_OF_PAGES);
@@ -49,10 +49,10 @@ export function renderPaginateButton(pages: number): void {
   paginateButton.forEach(element => {
     element.addEventListener('click', async(): Promise<void> => {
       const currentIndex = element.getAttribute('index');
-      assertNonNullish(currentIndex);
+      assertNonNull(currentIndex);
       localStorage.setItem('active', currentIndex);
       const sortSetting = localStorage.getItem('sort');
-      assertNonNullish(sortSetting);
+      assertNonNull(sortSetting);
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: parseInt(currentIndex, 10),
