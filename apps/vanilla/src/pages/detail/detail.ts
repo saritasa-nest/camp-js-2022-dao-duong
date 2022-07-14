@@ -18,6 +18,11 @@ window.addEventListener('load', async() => {
   renderLogoutButton();
   renderImage(data.image);
   renderContent(data);
+  console.log(data.youtubeTrailerId);
+
+  if (data.youtubeTrailerId) {
+    renderTrailer(data.youtubeTrailerId);
+  }
 });
 
 /**
@@ -25,11 +30,35 @@ window.addEventListener('load', async() => {
  * @param url Url of the image.
  */
 function renderImage(url: string): void {
-  const imageElement = document.querySelector('.anime-detail__image');
+  const mediaElement = document.querySelector('.anime-detail__media');
+  assertNonNull(mediaElement);
+  mediaElement.innerHTML += `<img src="${url}" class="anime-detail__image" alt="Anime Image"></img>`;
+  const imageElement = document.querySelector<HTMLImageElement>('.anime-detail__image');
+
   assertNonNull(imageElement);
-  imageElement.innerHTML = `<img src="${url}"></img>`;
+  imageElement.addEventListener('click', () => {
+    console.log('1');
+
+    document.body.innerHTML += `<img src="${url}" alt="Anime Image"></img>`;
+  });
 }
 
+/**
+ * Render trailer.
+ * @param youtubeId Youtube trailer Id.
+ */
+function renderTrailer(youtubeId: string): void {
+  const mediaElement = document.querySelector('.anime-detail__media');
+  assertNonNull(mediaElement);
+  mediaElement.innerHTML += `<button type="button" class="trailer-btn">Watch Trailer!</button>
+  <iframe src="https://www.youtube.com/embed/${youtubeId}" title="Trailer"></iframe>
+  `;
+}
+
+/**
+ * Render content.
+ * @param data Anime data.
+ */
 function renderContent(data: AnimeDetail): void {
   const contentElement = document.querySelector<HTMLDivElement>('.anime-detail__content');
   assertNonNull(contentElement);

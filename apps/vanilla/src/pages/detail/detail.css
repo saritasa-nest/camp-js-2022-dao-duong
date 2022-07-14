@@ -3,3 +3,16 @@
 .anime-detail {
   display: flex;
 }
+
+.anime-detail__content,
+.anime-detail__media {
+  padding: 30px;
+}
+
+.anime-detail__image {
+  max-width: 300px;
+}
+
+.anime-detail__content p {
+  margin: 0;
+}
