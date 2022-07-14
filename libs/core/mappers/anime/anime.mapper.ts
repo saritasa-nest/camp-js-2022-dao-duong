@@ -1,7 +1,8 @@
-import { AnimeDto } from '../dtos/anime.dto';
-import { Anime } from '../models/anime';
+import { Anime } from '@js-camp/core/models/anime/anime';
 
-import { DateRangeMapper } from './dateRange.mapper';
+import { AnimeDto } from '../../dtos/anime/anime.dto';
+
+import { DateRangeMapper } from '../dateRange.mapper';
 export namespace AnimeMapper {
 
   /**

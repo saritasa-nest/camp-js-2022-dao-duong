@@ -1,5 +1,5 @@
 /** Aired DTO. */
-import { DateRangeDto } from './dateRange.dto';
+import { DateRangeDto } from '../dateRange.dto';
 
 /** Possible values for type. */
 export enum Type {

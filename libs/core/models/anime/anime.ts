@@ -1,7 +1,7 @@
-import { Type, Status } from '../dtos/anime.dto';
+import { Type, Status } from '../../dtos/anime/anime.dto';
 
-import { OmitImmerable, Immerable } from './immerable';
-import { DateRange } from './dateRange';
+import { OmitImmerable, Immerable } from '../immerable';
+import { DateRange } from '../dateRange';
 
 /** Anime. */
 export class Anime extends Immerable {

@@ -1,9 +1,9 @@
-import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
+import { AnimeDto } from '@js-camp/core/dtos/anime/anime.dto';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
-import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
+import { AnimeMapper } from '@js-camp/core/mappers/anime/anime.mapper';
 import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
-import { Anime } from '@js-camp/core/models/anime';
+import { Anime } from '@js-camp/core/models/anime/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 
 import { api } from '../api/API';

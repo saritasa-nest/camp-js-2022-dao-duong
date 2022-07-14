@@ -1,7 +1,7 @@
-import { LoginMapper } from '@js-camp/core/mappers/login.mapper';
-import { RegisterMapper } from '@js-camp/core/mappers/register.mapper';
-import { Login } from '@js-camp/core/models/login';
-import { Register } from '@js-camp/core/models/register';
+import { LoginMapper } from '@js-camp/core/mappers/auth/login.mapper';
+import { RegisterMapper } from '@js-camp/core/mappers/auth/register.mapper';
+import { Login } from '@js-camp/core/models/auth/login';
+import { Register } from '@js-camp/core/models/auth/register';
 
 import { api } from '../api/API';
 import { Helpers } from '../scripts/helpers';

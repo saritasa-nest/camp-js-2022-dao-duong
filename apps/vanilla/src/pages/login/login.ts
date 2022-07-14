@@ -1,4 +1,4 @@
-import { Login } from '@js-camp/core/models/login';
+import { Login } from '@js-camp/core/models/auth/login';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Url } from '../../scripts/constants';

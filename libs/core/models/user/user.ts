@@ -1,4 +1,4 @@
-import { Immerable, OmitImmerable } from './immerable';
+import { Immerable, OmitImmerable } from '../immerable';
 
 /** User. */
 export class User extends Immerable {

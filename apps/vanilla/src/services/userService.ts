@@ -1,5 +1,5 @@
-import { UserMapper } from '@js-camp/core/mappers/user.mapper';
-import { User } from '@js-camp/core/models/user';
+import { UserMapper } from '@js-camp/core/mappers/user/user.mapper';
+import { User } from '@js-camp/core/models/user/user';
 
 import { api } from '../api/API';
 import { Token } from '../scripts/constants';

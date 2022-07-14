@@ -1,5 +1,6 @@
-import { UserDto } from '../dtos/user.dto';
-import { User } from '../models/user';
+import { User } from '@js-camp/core/models/user/user';
+
+import { UserDto } from '../../dtos/user/user.dto';
 
 export namespace UserMapper {
 
