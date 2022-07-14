@@ -15,12 +15,13 @@
 
 .sort {
   display: flex;
+  width: 100%;
 }
 
 .sort__select-element,
 .filter__select-element {
-  max-width: 40%;
-  padding: 0 20px;
+  width: 30%;
+  padding: 10px 20px 10px 0;
 }
 
 .pagination__item {
