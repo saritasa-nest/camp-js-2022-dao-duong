@@ -1,5 +1,5 @@
 import { RegisterDto } from '../../dtos/auth/register.dto';
-import { Register } from '../../models/register';
+import { Register } from '../../models/auth/register';
 
 export namespace RegisterMapper {
 
