@@ -1,11 +1,11 @@
-import { StudioDto } from '@js-camp/core/dtos/anime/studio.dto';
-
-import { GenreDto } from '@js-camp/core/dtos/anime/genre.dto';
 
 import { Type, Status } from '../../dtos/anime/anime.dto';
 
 import { OmitImmerable, Immerable } from '../immerable';
 import { DateRange } from '../dateRange';
+
+import { Genre } from './genre';
+import { Studio } from './studio';
 
 /** Anime. */
 export class AnimeDetail extends Immerable {
@@ -37,10 +37,10 @@ export class AnimeDetail extends Immerable {
   public readonly airing: boolean;
 
   /** Anime status. */
-  public readonly studioList: readonly StudioDto[];
+  public readonly studioList: readonly Studio[];
 
   /** Anime status. */
-  public readonly genreList: readonly GenreDto[];
+  public readonly genreList: readonly Genre[];
 
   /** Anime status. */
   public readonly youtubeTrailerId: string | null;

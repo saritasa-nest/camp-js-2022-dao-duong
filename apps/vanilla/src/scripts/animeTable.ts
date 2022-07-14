@@ -1,4 +1,4 @@
-import { Anime } from '@js-camp/core/models/anime';
+import { Anime } from '@js-camp/core/models/anime/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 

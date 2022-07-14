@@ -58,8 +58,7 @@ export function validateConfirmPassword(password: string, confirmPassword: strin
  */
 export function dateConverter(date: string | null): string {
   if (date !== null) {
-    return (new Date(date))
-      .toString();
+    return (new Date(date)).toLocaleDateString('en-GB');
   }
   return 'None';
 }

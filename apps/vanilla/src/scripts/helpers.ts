@@ -1,4 +1,4 @@
-import { TokenDto } from '@js-camp/core/dtos/token.dto';
+import { TokenDto } from '@js-camp/core/dtos/auth/token.dto';
 
 import { StorageService } from '../services/storageService';
 
