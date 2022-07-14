@@ -44,6 +44,6 @@ export function renderAnimeTable(dataset: Pagination<Anime>): void {
       </tbody>
     </table>
   `;
-  const totalPages = dataset.count / LIMIT;
+  const totalPages = Math.ceil(dataset.count / LIMIT);
   renderPaginateButton(totalPages);
 }

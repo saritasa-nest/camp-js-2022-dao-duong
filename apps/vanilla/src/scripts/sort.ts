@@ -29,10 +29,13 @@ export function renderSortOptions(): void {
       localStorage.setItem('active', FIRST_PAGE.toString());
       const sortSetting = sortDirection.value + sortOption.value;
       localStorage.setItem('sort', sortSetting);
+      const filterType = localStorage.getItem('type');
+      assertNonNullish(filterType);
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: FIRST_PAGE,
         ordering: sortSetting,
+        type: filterType,
       };
       setDirectionState(hasSortOption(sortOption.value));
       const data = await getAnime(paginationConfig);

@@ -53,10 +53,13 @@ export function renderPaginateButton(pages: number): void {
       localStorage.setItem('active', currentIndex);
       const sortSetting = localStorage.getItem('sort');
       assertNonNullish(sortSetting);
+      const filterType = localStorage.getItem('type');
+      assertNonNullish(filterType);
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: parseInt(currentIndex, 10),
         ordering: sortSetting,
+        type: filterType,
       };
       const data = await getAnime(paginationConfig);
       renderAnimeTable(data);

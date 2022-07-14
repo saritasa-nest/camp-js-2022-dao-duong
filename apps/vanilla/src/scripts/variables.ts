@@ -34,3 +34,14 @@ export const SORT_DIRECTIONS: readonly SortOption[] =
     { text: 'Ascending', value: '' },
     { text: 'Descending', value: '-' },
   ];
+
+/** Available type for filtering. */
+export const FILTERING_TYPES: readonly string[] =
+[
+  'TV',
+  'OVA',
+  'MOVIE',
+  'SPECIAL',
+  'ONA',
+  'MUSIC',
+];

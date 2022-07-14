@@ -24,4 +24,7 @@ export interface PaginationOptionsDto {
 
   /** Ordering options. */
   readonly ordering: string;
+
+  /** Filtering type. */
+  readonly type: string;
 }
