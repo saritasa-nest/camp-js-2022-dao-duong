@@ -25,7 +25,7 @@ export function renderSortOptions(): void {
 
   setDirectionState(hasSortOption(sortOption.value));
   sortOptions.forEach(element => {
-    element.addEventListener('change', async(): Promise<void> => {
+    element.addEventListener('change', async() => {
       /* Get and set pagination data */
       localStorage.setItem('active', FIRST_PAGE.toString());
       const sortSetting = sortDirection.value + sortOption.value;

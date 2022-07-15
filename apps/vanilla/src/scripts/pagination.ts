@@ -47,7 +47,7 @@ export function renderPaginateButton(pages: number): void {
   wrapper.innerHTML += `<li index=${pages} class="waves-effect pagination__item">Last</li>`;
   const paginateButton = document.querySelectorAll('.pagination__item');
   paginateButton.forEach(element => {
-    element.addEventListener('click', async(): Promise<void> => {
+    element.addEventListener('click', async() => {
       /* Get and set pagination data */
       const currentIndex = element.getAttribute('index');
       assertNonNullish(currentIndex);
