@@ -24,7 +24,7 @@
   margin: 0;
 }
 
-.video-wrapper {
+.modal-wrapper {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -33,21 +33,22 @@
   z-index: 100;
 }
 
-.video-wrapper__overlay {
+.modal-wrapper__overlay {
   width: 100%;
   height: 100%;
   background-color: var(--overlay-background-color);
 }
 
-.video-wrapper__inner {
+.modal-wrapper__inner {
   position: relative;
   aspect-ratio: 16 / 9;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 10%;
 }
 
-.video-wrapper__inner iframe {
+.modal-wrapper__inner .video {
   position: absolute;
   width: 60%;
   height: 60%;

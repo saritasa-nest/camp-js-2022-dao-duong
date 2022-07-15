@@ -30,12 +30,11 @@ window.addEventListener('load', async() => {
 function renderImage(url: string): void {
   const mediaElement = document.querySelector('.anime-detail__media');
   assertNonNull(mediaElement);
-  mediaElement.innerHTML += `<img src="${url}" class="anime-detail__image" alt="Anime Image"></img>`;
+  mediaElement.innerHTML = `<img src="${url}" class="anime-detail__image" alt="Anime Image"></img>`;
   const imageElement = document.querySelector<HTMLImageElement>('.anime-detail__image');
-
   assertNonNull(imageElement);
   imageElement.addEventListener('click', () => {
-    document.body.innerHTML += `<img src="${url}" alt="Anime Image"></img>`;
+    openFullSizeImage(url);
   });
 }
 
@@ -46,7 +45,7 @@ function renderImage(url: string): void {
 function renderTrailerButton(youtubeId: string): void {
   const mediaElement = document.querySelector('.anime-detail__media');
   assertNonNull(mediaElement);
-  mediaElement.innerHTML += `<button type="button" class="trailer-btn">Watch Trailer!</button>
+  mediaElement.innerHTML += `<button type="button" class="waves-effect waves-light btn trailer-btn">Watch Trailer!</button>
   `;
   const trailerButton = document.querySelector('.trailer-btn');
   assertNonNull(trailerButton);
@@ -79,19 +78,39 @@ function renderContent(data: AnimeDetail): void {
  * @param youtubeId Youtube trailer Id.
  */
 function openTrailer(youtubeId: string): void {
-  const videoWrapper = document.querySelector<HTMLDivElement>('.video-wrapper');
-  assertNonNull(videoWrapper);
-  const videoWrapperOverlay = document.querySelector<HTMLDivElement>('.video-wrapper__overlay');
-  assertNonNull(videoWrapperOverlay);
-  videoWrapper.classList.remove('hidden');
-  const videoWrapperInner = document.querySelector<HTMLDivElement>('.video-wrapper__inner');
-  assertNonNull(videoWrapperInner);
+  const modalWrapper = document.querySelector<HTMLDivElement>('.modal-wrapper');
+  assertNonNull(modalWrapper);
+  const modalWrapperOverlay = document.querySelector<HTMLDivElement>('.modal-wrapper__overlay');
+  assertNonNull(modalWrapperOverlay);
+  modalWrapper.classList.remove('hidden');
+  const modalWrapperInner = document.querySelector<HTMLDivElement>('.modal-wrapper__inner');
+  assertNonNull(modalWrapperInner);
   const video = document.querySelector<HTMLIFrameElement>('.video');
   assertNonNull(video);
   const trailerURL = `https://www.youtube-nocookie.com/embed/${youtubeId}`;
   video.setAttribute('src', trailerURL);
-  videoWrapperOverlay.addEventListener('click', () => {
+  modalWrapperOverlay.addEventListener('click', () => {
   video.setAttribute('src', '');
-    videoWrapper.classList.add('hidden');
+    modalWrapper.classList.add('hidden');
+  });
+}
+
+/**
+ * Open full size image.
+ * @param imageURL Youtube trailer Id.
+ */
+function openFullSizeImage(imageURL: string): void {
+  const modalWrapper = document.querySelector<HTMLDivElement>('.modal-wrapper');
+  const modalWrapperOverlay = document.querySelector<HTMLDivElement>('.modal-wrapper__overlay');
+  assertNonNull(modalWrapper);
+  assertNonNull(modalWrapperOverlay);
+  modalWrapper.classList.remove('hidden');
+  const modalWrapperInner = document.querySelector<HTMLDivElement>('.modal-wrapper__inner');
+  assertNonNull(modalWrapperInner);
+  modalWrapperInner.innerHTML = `
+  <img src="${imageURL}" alt="Anime Image"></img>
+  `;
+  modalWrapperOverlay.addEventListener('click', () => {
+    modalWrapper.classList.add('hidden');
   });
 }
