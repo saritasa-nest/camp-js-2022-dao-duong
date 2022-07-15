@@ -46,3 +46,7 @@
   font-size: 14px;
   color: var(--error-text-color);
 }
+
+.hidden {
+  display: none;
+}

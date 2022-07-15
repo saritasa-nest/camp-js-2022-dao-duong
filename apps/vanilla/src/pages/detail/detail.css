@@ -1,4 +1,5 @@
 @import url("../../global/index.css");
+@import url("../../global/variables.css");
 
 .anime-detail {
   display: flex;
@@ -9,10 +10,45 @@
   padding: 30px;
 }
 
+.anime-detail__media {
+  display: flex;
+  flex-direction: column;
+}
+
 .anime-detail__image {
   max-width: 300px;
+  padding-bottom: 10px;
 }
 
 .anime-detail__content p {
   margin: 0;
+}
+
+.video-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.video-wrapper__overlay {
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-background-color);
+}
+
+.video-wrapper__inner {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-wrapper__inner iframe {
+  position: absolute;
+  width: 60%;
+  height: 60%;
 }

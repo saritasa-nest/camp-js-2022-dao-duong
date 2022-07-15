@@ -18,10 +18,8 @@ window.addEventListener('load', async() => {
   renderLogoutButton();
   renderImage(data.image);
   renderContent(data);
-  console.log(data.youtubeTrailerId);
-
   if (data.youtubeTrailerId) {
-    renderTrailer(data.youtubeTrailerId);
+    renderTrailerButton(data.youtubeTrailerId);
   }
 });
 
@@ -37,8 +35,6 @@ function renderImage(url: string): void {
 
   assertNonNull(imageElement);
   imageElement.addEventListener('click', () => {
-    console.log('1');
-
     document.body.innerHTML += `<img src="${url}" alt="Anime Image"></img>`;
   });
 }
@@ -47,12 +43,14 @@ function renderImage(url: string): void {
  * Render trailer.
  * @param youtubeId Youtube trailer Id.
  */
-function renderTrailer(youtubeId: string): void {
+function renderTrailerButton(youtubeId: string): void {
   const mediaElement = document.querySelector('.anime-detail__media');
   assertNonNull(mediaElement);
   mediaElement.innerHTML += `<button type="button" class="trailer-btn">Watch Trailer!</button>
-  <iframe src="https://www.youtube.com/embed/${youtubeId}" title="Trailer"></iframe>
   `;
+  const trailerButton = document.querySelector('.trailer-btn');
+  assertNonNull(trailerButton);
+  trailerButton.addEventListener('click', () => openTrailer(youtubeId));
 }
 
 /**
@@ -74,4 +72,26 @@ function renderContent(data: AnimeDetail): void {
     <p>Studio List: ${data.studioList.map(studio => studio.name)}</p>
     <p>Genre List: ${data.genreList.map(genre => genre.name)}</p>
   `;
+}
+
+/**
+ * Open trailer.
+ * @param youtubeId Youtube trailer Id.
+ */
+function openTrailer(youtubeId: string): void {
+  const videoWrapper = document.querySelector<HTMLDivElement>('.video-wrapper');
+  assertNonNull(videoWrapper);
+  const videoWrapperOverlay = document.querySelector<HTMLDivElement>('.video-wrapper__overlay');
+  assertNonNull(videoWrapperOverlay);
+  videoWrapper.classList.remove('hidden');
+  const videoWrapperInner = document.querySelector<HTMLDivElement>('.video-wrapper__inner');
+  assertNonNull(videoWrapperInner);
+  const video = document.querySelector<HTMLIFrameElement>('.video');
+  assertNonNull(video);
+  const trailerURL = `https://www.youtube-nocookie.com/embed/${youtubeId}`;
+  video.setAttribute('src', trailerURL);
+  videoWrapperOverlay.addEventListener('click', () => {
+  video.setAttribute('src', '');
+    videoWrapper.classList.add('hidden');
+  });
 }

@@ -6,10 +6,11 @@
   --heading-color-3: #7bf8ff;
   --default-layout-width: 90%;
   --active-background-color: #ff8525;
+  --primary-background-color: #f16a00;
+  --secondary-background-color: #6d5545;
+  --overlay-background-color: #0006;
   --active-text-color: #fff;
   --primary-text-color: #28195f;
   --primary-text-contrast-color: #fff;
-  --primary-background-color: #f16a00;
   --error-text-color: #b8020f;
-  --secondary-background-color: #6d5545;
 }
