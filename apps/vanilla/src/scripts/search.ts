@@ -25,12 +25,6 @@ export function performSearching(): void {
       search: searchInputElement.value,
     };
     const data = await getAnime(paginationConfig);
-    if (data.count === 0) {
-      const animeTable = document.querySelector<HTMLDivElement>('.anime-table');
-      assertNonNullish(animeTable);
-      const noResultText = '<h1>No result</h1>';
-      animeTable.innerHTML = noResultText;
-    }
     renderAnimeTable(data);
   });
 }
