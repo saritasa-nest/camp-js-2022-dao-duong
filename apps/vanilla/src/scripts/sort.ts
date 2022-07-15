@@ -25,10 +25,10 @@ export function renderSortOptions(): void {
 
   setDirectionState(hasSortOption(sortOption.value));
   sortOptions.forEach(element => {
-    element.addEventListener('change', async(): Promise<void> => {
-      localStorage.setItem('active', FIRST_PAGE.toString());
+    element.addEventListener('change', async() => {
       const sortSetting = sortDirection.value + sortOption.value;
       localStorage.setItem('sort', sortSetting);
+      localStorage.setItem('active', FIRST_PAGE.toString());
       const filterType = localStorage.getItem('type');
       assertNonNullish(filterType);
       const paginationConfig: PaginationConfig = {

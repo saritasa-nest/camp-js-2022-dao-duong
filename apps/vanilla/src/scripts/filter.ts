@@ -13,11 +13,11 @@ export function renderFilterOptions(): void {
   FILTERING_TYPES.forEach(type => {
     filterElement.innerHTML += `<option value="${type.value}" class="type">${type.text}</option>`;
   });
-  filterElement.addEventListener('change', async(): Promise<void> => {
-    localStorage.setItem('active', FIRST_PAGE.toString());
+  filterElement.addEventListener('change', async() => {
+      localStorage.setItem('active', FIRST_PAGE.toString());
+      localStorage.setItem('type', filterElement.value);
       const sortSetting = localStorage.getItem('sort');
       assertNonNullish(sortSetting);
-      localStorage.setItem('type', filterElement.value);
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: FIRST_PAGE,

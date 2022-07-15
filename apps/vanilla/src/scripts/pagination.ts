@@ -47,13 +47,13 @@ export function renderPaginateButton(pages: number): void {
   wrapper.innerHTML += `<li index=${pages} class="waves-effect pagination__item">Last</li>`;
   const paginateButton = document.querySelectorAll('.pagination__item');
   paginateButton.forEach(element => {
-    element.addEventListener('click', async(): Promise<void> => {
+    element.addEventListener('click', async() => {
       const currentIndex = element.getAttribute('index');
       assertNonNullish(currentIndex);
       localStorage.setItem('active', currentIndex);
       const sortSetting = localStorage.getItem('sort');
-      assertNonNullish(sortSetting);
       const filterType = localStorage.getItem('type');
+      assertNonNullish(sortSetting);
       assertNonNullish(filterType);
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
