@@ -26,19 +26,24 @@ export function renderSortOptions(): void {
   setDirectionState(hasSortOption(sortOption.value));
   sortOptions.forEach(element => {
     element.addEventListener('change', async() => {
+      /* Get and set pagination configuration */
       const sortSetting = sortDirection.value + sortOption.value;
       localStorage.setItem('sort', sortSetting);
       localStorage.setItem('active', FIRST_PAGE.toString());
       const filterType = localStorage.getItem('type');
       assertNonNullish(filterType);
+
+      /* Get anime data. */
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: FIRST_PAGE,
         ordering: sortSetting,
         type: filterType,
       };
-      setDirectionState(hasSortOption(sortOption.value));
       const data = await getAnime(paginationConfig);
+
+      setDirectionState(hasSortOption(sortOption.value));
+
       renderAnimeTable(data);
     });
   });

@@ -48,6 +48,7 @@ export function renderPaginateButton(pages: number): void {
   const paginateButton = document.querySelectorAll('.pagination__item');
   paginateButton.forEach(element => {
     element.addEventListener('click', async() => {
+      /* Get and set pagination configuration */
       const currentIndex = element.getAttribute('index');
       assertNonNullish(currentIndex);
       localStorage.setItem('active', currentIndex);
@@ -55,6 +56,8 @@ export function renderPaginateButton(pages: number): void {
       const filterType = localStorage.getItem('type');
       assertNonNullish(sortSetting);
       assertNonNullish(filterType);
+
+      /* Get anime data. */
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: parseInt(currentIndex, 10),
@@ -62,6 +65,7 @@ export function renderPaginateButton(pages: number): void {
         type: filterType,
       };
       const data = await getAnime(paginationConfig);
+
       renderAnimeTable(data);
     });
   });

@@ -14,10 +14,14 @@ export function renderFilterOptions(): void {
     filterElement.innerHTML += `<option value="${type.value}" class="type">${type.text}</option>`;
   });
   filterElement.addEventListener('change', async() => {
+    /* Get and set pagination configuration */
     localStorage.setItem('active', FIRST_PAGE.toString());
     localStorage.setItem('type', filterElement.value);
     const sortSetting = localStorage.getItem('sort');
     assertNonNullish(sortSetting);
+
+    /* Get anime data */
+
     const paginationConfig: PaginationConfig = {
       limit: LIMIT,
       page: FIRST_PAGE,
@@ -25,6 +29,7 @@ export function renderFilterOptions(): void {
       type: filterElement.value,
     };
     const data = await getAnime(paginationConfig);
+
     renderAnimeTable(data);
   });
 }
