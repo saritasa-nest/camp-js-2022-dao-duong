@@ -18,6 +18,7 @@
 .anime-detail__image {
   max-width: 300px;
   padding-bottom: 10px;
+  cursor: zoom-in;
 }
 
 .anime-detail__content p {
