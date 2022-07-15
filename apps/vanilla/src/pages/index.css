@@ -17,12 +17,6 @@
   display: flex;
 }
 
-.sort__select-element,
-.filter__select-element {
-  width: 30%;
-  padding: 10px 20px 10px 0;
-}
-
 .pagination__item {
   width: 3rem;
 }
