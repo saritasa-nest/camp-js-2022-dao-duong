@@ -19,8 +19,9 @@ window.addEventListener('load', async() => {
   renderImage(data.image);
   renderContent(data);
   if (data.youtubeTrailerId) {
-    renderTrailerButton(data.youtubeTrailerId);
+    renderTrailerButton();
   }
+  handleMediaClick(data.image, data.youtubeTrailerId);
 });
 
 /**
@@ -30,26 +31,18 @@ window.addEventListener('load', async() => {
 function renderImage(url: string): void {
   const mediaElement = document.querySelector('.anime-detail__media');
   assertNonNull(mediaElement);
-  mediaElement.innerHTML = `<img src="${url}" class="anime-detail__image" alt="Anime Image"></img>`;
-  const imageElement = document.querySelector<HTMLImageElement>('.anime-detail__image');
-  assertNonNull(imageElement);
-  imageElement.addEventListener('click', () => {
-    openFullSizeImage(url);
-  });
+  mediaElement.innerHTML += `<img src="${url}" class="anime-detail__image" alt="Anime Image"></img>`;
 }
 
 /**
  * Render trailer.
  * @param youtubeId Youtube trailer Id.
  */
-function renderTrailerButton(youtubeId: string): void {
+function renderTrailerButton(): void {
   const mediaElement = document.querySelector('.anime-detail__media');
   assertNonNull(mediaElement);
   mediaElement.innerHTML += `<button type="button" class="waves-effect waves-light btn trailer-btn">Watch Trailer!</button>
   `;
-  const trailerButton = document.querySelector('.trailer-btn');
-  assertNonNull(trailerButton);
-  trailerButton.addEventListener('click', () => openTrailer(youtubeId));
 }
 
 /**
@@ -85,12 +78,13 @@ function openTrailer(youtubeId: string): void {
   modalWrapper.classList.remove('hidden');
   const modalWrapperInner = document.querySelector<HTMLDivElement>('.modal-wrapper__inner');
   assertNonNull(modalWrapperInner);
+  modalWrapperInner.innerHTML = `
+  <iframe src="https://www.youtube-nocookie.com/embed/${youtubeId}" title="Trailer" frameborder="0" allowfullscreen class="video"></iframe>
+  `;
   const video = document.querySelector<HTMLIFrameElement>('.video');
   assertNonNull(video);
-  const trailerURL = `https://www.youtube-nocookie.com/embed/${youtubeId}`;
-  video.setAttribute('src', trailerURL);
   modalWrapperOverlay.addEventListener('click', () => {
-  video.setAttribute('src', '');
+    video.setAttribute('src', '');
     modalWrapper.classList.add('hidden');
   });
 }
@@ -113,4 +107,20 @@ function openFullSizeImage(imageURL: string): void {
   modalWrapperOverlay.addEventListener('click', () => {
     modalWrapper.classList.add('hidden');
   });
+}
+
+/**
+ * Handle media click .
+ * @param imgUrl Image URL.
+ * @param trailerUrl Trailer URL.
+ * */
+function handleMediaClick(imgUrl: string, trailerUrl: string | null): void {
+  const imageElement = document.querySelector<HTMLImageElement>('.anime-detail__image');
+  assertNonNull(imageElement);
+  imageElement.addEventListener('click', () => openFullSizeImage(imgUrl));
+  if (trailerUrl) {
+    const trailerButton = document.querySelector('.trailer-btn');
+    assertNonNull(trailerButton);
+    trailerButton.addEventListener('click', () => openTrailer(trailerUrl));
+  }
 }
