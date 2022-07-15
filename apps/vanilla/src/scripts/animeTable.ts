@@ -16,16 +16,15 @@ export function renderAnimeTable(dataset: Pagination<Anime>): void {
   assertNonNullish(dataTable);
   const tableBody = dataset.results.reduce((previousValue: string, currentValue: Anime): string => `${previousValue}
     <tr>
-         <td>
-           <img class="anime-image" src="${currentValue.image}" alt="Anime image">
-         </td>
-         <td>${currentValue.englishTitle}</td>
-         <td>${currentValue.japaneseTitle}</td>
-         <td>${dateConverter(currentValue.aired.start)}</td>
-         <td>${currentValue.type}</td>
-         <td>${currentValue.status}</td>
-       </tr>
-    `, '');
+      <td>
+        <img class="anime-image" src="${currentValue.image}" alt="Anime image">
+      </td>
+      <td>${currentValue.englishTitle}</td>
+      <td>${currentValue.japaneseTitle}</td>
+      <td>${dateConverter(currentValue.aired.start)}</td>
+      <td>${currentValue.type}</td>
+      <td>${currentValue.status}</td>
+    </tr>`, '');
   dataTable.innerHTML = `
       <table class="responsive-table centered highlight" >
         <thead>

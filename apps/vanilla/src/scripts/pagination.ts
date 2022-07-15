@@ -48,17 +48,21 @@ export function renderPaginateButton(pages: number): void {
   const paginateButton = document.querySelectorAll('.pagination__item');
   paginateButton.forEach(element => {
     element.addEventListener('click', async(): Promise<void> => {
+      /* Get and set pagination data */
       const currentIndex = element.getAttribute('index');
       assertNonNullish(currentIndex);
       localStorage.setItem('active', currentIndex);
       const sortSetting = localStorage.getItem('sort');
       assertNonNullish(sortSetting);
+
+      /* Get anime data */
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: parseInt(currentIndex, 10),
         ordering: sortSetting,
       };
       const data = await getAnime(paginationConfig);
+
       renderAnimeTable(data);
     });
   });
