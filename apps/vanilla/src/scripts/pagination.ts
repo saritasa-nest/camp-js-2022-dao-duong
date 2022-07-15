@@ -54,12 +54,15 @@ export function renderPaginateButton(pages: number): void {
       localStorage.setItem('active', currentIndex);
       const sortSetting = localStorage.getItem('sort');
       assertNonNullish(sortSetting);
+      const searchQuery = localStorage.getItem('search');
+      assertNonNullish(searchQuery);
 
       /* Get anime data */
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: parseInt(currentIndex, 10),
         ordering: sortSetting,
+        search: searchQuery,
       };
       const data = await getAnime(paginationConfig);
 

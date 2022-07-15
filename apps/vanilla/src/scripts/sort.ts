@@ -32,12 +32,15 @@ export function renderSortOptions(): void {
       localStorage.setItem('sort', sortSetting);
 
       setDirectionState(hasSortOption(sortOption.value));
+      const searchQuery = localStorage.getItem('search');
+      assertNonNullish(searchQuery);
 
       /* Get anime data */
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: FIRST_PAGE,
         ordering: sortSetting,
+        search: searchQuery,
       };
       const data = await getAnime(paginationConfig);
 
