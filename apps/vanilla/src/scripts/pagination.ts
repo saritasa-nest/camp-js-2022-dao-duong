@@ -1,5 +1,3 @@
-import { log } from 'console';
-
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 

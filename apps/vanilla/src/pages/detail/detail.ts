@@ -3,7 +3,7 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Url } from '../../scripts/constants';
 
-import { checkAuthentication, dateConverter, navigate, renderLogoutButton } from '../../scripts/functions';
+import { checkAuthentication, convertDate, navigate, renderLogoutButton } from '../../scripts/functions';
 
 import { AnimeService } from '../../services/animeService';
 
@@ -32,7 +32,10 @@ window.addEventListener('load', async() => {
 function renderImage(url: string): void {
   const mediaElement = document.querySelector('.anime-detail__media');
   assertNonNull(mediaElement);
-  mediaElement.innerHTML += `<img src="${url}" class="anime-detail__image" alt="Anime Image"></img>`;
+  mediaElement.innerHTML += `
+  <button type="button">
+    <img src="${url}" class="anime-detail__image" alt="Anime Image"></img>
+  </button>`;
   const imageElement = document.querySelector<HTMLImageElement>('.anime-detail__image');
 
   assertNonNull(imageElement);
@@ -69,8 +72,8 @@ function renderContent(data: AnimeDetail): void {
     <p>Status: ${data.status}</p>
     <p>Synopsis: ${data.synopsis}</p>
     <p>Airing: ${data.airing}</p>
-    <p>Aired Start: ${dateConverter(data.aired.start)}</p>
-    <p>Aired End: ${dateConverter(data.aired.end)}</p>
+    <p>Aired Start: ${convertDate(data.aired.start)}</p>
+    <p>Aired End: ${convertDate(data.aired.end)}</p>
     <p>Studio List: ${data.studioList.map(studio => studio.name)}</p>
     <p>Genre List: ${data.genreList.map(genre => genre.name)}</p>
   `;
