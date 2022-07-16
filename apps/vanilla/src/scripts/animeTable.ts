@@ -2,7 +2,7 @@ import { Anime } from '@js-camp/core/models/anime/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
-import { dateConverter, navigate } from '../scripts/functions';
+import { convertDate, navigate } from '../scripts/functions';
 
 import { Url } from './constants';
 
@@ -23,7 +23,7 @@ export function renderAnimeTable(dataset: Pagination<Anime>): void {
          </td>
          <td>${currentValue.englishTitle}</td>
          <td>${currentValue.japaneseTitle}</td>
-         <td>${dateConverter(currentValue.aired.start)}</td>
+         <td>${convertDate(currentValue.aired.start)}</td>
          <td>${currentValue.type}</td>
          <td>${currentValue.status}</td>
        </tr>

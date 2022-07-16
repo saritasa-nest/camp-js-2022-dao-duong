@@ -3,7 +3,7 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Url } from '../../scripts/constants';
 
-import { checkAuthentication, dateConverter, navigate, renderLogoutButton } from '../../scripts/functions';
+import { checkAuthentication, convertDate, navigate, renderLogoutButton } from '../../scripts/functions';
 
 import { AnimeService } from '../../services/animeService';
 
@@ -34,10 +34,7 @@ function renderImage(url: string): void {
   mediaElement.innerHTML += `<img src="${url}" class="anime-detail__image" alt="Anime Image"></img>`;
 }
 
-/**
- * Render trailer.
- * @param youtubeId Youtube trailer Id.
- */
+/** Render trailer. */
 function renderTrailerButton(): void {
   const mediaElement = document.querySelector('.anime-detail__media');
   assertNonNull(mediaElement);
@@ -59,8 +56,8 @@ function renderContent(data: AnimeDetail): void {
     <p>Status: ${data.status}</p>
     <p>Synopsis: ${data.synopsis}</p>
     <p>Airing: ${data.airing}</p>
-    <p>Aired Start: ${dateConverter(data.aired.start)}</p>
-    <p>Aired End: ${dateConverter(data.aired.end)}</p>
+    <p>Aired Start: ${convertDate(data.aired.start)}</p>
+    <p>Aired End: ${convertDate(data.aired.end)}</p>
     <p>Studio List: ${data.studioList.map(studio => studio.name)}</p>
     <p>Genre List: ${data.genreList.map(genre => genre.name)}</p>
   `;
