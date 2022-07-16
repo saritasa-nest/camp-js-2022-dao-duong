@@ -21,11 +21,11 @@
   padding: 0 20px;
 }
 
-.pagination__item {
+.pagination__button {
   width: 3rem;
 }
 
-.pagination__item-active {
+.pagination__button-active {
   color: var(--active-text-color);
   background-color: var(--active-background-color);
 }
