@@ -1,21 +1,20 @@
-/** Aired DTO. */
 import { DateRangeDto } from '../dateRange.dto';
 
 /** Possible values for type. */
 export enum Type {
-  'TV',
-  'OVA',
-  'MOVIE',
-  'SPECIAL',
-  'ONA',
-  'MUSIC',
+  Tv = 'TV',
+  Ova = 'OVA',
+  Movie = 'MOVIE',
+  Special = 'SPECIAL',
+  Ona = 'ONA',
+  Music = 'MUSIC',
 }
 
 /** Possible values for status. */
 export enum Status {
-  'AIRING',
-  'FINISHED',
-  'NOT_YET_AIRED',
+  Airing = 'AIRING',
+  Finished = 'FINISHED',
+  NotYetAired = 'NOT_YET_AIRED',
 }
 
 /** Anime DTO. */

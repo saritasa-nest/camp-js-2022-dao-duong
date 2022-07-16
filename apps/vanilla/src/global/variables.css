@@ -1,10 +1,12 @@
 :root {
-  /* Using html color names here only for showcase,
-   * you shouldn't be using color names in real projects. */
+  --default-layout-width: 90%;
+
+  /* Heading */
   --heading-color-1: #ffb57a;
   --heading-color-2: #f16a00;
   --heading-color-3: #7bf8ff;
-  --default-layout-width: 90%;
+
+  /* Active */
   --active-background-color: #ff8525;
   --active-text-color: #fff;
   --primary-text-color: #28195f;

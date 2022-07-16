@@ -1,3 +1,5 @@
+import { log } from 'console';
+
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
@@ -8,55 +10,70 @@ import { renderAnimeTable } from './animeTable';
 
 /**
  * Render pagination.
- * @param pages Number of total pages.
- * */
-export function renderPaginateButton(pages: number): void {
+ * @param totalPages Number of total pages.
+ */
+export function renderPagination(totalPages: number): void {
   const pageValueFromStorage = localStorage.getItem('active');
   assertNonNull(pageValueFromStorage);
   const currentPage = parseInt(pageValueFromStorage, 10);
   const wrapper = document.querySelector<HTMLDivElement>('.pagination');
   assertNonNull(wrapper);
   wrapper.innerHTML = ``;
-  let maxLeft = (currentPage - HALF_NUMBER_OF_PAGES);
-  let maxRight = (currentPage + HALF_NUMBER_OF_PAGES);
+  let firstDisplayPage = (currentPage - HALF_NUMBER_OF_PAGES);
+  let lastDisplayPage = (currentPage + HALF_NUMBER_OF_PAGES);
 
-  if (maxLeft < FIRST_PAGE) {
-    maxLeft = FIRST_PAGE;
-    maxRight = NUMBER_OF_PAGES;
+  if (firstDisplayPage < FIRST_PAGE) {
+    firstDisplayPage = FIRST_PAGE;
+    lastDisplayPage = NUMBER_OF_PAGES;
   }
 
-  if (maxRight > pages) {
-    maxLeft = pages - (NUMBER_OF_PAGES - FIRST_PAGE);
-
-    if (maxLeft < FIRST_PAGE) {
-      maxLeft = FIRST_PAGE;
+  if (lastDisplayPage > totalPages) {
+    firstDisplayPage = totalPages - (NUMBER_OF_PAGES - FIRST_PAGE);
+    if (firstDisplayPage < FIRST_PAGE) {
+      firstDisplayPage = FIRST_PAGE;
     }
-    maxRight = pages;
+    lastDisplayPage = totalPages;
   }
 
-  for (let page = maxLeft; page <= maxRight; page++) {
+  for (let page = firstDisplayPage; page <= lastDisplayPage; page++) {
     wrapper.innerHTML += `
-    <li index=${page} class="waves-effect pagination__item ${page === currentPage ? 'pagination__item-active' : ''}">
-    ${page}
+    <li>
+      <button index=${page}  class="btn waves-effect pagination__button ${page === currentPage ? 'pagination__button-active' : ''}">
+        ${page}
+      </button>
     </li>`;
   }
   wrapper.innerHTML = `
-    <li index=${FIRST_PAGE} class="waves-effect pagination__item">First</li>
-    ${wrapper.innerHTML}`;
+  <li>
+    <button index=${FIRST_PAGE}  class="btn waves-effect pagination__button">
+      First
+    </button>
+  </li>${wrapper.innerHTML}`;
 
-  wrapper.innerHTML += `<li index=${pages} class="waves-effect pagination__item">Last</li>`;
-  const paginateButton = document.querySelectorAll('.pagination__item');
+  wrapper.innerHTML += `
+  <li>
+    <button index=${totalPages}  class="btn waves-effect pagination__button">
+      Last
+    </button>
+  </li>`;
+  const paginateButton = document.querySelectorAll('.pagination__button');
   paginateButton.forEach(element => {
-    element.addEventListener('click', async(): Promise<void> => {
+    element.addEventListener('click', async() => {
+      /* Get and set pagination data */
       const currentIndex = element.getAttribute('index');
       assertNonNull(currentIndex);
       localStorage.setItem('active', currentIndex);
       const sortSetting = localStorage.getItem('sort');
       assertNonNull(sortSetting);
+      const searchQuery = localStorage.getItem('search');
+      assertNonNull(searchQuery);
+
+      /* Get anime data */
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: parseInt(currentIndex, 10),
         ordering: sortSetting,
+        search: searchQuery,
       };
       const data = await AnimeService.getAnime(paginationConfig);
       renderAnimeTable(data);
