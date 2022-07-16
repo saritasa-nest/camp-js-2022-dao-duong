@@ -9,8 +9,8 @@ import { getAnime } from './anime';
 /**
  * Render pagination.
  * @param pages Number of total pages.
- * */
-export function renderPaginateButton(pages: number): void {
+ */
+export function renderPagination(pages: number): void {
   const pageValueFromStorage = localStorage.getItem('active');
   assertNonNullish(pageValueFromStorage);
   const currentPage = parseInt(pageValueFromStorage, 10);

@@ -5,7 +5,7 @@ import { LIMIT, FIRST_PAGE } from '../scripts/variables';
 
 import { renderAnimeTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
-import { performSearching } from '../scripts/search';
+import { initSearch } from '../scripts/search';
 
 window.addEventListener('load', (): void => {
   initHomepage();
@@ -24,5 +24,5 @@ const initHomepage = async(): Promise<void> => {
   const data = await getAnime(paginationConfig);
   renderAnimeTable(data);
   renderSortOptions();
-  performSearching();
+  initSearch();
 };

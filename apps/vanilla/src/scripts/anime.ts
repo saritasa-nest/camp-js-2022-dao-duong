@@ -6,7 +6,7 @@ import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
-import { api } from './API';
+import { api } from './api';
 
 /**
  * Get anime data from the server.

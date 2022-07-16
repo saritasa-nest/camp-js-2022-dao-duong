@@ -6,7 +6,7 @@ import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT, FIRST_PAGE } from './variables';
 import { getAnime } from './anime';
 import { setDirectionState, hasSortOption } from './functions';
 
-/**  Render sort options.*/
+/** Render sort options. */
 export function renderSortOptions(): void {
   const sortOptions = document.querySelectorAll('.sort__select-element');
   const sortOption = document.querySelector<HTMLSelectElement>('.sort__option');

@@ -7,17 +7,17 @@ import { renderAnimeTable } from './animeTable';
 import { FIRST_PAGE, LIMIT } from './variables';
 
 /** Search feature. */
-export function performSearching(): void {
-  const searchInputElement = document.querySelector<HTMLInputElement>('.search_input');
-  const searchButtonElement = document.querySelector<HTMLButtonElement>('.search_button');
+export function initSearch(): void {
+  const searchInputElement = document.querySelector<HTMLInputElement>('.search__input');
+  const searchButtonElement = document.querySelector<HTMLButtonElement>('.search__button');
   assertNonNullish(searchInputElement);
   assertNonNullish(searchButtonElement);
 
   searchButtonElement.addEventListener('click', async() => {
     localStorage.setItem('search', searchInputElement.value);
-
     const orderingOptions = localStorage.getItem('sort');
     assertNonNullish(orderingOptions);
+
     const paginationConfig: PaginationConfig = {
       limit: LIMIT,
       page: FIRST_PAGE,
