@@ -8,7 +8,7 @@ import { Anime } from '@js-camp/core/models/anime/anime';
 import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
 import { Pagination } from '@js-camp/core/models/pagination';
 
-import { api } from '../api/API';
+import { api } from '../api/api';
 import { Token } from '../scripts/constants';
 
 import { StorageService } from './storageService';
@@ -32,6 +32,7 @@ export namespace AnimeService {
    * @param id ID of the anime.
    */
   export async function getAnimeDetail(id: string): Promise<AnimeDetail> {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { data } = await api.get(`anime/anime/${id}/`, { headers: { Authorization: `Bearer ${StorageService.get(Token.Access)}` } });
     return AnimeDetailMapper.fromDto(data);
   }

@@ -1,7 +1,7 @@
 import { UserMapper } from '@js-camp/core/mappers/user/user.mapper';
 import { User } from '@js-camp/core/models/user/user';
 
-import { api } from '../api/API';
+import { api } from '../api/api';
 import { Token } from '../scripts/constants';
 
 import { StorageService } from './storageService';

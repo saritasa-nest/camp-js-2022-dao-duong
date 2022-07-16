@@ -3,7 +3,7 @@ import { RegisterMapper } from '@js-camp/core/mappers/auth/register.mapper';
 import { Login } from '@js-camp/core/models/auth/login';
 import { Register } from '@js-camp/core/models/auth/register';
 
-import { api } from '../api/API';
+import { api } from '../api/api';
 import { Helpers } from '../scripts/helpers';
 
 import { ErrorService } from './errorService';
