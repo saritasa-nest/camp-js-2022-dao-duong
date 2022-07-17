@@ -10,14 +10,12 @@ import { Helpers } from './helpers';
 /** Check whether the user authenticated or not.*/
 export async function checkAuthentication(): Promise<boolean> {
   const token = StorageService.get<string>(Token.Access);
-  if (token !== null) {
-    const isVerify = await AuthService.verifyToken(token);
-    if (isVerify) {
-      return true;
-    }
+
+  if (token === null) {
     return false;
   }
-  return false;
+  const isValid = await AuthService.verifyToken(token);
+  return isValid;
 }
 
 /** Render logout button. */
