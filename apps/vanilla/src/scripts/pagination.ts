@@ -8,9 +8,9 @@ import { getAnime } from './anime';
 
 /**
  * Render pagination.
- * @param totalPages Number of total pages.
+ * @param displayPages Number of pages to display.
  */
-export function renderPagination(totalPages: number): void {
+export function renderPagination(displayPages: number): void {
   const pageValueFromStorage = localStorage.getItem('active');
   assertNonNullish(pageValueFromStorage);
   const currentPage = parseInt(pageValueFromStorage, 10);
@@ -25,12 +25,12 @@ export function renderPagination(totalPages: number): void {
     lastDisplayPage = NUMBER_OF_PAGES;
   }
 
-  if (lastDisplayPage > totalPages) {
-    firstDisplayPage = totalPages - (NUMBER_OF_PAGES - FIRST_PAGE);
+  if (lastDisplayPage > displayPages) {
+    firstDisplayPage = displayPages - (NUMBER_OF_PAGES - FIRST_PAGE);
     if (firstDisplayPage < FIRST_PAGE) {
       firstDisplayPage = FIRST_PAGE;
     }
-    lastDisplayPage = totalPages;
+    lastDisplayPage = displayPages;
   }
 
   for (let page = firstDisplayPage; page <= lastDisplayPage; page++) {
@@ -50,7 +50,7 @@ export function renderPagination(totalPages: number): void {
 
   wrapper.innerHTML += `
   <li>
-    <button index=${totalPages}  class="btn waves-effect pagination__button">
+    <button index=${displayPages}  class="btn waves-effect pagination__button">
       Last
     </button>
   </li>`;
