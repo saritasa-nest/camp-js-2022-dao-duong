@@ -37,14 +37,15 @@ export function renderLogoutButton(): void {
 }
 
 /**
- *Navigation functions.
- *@param url Url to navigate to.
+ * Navigation functions.
+ * @param url Url to navigate to.
  */
 export function navigate(url: Url): void {
   window.location.href = url;
 }
 
-/** Validate password.
+/**
+ * Validate password.
  * @param password Password to validate.
  * @param confirmPassword Password to validate.
  */
@@ -58,8 +59,7 @@ export function validateConfirmPassword(password: string, confirmPassword: strin
  */
 export function dateConverter(date: string | null): string {
   if (date !== null) {
-    return (new Date(date))
-      .toString();
+    return (new Date(date)).toLocaleDateString('en-gb');
   }
   return 'None';
 }
