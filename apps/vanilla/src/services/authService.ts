@@ -5,13 +5,10 @@ import { Login } from '@js-camp/core/models/login';
 import { Register } from '@js-camp/core/models/register';
 import { User } from '@js-camp/core/models/user';
 
-import { api } from '../api/API';
-import { Token } from '../scripts/constants';
+import { api } from '../api/api';
 import { Helpers } from '../scripts/helpers';
 
 import { ErrorService } from './errorService';
-
-import { StorageService } from './storageService';
 
 export namespace AuthService {
 
@@ -43,7 +40,7 @@ export namespace AuthService {
   /** Get user.*/
   export async function getUser(): Promise<User> {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { data } = await api.get('/users/profile/', { headers: { Authorization: `Bearer ${StorageService.get(Token.Access)}` } });
+    const { data } = await api.get('/users/profile/');
     return UserMapper.fromDto(data);
   }
 
