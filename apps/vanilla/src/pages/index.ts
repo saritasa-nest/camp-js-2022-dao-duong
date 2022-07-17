@@ -3,7 +3,7 @@ import { checkAuthentication, navigate, renderLogoutButton } from '../scripts/fu
 
 window.addEventListener('load', async() => {
   const isAuthenticated = await checkAuthentication();
-  if (isAuthenticated === false) {
+  if (!isAuthenticated) {
     navigate(Url.Login);
   }
   renderLogoutButton();

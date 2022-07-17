@@ -38,9 +38,9 @@ registerForm.addEventListener('submit', async event => {
     try {
       await AuthService.register(registerData);
       navigate(Url.Base);
-      } catch (error: unknown) {
+    } catch (error: unknown) {
       ErrorService.renderErrorMessage(error);
-      }
+    }
   } else {
       const confirmationErrorText = 'The password confirmation does not match';
       ErrorService.createErrorElement(confirmPasswordTextInput, confirmationErrorText);
