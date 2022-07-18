@@ -22,6 +22,7 @@ window.addEventListener('load', async(): Promise<void> => {
 const initHomepage = async(): Promise<void> => {
   localStorage.setItem('active', FIRST_PAGE.toString());
   localStorage.setItem('sort', '');
+  localStorage.setItem('search', '');
   const paginationConfig: PaginationConfig = {
     limit: LIMIT,
     page: FIRST_PAGE,

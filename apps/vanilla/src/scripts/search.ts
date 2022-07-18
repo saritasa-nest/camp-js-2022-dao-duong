@@ -1,7 +1,7 @@
-import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
-import { getAnime } from './anime';
+import { AnimeService } from '../services/animeService';
+
 import { renderAnimeTable } from './animeTable';
 
 import { FIRST_PAGE, LIMIT } from './variables';
@@ -14,17 +14,18 @@ export function initSearch(): void {
   assertNonNull(searchButtonElement);
 
   searchButtonElement.addEventListener('click', async() => {
+    localStorage.setItem('active', FIRST_PAGE.toString());
     localStorage.setItem('search', searchInputElement.value);
     const orderingOptions = localStorage.getItem('sort');
     assertNonNull(orderingOptions);
 
-    const paginationConfig: PaginationConfig = {
+    const paginationConfig = {
       limit: LIMIT,
       page: FIRST_PAGE,
       ordering: orderingOptions,
       search: searchInputElement.value,
     };
-    const data = await getAnime(paginationConfig);
+    const data = await AnimeService.getAnime(paginationConfig);
     renderAnimeTable(data);
   });
 }

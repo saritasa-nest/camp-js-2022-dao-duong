@@ -1,5 +1,4 @@
 @import url("../global/index.css");
-@import url("../global/variables.css");
 
 .title {
   color: var(--heading-color-1);

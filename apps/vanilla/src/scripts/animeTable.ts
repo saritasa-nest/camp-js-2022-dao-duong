@@ -40,13 +40,11 @@ export function renderAnimeTable(dataset: Pagination<Anime>): void {
               <th>Status</th>
           </tr>
         </thead>
-
-      <tbody>
-       ${tableBody}
-      </tbody>
-    </table>
-  `;
-  const totalPages = dataset.count / LIMIT;
+        <tbody>
+        ${tableBody}
+        </tbody>
+      </table>`;
+  const totalPages = Math.ceil(dataset.count / LIMIT);
   renderPagination(totalPages);
   const animeTableRows = document.querySelectorAll<HTMLTableRowElement>('tbody tr');
   assertNonNull(animeTableRows);
