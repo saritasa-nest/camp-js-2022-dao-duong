@@ -62,12 +62,11 @@ export function renderPagination(displayPages: number): void {
       localStorage.setItem('active', currentIndex);
       const sortSetting = localStorage.getItem('sort');
       const filterType = localStorage.getItem('type');
+      const searchQuery = localStorage.getItem('search');
       assertNonNullish(sortSetting);
       assertNonNullish(filterType);
-      const searchQuery = localStorage.getItem('search');
       assertNonNullish(searchQuery);
 
-      /* Get anime data. */
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: parseInt(currentIndex, 10),

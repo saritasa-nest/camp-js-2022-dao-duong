@@ -10,8 +10,10 @@ import { FIRST_PAGE, LIMIT } from './variables';
 export function initSearch(): void {
   const searchInputElement = document.querySelector<HTMLInputElement>('.search__input');
   const searchButtonElement = document.querySelector<HTMLButtonElement>('.search__button');
+  const filterType = localStorage.getItem('type');
   assertNonNullish(searchInputElement);
   assertNonNullish(searchButtonElement);
+  assertNonNullish(filterType);
 
   searchButtonElement.addEventListener('click', async() => {
     localStorage.setItem('search', searchInputElement.value);
@@ -22,6 +24,7 @@ export function initSearch(): void {
       limit: LIMIT,
       page: FIRST_PAGE,
       ordering: orderingOptions,
+      type: filterType,
       search: searchInputElement.value,
     };
     const data = await getAnime(paginationConfig);

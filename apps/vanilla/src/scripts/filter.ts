@@ -1,4 +1,3 @@
-import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 
 import { getAnime } from './anime';
@@ -18,15 +17,17 @@ export function renderFilterOptions(): void {
     localStorage.setItem('active', FIRST_PAGE.toString());
     localStorage.setItem('type', filterElement.value);
     const sortSetting = localStorage.getItem('sort');
+    const searchQuery = localStorage.getItem('search');
     assertNonNullish(sortSetting);
+    assertNonNullish(searchQuery);
 
     /* Get anime data */
-
-    const paginationConfig: PaginationConfig = {
+    const paginationConfig = {
       limit: LIMIT,
       page: FIRST_PAGE,
       ordering: sortSetting,
       type: filterElement.value,
+      search: searchQuery,
     };
     const data = await getAnime(paginationConfig);
 
