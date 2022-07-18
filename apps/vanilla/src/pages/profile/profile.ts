@@ -1,7 +1,7 @@
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Url } from '../../scripts/constants';
-import { checkAuthentication, renderLogoutButton, navigate, dateConverter } from '../../scripts/functions';
+import { checkAuthentication, navigate, convertDate, renderNavbar } from '../../scripts/functions';
 import { UserService } from '../../services/userService';
 
 window.addEventListener('load', async(): Promise<void> => {
@@ -9,8 +9,8 @@ window.addEventListener('load', async(): Promise<void> => {
   if (!isAuthenticated) {
     navigate(Url.Login);
   }
-  renderLogoutButton();
   renderUserProfile();
+  renderNavbar();
 });
 
 /** Render user profile. */
@@ -23,8 +23,8 @@ export async function renderUserProfile(): Promise<void> {
     <li>Email: ${user.email}</li>
     <li>First Name: ${user.firstName ? user.firstName : 'No first name available'}</li>
     <li>Last Name: ${user.lastName ? user.lastName : 'No last name available'}</li>
-    <li>Created at: ${dateConverter(user.created)}</li>
-    <li>Modified at: ${dateConverter(user.modified)}</li>
+    <li>Created at: ${convertDate(user.created)}</li>
+    <li>Modified at: ${convertDate(user.modified)}</li>
     <li>Avatar: ${user.avatar ? `
       <img class="user-avatar" src="${user.avatar}" alt="${user.firstName}${user.lastName}" />
     ` : 'No avatar available'}

@@ -20,13 +20,26 @@ export async function checkAuthentication(): Promise<boolean> {
   return false;
 }
 
+/** Render navbar. */
+export function renderNavbar(): void {
+  const { body } = document;
+  body.innerHTML = `
+  <nav class="navbar">
+    <h4><a href="/#">Anime</a></h4>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/profile/">Profile</a></li>
+    </ul>
+  </nav>${body.innerHTML}`;
+  renderLogoutButton();
+}
+
 /** Render logout button. */
 export function renderLogoutButton(): void {
-  const { body } = document;
-  body.innerHTML += `
-    <nav class="navbar">
-      <button type="button" class="logout-btn btn-right">Logout</button>
-    </nav>
+  const navbar = document.querySelector('.navbar');
+  assertNonNull(navbar);
+  navbar.innerHTML += `
+    <button type="button" class="logout-btn btn-right">Logout</button>
   `;
   const logoutButton = document.querySelector('.logout-btn');
   assertNonNull(logoutButton);

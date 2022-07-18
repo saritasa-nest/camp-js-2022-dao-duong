@@ -7,7 +7,7 @@ import { renderAnimeTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
 
 import { Url } from '../scripts/constants';
-import { checkAuthentication, navigate, renderLogoutButton } from '../scripts/functions';
+import { checkAuthentication, navigate, renderNavbar } from '../scripts/functions';
 
 window.addEventListener('load', async(): Promise<void> => {
   const isAuthenticated = await checkAuthentication();
@@ -15,7 +15,7 @@ window.addEventListener('load', async(): Promise<void> => {
     navigate(Url.Login);
   }
   initHomepage();
-  renderLogoutButton();
+  renderNavbar();
 });
 
 const initHomepage = async(): Promise<void> => {

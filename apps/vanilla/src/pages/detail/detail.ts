@@ -3,7 +3,7 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Url } from '../../scripts/constants';
 
-import { checkAuthentication, convertDate, navigate, renderLogoutButton } from '../../scripts/functions';
+import { checkAuthentication, convertDate, navigate, renderNavbar } from '../../scripts/functions';
 
 import { AnimeService } from '../../services/animeService';
 
@@ -15,7 +15,7 @@ window.addEventListener('load', async() => {
   const id = localStorage.getItem('CLICKED_ANIME_ID');
   assertNonNull(id);
   const data = await AnimeService.getAnimeDetail(id);
-  renderLogoutButton();
+  renderNavbar();
   renderImage(data.image);
   renderContent(data);
   if (data.youtubeTrailerId) {
@@ -69,12 +69,12 @@ function renderContent(data: AnimeDetail): void {
  */
 function openTrailer(youtubeId: string): void {
   const modalWrapper = document.querySelector<HTMLDivElement>('.modal-wrapper');
-  assertNonNull(modalWrapper);
   const modalWrapperOverlay = document.querySelector<HTMLDivElement>('.modal-wrapper__overlay');
-  assertNonNull(modalWrapperOverlay);
-  modalWrapper.classList.remove('hidden');
   const modalWrapperInner = document.querySelector<HTMLDivElement>('.modal-wrapper__inner');
+  assertNonNull(modalWrapper);
+  assertNonNull(modalWrapperOverlay);
   assertNonNull(modalWrapperInner);
+  modalWrapper.classList.remove('hidden');
   modalWrapperInner.innerHTML = `
   <iframe src="https://www.youtube-nocookie.com/embed/${youtubeId}" title="Trailer" frameborder="0" allowfullscreen class="video"></iframe>
   `;
