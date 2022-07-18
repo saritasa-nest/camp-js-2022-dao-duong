@@ -99,7 +99,7 @@ function openFullSizeImage(imageURL: string): void {
   const modalWrapperInner = document.querySelector<HTMLDivElement>('.modal-wrapper__inner');
   assertNonNull(modalWrapperInner);
   modalWrapperInner.innerHTML = `
-  <img src="${imageURL}" alt="Anime Image"></img>
+  <img src="${imageURL}" alt="Anime Image" class="image"></img>
   `;
   modalWrapperOverlay.addEventListener('click', () => {
     modalWrapper.classList.add('hidden');
