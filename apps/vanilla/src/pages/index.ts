@@ -12,7 +12,7 @@ import { checkAuthentication, navigate, renderNavbar } from '../scripts/function
 
 window.addEventListener('load', async(): Promise<void> => {
   const isAuthenticated = await checkAuthentication();
-  if (isAuthenticated === false) {
+  if (!isAuthenticated) {
     navigate(Url.Login);
   }
   initHomepage();

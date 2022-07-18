@@ -19,14 +19,14 @@ assertNonNull(registerForm);
 registerForm.addEventListener('submit', async event => {
   event.preventDefault();
   const emailTextInput = document.querySelector<HTMLInputElement>('input[name="email"]');
-  assertNonNull(emailTextInput);
   const firstNameTextInput = document.querySelector<HTMLInputElement>('input[name="first_name"]');
-  assertNonNull(firstNameTextInput);
   const lastNameTextInput = document.querySelector<HTMLInputElement>('input[name="last_name"]');
-  assertNonNull(lastNameTextInput);
   const passwordTextInput = document.querySelector<HTMLInputElement>('input[name="password"]');
-  assertNonNull(passwordTextInput);
   const confirmPasswordTextInput = document.querySelector<HTMLInputElement>('input[name="confirm_password"]');
+  assertNonNull(emailTextInput);
+  assertNonNull(firstNameTextInput);
+  assertNonNull(lastNameTextInput);
+  assertNonNull(passwordTextInput);
   assertNonNull(confirmPasswordTextInput);
   if (validateConfirmPassword(passwordTextInput.value, confirmPasswordTextInput.value)) {
     const registerData: Register = {
@@ -38,9 +38,9 @@ registerForm.addEventListener('submit', async event => {
     try {
       await AuthService.register(registerData);
       navigate(Url.Base);
-      } catch (error: unknown) {
+    } catch (error: unknown) {
       ErrorService.renderErrorMessage(error);
-      }
+    }
   } else {
       const confirmationErrorText = 'The password confirmation does not match';
       ErrorService.createErrorElement(confirmPasswordTextInput, confirmationErrorText);

@@ -15,7 +15,7 @@ export namespace StorageService {
    */
   export function get<T>(key: string): T | null {
     const value = localStorage.getItem(key);
-    if (value === null) {
+    if (value === null || value === '') {
       return null;
     }
     return JSON.parse(value) as T;
