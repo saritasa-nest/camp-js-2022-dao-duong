@@ -42,15 +42,21 @@
 
 .modal-wrapper__inner {
   position: relative;
-  aspect-ratio: 16 / 9;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 10%;
+  padding-top: 56.25%;
 }
 
 .modal-wrapper__inner .video {
   position: absolute;
   width: 60%;
   height: 60%;
+  top: 10%;
+}
+
+.modal-wrapper__inner .image {
+  position: absolute;
+  height: 60%;
+  top: 10%;
 }
