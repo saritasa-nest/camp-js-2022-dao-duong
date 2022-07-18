@@ -8,44 +8,54 @@ import { renderAnimeTable } from './animeTable';
 
 /**
  * Render pagination.
- * @param pages Number of total pages.
+ * @param displayPages Number of total pages.
  * */
-export function renderPaginateButton(pages: number): void {
+export function renderPaginateButton(displayPages: number): void {
   const pageValueFromStorage = localStorage.getItem('active');
   assertNonNull(pageValueFromStorage);
   const currentPage = parseInt(pageValueFromStorage, 10);
   const wrapper = document.querySelector<HTMLDivElement>('.pagination');
   assertNonNull(wrapper);
   wrapper.innerHTML = ``;
-  let maxLeft = (currentPage - HALF_NUMBER_OF_PAGES);
-  let maxRight = (currentPage + HALF_NUMBER_OF_PAGES);
+  let firstDisplayPage = (currentPage - HALF_NUMBER_OF_PAGES);
+  let lastDisplayPage = (currentPage + HALF_NUMBER_OF_PAGES);
 
-  if (maxLeft < FIRST_PAGE) {
-    maxLeft = FIRST_PAGE;
-    maxRight = NUMBER_OF_PAGES;
+  if (firstDisplayPage < FIRST_PAGE) {
+    firstDisplayPage = FIRST_PAGE;
+    lastDisplayPage = NUMBER_OF_PAGES;
   }
 
-  if (maxRight > pages) {
-    maxLeft = pages - (NUMBER_OF_PAGES - FIRST_PAGE);
+  if (lastDisplayPage > displayPages) {
+    firstDisplayPage = displayPages - (NUMBER_OF_PAGES - FIRST_PAGE);
 
-    if (maxLeft < FIRST_PAGE) {
-      maxLeft = FIRST_PAGE;
+    if (firstDisplayPage < FIRST_PAGE) {
+      firstDisplayPage = FIRST_PAGE;
     }
-    maxRight = pages;
+    lastDisplayPage = displayPages;
   }
 
-  for (let page = maxLeft; page <= maxRight; page++) {
+  for (let page = firstDisplayPage; page <= lastDisplayPage; page++) {
     wrapper.innerHTML += `
-    <li index=${page} class="waves-effect pagination__item ${page === currentPage ? 'pagination__item-active' : ''}">
-    ${page}
+    <li>
+      <button index=${page}  class="btn waves-effect pagination__button ${page === currentPage ? 'pagination__button-active' : ''}">
+        ${page}
+      </button>
     </li>`;
   }
   wrapper.innerHTML = `
-    <li index=${FIRST_PAGE} class="waves-effect pagination__item">First</li>
-    ${wrapper.innerHTML}`;
+  <li>
+    <button index=${FIRST_PAGE}  class="btn waves-effect pagination__button">
+      First
+    </button>
+  </li>${wrapper.innerHTML}`;
 
-  wrapper.innerHTML += `<li index=${pages} class="waves-effect pagination__item">Last</li>`;
-  const paginateButton = document.querySelectorAll('.pagination__item');
+  wrapper.innerHTML += `
+  <li>
+    <button index=${displayPages}  class="btn waves-effect pagination__button">
+      Last
+    </button>
+  </li>`;
+  const paginateButton = document.querySelectorAll('.pagination__button');
   paginateButton.forEach(element => {
     element.addEventListener('click', async(): Promise<void> => {
       const currentIndex = element.getAttribute('index');
