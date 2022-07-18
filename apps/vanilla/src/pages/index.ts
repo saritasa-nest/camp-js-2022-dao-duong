@@ -7,6 +7,7 @@ import { renderAnimeTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
 import { renderFilterOptions } from '../scripts/filter';
 import { resetTableState } from '../scripts/functions';
+import { initSearch } from '../scripts/search';
 
 window.addEventListener('load', (): void => {
   initHomepage();
@@ -19,6 +20,7 @@ const initHomepage = async(): Promise<void> => {
     page: FIRST_PAGE,
     ordering: '',
     type: '',
+    search: '',
   };
 
   const data = await getAnime(paginationConfig);
@@ -26,4 +28,5 @@ const initHomepage = async(): Promise<void> => {
   renderAnimeTable(data);
   renderSortOptions();
   renderFilterOptions();
+  initSearch();
 };

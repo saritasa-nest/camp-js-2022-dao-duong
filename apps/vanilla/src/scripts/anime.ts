@@ -6,14 +6,14 @@ import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
-import { api } from './API';
+import { api } from './api';
 
 /**
  * Get anime data from the server.
  * @param PaginationConfig Option for request parameters.
  */
-export async function getAnime({ limit, page, ordering, type }: PaginationConfig): Promise<Pagination<Anime>> {
-  const params = PaginationMapper.toDto({ limit, page, ordering, type });
+export async function getAnime({ limit, page, ordering, type, search }: PaginationConfig): Promise<Pagination<Anime>> {
+  const params = PaginationMapper.toDto({ limit, page, ordering, type, search });
   const { data } = await api.get<PaginationDto<AnimeDto>>(
     `anime/anime/`, { params },
   );

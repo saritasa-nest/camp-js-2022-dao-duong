@@ -1,5 +1,3 @@
-@import url("./variables.css");
-
 .default-layout {
   margin: 60px auto 0;
   max-width: var(--default-layout-width);

@@ -8,47 +8,55 @@ import { getAnime } from './anime';
 
 /**
  * Render pagination.
- * @param pages Number of total pages.
- * */
-export function renderPaginateButton(pages: number): void {
+ * @param displayPages Number of pages to display.
+ */
+export function renderPagination(displayPages: number): void {
   const pageValueFromStorage = localStorage.getItem('active');
   assertNonNullish(pageValueFromStorage);
   const currentPage = parseInt(pageValueFromStorage, 10);
   const wrapper = document.querySelector<HTMLDivElement>('.pagination');
   assertNonNullish(wrapper);
   wrapper.innerHTML = ``;
-  let maxLeft = (currentPage - HALF_NUMBER_OF_PAGES);
-  let maxRight = (currentPage + HALF_NUMBER_OF_PAGES);
+  let firstDisplayPage = (currentPage - HALF_NUMBER_OF_PAGES);
+  let lastDisplayPage = (currentPage + HALF_NUMBER_OF_PAGES);
 
-  if (maxLeft < FIRST_PAGE) {
-    maxLeft = FIRST_PAGE;
-    maxRight = NUMBER_OF_PAGES;
+  if (firstDisplayPage < FIRST_PAGE) {
+    firstDisplayPage = FIRST_PAGE;
+    lastDisplayPage = NUMBER_OF_PAGES;
   }
 
-  if (maxRight > pages) {
-    maxLeft = pages - (NUMBER_OF_PAGES - FIRST_PAGE);
-
-    if (maxLeft < FIRST_PAGE) {
-      maxLeft = FIRST_PAGE;
+  if (lastDisplayPage > displayPages) {
+    firstDisplayPage = displayPages - (NUMBER_OF_PAGES - FIRST_PAGE);
+    if (firstDisplayPage < FIRST_PAGE) {
+      firstDisplayPage = FIRST_PAGE;
     }
-    maxRight = pages;
+    lastDisplayPage = displayPages;
   }
 
-  for (let page = maxLeft; page <= maxRight; page++) {
+  for (let page = firstDisplayPage; page <= lastDisplayPage; page++) {
     wrapper.innerHTML += `
-    <li index=${page} class="waves-effect pagination__item ${page === currentPage ? 'pagination__item-active' : ''}">
-    ${page}
+    <li>
+      <button index=${page}  class="btn waves-effect pagination__button ${page === currentPage ? 'pagination__button-active' : ''}">
+        ${page}
+      </button>
     </li>`;
   }
   wrapper.innerHTML = `
-    <li index=${FIRST_PAGE} class="waves-effect pagination__item">First</li>
-    ${wrapper.innerHTML}`;
+  <li>
+    <button index=${FIRST_PAGE}  class="btn waves-effect pagination__button">
+      First
+    </button>
+  </li>${wrapper.innerHTML}`;
 
-  wrapper.innerHTML += `<li index=${pages} class="waves-effect pagination__item">Last</li>`;
-  const paginateButton = document.querySelectorAll('.pagination__item');
+  wrapper.innerHTML += `
+  <li>
+    <button index=${displayPages}  class="btn waves-effect pagination__button">
+      Last
+    </button>
+  </li>`;
+  const paginateButton = document.querySelectorAll('.pagination__button');
   paginateButton.forEach(element => {
     element.addEventListener('click', async() => {
-      /* Get and set pagination configuration */
       const currentIndex = element.getAttribute('index');
       assertNonNullish(currentIndex);
       localStorage.setItem('active', currentIndex);
@@ -56,6 +64,8 @@ export function renderPaginateButton(pages: number): void {
       const filterType = localStorage.getItem('type');
       assertNonNullish(sortSetting);
       assertNonNullish(filterType);
+      const searchQuery = localStorage.getItem('search');
+      assertNonNullish(searchQuery);
 
       /* Get anime data. */
       const paginationConfig: PaginationConfig = {
@@ -63,6 +73,7 @@ export function renderPaginateButton(pages: number): void {
         page: parseInt(currentIndex, 10),
         ordering: sortSetting,
         type: filterType,
+        search: searchQuery,
       };
       const data = await getAnime(paginationConfig);
 

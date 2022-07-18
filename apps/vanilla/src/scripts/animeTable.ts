@@ -2,9 +2,9 @@ import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 
-import { dateConverter } from '../scripts/functions';
+import { convertDate } from '../scripts/functions';
 
-import { renderPaginateButton } from './pagination';
+import { renderPagination } from './pagination';
 import { LIMIT } from './variables';
 
 /**
@@ -21,7 +21,7 @@ export function renderAnimeTable(dataset: Pagination<Anime>): void {
       </td>
       <td>${currentValue.englishTitle}</td>
       <td>${currentValue.japaneseTitle}</td>
-      <td>${dateConverter(currentValue.aired.start)}</td>
+      <td>${convertDate(currentValue.aired.start)}</td>
       <td>${currentValue.type}</td>
       <td>${currentValue.status}</td>
     </tr>`, '');
@@ -44,5 +44,5 @@ export function renderAnimeTable(dataset: Pagination<Anime>): void {
     </table>
   `;
   const totalPages = Math.ceil(dataset.count / LIMIT);
-  renderPaginateButton(totalPages);
+  renderPagination(totalPages);
 }

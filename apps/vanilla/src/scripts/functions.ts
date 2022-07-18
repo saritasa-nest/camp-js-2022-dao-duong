@@ -6,10 +6,9 @@ import { FIRST_PAGE } from './variables';
  * Convert response date object to readable format.
  * @param date Date data from response object.
  */
-export function dateConverter(date: string | null): string {
+export function convertDate(date: string | null): string {
   if (date !== null) {
-    return (new Date(date))
-      .toString();
+    return (new Date(date)).toLocaleDateString('en-GB');
   }
   return 'None';
 }
@@ -43,4 +42,5 @@ export function resetTableState(): void {
   localStorage.setItem('active', FIRST_PAGE.toString());
   localStorage.setItem('sort', '');
   localStorage.setItem('type', '');
+  localStorage.setItem('search', '');
 }

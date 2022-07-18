@@ -6,7 +6,7 @@ import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT, FIRST_PAGE } from './variables';
 import { getAnime } from './anime';
 import { setDirectionState, hasSortOption } from './functions';
 
-/**  Render sort options.*/
+/** Render sort options. */
 export function renderSortOptions(): void {
   const sortOptions = document.querySelectorAll('.sort__select-element');
   const sortOption = document.querySelector<HTMLSelectElement>('.sort__option');
@@ -31,6 +31,10 @@ export function renderSortOptions(): void {
       localStorage.setItem('active', FIRST_PAGE.toString());
       const filterType = localStorage.getItem('type');
       assertNonNullish(filterType);
+      const searchQuery = localStorage.getItem('search');
+      assertNonNullish(searchQuery);
+
+      setDirectionState(hasSortOption(sortOption.value));
 
       /* Get anime data */
       const paginationConfig: PaginationConfig = {
@@ -38,10 +42,9 @@ export function renderSortOptions(): void {
         page: FIRST_PAGE,
         ordering: sortSetting,
         type: filterType,
+        search: searchQuery,
       };
       const data = await getAnime(paginationConfig);
-
-      setDirectionState(hasSortOption(sortOption.value));
 
       renderAnimeTable(data);
     });
