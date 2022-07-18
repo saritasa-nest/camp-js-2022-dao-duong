@@ -13,7 +13,6 @@ export function renderFilterOptions(): void {
     filterElement.innerHTML += `<option value="${type.value}" class="type">${type.text}</option>`;
   });
   filterElement.addEventListener('change', async() => {
-    /* Get and set pagination configuration */
     localStorage.setItem('active', FIRST_PAGE.toString());
     localStorage.setItem('type', filterElement.value);
     const sortSetting = localStorage.getItem('sort');
@@ -21,7 +20,6 @@ export function renderFilterOptions(): void {
     assertNonNullish(sortSetting);
     assertNonNullish(searchQuery);
 
-    /* Get anime data */
     const paginationConfig = {
       limit: LIMIT,
       page: FIRST_PAGE,

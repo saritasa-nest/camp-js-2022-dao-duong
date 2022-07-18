@@ -36,7 +36,6 @@ export function renderSortOptions(): void {
 
       setDirectionState(hasSortOption(sortOption.value));
 
-      /* Get anime data */
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: FIRST_PAGE,
