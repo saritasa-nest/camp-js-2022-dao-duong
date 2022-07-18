@@ -17,6 +17,10 @@
   display: flex;
 }
 
+.sort__select-element {
+  padding: 0 20px;
+}
+
 .pagination__item {
   width: 3rem;
 }
