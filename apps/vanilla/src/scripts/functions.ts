@@ -23,7 +23,7 @@ export function renderNavbar(): void {
   const { body } = document;
   body.innerHTML = `
   <nav class="navbar">
-    <h4><a href="/#">Anime</a></h4>
+    <h5><a href="/#">Anime</a></h5>
     <ul>
       <li><a href="/">Home</a></li>
       <li><a href="/profile/">Profile</a></li>
