@@ -1,4 +1,4 @@
-import { Anime } from '@js-camp/core/models/anime/anime';
+import { Anime } from '../../models/anime/anime';
 
 import { AnimeDto } from '../../dtos/anime/anime.dto';
 

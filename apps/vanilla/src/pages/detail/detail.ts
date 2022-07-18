@@ -52,7 +52,7 @@ function renderContent(data: AnimeDetail): void {
   contentElement.innerHTML = `
     <p>English Title: ${data.englishTitle}</p>
     <p>Japanese Title: ${data.japaneseTitle}</p>
-    <p>Type Title: ${data.type}</p>
+    <p>Type: ${data.type}</p>
     <p>Status: ${data.status}</p>
     <p>Synopsis: ${data.synopsis}</p>
     <p>Airing: ${data.airing}</p>

@@ -1,4 +1,4 @@
-import { User } from '@js-camp/core/models/user/user';
+import { User } from '../../models/user/user';
 
 import { UserDto } from '../../dtos/user/user.dto';
 
