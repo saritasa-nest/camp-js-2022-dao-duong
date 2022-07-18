@@ -26,7 +26,6 @@ export function renderSortOptions(): void {
   setDirectionState(hasSortOption(sortOption.value));
   sortOptions.forEach(element => {
     element.addEventListener('change', async() => {
-      /* Get and set pagination data */
       localStorage.setItem('active', FIRST_PAGE.toString());
       const sortSetting = sortDirection.value + sortOption.value;
       localStorage.setItem('sort', sortSetting);
@@ -35,7 +34,6 @@ export function renderSortOptions(): void {
       const searchQuery = localStorage.getItem('search');
       assertNonNullish(searchQuery);
 
-      /* Get anime data */
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: FIRST_PAGE,

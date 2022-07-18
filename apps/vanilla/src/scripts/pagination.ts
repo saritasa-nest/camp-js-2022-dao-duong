@@ -57,7 +57,6 @@ export function renderPagination(displayPages: number): void {
   const paginateButton = document.querySelectorAll('.pagination__button');
   paginateButton.forEach(element => {
     element.addEventListener('click', async() => {
-      /* Get and set pagination data */
       const currentIndex = element.getAttribute('index');
       assertNonNullish(currentIndex);
       localStorage.setItem('active', currentIndex);
@@ -66,7 +65,6 @@ export function renderPagination(displayPages: number): void {
       const searchQuery = localStorage.getItem('search');
       assertNonNullish(searchQuery);
 
-      /* Get anime data */
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: parseInt(currentIndex, 10),
