@@ -5,43 +5,43 @@ import { StudioDto } from './studio.dto';
 
 /** Possible source for anime. */
 export enum Source {
-  'FOUR_KOMA_MANGA',
-  'BOOK',
-  'CARD_GAME',
-  'GAME',
-  'LIGHT_NOVEL',
-  'MANGA',
-  'MIXED_MEDIA',
-  'MUSIC',
-  'NOVEL',
-  'ORIGINAL',
-  'PICTURE_BOOK',
-  'RADIO',
-  'VISUAL_NOVEL',
-  'WEB_MANGA',
-  'WEB_NOVEL',
-  'OTHER',
-  'UNKNOWN',
+  FourKomaManga = 'FOUR_KOMA_MANGA',
+  Book = 'BOOK',
+  CardGame = 'CARD_GAME',
+  Game = 'GAME',
+  LightNovel = 'LIGHT_NOVEL',
+  Manga = 'MANGA',
+  MixedMedia = 'MIXED_MEDIA',
+  Music = 'MUSIC',
+  Novel = 'NOVEL',
+  Original = 'ORIGINAL',
+  PictureBook = 'PICTURE_BOOK',
+  Radio = 'RADIO',
+  VisualNovel = 'VISUAL_NOVEL',
+  WebManga = 'WEB_MANGA',
+  WebNovel = 'WEB_NOVEL',
+  Other = 'OTHER',
+  Unknown = 'UNKNOWN',
 }
 
 /** Possible rating for anime. */
 export enum Rating {
-  'G',
-  'PG',
-  'PG_13',
-  'R_17',
-  'R_PLUS',
-  'R_X',
-  'UNKNOWN',
+  G = 'G',
+  PG = 'PG',
+  PG13 = 'PG_13',
+  R17 = 'R_17',
+  RPlus = 'R_PLUS',
+  RX = 'R_X',
+  Unknown = 'UNKNOWN',
 }
 
 /** Possible season for anime. */
 export enum Season {
-  'SUMMER',
-  'WINTER',
-  'SPRING',
-  'FALL',
-  'NON_SEASONAL',
+  Summer = 'SUMMER',
+  Winter = 'WINTER',
+  Spring = 'SPRING',
+  Fall = 'FALL',
+  NonSeasonal = 'NON_SEASONAL',
 }
 
 /** Anime DTO. */
