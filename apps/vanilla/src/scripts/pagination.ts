@@ -8,9 +8,9 @@ import { renderAnimeTable } from './animeTable';
 
 /**
  * Render pagination.
- * @param displayPages Number of total pages.
- * */
-export function renderPaginateButton(displayPages: number): void {
+ * @param displayPages Number of pages to display.
+ */
+export function renderPagination(displayPages: number): void {
   const pageValueFromStorage = localStorage.getItem('active');
   assertNonNull(pageValueFromStorage);
   const currentPage = parseInt(pageValueFromStorage, 10);
@@ -27,7 +27,6 @@ export function renderPaginateButton(displayPages: number): void {
 
   if (lastDisplayPage > displayPages) {
     firstDisplayPage = displayPages - (NUMBER_OF_PAGES - FIRST_PAGE);
-
     if (firstDisplayPage < FIRST_PAGE) {
       firstDisplayPage = FIRST_PAGE;
     }
@@ -57,16 +56,20 @@ export function renderPaginateButton(displayPages: number): void {
   </li>`;
   const paginateButton = document.querySelectorAll('.pagination__button');
   paginateButton.forEach(element => {
-    element.addEventListener('click', async(): Promise<void> => {
+    element.addEventListener('click', async() => {
       const currentIndex = element.getAttribute('index');
       assertNonNull(currentIndex);
       localStorage.setItem('active', currentIndex);
       const sortSetting = localStorage.getItem('sort');
       assertNonNull(sortSetting);
+      const searchQuery = localStorage.getItem('search');
+      assertNonNull(searchQuery);
+
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: parseInt(currentIndex, 10),
         ordering: sortSetting,
+        search: searchQuery,
       };
       const data = await AnimeService.getAnime(paginationConfig);
       renderAnimeTable(data);

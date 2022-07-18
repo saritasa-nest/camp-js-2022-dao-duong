@@ -8,20 +8,23 @@
   </head>
   <body class="default-layout">
     <h1 class="title">Homepage</h1>
+    <!-- Search -->
+    <div class="search">
+      <input type="search" class="search__input"/>
+      <button class="btn search__button" type="button">Search</button>
+    </div>
     <ul class="pagination">
     </ul>
-      <!-- Select section -->
+    <!-- Select section -->
     <div class="sort">
-      <div class="sort__select-element">
-        <span>Sort by</span>
-        <select class="browser-default select sort__option">
+      <label> Sort by
+        <select class="browser-default sort__select-element sort__option">
         </select>
-      </div>
-      <div class="sort__select-element">
-        <span>Order</span>
-        <select class="browser-default select sort__direction">
+      </label>
+      <label> Order
+        <select class="browser-default sort__select-element sort__direction">
         </select>
-      </div>
+      </label>
     </div>
     <div class="anime-table"></div>
     <script type="module" src="./index.ts"></script>

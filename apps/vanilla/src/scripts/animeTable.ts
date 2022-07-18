@@ -6,7 +6,7 @@ import { convertDate, navigate } from '../scripts/functions';
 
 import { Url } from './constants';
 
-import { renderPaginateButton } from './pagination';
+import { renderPagination } from './pagination';
 import { LIMIT } from './variables';
 
 /**
@@ -47,7 +47,7 @@ export function renderAnimeTable(dataset: Pagination<Anime>): void {
     </table>
   `;
   const totalPages = dataset.count / LIMIT;
-  renderPaginateButton(totalPages);
+  renderPagination(totalPages);
   const animeTableRows = document.querySelectorAll<HTMLTableRowElement>('tbody tr');
   assertNonNull(animeTableRows);
   animeTableRows.forEach(anime => {

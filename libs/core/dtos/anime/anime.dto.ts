@@ -1,4 +1,3 @@
-/** Aired DTO. */
 import { DateRangeDto } from '../dateRange.dto';
 
 /** Possible values for type. */
