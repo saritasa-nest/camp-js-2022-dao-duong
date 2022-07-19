@@ -1,3 +1,6 @@
+// Disable `require-await` to make methods async
+// for better refactoring/re-usability.
+/* eslint-disable require-await */
 import { TokenDto } from '@js-camp/core/dtos/token.dto';
 
 import { Token } from '../scripts/constants';
