@@ -9,6 +9,7 @@ import { initSearch } from '../scripts/search';
 
 import { Navbar } from '../namespaces/navbar';
 import { AuthService } from '../services/authService';
+import { PaginationLocalStorage } from '../scripts/constants';
 
 window.addEventListener('load', async(): Promise<void> => {
   await AuthService.navigateByAuthorization();
@@ -17,9 +18,9 @@ window.addEventListener('load', async(): Promise<void> => {
 });
 
 const initHomepage = async(): Promise<void> => {
-  localStorage.setItem('active', FIRST_PAGE.toString());
-  localStorage.setItem('sort', '');
-  localStorage.setItem('search', '');
+  localStorage.setItem(PaginationLocalStorage.active, FIRST_PAGE.toString());
+  localStorage.setItem(PaginationLocalStorage.sort, '');
+  localStorage.setItem(PaginationLocalStorage.search, '');
   const paginationConfig: PaginationConfig = {
     limit: LIMIT,
     page: FIRST_PAGE,

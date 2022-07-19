@@ -3,7 +3,6 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Navbar } from '../../namespaces/navbar';
 import { Utility } from '../../namespaces/utility';
-import { renderNavbar } from '../../scripts/functions';
 
 import { AuthService } from '../../services/authService';
 import { UserService } from '../../services/userService';
@@ -12,7 +11,6 @@ window.addEventListener('load', async(): Promise<void> => {
   await AuthService.navigateByAuthorization();
   Navbar.renderNavbar();
   renderUserProfile();
-  renderNavbar();
 });
 
 /** Render user profile. */

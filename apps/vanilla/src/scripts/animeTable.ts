@@ -2,12 +2,14 @@ import { Anime } from '@js-camp/core/models/anime/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
-import { convertDate, navigate } from '../scripts/functions';
+import { Utility } from '../namespaces/utility';
 
 import { Url } from './constants';
 
 import { renderPagination } from './pagination';
 import { LIMIT } from './variables';
+
+const clickedAnime = 'CLICKED_ANIME_ID';
 
 /**
  * Render anime table.
@@ -23,7 +25,7 @@ export function renderAnimeTable(dataset: Pagination<Anime>): void {
          </td>
          <td>${currentValue.englishTitle}</td>
          <td>${currentValue.japaneseTitle}</td>
-         <td>${convertDate(currentValue.aired.start)}</td>
+         <td>${Utility.convertDate(currentValue.aired.start)}</td>
          <td>${currentValue.type}</td>
          <td>${currentValue.status}</td>
        </tr>
@@ -52,8 +54,8 @@ export function renderAnimeTable(dataset: Pagination<Anime>): void {
     anime.addEventListener('click', () => {
       const animeId = anime.getAttribute('data-id');
       assertNonNull(animeId);
-      localStorage.setItem('CLICKED_ANIME_ID', animeId);
-      navigate(Url.Detail);
+      localStorage.setItem(clickedAnime, animeId);
+      Utility.navigate(Url.Detail);
     });
   });
 }

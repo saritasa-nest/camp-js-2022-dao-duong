@@ -3,10 +3,11 @@ import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
 import { AnimeService } from '../services/animeService';
 
+import { Utility } from '../namespaces/utility';
+
 import { renderAnimeTable } from './animeTable';
 import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT, FIRST_PAGE } from './variables';
-
-import { setDirectionState, hasSortOption } from './functions';
+import { PaginationLocalStorage } from './constants';
 
 /** Render sort options. */
 export function renderSortOptions(): void {
@@ -25,15 +26,15 @@ export function renderSortOptions(): void {
     sortDirection.innerHTML += `<option value="${direction.value}" class="select__option">${direction.text}</option>`;
   });
 
-  setDirectionState(hasSortOption(sortOption.value));
+  Utility.setDirectionState(Utility.hasSortOption(sortOption.value));
   sortOptions.forEach(element => {
     element.addEventListener('change', async() => {
-      localStorage.setItem('active', FIRST_PAGE.toString());
       const sortSetting = sortDirection.value + sortOption.value;
-      localStorage.setItem('sort', sortSetting);
+      localStorage.setItem(PaginationLocalStorage.sort, sortSetting);
+      localStorage.setItem(PaginationLocalStorage.active, FIRST_PAGE.toString());
 
-      setDirectionState(hasSortOption(sortOption.value));
-      const searchQuery = localStorage.getItem('search');
+      Utility.setDirectionState(Utility.hasSortOption(sortOption.value));
+      const searchQuery = localStorage.getItem(PaginationLocalStorage.search);
       assertNonNull(searchQuery);
 
       const paginationConfig: PaginationConfig = {

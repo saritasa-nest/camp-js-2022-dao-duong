@@ -12,3 +12,11 @@ export enum Url {
   Detail = '/detail/',
   Profile = '/profile/',
 }
+
+/** Local storage key for pagination data. */
+export enum PaginationLocalStorage {
+  active = 'ACTIVE',
+  search = 'SEARCH',
+  type = 'TYPE',
+  sort = 'SORT',
+}
