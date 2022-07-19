@@ -3,8 +3,11 @@ import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
 import { AnimeService } from '../services/animeService';
 
-import { LIMIT, FIRST_PAGE, HALF_NUMBER_OF_PAGES, NUMBER_OF_PAGES } from './variables';
+import { LIMIT, FIRST_PAGE, NUMBER_OF_PAGES } from './variables';
 import { renderAnimeTable } from './animeTable';
+
+/** Half number of pages to display.*/
+const HALF_NUMBER_OF_PAGES = Math.floor(NUMBER_OF_PAGES / 2);
 
 /**
  * Render pagination.
