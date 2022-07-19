@@ -4,12 +4,10 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Utility } from '../namespaces/utility';
 
-import { Url } from './constants';
+import { CLICKED_ANIME, Url } from './constants';
 
 import { renderPagination } from './pagination';
 import { LIMIT } from './variables';
-
-const clickedAnime = 'CLICKED_ANIME_ID';
 
 /**
  * Render anime table.
@@ -54,7 +52,7 @@ export function renderAnimeTable(dataset: Pagination<Anime>): void {
     anime.addEventListener('click', () => {
       const animeId = anime.getAttribute('data-id');
       assertNonNull(animeId);
-      localStorage.setItem(clickedAnime, animeId);
+      localStorage.setItem(CLICKED_ANIME, animeId);
       Utility.navigate(Url.Detail);
     });
   });

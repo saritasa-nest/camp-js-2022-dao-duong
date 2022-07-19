@@ -20,3 +20,5 @@ export enum PaginationLocalStorage {
   type = 'TYPE',
   sort = 'SORT',
 }
+
+export const CLICKED_ANIME = 'CLICKED_ANIME_ID';

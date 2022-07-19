@@ -1,21 +1,19 @@
 import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
-import { Url } from '../../scripts/constants';
-
-import { checkAuthentication, convertDate, navigate, renderNavbar } from '../../scripts/functions';
+import { Navbar } from '../../namespaces/navbar';
+import { Utility } from '../../namespaces/utility';
+import { CLICKED_ANIME } from '../../scripts/constants';
 
 import { AnimeService } from '../../services/animeService';
+import { AuthService } from '../../services/authService';
 
 window.addEventListener('load', async() => {
-  const isAuthenticated = await checkAuthentication();
-  if (isAuthenticated === false) {
-    navigate(Url.Login);
-  }
-  const id = localStorage.getItem('CLICKED_ANIME_ID');
+  await AuthService.navigateByAuthorization();
+  Navbar.renderNavbar();
+  const id = localStorage.getItem(CLICKED_ANIME);
   assertNonNull(id);
   const data = await AnimeService.getAnimeDetail(id);
-  renderNavbar();
   renderImage(data.image);
   renderContent(data);
   if (data.youtubeTrailerId) {
@@ -56,8 +54,8 @@ function renderContent(data: AnimeDetail): void {
     <p>Status: ${data.status}</p>
     <p>Synopsis: ${data.synopsis}</p>
     <p>Airing: ${data.airing}</p>
-    <p>Aired Start: ${convertDate(data.aired.start)}</p>
-    <p>Aired End: ${convertDate(data.aired.end)}</p>
+    <p>Aired Start: ${Utility.convertDate(data.aired.start)}</p>
+    <p>Aired End: ${Utility.convertDate(data.aired.end)}</p>
     <p>Studio List: ${data.studioList.map(studio => studio.name)}</p>
     <p>Genre List: ${data.genreList.map(genre => genre.name)}</p>
   `;
