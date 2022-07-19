@@ -10,7 +10,7 @@ export namespace StorageService {
    * @param value Value to store.
    */
   export async function set<T>(key: string, value: T): Promise<void> {
-    await localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
   }
 
   /**
@@ -30,7 +30,7 @@ export namespace StorageService {
    * @param key Store key.
    */
   export async function remove(key: string): Promise<void> {
-    await localStorage.removeItem(key);
+    localStorage.removeItem(key);
   }
 
   /**

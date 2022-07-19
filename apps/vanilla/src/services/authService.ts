@@ -65,8 +65,7 @@ export namespace AuthService {
     if (token === null) {
       return false;
     }
-    const isValid = await AuthService.verifyToken(token);
-    return isValid;
+    return AuthService.verifyToken(token);
   }
 
   /** Check whether the user authenticated or not.*/
