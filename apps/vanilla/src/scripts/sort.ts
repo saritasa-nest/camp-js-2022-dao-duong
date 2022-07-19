@@ -2,7 +2,7 @@ import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
 import { renderAnimeTable } from './animeTable';
-import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT, FIRST_PAGE } from './variables';
+import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT, FIRST_PAGE, ACTIVE_LS, SORT_LS, TYPE_LS, SEARCH_LS } from './variables';
 import { getAnime } from './anime';
 import { setDirectionState, hasSortOption } from './functions';
 
@@ -26,13 +26,12 @@ export function renderSortOptions(): void {
   setDirectionState(hasSortOption(sortOption.value));
   sortOptions.forEach(element => {
     element.addEventListener('change', async() => {
-      localStorage.setItem('active', FIRST_PAGE.toString());
       const sortSetting = sortDirection.value + sortOption.value;
-      localStorage.setItem('sort', sortSetting);
-      localStorage.setItem('active', FIRST_PAGE.toString());
-      const filterType = localStorage.getItem('type');
+      localStorage.setItem(SORT_LS, sortSetting);
+      localStorage.setItem(ACTIVE_LS, FIRST_PAGE.toString());
+      const filterType = localStorage.getItem(TYPE_LS);
+      const searchQuery = localStorage.getItem(SEARCH_LS);
       assertNonNullish(filterType);
-      const searchQuery = localStorage.getItem('search');
       assertNonNullish(searchQuery);
       setDirectionState(hasSortOption(sortOption.value));
       const paginationConfig: PaginationConfig = {

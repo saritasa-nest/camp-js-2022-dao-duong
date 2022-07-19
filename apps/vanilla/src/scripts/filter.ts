@@ -3,7 +3,7 @@ import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 import { getAnime } from './anime';
 import { renderAnimeTable } from './animeTable';
 
-import { FILTERING_TYPES, FIRST_PAGE, LIMIT } from './variables';
+import { ACTIVE_LS, FILTERING_TYPES, FIRST_PAGE, LIMIT, SEARCH_LS, SORT_LS, TYPE_LS } from './variables';
 
 /** Render filtering.*/
 export function renderFilterOptions(): void {
@@ -13,10 +13,10 @@ export function renderFilterOptions(): void {
     filterElement.innerHTML += `<option value="${type.value}" class="type">${type.text}</option>`;
   });
   filterElement.addEventListener('change', async() => {
-    localStorage.setItem('active', FIRST_PAGE.toString());
-    localStorage.setItem('type', filterElement.value);
-    const sortSetting = localStorage.getItem('sort');
-    const searchQuery = localStorage.getItem('search');
+    localStorage.setItem(ACTIVE_LS, FIRST_PAGE.toString());
+    localStorage.setItem(TYPE_LS, filterElement.value);
+    const sortSetting = localStorage.getItem(SORT_LS);
+    const searchQuery = localStorage.getItem(SEARCH_LS);
     assertNonNullish(sortSetting);
     assertNonNullish(searchQuery);
 

@@ -1,7 +1,7 @@
 import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
-import { LIMIT, FIRST_PAGE, NUMBER_OF_PAGES } from './variables';
+import { LIMIT, FIRST_PAGE, NUMBER_OF_PAGES, ACTIVE_LS, SORT_LS, TYPE_LS, SEARCH_LS } from './variables';
 import { renderAnimeTable } from './animeTable';
 
 import { getAnime } from './anime';
@@ -14,7 +14,7 @@ const HALF_NUMBER_OF_PAGES = Math.floor(NUMBER_OF_PAGES / 2);
  * @param displayPages Number of pages to display.
  */
 export function renderPagination(displayPages: number): void {
-  const pageValueFromStorage = localStorage.getItem('active');
+  const pageValueFromStorage = localStorage.getItem(ACTIVE_LS);
   assertNonNullish(pageValueFromStorage);
   const currentPage = parseInt(pageValueFromStorage, 10);
   const wrapper = document.querySelector<HTMLDivElement>('.pagination');
@@ -62,10 +62,10 @@ export function renderPagination(displayPages: number): void {
     element.addEventListener('click', async() => {
       const currentIndex = element.getAttribute('index');
       assertNonNullish(currentIndex);
-      localStorage.setItem('active', currentIndex);
-      const sortSetting = localStorage.getItem('sort');
-      const filterType = localStorage.getItem('type');
-      const searchQuery = localStorage.getItem('search');
+      localStorage.setItem(ACTIVE_LS, currentIndex);
+      const sortSetting = localStorage.getItem(SORT_LS);
+      const filterType = localStorage.getItem(TYPE_LS);
+      const searchQuery = localStorage.getItem(SEARCH_LS);
       assertNonNullish(sortSetting);
       assertNonNullish(filterType);
       assertNonNullish(searchQuery);
