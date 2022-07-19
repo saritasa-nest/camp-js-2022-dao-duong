@@ -6,9 +6,6 @@ export const FIRST_PAGE = 1;
 /** Number of pages to display.*/
 export const NUMBER_OF_PAGES = 9;
 
-/** Half number of pages to display.*/
-export const HALF_NUMBER_OF_PAGES = Math.floor(NUMBER_OF_PAGES / 2);
-
 /** Number of items per request. */
 export const LIMIT = 10;
 

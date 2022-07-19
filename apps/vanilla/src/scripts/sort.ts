@@ -26,6 +26,7 @@ export function renderSortOptions(): void {
   setDirectionState(hasSortOption(sortOption.value));
   sortOptions.forEach(element => {
     element.addEventListener('change', async() => {
+      localStorage.setItem('active', FIRST_PAGE.toString());
       const sortSetting = sortDirection.value + sortOption.value;
       localStorage.setItem('sort', sortSetting);
       localStorage.setItem('active', FIRST_PAGE.toString());
@@ -33,9 +34,7 @@ export function renderSortOptions(): void {
       assertNonNullish(filterType);
       const searchQuery = localStorage.getItem('search');
       assertNonNullish(searchQuery);
-
       setDirectionState(hasSortOption(sortOption.value));
-
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: FIRST_PAGE,
