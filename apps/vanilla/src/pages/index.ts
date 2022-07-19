@@ -7,16 +7,13 @@ import { renderAnimeTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
 import { initSearch } from '../scripts/search';
 
-import { Url } from '../scripts/constants';
-import { checkAuthentication, navigate, renderNavbar } from '../scripts/functions';
+import { Navbar } from '../namespaces/navbar';
+import { AuthService } from '../services/authService';
 
 window.addEventListener('load', async(): Promise<void> => {
-  const isAuthenticated = await checkAuthentication();
-  if (!isAuthenticated) {
-    navigate(Url.Login);
-  }
+  await AuthService.navigateByAuthorization();
+  Navbar.renderNavbar();
   initHomepage();
-  renderNavbar();
 });
 
 const initHomepage = async(): Promise<void> => {

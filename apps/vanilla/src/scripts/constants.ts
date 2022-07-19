@@ -6,8 +6,9 @@ export enum Token {
 
 /** Available url. */
 export enum Url {
-  Base = '/',
+  Home = '/',
   Login = '/login/',
   Register = '/register/',
   Detail = '/detail/',
+  Profile = '/profile/',
 }

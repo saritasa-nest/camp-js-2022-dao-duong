@@ -9,7 +9,7 @@ export namespace ErrorService{
    * @param errorElement Input element that contains error message.
    * @param err Error messages of the element.
    */
-  export function createErrorElement(errorElement: HTMLInputElement | HTMLFormElement, err: string): void {
+  export function displayErrorMessage(errorElement: HTMLInputElement | HTMLFormElement, err: string): void {
     const errorText = document.createElement('span');
     errorText.innerHTML = err;
     errorText.classList.add('input-error');
@@ -28,25 +28,25 @@ export namespace ErrorService{
    * Render error message to the form input field.
    * @param error Error message.
    */
-  export function renderErrorMessage(error: unknown): void {
+  export function renderInputError(error: unknown): void {
     removeAllErrorElement();
     const errorMessages = getError(error);
 
     // Render error message detail
     const inputForm = document.querySelector<HTMLFormElement>('.form');
     assertNonNull(inputForm);
-    createErrorElement(inputForm, errorMessages.detail);
+    displayErrorMessage(inputForm, errorMessages.detail);
     for (const err in errorMessages.data) {
       if (err === 'token' || err === 'non_field_errors') {
         errorMessages.data[err].map(errorMessage => {
-          createErrorElement(inputForm, errorMessage);
+          displayErrorMessage(inputForm, errorMessage);
         });
       } else {
         const textInput = document.querySelector<HTMLInputElement>(`input[name="${err}"]`);
         assertNonNull(textInput);
         assertNonNull(errorMessages.data);
         errorMessages.data[err].map(errorMessage => {
-          createErrorElement(textInput, errorMessage);
+          displayErrorMessage(textInput, errorMessage);
       });
       }
     }

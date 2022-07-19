@@ -1,7 +1,7 @@
 /** Register user DTO. */
 export interface UserDto {
 
-  /** User email.*/
+  /** User email. */
   readonly email: string;
 
   /** User first name. */
@@ -13,12 +13,12 @@ export interface UserDto {
   /** User password. */
   readonly password: string | null;
 
-  /** User avatar.*/
+  /** User avatar. */
   readonly avatar: string | null;
 
   /** User created date. */
   readonly created: string;
 
-  /** User modified date.*/
+  /** User modified date. */
   readonly modified: string;
 }
