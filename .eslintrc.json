@@ -19,7 +19,8 @@
               }
             ]
           }
-        ]
+        ],
+        "@typescript-eslint/naming-convention": "off"
       }
     }
   ]

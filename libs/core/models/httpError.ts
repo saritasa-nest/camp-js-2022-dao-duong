@@ -1,4 +1,4 @@
-import { ErrorDataDto } from '../dtos/httpError.dto';
+import { ErrorData } from '../dtos/httpError.dto';
 
 import { Immerable, OmitImmerable } from './immerable';
 
@@ -12,7 +12,7 @@ export class HttpError extends Immerable {
   public readonly code?: string;
 
   /** Error data. */
-  public readonly data?: ErrorDataDto;
+  public readonly data?: ErrorData;
 
   public constructor(error: ErrorInitArgs) {
     super();

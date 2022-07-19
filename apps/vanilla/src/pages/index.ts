@@ -1,10 +1,7 @@
-import { Url } from '../scripts/constants';
-import { checkAuthentication, navigate, renderLogoutButton } from '../scripts/functions';
+import { Navbar } from '../namespaces/navbar';
+import { AuthService } from '../services/authService';
 
 window.addEventListener('load', async() => {
-  const isAuthenticated = await checkAuthentication();
-  if (!isAuthenticated) {
-    navigate(Url.Login);
-  }
-  renderLogoutButton();
+  await AuthService.navigateByAuthorization();
+  Navbar.renderNavbar();
 });

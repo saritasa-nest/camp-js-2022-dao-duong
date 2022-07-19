@@ -1,19 +1,17 @@
 import { Login } from '@js-camp/core/models/login';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
+import { Utility } from '../../namespaces/utility';
+
 import { Url } from '../../scripts/constants';
 
-import { checkAuthentication, navigate } from '../../scripts/functions';
 import { AuthService } from '../../services/authService';
 import { ErrorService } from '../../services/errorService';
 
 const loginForm = document.querySelector<HTMLFormElement>('.form');
 
 window.addEventListener('load', async() => {
-  const isAuthenticated = await checkAuthentication();
-  if (isAuthenticated) {
-    navigate(Url.Base);
-  }
+  await AuthService.navigateByAuthorization();
 });
 
 assertNonNull(loginForm);
@@ -29,8 +27,8 @@ loginForm.addEventListener('submit', async(event): Promise<void> => {
   };
   try {
     await AuthService.login(loginData);
-    navigate(Url.Base);
+    Utility.navigate(Url.Home);
   } catch (error: unknown) {
-    ErrorService.renderErrorMessage(error);
+    ErrorService.renderInputError(error);
   }
 });
