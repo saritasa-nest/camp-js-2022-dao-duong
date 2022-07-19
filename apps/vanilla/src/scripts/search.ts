@@ -9,12 +9,13 @@ import { FIRST_PAGE, LIMIT } from './variables';
 
 /** Search feature. */
 export function initSearch(): void {
+  const searchFormElement = document.querySelector<HTMLFormElement>('.search');
   const searchInputElement = document.querySelector<HTMLInputElement>('.search__input');
-  const searchButtonElement = document.querySelector<HTMLButtonElement>('.search__button');
   assertNonNull(searchInputElement);
-  assertNonNull(searchButtonElement);
+  assertNonNull(searchFormElement);
 
-  searchButtonElement.addEventListener('click', async() => {
+  searchFormElement.addEventListener('submit', async event => {
+    event.preventDefault();
     localStorage.setItem(PaginationLocalStorage.active, FIRST_PAGE.toString());
     localStorage.setItem(PaginationLocalStorage.search, searchInputElement.value);
     const orderingOptions = localStorage.getItem(PaginationLocalStorage.sort);
