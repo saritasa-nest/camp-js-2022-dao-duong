@@ -53,9 +53,9 @@ export function renderTable(dataset: Pagination<Anime>): void {
 export function handleAnimeClick(): void {
   const animeTableRows = document.querySelectorAll<HTMLTableRowElement>('tbody tr');
   assertNonNull(animeTableRows);
-  animeTableRows.forEach(anime => {
-    anime.addEventListener('click', () => {
-      const animeId = anime.getAttribute('data-id');
+  animeTableRows.forEach(animeRow => {
+    animeRow.addEventListener('click', () => {
+      const animeId = animeRow.getAttribute('data-id');
       assertNonNull(animeId);
       localStorage.setItem(CLICKED_ANIME, animeId);
       Utility.navigate(Url.Detail);

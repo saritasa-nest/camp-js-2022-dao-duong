@@ -7,10 +7,6 @@
   color: var(--heading-color-1);
 }
 
-.card__content {
-  padding-top: 40px;
-}
-
 .navbar {
   position: fixed;
   top: 0;

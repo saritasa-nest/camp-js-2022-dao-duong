@@ -29,13 +29,12 @@ export function renderSortOptions(): void {
   sortOptions.forEach(element => {
     element.addEventListener('change', async() => {
       const sortSetting = sortDirection.value + sortOption.value;
-      localStorage.setItem(PaginationLocalStorage.sort, sortSetting);
-
-      Utility.setDirectionState(Utility.hasSortOption(sortOption.value));
       const currentPage = localStorage.getItem(PaginationLocalStorage.active);
       const searchQuery = localStorage.getItem(PaginationLocalStorage.search);
+      localStorage.setItem(PaginationLocalStorage.sort, sortSetting);
       assertNonNull(searchQuery);
       assertNonNull(currentPage);
+      Utility.setDirectionState(Utility.hasSortOption(sortOption.value));
 
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
@@ -44,7 +43,6 @@ export function renderSortOptions(): void {
         search: searchQuery,
       };
       const anime = await AnimeService.getAnime(paginationConfig);
-
       renderTable(anime);
     });
   });
