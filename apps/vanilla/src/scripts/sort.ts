@@ -14,7 +14,6 @@ export function renderSortOptions(): void {
   const sortOptions = document.querySelectorAll('.sort__select-element');
   const sortOption = document.querySelector<HTMLSelectElement>('.sort__option');
   const sortDirection = document.querySelector<HTMLSelectElement>('.sort__direction');
-
   assertNonNull(sortOption);
   assertNonNull(sortDirection);
   sortOption.innerHTML = ``;

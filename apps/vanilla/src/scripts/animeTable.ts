@@ -17,7 +17,7 @@ export function renderTable(dataset: Pagination<Anime>): void {
   const dataTable = document.querySelector<HTMLDivElement>('.anime-table');
   assertNonNull(dataTable);
   const tableBody = dataset.results.reduce((previousBody: string, currentData: Anime): string => `${previousBody}
-    <tr>
+    <tr data-id=${currentData.id}>
       <td>
         <img class="anime-image" src="${currentData.image}" alt="Anime image">
       </td>
