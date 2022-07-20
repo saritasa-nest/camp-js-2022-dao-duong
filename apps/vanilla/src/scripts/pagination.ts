@@ -12,7 +12,7 @@ const HALF_NUMBER_OF_PAGES = Math.floor(NUMBER_OF_PAGES / 2);
 
 /**
  * Render pagination.
- * @param displayPages Number of pages to display.
+ * @param displayPages Pages number  to display.
  */
 export function renderPagination(displayPages: number): void {
   const pageValueFromStorage = localStorage.getItem(PaginationLocalStorage.active);
