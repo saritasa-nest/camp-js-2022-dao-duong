@@ -8,7 +8,7 @@ import { AuthService } from '../../services/authService';
 
 window.addEventListener('load', async() => {
   await AuthService.navigateByAuthorization();
-  Navbar.renderNavbar();
+  await Navbar.renderNavbar();
   const animeId = localStorage.getItem(CLICKED_ANIME);
   assertNonNull(animeId);
   const animeDetail = await AnimeService.getAnimeDetail(animeId);

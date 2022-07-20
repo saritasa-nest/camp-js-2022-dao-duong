@@ -9,7 +9,7 @@ import { UserService } from '../../services/userService';
 
 window.addEventListener('load', async(): Promise<void> => {
   await AuthService.navigateByAuthorization();
-  Navbar.renderNavbar();
+  await Navbar.renderNavbar();
   renderUserProfile();
 });
 

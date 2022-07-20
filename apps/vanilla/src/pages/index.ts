@@ -8,12 +8,10 @@ import { renderSortOptions } from '../scripts/sort';
 import { initSearch } from '../scripts/search';
 
 import { Navbar } from '../namespaces/navbar';
-import { AuthService } from '../services/authService';
 import { PaginationLocalStorage } from '../scripts/constants';
 
 window.addEventListener('load', async(): Promise<void> => {
-  await AuthService.navigateByAuthorization();
-  Navbar.renderNavbar();
+  await Navbar.renderNavbar();
   initHomepage();
 });
 

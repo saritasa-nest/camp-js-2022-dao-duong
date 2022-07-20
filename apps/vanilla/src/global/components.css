@@ -33,7 +33,8 @@
   background-color: var(--active-background-color);
 }
 
-.logout-btn {
+.logout-btn,
+.login-btn {
   height: 100%;
   background-color: transparent;
   border: none;
@@ -43,7 +44,8 @@
   padding: 0 20px;
 }
 
-.logout-btn:hover {
+.logout-btn:hover,
+.login-btn:hover {
   background-color: var(--secondary-background-color);
 }
 

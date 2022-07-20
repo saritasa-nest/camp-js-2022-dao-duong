@@ -53,18 +53,18 @@ export namespace AuthService {
 
   /** Check whether the user authenticated or not.*/
   export async function checkIsAuthenticated(): Promise<boolean> {
-    const token = await StorageService.get<string>(Token.Access);
-    if (token === null) {
+    const accessToken = await StorageService.get<string>(Token.Access);
+    if (accessToken === null) {
       return false;
     }
-    return AuthService.verifyToken(token);
+    return AuthService.verifyToken(accessToken);
   }
 
   /** Check whether the user authenticated or not.*/
   export async function navigateByAuthorization(): Promise<void> {
     const currentLocation = window.location.pathname;
     const isAuthenticated = await checkIsAuthenticated();
-    if ((currentLocation === Url.Home || currentLocation === Url.Profile) && !isAuthenticated) {
+    if ((currentLocation === Url.Detail || currentLocation === Url.Profile) && !isAuthenticated) {
       Utility.navigate(Url.Login);
     }
     if ((currentLocation === Url.Login || currentLocation === Url.Register) && isAuthenticated) {
