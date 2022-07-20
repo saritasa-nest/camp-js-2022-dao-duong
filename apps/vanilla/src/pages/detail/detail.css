@@ -48,15 +48,13 @@
   padding-top: 56.25%;
 }
 
-.modal-wrapper__inner .video {
-  position: absolute;
-  width: 60%;
-  height: 60%;
-  top: 10%;
-}
-
+.modal-wrapper__inner .video,
 .modal-wrapper__inner .image {
   position: absolute;
   height: 60%;
   top: 10%;
+}
+
+.modal-wrapper__inner .video {
+  width: 60%;
 }
