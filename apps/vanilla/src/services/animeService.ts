@@ -123,17 +123,17 @@ export namespace AnimeService {
 
   /**
    * Handle media click .
-   * @param imgUrl Image URL.
-   * @param trailerUrl Trailer URL.
+   * @param imageURL Image URL.
+   * @param trailerURL Trailer URL.
    */
-  export function handleMediaClick(imgUrl: string, trailerUrl: string | null): void {
+  export function handleMediaClick(imageURL: string, trailerURL: string | null): void {
     const imageElement = document.querySelector<HTMLImageElement>('.anime-detail__image');
     assertNonNull(imageElement);
-    imageElement.addEventListener('click', () => openFullSizeImage(imgUrl));
-    if (trailerUrl) {
+    imageElement.addEventListener('click', () => openFullSizeImage(imageURL));
+    if (trailerURL) {
       const trailerButton = document.querySelector('.trailer-btn');
       assertNonNull(trailerButton);
-      trailerButton.addEventListener('click', () => openTrailer(trailerUrl));
+      trailerButton.addEventListener('click', () => openTrailer(trailerURL));
     }
   }
 }
