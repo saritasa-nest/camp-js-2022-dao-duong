@@ -54,7 +54,7 @@ registerForm.addEventListener('submit', async event => {
 /**
  * Validate password.
  * @param password Password to validate.
- * @param confirmPassword Password to validate.
+ * @param confirmPassword Confirm password to validate.
  */
 function validateConfirmPassword(password: string, confirmPassword: string): boolean {
   return (password === confirmPassword);

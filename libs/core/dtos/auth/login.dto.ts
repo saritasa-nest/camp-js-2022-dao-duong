@@ -1,7 +1,7 @@
 /** Login user DTO. */
 export interface LoginDto {
 
-  /** User email.*/
+  /** User email. */
   readonly email: string;
 
   /** User password. */

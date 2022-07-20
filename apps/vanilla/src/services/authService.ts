@@ -32,7 +32,7 @@ export namespace AuthService {
     StorageService.setToken(registerResponse.data);
   }
 
-  /** Logout service.*/
+  /** Logout service. */
   export async function logout(): Promise<void> {
     await StorageService.clearToken();
   }
@@ -51,7 +51,7 @@ export namespace AuthService {
     }
   }
 
-  /** Check whether the user authenticated or not.*/
+  /** Check whether the user authenticated or not. */
   export async function checkIsAuthenticated(): Promise<boolean> {
     const accessToken = await StorageService.get<string>(Token.Access);
     if (accessToken === null) {
@@ -60,7 +60,7 @@ export namespace AuthService {
     return AuthService.verifyToken(accessToken);
   }
 
-  /** Check whether the user authenticated or not.*/
+  /** Navigate user based on authorization. */
   export async function navigateByAuthorization(): Promise<void> {
     const currentLocation = window.location.pathname;
     const isAuthenticated = await checkIsAuthenticated();

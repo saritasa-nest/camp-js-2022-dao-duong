@@ -45,7 +45,7 @@ export namespace StorageService {
     await StorageService.set(Token.Refresh, token.refresh);
   }
 
-  /** Clear tokens data from storage.*/
+  /** Clear tokens data from storage. */
   export async function clearToken(): Promise<void> {
     await StorageService.remove(Token.Access);
     await StorageService.remove(Token.Refresh);

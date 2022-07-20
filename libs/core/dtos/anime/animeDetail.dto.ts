@@ -44,7 +44,7 @@ export enum Season {
   NonSeasonal = 'NON_SEASONAL',
 }
 
-/** Anime DTO. */
+/** Anime detail DTO. */
 export interface AnimeDetailDto extends AnimeDto {
 
   /** Youtube trailer id. */

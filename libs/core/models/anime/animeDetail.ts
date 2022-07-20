@@ -7,7 +7,7 @@ import { DateRange } from '../dateRange';
 import { Genre } from './genre';
 import { Studio } from './studio';
 
-/** Anime. */
+/** Anime Detail. */
 export class AnimeDetail extends Immerable {
   /** ID. */
   public readonly id: number;

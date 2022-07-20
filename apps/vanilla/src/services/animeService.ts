@@ -125,7 +125,7 @@ export namespace AnimeService {
    * Handle media click .
    * @param imgUrl Image URL.
    * @param trailerUrl Trailer URL.
-   * */
+   */
   export function handleMediaClick(imgUrl: string, trailerUrl: string | null): void {
     const imageElement = document.querySelector<HTMLImageElement>('.anime-detail__image');
     assertNonNull(imageElement);

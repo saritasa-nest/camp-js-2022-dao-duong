@@ -1,4 +1,4 @@
-/** Register user DTO. */
+/** User DTO. */
 export interface UserDto {
 
   /** User email. */

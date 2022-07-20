@@ -7,7 +7,7 @@ import { LIMIT, FIRST_PAGE, NUMBER_OF_PAGES } from './variables';
 import { PaginationLocalStorage } from './constants';
 import { renderTable } from './animeTable';
 
-/** Half number of pages to display.*/
+/** Half number of pages to display. */
 const HALF_NUMBER_OF_PAGES = Math.floor(NUMBER_OF_PAGES / 2);
 
 /**

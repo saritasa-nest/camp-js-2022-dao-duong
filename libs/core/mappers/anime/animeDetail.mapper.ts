@@ -8,7 +8,7 @@ import { StudioMapper } from './studio.mapper';
 export namespace AnimeDetailMapper {
 
   /**
-   * Maps AnimeDto to Anime model.
+   * Maps AnimeDetailDto to AnimeDetail model.
    * @param dto Anime dto.
    */
   export function fromDto(dto: AnimeDetailDto): AnimeDetail {

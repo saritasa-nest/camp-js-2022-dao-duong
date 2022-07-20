@@ -1,7 +1,7 @@
 /** Login user model. */
 export interface Login{
 
-  /** User email.*/
+  /** User email. */
   readonly email: string;
 
   /** User password. */

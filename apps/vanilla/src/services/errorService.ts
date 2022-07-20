@@ -16,7 +16,7 @@ export namespace ErrorService{
     errorElement.parentElement?.append(errorText);
   }
 
-  /** Remove all error text element.*/
+  /** Remove all error text element. */
   function removeAllErrorElement(): void {
     const inputErrorElementList = document.querySelectorAll<HTMLElement>('.input-error');
     if (inputErrorElementList !== null) {
@@ -31,8 +31,6 @@ export namespace ErrorService{
   export function renderInputError(error: unknown): void {
     removeAllErrorElement();
     const errorMessages = getError(error);
-
-    // Render error message detail
     const inputForm = document.querySelector<HTMLFormElement>('.form');
     assertNonNull(inputForm);
     displayErrorMessage(inputForm, errorMessages.detail);
