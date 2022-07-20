@@ -4,10 +4,10 @@ import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { AnimeService } from '../services/animeService';
 
 import { Utility } from '../namespaces/utility';
+
 import { PaginationLocalStorage } from './constants';
 import { renderTable } from './animeTable';
 import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT } from './variables';
-import { getAnime } from './anime';
 
 /** Render sort options. */
 export function renderSortOptions(): void {

@@ -1,9 +1,7 @@
 import { LoginMapper } from '@js-camp/core/mappers/auth/login.mapper';
 import { RegisterMapper } from '@js-camp/core/mappers/auth/register.mapper';
-import { UserMapper } from '@js-camp/core/mappers/user/user.mapper';
 import { Login } from '@js-camp/core/models/auth/login';
 import { Register } from '@js-camp/core/models/auth/register';
-import { User } from '@js-camp/core/models/user/user';
 
 import { api } from '../api/api';
 import { Utility } from '../namespaces/utility';

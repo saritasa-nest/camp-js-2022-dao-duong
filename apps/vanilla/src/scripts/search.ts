@@ -3,7 +3,6 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { AnimeService } from '../services/animeService';
 
 import { PaginationLocalStorage } from './constants';
-import { getAnime } from './anime';
 import { renderTable } from './animeTable';
 
 import { FIRST_PAGE, LIMIT } from './variables';
