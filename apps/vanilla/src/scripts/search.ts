@@ -24,7 +24,8 @@ export function initSearch(): void {
       ordering: orderingOptions,
       search: searchInputElement.value,
     };
-    const anime = await getAnime(paginationConfig);
-    renderTable(anime);
+    const animeList = await getAnime(paginationConfig);
+
+    renderTable(animeList);
   });
 }

@@ -41,9 +41,9 @@ export function renderSortOptions(): void {
         ordering: sortSetting,
         search: searchQuery,
       };
-      const anime = await getAnime(paginationConfig);
+      const animeList = await getAnime(paginationConfig);
 
-      renderTable(anime);
+      renderTable(animeList);
     });
   });
 }
