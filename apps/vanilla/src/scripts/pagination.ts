@@ -4,8 +4,10 @@ import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { AnimeService } from '../services/animeService';
 
 import { LIMIT, FIRST_PAGE, NUMBER_OF_PAGES } from './variables';
-import { renderAnimeTable } from './animeTable';
 import { PaginationLocalStorage } from './constants';
+import { renderTable } from './animeTable';
+
+import { getAnime } from './anime';
 
 /** Half number of pages to display.*/
 const HALF_NUMBER_OF_PAGES = Math.floor(NUMBER_OF_PAGES / 2);
@@ -75,8 +77,9 @@ export function renderPagination(displayPages: number): void {
         ordering: sortSetting,
         search: searchQuery,
       };
-      const data = await AnimeService.getAnime(paginationConfig);
-      renderAnimeTable(data);
+      const anime = await AnimeService.getAnime(paginationConfig);
+
+      renderTable(anime);
     });
   });
 }

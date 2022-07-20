@@ -16,10 +16,10 @@ export class User extends Immerable {
   public readonly avatar: string | null;
 
   /** User created date. */
-  public readonly created: string;
+  public readonly created: Date;
 
   /** User modified date. */
-  public readonly modified: string;
+  public readonly modified: Date;
 
   public constructor(data: UserInitArgs) {
     super();

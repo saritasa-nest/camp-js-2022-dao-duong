@@ -3,7 +3,7 @@ import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { AnimeService } from '../services/animeService';
 import { LIMIT, FIRST_PAGE } from '../scripts/variables';
 
-import { renderAnimeTable } from '../scripts/animeTable';
+import { renderTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
 import { initSearch } from '../scripts/search';
 
@@ -27,8 +27,8 @@ const initHomepage = async(): Promise<void> => {
     ordering: '',
     search: '',
   };
-  const data = await AnimeService.getAnime(paginationConfig);
-  renderAnimeTable(data);
+  const anime = await AnimeService.getAnime(paginationConfig);
+  renderTable(anime);
   renderSortOptions();
   initSearch();
 };

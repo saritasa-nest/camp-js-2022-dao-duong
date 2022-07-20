@@ -4,10 +4,10 @@ import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { AnimeService } from '../services/animeService';
 
 import { Utility } from '../namespaces/utility';
-
-import { renderAnimeTable } from './animeTable';
-import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT, FIRST_PAGE } from './variables';
 import { PaginationLocalStorage } from './constants';
+import { renderTable } from './animeTable';
+import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT } from './variables';
+import { getAnime } from './anime';
 
 /** Render sort options. */
 export function renderSortOptions(): void {
@@ -31,20 +31,22 @@ export function renderSortOptions(): void {
     element.addEventListener('change', async() => {
       const sortSetting = sortDirection.value + sortOption.value;
       localStorage.setItem(PaginationLocalStorage.sort, sortSetting);
-      localStorage.setItem(PaginationLocalStorage.active, FIRST_PAGE.toString());
 
       Utility.setDirectionState(Utility.hasSortOption(sortOption.value));
+      const currentPage = localStorage.getItem(PaginationLocalStorage.active);
       const searchQuery = localStorage.getItem(PaginationLocalStorage.search);
       assertNonNull(searchQuery);
+      assertNonNull(currentPage);
 
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
-        page: FIRST_PAGE,
+        page: parseInt(currentPage, 10),
         ordering: sortSetting,
         search: searchQuery,
       };
-      const data = await AnimeService.getAnime(paginationConfig);
-      renderAnimeTable(data);
+      const anime = await AnimeService.getAnime(paginationConfig);
+
+      renderTable(anime);
     });
   });
 }

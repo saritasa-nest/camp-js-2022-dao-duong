@@ -8,7 +8,7 @@ export namespace UserService {
   /** Get user.*/
   export async function getUser(): Promise<User> {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { data } = await api.get('/users/profile/');
-    return UserMapper.fromDto(data);
+    const userResponse = await api.get('/users/profile/');
+    return UserMapper.fromDto(userResponse.data);
   }
 }

@@ -20,8 +20,8 @@ export namespace AuthService {
    */
   export async function login(loginData: Login): Promise<void> {
     const userLoginDto = LoginMapper.toDto(loginData);
-    const { data } = await api.post('/auth/login/', userLoginDto);
-    StorageService.setToken(data);
+    const loginResponse = await api.post('/auth/login/', userLoginDto);
+    StorageService.setToken(loginResponse.data);
   }
 
   /**
@@ -30,19 +30,13 @@ export namespace AuthService {
    */
   export async function register(registerData: Register): Promise<void> {
     const userRegisterDto = RegisterMapper.toDto(registerData);
-    const { data } = await api.post('/auth/register/', userRegisterDto);
-    StorageService.setToken(data);
+    const registerResponse = await api.post('/auth/register/', userRegisterDto);
+    StorageService.setToken(registerResponse.data);
   }
 
   /** Logout service.*/
   export async function logout(): Promise<void> {
     await StorageService.clearToken();
-  }
-
-  /** Get user.*/
-  export async function getUser(): Promise<User> {
-    const { data } = await api.get('/users/profile/');
-    return UserMapper.fromDto(data);
   }
 
   /**
