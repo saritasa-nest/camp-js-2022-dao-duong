@@ -1,8 +1,8 @@
 import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
-import { renderAnimeTable } from './animeTable';
-import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT, FIRST_PAGE } from './variables';
+import { renderTable } from './animeTable';
+import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT } from './variables';
 import { getAnime } from './anime';
 import { setDirectionState, hasSortOption } from './functions';
 
@@ -26,23 +26,24 @@ export function renderSortOptions(): void {
   setDirectionState(hasSortOption(sortOption.value));
   sortOptions.forEach(element => {
     element.addEventListener('change', async() => {
-      localStorage.setItem('active', FIRST_PAGE.toString());
       const sortSetting = sortDirection.value + sortOption.value;
       localStorage.setItem('sort', sortSetting);
 
       setDirectionState(hasSortOption(sortOption.value));
+      const currentPage = localStorage.getItem('active');
       const searchQuery = localStorage.getItem('search');
       assertNonNullish(searchQuery);
+      assertNonNullish(currentPage);
 
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
-        page: FIRST_PAGE,
+        page: parseInt(currentPage, 10),
         ordering: sortSetting,
         search: searchQuery,
       };
-      const data = await getAnime(paginationConfig);
+      const anime = await getAnime(paginationConfig);
 
-      renderAnimeTable(data);
+      renderTable(anime);
     });
   });
 }
