@@ -75,8 +75,8 @@ export function renderPagination(displayPages: number): void {
         ordering: sortSetting,
         search: searchQuery,
       };
-      const anime = await AnimeService.getAnime(paginationConfig);
-      renderTable(anime);
+      const animeList = await AnimeService.getAnime(paginationConfig);
+      renderTable(animeList);
     });
   });
 }

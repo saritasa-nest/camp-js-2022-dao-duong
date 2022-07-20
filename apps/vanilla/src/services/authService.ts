@@ -7,7 +7,6 @@ import { api } from '../api/api';
 import { Utility } from '../namespaces/utility';
 import { Token, Url } from '../scripts/constants';
 
-import { ErrorService } from './errorService';
 import { StorageService } from './storageService';
 
 export namespace AuthService {
@@ -46,7 +45,6 @@ export namespace AuthService {
       await api.post('/auth/token/verify/', { token: accessToken });
       return true;
     } catch (error: unknown) {
-      ErrorService.renderInputError(error);
       return false;
     }
   }
@@ -63,6 +61,7 @@ export namespace AuthService {
   /** Navigate user based on authorization. */
   export async function navigateByAuthorization(): Promise<void> {
     const currentLocation = window.location.pathname;
+
     const isAuthenticated = await checkIsAuthenticated();
     if ((currentLocation === Url.Detail || currentLocation === Url.Profile) && !isAuthenticated) {
       Utility.navigate(Url.Login);
