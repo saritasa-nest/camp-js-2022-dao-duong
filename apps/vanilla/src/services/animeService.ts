@@ -105,7 +105,7 @@ export namespace AnimeService {
 
   /**
    * Open full size image.
-   * @param imageURL Youtube trailer Id.
+   * @param imageURL Image URL to open.
    */
   export function openFullSizeImage(imageURL: string): void {
     const modalWrapper = document.querySelector<HTMLDivElement>('.modal-wrapper');
