@@ -3,6 +3,12 @@ import { SortOption } from './interfaces';
 /** Initial page or first page. */
 export const FIRST_PAGE = 1;
 
+/** Default sort value. */
+export const DEFAULT_SORT = '';
+
+/** Default search value. */
+export const DEFAULT_SEARCH = '';
+
 /** Number of pages to display. */
 export const NUMBER_OF_PAGES = 9;
 

@@ -1,6 +1,7 @@
 import { Anime } from '@js-camp/core/models/anime/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
+import { StorageService } from '../services/storageService';
 
 import { convertDate } from '../utils/convertDate';
 import { navigate } from '../utils/navigate';
@@ -58,7 +59,7 @@ export function handleAnimeClick(): void {
     animeRow.addEventListener('click', () => {
       const animeId = animeRow.getAttribute('data-id');
       assertNonNull(animeId);
-      localStorage.setItem(CLICKED_ANIME, animeId);
+      StorageService.set(CLICKED_ANIME, animeId);
       navigate(Url.Detail);
     });
   });

@@ -3,6 +3,8 @@ import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
 import { AnimeService } from '../services/animeService';
 
+import { StorageService } from '../services/storageService';
+
 import { LIMIT, FIRST_PAGE, NUMBER_OF_PAGES } from './variables';
 import { PaginationLocalStorage } from './constants';
 import { renderTable } from './animeTable';
@@ -14,10 +16,9 @@ const HALF_NUMBER_OF_PAGES = Math.floor(NUMBER_OF_PAGES / 2);
  * Render pagination.
  * @param displayPages Pages number  to display.
  */
-export function renderPagination(displayPages: number): void {
-  const pageValueFromStorage = localStorage.getItem(PaginationLocalStorage.active);
-  assertNonNull(pageValueFromStorage);
-  const currentPage = parseInt(pageValueFromStorage, 10);
+export async function renderPagination(displayPages: number): Promise<void> {
+  const currentPage = await StorageService.get<number>(PaginationLocalStorage.active);
+  assertNonNull(currentPage);
   const wrapper = document.querySelector<HTMLDivElement>('.pagination');
   assertNonNull(wrapper);
   wrapper.innerHTML = ``;
@@ -63,9 +64,9 @@ export function renderPagination(displayPages: number): void {
     element.addEventListener('click', async() => {
       const currentIndex = element.getAttribute('index');
       assertNonNull(currentIndex);
-      localStorage.setItem(PaginationLocalStorage.active, currentIndex);
-      const sortSetting = localStorage.getItem(PaginationLocalStorage.sort);
-      const searchQuery = localStorage.getItem(PaginationLocalStorage.search);
+      StorageService.set(PaginationLocalStorage.active, parseInt(currentIndex, 10));
+      const sortSetting = await StorageService.get<string>(PaginationLocalStorage.sort);
+      const searchQuery = await StorageService.get<string>(PaginationLocalStorage.search);
       assertNonNull(sortSetting);
       assertNonNull(searchQuery);
 

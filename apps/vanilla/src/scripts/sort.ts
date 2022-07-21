@@ -7,6 +7,8 @@ import { hasSortOption } from '../utils/hasSortOption';
 
 import { setDirectionState } from '../utils/setDirectionState';
 
+import { StorageService } from '../services/storageService';
+
 import { PaginationLocalStorage } from './constants';
 import { renderTable } from './animeTable';
 import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT } from './variables';
@@ -31,16 +33,16 @@ export function renderSortOptions(): void {
   sortOptions.forEach(element => {
     element.addEventListener('change', async() => {
       const sortSetting = sortDirection.value + sortOption.value;
-      const currentPage = localStorage.getItem(PaginationLocalStorage.active);
-      const searchQuery = localStorage.getItem(PaginationLocalStorage.search);
-      localStorage.setItem(PaginationLocalStorage.sort, sortSetting);
+      const currentPage = await StorageService.get<number>(PaginationLocalStorage.active);
+      const searchQuery = await StorageService.get<string>(PaginationLocalStorage.search);
+      StorageService.set<string>(PaginationLocalStorage.sort, sortSetting);
       assertNonNull(searchQuery);
       assertNonNull(currentPage);
       setDirectionState(hasSortOption(sortOption.value));
 
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
-        page: parseInt(currentPage, 10),
+        page: currentPage,
         ordering: sortSetting,
         search: searchQuery,
       };

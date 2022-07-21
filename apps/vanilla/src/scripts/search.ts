@@ -2,6 +2,8 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { AnimeService } from '../services/animeService';
 
+import { StorageService } from '../services/storageService';
+
 import { PaginationLocalStorage } from './constants';
 import { renderTable } from './animeTable';
 
@@ -16,9 +18,9 @@ export function initSearch(): void {
 
   searchFormElement.addEventListener('submit', async event => {
     event.preventDefault();
-    localStorage.setItem(PaginationLocalStorage.active, FIRST_PAGE.toString());
-    localStorage.setItem(PaginationLocalStorage.search, searchInputElement.value);
-    const orderingOptions = localStorage.getItem(PaginationLocalStorage.sort);
+    StorageService.set(PaginationLocalStorage.active, FIRST_PAGE);
+    StorageService.set<string>(PaginationLocalStorage.search, searchInputElement.value);
+    const orderingOptions = await StorageService.get<string>(PaginationLocalStorage.sort);
     assertNonNull(orderingOptions);
 
     const paginationConfig = {
