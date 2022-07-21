@@ -6,11 +6,12 @@ import { CLICKED_ANIME } from '../../scripts/constants';
 
 import { AnimeService } from '../../services/animeService';
 import { AuthService } from '../../services/authService';
+import { StorageService } from '../../services/storageService';
 
 window.addEventListener('load', async() => {
   await AuthService.navigateByAuthorization();
   await Navbar.render();
-  const animeId = localStorage.getItem(CLICKED_ANIME);
+  const animeId = await StorageService.get<string>(CLICKED_ANIME);
   assertNonNull(animeId);
   const animeDetail = await AnimeService.getAnimeDetail(animeId);
   renderTitle(animeDetail.englishTitle || animeDetail.japaneseTitle);
