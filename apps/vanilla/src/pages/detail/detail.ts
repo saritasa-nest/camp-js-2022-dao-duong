@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Navbar } from '../../namespaces/navbar';
@@ -8,11 +9,11 @@ import { AuthService } from '../../services/authService';
 
 window.addEventListener('load', async() => {
   await AuthService.navigateByAuthorization();
-  await Navbar.renderNavbar();
+  await Navbar.render();
   const animeId = localStorage.getItem(CLICKED_ANIME);
   assertNonNull(animeId);
   const animeDetail = await AnimeService.getAnimeDetail(animeId);
-  renderTitle(animeDetail.englishTitle ? animeDetail.englishTitle : animeDetail.japaneseTitle);
+  renderTitle(animeDetail.englishTitle || animeDetail.japaneseTitle);
   AnimeService.renderImage(animeDetail.image);
   AnimeService.renderContent(animeDetail);
   if (animeDetail.youtubeTrailerId) {
