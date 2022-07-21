@@ -1,12 +1,11 @@
 import { Login } from '@js-camp/core/models/auth/login';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
-import { Utility } from '../../namespaces/utility';
-
 import { Url } from '../../scripts/constants';
 
 import { AuthService } from '../../services/authService';
 import { ErrorService } from '../../services/errorService';
+import { navigate } from '../../utils/navigate';
 
 const loginForm = document.querySelector<HTMLFormElement>('.form');
 
@@ -27,7 +26,7 @@ loginForm.addEventListener('submit', async(event): Promise<void> => {
   };
   try {
     await AuthService.login(loginData);
-    Utility.navigate(Url.Home);
+    navigate(Url.Home);
   } catch (error: unknown) {
     ErrorService.renderInputError(error);
   }

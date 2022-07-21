@@ -1,12 +1,11 @@
 import { Register } from '@js-camp/core/models/auth/register';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
-import { Utility } from '../../namespaces/utility';
-
 import { Url } from '../../scripts/constants';
 
 import { AuthService } from '../../services/authService';
 import { ErrorService } from '../../services/errorService';
+import { navigate } from '../../utils/navigate';
 
 window.addEventListener('load', async() => {
   await AuthService.navigateByAuthorization();
@@ -39,7 +38,7 @@ registerForm.addEventListener('submit', async event => {
     };
     try {
       await AuthService.register(registerData);
-      Utility.navigate(Url.Home);
+      navigate(Url.Home);
     } catch (error: unknown) {
       ErrorService.renderInputError(error);
     }

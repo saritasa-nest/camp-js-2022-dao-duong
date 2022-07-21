@@ -3,7 +3,9 @@ import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
 import { AnimeService } from '../services/animeService';
 
-import { Utility } from '../namespaces/utility';
+import { hasSortOption } from '../utils/hasSortOption';
+
+import { setDirectionState } from '../utils/setDirectionState';
 
 import { PaginationLocalStorage } from './constants';
 import { renderTable } from './animeTable';
@@ -25,7 +27,7 @@ export function renderSortOptions(): void {
     sortDirection.innerHTML += `<option value="${direction.value}" class="select__option">${direction.text}</option>`;
   });
 
-  Utility.setDirectionState(Utility.hasSortOption(sortOption.value));
+  setDirectionState(hasSortOption(sortOption.value));
   sortOptions.forEach(element => {
     element.addEventListener('change', async() => {
       const sortSetting = sortDirection.value + sortOption.value;
@@ -34,7 +36,7 @@ export function renderSortOptions(): void {
       localStorage.setItem(PaginationLocalStorage.sort, sortSetting);
       assertNonNull(searchQuery);
       assertNonNull(currentPage);
-      Utility.setDirectionState(Utility.hasSortOption(sortOption.value));
+      setDirectionState(hasSortOption(sortOption.value));
 
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,

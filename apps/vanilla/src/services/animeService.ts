@@ -10,7 +10,7 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { api } from '../api/api';
-import { Utility } from '../namespaces/utility';
+import { convertDate } from '../utils/convertDate';
 
 export namespace AnimeService {
 
@@ -69,8 +69,8 @@ export namespace AnimeService {
     <p>Status: ${data.status}</p>
     <p>Synopsis: ${data.synopsis}</p>
     <p>Airing: ${data.airing}</p>
-    <p>Aired Start: ${Utility.convertDate(data.aired.start)}</p>
-    <p>Aired End: ${Utility.convertDate(data.aired.end)}</p>
+    <p>Aired Start: ${convertDate(data.aired.start)}</p>
+    <p>Aired End: ${convertDate(data.aired.end)}</p>
     <p>Studio List: ${data.studioList.map(studio => studio.name)}</p>
     <p>Genre List: ${data.genreList.map(genre => genre.name)}</p>`;
   }

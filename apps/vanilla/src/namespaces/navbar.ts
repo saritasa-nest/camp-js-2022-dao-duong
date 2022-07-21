@@ -2,13 +2,12 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Url } from '../scripts/constants';
 import { AuthService } from '../services/authService';
-
-import { Utility } from './utility';
+import { navigate } from '../utils/navigate';
 
 export namespace Navbar {
 
   /** Render navbar. */
-  export async function renderNavbar(): Promise<void> {
+  export async function render(): Promise<void> {
     const { body } = document;
     const isAuthenticated = await AuthService.checkIsAuthenticated();
     body.innerHTML = `
@@ -32,7 +31,7 @@ export namespace Navbar {
     assertNonNull(logoutButton);
     logoutButton.addEventListener('click', async() => {
       await AuthService.logout();
-      Utility.navigate(Url.Login);
+      navigate(Url.Login);
     });
   }
 
@@ -44,7 +43,7 @@ export namespace Navbar {
     const loginButton = document.querySelector('.login-btn');
     assertNonNull(loginButton);
     loginButton.addEventListener('click', () => {
-      Utility.navigate(Url.Login);
+      navigate(Url.Login);
     });
   }
 

@@ -4,8 +4,9 @@ import { Login } from '@js-camp/core/models/auth/login';
 import { Register } from '@js-camp/core/models/auth/register';
 
 import { api } from '../api/api';
-import { Utility } from '../namespaces/utility';
+
 import { Token, Url } from '../scripts/constants';
+import { navigate } from '../utils/navigate';
 
 import { StorageService } from './storageService';
 
@@ -64,10 +65,10 @@ export namespace AuthService {
 
     const isAuthenticated = await checkIsAuthenticated();
     if ((currentLocation === Url.Detail || currentLocation === Url.Profile) && !isAuthenticated) {
-      Utility.navigate(Url.Login);
+      navigate(Url.Login);
     }
     if ((currentLocation === Url.Login || currentLocation === Url.Register) && isAuthenticated) {
-      Utility.navigate(Url.Home);
+      navigate(Url.Home);
     }
   }
 }

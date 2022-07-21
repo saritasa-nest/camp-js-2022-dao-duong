@@ -11,7 +11,7 @@ import { Navbar } from '../namespaces/navbar';
 import { PaginationLocalStorage } from '../scripts/constants';
 
 window.addEventListener('load', async(): Promise<void> => {
-  await Navbar.renderNavbar();
+  await Navbar.render();
   initHomepage();
 });
 
