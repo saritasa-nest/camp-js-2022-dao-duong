@@ -1,7 +1,7 @@
-import { Immerable, OmitImmerable } from './immerable';
+import { Immerable, OmitImmerable } from '../immerable';
 
-/** Genre. */
-export class Genre extends Immerable {
+/** Studio. */
+export class Studio extends Immerable {
 
   /** Id. */
   public readonly id: number;
@@ -16,4 +16,4 @@ export class Genre extends Immerable {
   }
 }
 
-type PostInitArgs = OmitImmerable<Genre>;
+type PostInitArgs = OmitImmerable<Studio>;

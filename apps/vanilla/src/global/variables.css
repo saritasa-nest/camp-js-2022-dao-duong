@@ -1,7 +1,21 @@
 :root {
-  /* Using html color names here only for showcase,
-   * you shouldn't be using color names in real projects. */
-  --heading-color-1: gold;
-  --heading-color-2: darksalmon;
-  --heading-color-3: powderblue;
+  --default-layout-width: 90%;
+
+  /* Heading colors */
+  --heading-color-1: #f16a00;
+  --heading-color-2: #ffb57a;
+  --heading-color-3: #7bf8ff;
+
+  /* Background colors */
+  --primary-background-color: #f16a00;
+  --primary-contrast-background-color: #fff;
+  --secondary-background-color: #6d5545;
+  --active-background-color: #f16a00;
+  --overlay-background-color: #0006;
+
+  /* Text colors */
+  --active-text-color: #fff;
+  --primary-text-color: #45220f;
+  --primary-text-contrast-color: #fff;
+  --error-text-color: #b8020f;
 }

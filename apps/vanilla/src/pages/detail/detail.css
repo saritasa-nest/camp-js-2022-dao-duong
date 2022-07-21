@@ -1,0 +1,59 @@
+@import url("../../global/index.css");
+
+.anime-detail {
+  display: flex;
+}
+
+.anime-detail__content,
+.anime-detail__media {
+  padding: 30px;
+}
+
+.anime-detail__media {
+  display: flex;
+  flex-direction: column;
+}
+
+.anime-detail__image {
+  max-width: 300px;
+  padding-bottom: 10px;
+  cursor: zoom-in;
+}
+
+.anime-detail__content p {
+  margin: 0;
+}
+
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.modal-wrapper__overlay {
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-background-color);
+}
+
+.modal-wrapper__inner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 56.25%;
+}
+
+.modal-wrapper__inner .video,
+.modal-wrapper__inner .image {
+  position: absolute;
+  height: 60%;
+  top: 10%;
+}
+
+.modal-wrapper__inner .video {
+  width: 60%;
+}

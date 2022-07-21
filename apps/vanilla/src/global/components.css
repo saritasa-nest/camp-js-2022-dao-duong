@@ -1,28 +1,60 @@
-a,
-:link,
-.link {
-  --link-color: var(--primary-color);
-
-  color: var(--link-color);
-  text-decoration: none;
-  border-bottom: 1px solid var(--link-color);
-}
-
-a:hover,
-:link:hover,
-.link:hover {
-  --link-color: var(--primary-light-color);
-}
-
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
 .default-layout {
-  --default-layout-width: 600px;
-
   margin: 80px auto 0;
   max-width: var(--default-layout-width);
+}
+
+.title {
+  color: var(--heading-color-1);
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submit {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  background-color: var(--primary-background-color);
+}
+
+.btn:hover,
+.btn:focus {
+  color: var(--active-text-color);
+  background-color: var(--active-background-color);
+}
+
+.logout-btn,
+.login-btn {
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  color: var(--primary-text-contrast-color);
+  cursor: pointer;
+  transition: all 0.5s;
+  padding: 0 20px;
+}
+
+.logout-btn:hover,
+.login-btn:hover {
+  background-color: var(--secondary-background-color);
+}
+
+.input-error {
+  display: block;
+  font-size: 14px;
+  color: var(--error-text-color);
+}
+
+.hidden {
+  display: none;
 }

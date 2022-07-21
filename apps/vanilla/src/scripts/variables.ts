@@ -1,0 +1,39 @@
+import { SortOption } from './interfaces';
+
+/** Initial page or first page. */
+export const FIRST_PAGE = 1;
+
+/** Default sort value. */
+export const DEFAULT_SORT = '';
+
+/** Default search value. */
+export const DEFAULT_SEARCH = '';
+
+/** Number of pages to display. */
+export const NUMBER_OF_PAGES = 9;
+
+/** Number of items per request. */
+export const LIMIT = 10;
+
+/** Available options for sorting. */
+export enum Ordering {
+  EnglishTitle = 'title_eng',
+  Status = 'status',
+  AiredStart = 'aired__startswith',
+}
+
+/** Available value for sorting options. */
+export const SORT_OPTIONS: readonly SortOption[] =
+  [
+    { text: 'Default', value: '' },
+    { text: 'English Title', value: Ordering.EnglishTitle },
+    { text: 'Aired Start', value: Ordering.AiredStart },
+    { text: 'Status', value: Ordering.Status },
+  ];
+
+/** Available direction for sorting options. */
+export const SORT_DIRECTIONS: readonly SortOption[] =
+  [
+    { text: 'Ascending', value: '' },
+    { text: 'Descending', value: '-' },
+  ];
