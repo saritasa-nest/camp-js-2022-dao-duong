@@ -1,8 +1,8 @@
 import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
-import { LIMIT, FIRST_PAGE, NUMBER_OF_PAGES, ACTIVE_LS, SORT_LS, TYPE_LS, SEARCH_LS } from './variables';
-import { renderAnimeTable } from './animeTable';
+import { LIMIT, FIRST_PAGE, NUMBER_OF_PAGES } from './variables';
+import { renderTable } from './animeTable';
 
 import { getAnime } from './anime';
 
@@ -77,9 +77,9 @@ export function renderPagination(displayPages: number): void {
         type: filterType,
         search: searchQuery,
       };
-      const data = await getAnime(paginationConfig);
+      const animeList = await getAnime(paginationConfig);
 
-      renderAnimeTable(data);
+      renderTable(animeList);
     });
   });
 }

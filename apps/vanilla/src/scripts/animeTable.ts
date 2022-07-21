@@ -9,21 +9,21 @@ import { LIMIT } from './variables';
 
 /**
  * Render anime table.
- * @param dataset Data for render.
+ * @param animeList Anime data for rendering.
  */
-export function renderAnimeTable(dataset: Pagination<Anime>): void {
+export function renderTable(animeList: Pagination<Anime>): void {
   const dataTable = document.querySelector<HTMLDivElement>('.anime-table');
   assertNonNullish(dataTable);
-  const tableBody = dataset.results.reduce((previousValue: string, currentValue: Anime): string => `${previousValue}
+  const tableBody = animeList.results.reduce((previousBody: string, anime: Anime): string => `${previousBody}
     <tr>
       <td>
-        <img class="anime-image" src="${currentValue.image}" alt="Anime image">
+        <img class="anime-image" src="${anime.image}" alt="Anime image">
       </td>
-      <td>${currentValue.englishTitle}</td>
-      <td>${currentValue.japaneseTitle}</td>
-      <td>${convertDate(currentValue.aired.start)}</td>
-      <td>${currentValue.type}</td>
-      <td>${currentValue.status}</td>
+      <td>${anime.englishTitle}</td>
+      <td>${anime.japaneseTitle}</td>
+      <td>${convertDate(anime.aired.start)}</td>
+      <td>${anime.type}</td>
+      <td>${anime.status}</td>
     </tr>`, '');
   dataTable.innerHTML = `
       <table class="responsive-table centered highlight" >
@@ -43,6 +43,6 @@ export function renderAnimeTable(dataset: Pagination<Anime>): void {
       </tbody>
     </table>
   `;
-  const totalPages = Math.ceil(dataset.count / LIMIT);
+  const totalPages = Math.ceil(animeList.count / LIMIT);
   renderPagination(totalPages);
 }
