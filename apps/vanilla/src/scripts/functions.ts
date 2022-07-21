@@ -1,5 +1,7 @@
 import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 
+import { ACTIVE_LS, FIRST_PAGE, SEARCH_LS, SORT_LS, TYPE_LS } from './variables';
+
 /**
  * Convert response date object to readable format.
  * @param date Date data from response object.
@@ -33,4 +35,12 @@ export function setDirectionState(hasOption: boolean): void {
     sortDirection.disabled = true;
     sortDirection.style.cursor = 'not-allowed';
   }
+}
+
+/** Reset data table options and filter.*/
+export function resetTableState(): void {
+  localStorage.setItem(ACTIVE_LS, FIRST_PAGE.toString());
+  localStorage.setItem(SORT_LS, '');
+  localStorage.setItem(TYPE_LS, '');
+  localStorage.setItem(SEARCH_LS, '');
 }

@@ -34,11 +34,11 @@ export function renderSortOptions(): void {
       const searchQuery = localStorage.getItem('search');
       assertNonNullish(searchQuery);
       assertNonNullish(currentPage);
-
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: parseInt(currentPage, 10),
         ordering: sortSetting,
+        type: filterType,
         search: searchQuery,
       };
       const animeList = await getAnime(paginationConfig);
