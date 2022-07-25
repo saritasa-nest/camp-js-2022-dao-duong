@@ -1,4 +1,5 @@
 import { AnimeDto } from '@js-camp/core/dtos/anime/anime.dto';
+import { AnimeDetailDto } from '@js-camp/core/dtos/anime/animeDetail.dto';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { AnimeMapper } from '@js-camp/core/mappers/anime/anime.mapper';
@@ -33,7 +34,7 @@ export namespace AnimeService {
    */
   export async function getAnimeDetail(id: string): Promise<AnimeDetail> {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    const animeDetailResponse = await api.get(`anime/anime/${id}/`);
+    const animeDetailResponse = await api.get<AnimeDetailDto>(`anime/anime/${id}/`);
     return AnimeDetailMapper.fromDto(animeDetailResponse.data);
   }
 
