@@ -1,35 +1,11 @@
-
-import { Type, Status } from '../../dtos/anime/anime.dto';
-
-import { OmitImmerable, Immerable } from '../immerable';
-import { DateRange } from '../dateRange';
+import { OmitImmerable } from '../immerable';
 
 import { Genre } from './genre';
 import { Studio } from './studio';
+import { Anime } from './anime';
 
 /** Anime Detail. */
-export class AnimeDetail extends Immerable {
-  /** ID. */
-  public readonly id: number;
-
-  /** Url address image. */
-  public readonly image: string;
-
-  /** Title in English. */
-  public readonly englishTitle: string | null;
-
-  /** Title in Japanese. */
-  public readonly japaneseTitle: string | null;
-
-  /** Release and end dates. */
-  public readonly aired: DateRange;
-
-  /** Anime type. */
-  public readonly type: Type;
-
-  /** Anime status. */
-  public readonly status: Status;
-
+export class AnimeDetail extends Anime {
   /** Anime status. */
   public readonly synopsis: string;
 
@@ -46,14 +22,7 @@ export class AnimeDetail extends Immerable {
   public readonly youtubeTrailerId: string | null;
 
   public constructor(data: InitArgsAnime) {
-    super();
-    this.id = data.id;
-    this.image = data.image;
-    this.englishTitle = data.englishTitle;
-    this.japaneseTitle = data.japaneseTitle;
-    this.aired = data.aired;
-    this.type = data.type;
-    this.status = data.status;
+    super(data);
     this.synopsis = data.synopsis;
     this.airing = data.airing;
     this.studioList = data.studioList;
