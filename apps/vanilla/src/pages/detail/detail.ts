@@ -11,7 +11,8 @@ import { StorageService } from '../../services/storageService';
 window.addEventListener('load', async() => {
   await AuthService.navigateByAuthorization();
   await Navbar.render();
-  const animeId = await StorageService.get<string>(CLICKED_ANIME);
+  const params = new URLSearchParams(window.location.search);
+  const animeId = await StorageService.get<string>(CLICKED_ANIME) || params.get('id');
   assertNonNull(animeId);
   const animeDetail = await AnimeService.getAnimeDetail(animeId);
   renderTitle(animeDetail.englishTitle || animeDetail.japaneseTitle);

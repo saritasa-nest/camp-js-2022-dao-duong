@@ -61,7 +61,7 @@ export function handleAnimeClick(): void {
       const animeId = animeRow.getAttribute('data-id');
       assertNonNull(animeId);
       StorageService.set(CLICKED_ANIME, animeId);
-      navigate(Url.Detail);
+      navigate(Url.Detail, animeId);
     });
   });
 }
