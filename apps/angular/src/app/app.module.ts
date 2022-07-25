@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatButtonModule } from '@angular/material/button';
-
+import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -23,8 +21,7 @@ import { DataComponent } from './data/data.component';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatSliderModule,
-    MatButtonModule,
+    MatTableModule,
   ],
   providers: [
     {
