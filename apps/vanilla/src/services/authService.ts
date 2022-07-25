@@ -1,3 +1,6 @@
+// Disable `require-await` to make methods async
+// for better refactoring/re-usability.
+/* eslint-disable require-await */
 import { LoginMapper } from '@js-camp/core/mappers/auth/login.mapper';
 import { RegisterMapper } from '@js-camp/core/mappers/auth/register.mapper';
 import { Login } from '@js-camp/core/models/auth/login';
@@ -34,7 +37,7 @@ export namespace AuthService {
 
   /** Logout service. */
   export async function logout(): Promise<void> {
-    await StorageService.clearToken();
+    StorageService.clearToken();
   }
 
   /**
