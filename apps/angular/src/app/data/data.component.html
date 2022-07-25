@@ -1,0 +1,6 @@
+<p>data works!</p>
+<div *ngIf="animeList$ | async as animeList">
+  <div *ngFor="let anime of animeList.results">
+    <p>{{anime.id}} - {{anime.type}}</p>
+  </div>
+</div>
