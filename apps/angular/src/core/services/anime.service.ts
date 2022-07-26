@@ -19,10 +19,6 @@ import { ApiService } from './api.service';
 export class AnimeService {
   public constructor(private apiService: ApiService) {}
 
-  private formatErrors(error: string): Error {
-    return new Error(error);
-  }
-
   /**
    * Get service.
    * @param params Parameters for request.

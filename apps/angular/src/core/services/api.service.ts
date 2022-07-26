@@ -12,8 +12,8 @@ import { environment } from '../../environments/environment';
 export class ApiService {
   public constructor(private http: HttpClient) {}
 
-  private formatErrors(error: string): Error {
-    return new Error(error);
+  private formatErrors(error: unknown): Error {
+    return new Error(`${error}`);
   }
 
   /**

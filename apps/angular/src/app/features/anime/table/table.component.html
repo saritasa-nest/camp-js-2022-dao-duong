@@ -1,5 +1,11 @@
-<div *ngIf="animeList$ | async as animeList">
-  <table mat-table [dataSource]="animeList.results" class="mat-elevation-z8">
+<div >
+  <mat-paginator
+    [pageSizeOptions]="[10, 15, 25]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+    >
+  </mat-paginator>
+  <table mat-table [dataSource]="animeList" class="mat-elevation-z8">
     <!-- Image Column -->
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef> Image </th>
