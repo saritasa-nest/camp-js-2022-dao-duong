@@ -1,8 +1,11 @@
 /* eslint-disable jsdoc/require-jsdoc */
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { HttpParams } from '@angular/common/http';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Anime } from '@js-camp/core/models/anime/anime';
+import { Pagination } from '@js-camp/core/models/pagination';
+
+import { Observable } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
@@ -13,9 +16,16 @@ import { AnimeService } from '../../../../core/services/anime.service';
   styleUrls: ['./table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent {
+export class TableComponent implements AfterViewInit {
+  public pageSize = 10;
 
-  public animeList!: MatTableDataSource<Anime>;
+  public pageSizeOptions: number[] = [10, 15, 20];
+
+  public animeList$: Observable<Pagination<Anime>>;
+
+  public pageEvent!: PageEvent;
+
+  public params = new HttpParams();
 
   @ViewChild(MatPaginator) public paginator!: MatPaginator;
 
@@ -23,11 +33,20 @@ export class TableComponent {
   public displayedColumns: string[] = ['image', 'title_eng', 'title_jpn', 'type', 'status'];
 
   public constructor(private animeService: AnimeService) {
-    this.animeService.getAnime().subscribe(animeResponse => {
-      this.animeList = new MatTableDataSource(animeResponse.results.slice());
-      this.animeList.paginator = this.paginator;
-      console.log(this.animeList.paginator);
+    this.params = this.params.set('limit', this.pageSize);
+    this.animeList$ = this.animeService.getAnime(this.params);
+  }
 
+  public ngAfterViewInit(): void {
+    this.animeList$.subscribe(animeList => {
+      this.paginator.length = animeList.count;
     });
+  }
+
+  public handlePaginatorChange(event: PageEvent): PageEvent {
+    this.params = this.params.set('limit', event.pageSize);
+    this.params = this.params.set('offset', event.pageSize * event.pageIndex);
+    this.animeList$ = this.animeService.getAnime(this.params);
+    return this.pageEvent;
   }
 }
