@@ -1,5 +1,10 @@
-table {
+.anime-table {
   width: 100%;
+}
+
+.anime-table__controller {
+  display: flex;
+  justify-content: space-between;
 }
 
 .spinner {

@@ -15,7 +15,6 @@ import { ApiService } from './api.service';
 @Injectable({
   providedIn: 'root',
 })
-
 export class AnimeService {
   public constructor(private apiService: ApiService) {}
 
@@ -23,8 +22,15 @@ export class AnimeService {
    * Get service.
    * @param params Parameters for request.
    **/
-  public getAnime(params?: HttpParams): Observable<Pagination<Anime>> {
-    const animeResponse$ = this.apiService.get<PaginationDto<AnimeDto>>(`anime/anime/`, params);
-    return animeResponse$.pipe(map(animes => PaginationMapper.fromDto(animes, animeDto => AnimeMapper.fromDto(animeDto))));
+  public fetchAnime(params?: HttpParams): Observable<Pagination<Anime>> {
+    const animeResponse$ = this.apiService.get<PaginationDto<AnimeDto>>(
+      `anime/anime/`,
+      params,
+    );
+    return animeResponse$.pipe(
+      map(animes =>
+        PaginationMapper.fromDto(animes, animeDto =>
+          AnimeMapper.fromDto(animeDto))),
+    );
   }
 }

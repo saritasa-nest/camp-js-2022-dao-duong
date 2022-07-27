@@ -1,15 +1,9 @@
 import { HttpParams } from '@angular/common/http';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ViewChild,
-} from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Anime } from '@js-camp/core/models/anime/anime';
-import { Pagination } from '@js-camp/core/models/pagination';
 
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
@@ -20,15 +14,9 @@ import { AnimeService } from '../../../../core/services/anime.service';
   styleUrls: ['./table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent implements AfterViewInit {
-  /** Paginator page size. */
-  public pageSize = 10;
-
-  /** Paginator page options. */
-  public pageSizeOptions: number[] = [10, 15, 20];
-
+export class TableComponent {
   /** Anime list observer. */
-  public animeList$: Observable<Pagination<Anime>>;
+  public animeList$: Observable<readonly Anime[]>;
 
   /** Paginator page event. */
   public pageEvent!: PageEvent;
@@ -36,38 +24,65 @@ export class TableComponent implements AfterViewInit {
   /** Request params. */
   public params = new HttpParams();
 
-  /** Paginator. */
-  @ViewChild(MatPaginator) public paginator!: MatPaginator;
+  /** Anime length. */
+  public length = 0;
+
+  /** Anime page size. */
+  public pageSize = 10;
 
   /** Anime table column. */
   public displayedColumns: string[] = [
     'image',
     'title_eng',
     'title_jpn',
+    'aired_start',
     'type',
     'status',
   ];
 
   public constructor(private animeService: AnimeService) {
     this.params = this.params.set('limit', this.pageSize);
-    this.animeList$ = this.animeService.getAnime(this.params);
-  }
-
-  /** After view init lifecycle. */
-  public ngAfterViewInit(): void {
-    this.animeList$.subscribe(animeList => {
-      this.paginator.length = animeList.count;
-    });
+    this.animeList$ = this.getAnimeList(this.params);
   }
 
   /**
-   * Handle change event from paginator.
-   * @param event Paginator event.
-   */
+   * Handle changes in paginator.
+   * @param event Paginator event emission.
+   **/
   public handlePaginatorChange(event: PageEvent): void {
     this.params = this.params
       .set('limit', event.pageSize)
-      .set('offset', event.pageSize * event.pageIndex);
-    this.animeList$ = this.animeService.getAnime(this.params);
+      .set('offset', event.pageIndex * event.pageSize);
+    this.animeList$ = this.getAnimeList(this.params);
+  }
+
+  /**
+   * Handle changes in sort.
+   * @param event Sort event emission.
+   **/
+  public handleSortChange(event: PageEvent): void {
+    this.params = this.params.set('ordering', event.toString());
+    this.animeList$ = this.getAnimeList(this.params);
+  }
+
+  private getAnimeList(params?: HttpParams): Observable<readonly Anime[]> {
+    return this.animeService.fetchAnime(params).pipe(
+      map(pagination => {
+        this.length = pagination.count;
+
+        return pagination.results;
+      }),
+    );
+  }
+
+  /**
+   * Convert response date object to readable format.
+   * @param date Date data from response object.
+   */
+  public convertDate(date: Date | null): string {
+    if (date !== null) {
+      return date.toLocaleDateString('en-GB');
+    }
+    return 'None';
   }
 }
