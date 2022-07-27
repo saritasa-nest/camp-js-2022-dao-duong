@@ -1,4 +1,4 @@
-<div *ngIf="animeList$ | async as animeList">
+<div *ngIf="animeList$ | async as animeList; else loading">
   <table mat-table [dataSource]="animeList.results" class="mat-elevation-z8 anime-table">
     <!-- Image Column -->
     <ng-container matColumnDef="image">
@@ -38,3 +38,8 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </div>
+<ng-template #loading>
+  <div class="spinner">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+</ng-template>
