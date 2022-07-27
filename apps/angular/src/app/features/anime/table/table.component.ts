@@ -29,4 +29,15 @@ export class TableComponent {
   public constructor(private animeService: AnimeService) {
     this.animeList$ = this.animeService.getAnime();
   }
+
+  /**
+   * Format response date object to readable format.
+   * @param date Date data from response object.
+   */
+  public formatDate(date: Date | null): string {
+    if (date !== null) {
+      return date.toLocaleDateString('en-GB');
+    }
+    return 'None';
+  }
 }
