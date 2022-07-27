@@ -2,32 +2,37 @@
   <table mat-table [dataSource]="animeList.results" class="mat-elevation-z8">
     <!-- Image Column -->
     <ng-container matColumnDef="image">
-      <th mat-header-cell *matHeaderCellDef> Image </th>
+      <th mat-header-cell *matHeaderCellDef>Image</th>
       <td mat-cell *matCellDef="let anime">
-        <img [src]="anime.image" alt="Anime image" class="anime-image">
+        <img [src]="anime.image" alt="Anime image" class="anime-image" />
       </td>
     </ng-container>
     <!-- English Title Column -->
     <ng-container matColumnDef="title_eng">
-      <th mat-header-cell *matHeaderCellDef> English Title </th>
-      <td mat-cell *matCellDef="let anime"> {{anime.englishTitle}} </td>
+      <th mat-header-cell *matHeaderCellDef>English Title</th>
+      <td mat-cell *matCellDef="let anime">{{ anime.englishTitle }}</td>
     </ng-container>
-     <!-- Japanese Title Column -->
-     <ng-container matColumnDef="title_jpn">
-      <th mat-header-cell *matHeaderCellDef> Japanese Title</th>
-      <td mat-cell *matCellDef="let anime"> {{anime.japaneseTitle}} </td>
+    <!-- Japanese Title Column -->
+    <ng-container matColumnDef="title_jpn">
+      <th mat-header-cell *matHeaderCellDef>Japanese Title</th>
+      <td mat-cell *matCellDef="let anime">{{ anime.japaneseTitle }}</td>
     </ng-container>
-     <!-- Type Column -->
-     <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let anime"> {{anime.type}} </td>
+    <!-- Aired Start Column -->
+    <ng-container matColumnDef="aired_start">
+      <th mat-header-cell *matHeaderCellDef>Aired Start</th>
+      <td mat-cell *matCellDef="let anime">{{ anime.aired.start }}</td>
     </ng-container>
-     <!-- Status Column -->
-     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let anime"> {{anime.status}} </td>
+    <!-- Type Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let anime">{{ anime.type }}</td>
+    </ng-container>
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let anime">{{ anime.status }}</td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </div>

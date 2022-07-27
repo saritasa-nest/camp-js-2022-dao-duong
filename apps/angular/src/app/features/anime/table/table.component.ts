@@ -13,12 +13,18 @@ import { AnimeService } from '../../../../core/services/anime.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent {
-
   /** Anime list. */
   public animeList$: Observable<Pagination<Anime>>;
 
   /** Anime table column. */
-  public displayedColumns: string[] = ['image', 'title_eng', 'title_jpn', 'type', 'status'];
+  public displayedColumns: string[] = [
+    'image',
+    'title_eng',
+    'title_jpn',
+    'aired_start',
+    'type',
+    'status',
+  ];
 
   public constructor(private animeService: AnimeService) {
     this.animeList$ = this.animeService.getAnime();
