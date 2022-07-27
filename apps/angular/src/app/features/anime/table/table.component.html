@@ -1,5 +1,9 @@
 <div *ngIf="animeList$ | async as animeList; else loading">
-  <table mat-table [dataSource]="animeList.results" class="mat-elevation-z8 anime-table">
+  <table
+    mat-table
+    [dataSource]="animeList.results"
+    class="mat-elevation-z8 anime-table"
+  >
     <!-- Image Column -->
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef>Image</th>
