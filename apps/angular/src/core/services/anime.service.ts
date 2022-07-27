@@ -9,6 +9,8 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { AnimeMapper } from '@js-camp/core/mappers/anime/anime.mapper';
 
+import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
+
 import { ApiService } from './api.service';
 
 /** Api service. */
@@ -20,9 +22,15 @@ export class AnimeService {
 
   /**
    * Get service.
-   * @param params Parameters for request.
+   * @param options Pagination options.
    **/
-  public fetchAnime(params?: HttpParams): Observable<Pagination<Anime>> {
+  public fetchAnime(options: PaginationConfig): Observable<Pagination<Anime>> {
+    // Handle params
+    const params = new HttpParams({
+      fromObject: {
+        ...PaginationMapper.toDto(options),
+      },
+    });
     const animeResponse$ = this.apiService.get<PaginationDto<AnimeDto>>(
       `anime/anime/`,
       params,
