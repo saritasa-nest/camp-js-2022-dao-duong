@@ -3,6 +3,7 @@
     mat-table
     [dataSource]="animeList.results"
     class="mat-elevation-z8 anime-table"
+    [trackBy]="tableTrackByFunction"
   >
     <!-- Image Column -->
     <ng-container matColumnDef="image">

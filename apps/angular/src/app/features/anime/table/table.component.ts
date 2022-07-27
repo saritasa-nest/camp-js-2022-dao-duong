@@ -40,4 +40,13 @@ export class TableComponent {
     }
     return 'None';
   }
+
+  /**
+   * Format response date object to readable format.
+   * @param index Index of the item.
+   * @param item Value of the item.
+   */
+  public tableTrackByFunction<T>(index: number, item: T): T {
+    return item;
+  }
 }
