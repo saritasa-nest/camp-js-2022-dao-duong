@@ -11,6 +11,11 @@ import { TableComponent } from './table/table.component';
 /** Anime module. */
 @NgModule({
   declarations: [AnimeComponent, TableComponent],
-  imports: [CommonModule, AnimeRoutingModule, MatTableModule, MatProgressSpinnerModule],
+  imports: [
+    CommonModule,
+    AnimeRoutingModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+  ],
 })
 export class AnimeModule {}
