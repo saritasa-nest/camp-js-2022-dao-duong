@@ -22,6 +22,9 @@ export class PaginatorComponent {
   /** Paginator page size. */
   @Input() public pageSize = 0;
 
+  /** Current page index. */
+  @Input() public pageIndex = 0;
+
   /** Paginator change event. */
   @Output() public paginatorChange = new EventEmitter();
 

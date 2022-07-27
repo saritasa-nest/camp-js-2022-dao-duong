@@ -1,6 +1,6 @@
-import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { Anime } from '@js-camp/core/models/anime/anime';
 
@@ -17,7 +17,7 @@ import { AnimeService } from '../../../../core/services/anime.service';
 
 const DEFAULT_PAGINATION_OPTIONS: PaginationConfig = {
   limit: 10,
-  page: 1,
+  page: 0,
   ordering: '',
   search: '',
 };
@@ -34,19 +34,19 @@ export class TableComponent {
   public readonly animeList$: Observable<readonly Anime[]>;
 
   /** TODO. */
-  public readonly params$ = new BehaviorSubject<PaginationConfig>(DEFAULT_PAGINATION_OPTIONS);
+  public readonly params$: BehaviorSubject<PaginationConfig>;
 
   /** Paginator page event. */
   public pageEvent!: PageEvent;
-
-  /** Request params. */
-  public params = new HttpParams();
 
   /** Anime length. */
   public length = 0;
 
   /** Anime page size. */
   public pageSize = 10;
+
+  /** Anime table current page. */
+  public currentPage = 0;
 
   /** Anime table column. */
   public displayedColumns: string[] = [
@@ -58,9 +58,25 @@ export class TableComponent {
     'status',
   ];
 
-  public constructor(private animeService: AnimeService) {
+  public constructor(
+    private animeService: AnimeService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
+    this.params$ = new BehaviorSubject({
+      ...DEFAULT_PAGINATION_OPTIONS,
+      ...this.route.snapshot.queryParams,
+    });
     this.animeList$ = this.params$.pipe(
-      switchMap(params => this.animeService.fetchAnime({ ...DEFAULT_PAGINATION_OPTIONS, ...params })),
+      tap(params => {
+        this.currentPage = params.page - 1;
+        this.pageSize = params.limit;
+      }),
+      switchMap(params =>
+        this.animeService.fetchAnime({
+          ...DEFAULT_PAGINATION_OPTIONS,
+          ...params,
+        })),
       tap(pagination => {
         this.length = pagination.count;
       }),
@@ -74,11 +90,26 @@ export class TableComponent {
    * @param event Paginator event emission.
    **/
   public handlePaginatorChange(event: PageEvent): void {
+    this.router.navigate(['/'], {
+      queryParams: {
+        ...(this.route.snapshot.queryParams as PaginationConfig),
+        limit: event.pageSize,
+
+        /**
+         * In vanilla projects, the initial page index is 1 but here the initial page index is 0.
+         * So we have to plus 1 to match the calculation.
+         */
+        page: event.pageIndex + 1,
+      },
+    });
     this.params$.next({
-      ...DEFAULT_PAGINATION_OPTIONS,
+      ...(this.route.snapshot.queryParams as PaginationConfig),
       limit: event.pageSize,
 
-      // TODO: Explain magic number
+      /**
+       * In vanilla projects, the initial page index is 1 but here the initial page index is 0.
+       * So we have to plus 1 to match the calculation.
+       */
       page: event.pageIndex + 1,
     });
   }
@@ -88,8 +119,14 @@ export class TableComponent {
    * @param event Sort event emission.
    **/
   public handleSortChange(event: PageEvent): void {
+    this.router.navigate(['/'], {
+      queryParams: {
+        ...(this.route.snapshot.queryParams as PaginationConfig),
+        ordering: event.toString(),
+      },
+    });
     this.params$.next({
-      ...DEFAULT_PAGINATION_OPTIONS,
+      ...(this.route.snapshot.queryParams as PaginationConfig),
       ordering: event.toString(),
     });
   }

@@ -3,13 +3,14 @@
   <camp-paginator
     [length]="length"
     [pageSize]="pageSize"
+    [pageIndex]="currentPage"
     (paginatorChange)="handlePaginatorChange($event)"
   ></camp-paginator>
 </div>
-<div *ngIf="(animeList$ | async) === null" class="spinner">
-  <mat-spinner color="accent"></mat-spinner>
-</div>
-<div *ngIf="animeList$ | async as animeList" class="anime-table__container">
+<div
+  *ngIf="animeList$ | async as animeList; else loading"
+  class="anime-table__container"
+>
   <table
     mat-table
     [dataSource]="animeList"
@@ -53,3 +54,8 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </div>
+<ng-template #loading>
+  <div class="spinner">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+</ng-template>
