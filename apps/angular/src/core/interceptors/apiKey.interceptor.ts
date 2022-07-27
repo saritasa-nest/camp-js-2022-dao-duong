@@ -7,8 +7,6 @@ import { environment } from '../../environments/environment';
 /** Api key interceptor. */
 @Injectable()
 export class HttpApiKeyInterceptor implements HttpInterceptor {
-  public constructor() {}
-
   /**
    * Interceptor.
    * @param req HttpRequest object.

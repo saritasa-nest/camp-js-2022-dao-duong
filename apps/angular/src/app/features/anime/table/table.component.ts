@@ -43,10 +43,10 @@ export class TableComponent {
 
   /**
    * Table tracking function.
-   * @param index Index of the item.
+   * @param _index Index of the item.
    * @param item Value of the item.
    */
-  public trackTableItem<T>(index: number, item: T): T {
+  public trackTableItem<T>(_index: number, item: T): T {
     return item;
   }
 }
