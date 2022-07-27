@@ -13,7 +13,7 @@ import { AnimeService } from '../../../../core/services/anime.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent {
-  /** Anime list. */
+  /** Anime list observer. */
   public animeList$: Observable<Pagination<Anime>>;
 
   /** Anime table column. */
@@ -42,11 +42,11 @@ export class TableComponent {
   }
 
   /**
-   * Format response date object to readable format.
+   * Table tracking function.
    * @param index Index of the item.
    * @param item Value of the item.
    */
-  public tableTrackByFunction<T>(index: number, item: T): T {
+  public trackTableItem<T>(index: number, item: T): T {
     return item;
   }
 }
