@@ -16,6 +16,7 @@ window.addEventListener('load', async(): Promise<void> => {
 export async function renderUserProfile(): Promise<void> {
   const user = await AuthService.getUser();
   renderDetail(user);
+  renderAvatar(user.avatar);
 }
 
 /**
@@ -32,9 +33,20 @@ export function renderDetail(user: User): void {
     <li>Last Name: ${user.lastName ? user.lastName : 'No last name available'}</li>
     <li>Created at: ${convertDate(user.created)}</li>
     <li>Modified at: ${convertDate(user.modified)}</li>
-    <li>Avatar: ${user.avatar ? `
-      <img class="user-avatar" src="${user.avatar}" alt="${user.firstName}${user.lastName}" />
-    ` : 'No avatar available'}
-    </li>
   </ul>`;
+}
+
+/**
+ * Render user avatar.
+ * @param imageURL URL to the user's avatar image.
+ */
+export function renderAvatar(imageURL: string | null): void {
+  const profileSection = document.querySelector('.profile');
+  assertNonNull(profileSection);
+  profileSection.innerHTML += `
+  <li> Avatar: ${
+  imageURL ?
+    `<img class="user-avatar" src="${imageURL}" alt="User Avatar" />` :
+    'No avatar available'}
+  </li>`;
 }
