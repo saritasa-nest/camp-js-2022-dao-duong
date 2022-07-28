@@ -58,9 +58,9 @@ export class TableComponent {
   ] as const;
 
   public constructor(
-    private animeService: AnimeService,
-    private route: ActivatedRoute,
-    private router: Router,
+    private readonly animeService: AnimeService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
   ) {
     this.animeList$ = this.params$.pipe(
       tap(params => {
@@ -147,5 +147,10 @@ export class TableComponent {
     }
     this.currentPage = params['page'] - 1;
     this.pageSize = params['limit'];
+  }
+
+  test(event: PageEvent): void {
+    console.log(event);
+
   }
 }

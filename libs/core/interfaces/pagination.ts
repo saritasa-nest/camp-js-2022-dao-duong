@@ -12,4 +12,7 @@ export interface PaginationConfig {
 
   /** Query string. */
   readonly search?: string;
+
+  /** Filtering type. */
+  readonly type?: string;
 }
