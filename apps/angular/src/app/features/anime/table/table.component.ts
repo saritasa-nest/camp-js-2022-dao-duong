@@ -17,17 +17,17 @@ export class TableComponent {
   public animeList$: Observable<Pagination<Anime>>;
 
   /** Anime table column. */
-  public displayedColumns: string[] = [
+  public readonly displayedColumns = [
     'image',
-    'title_eng',
-    'title_jpn',
-    'aired_start',
+    'titleEng',
+    'titleJpn',
+    'airedStart',
     'type',
     'status',
-  ];
+  ] as const;
 
   public constructor(private animeService: AnimeService) {
-    this.animeList$ = this.animeService.getAnime();
+    this.animeList$ = this.animeService.fetchAnime();
   }
 
   /**
@@ -43,10 +43,10 @@ export class TableComponent {
 
   /**
    * Table tracking function.
-   * @param _index Index of the item.
-   * @param item Value of the item.
+   * @param _index Index of the anime.
+   * @param anime Anime data.
    */
-  public trackTableItem<T>(_index: number, item: T): T {
-    return item;
+  public trackAnimeById(_index: number, anime: Anime): number {
+    return anime.id;
   }
 }

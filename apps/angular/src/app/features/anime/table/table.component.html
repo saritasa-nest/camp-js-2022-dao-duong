@@ -3,7 +3,7 @@
     mat-table
     [dataSource]="animeList.results"
     class="mat-elevation-z8 anime-table"
-    [trackBy]="trackTableItem"
+    [trackBy]="trackAnimeById"
     aria-label="anime"
     aria-describedby="anime-table"
   >
@@ -15,17 +15,17 @@
       </td>
     </ng-container>
     <!-- English Title Column -->
-    <ng-container matColumnDef="title_eng">
+    <ng-container matColumnDef="titleEng">
       <th mat-header-cell *matHeaderCellDef>English Title</th>
       <td mat-cell *matCellDef="let anime">{{ anime.englishTitle }}</td>
     </ng-container>
     <!-- Japanese Title Column -->
-    <ng-container matColumnDef="title_jpn">
+    <ng-container matColumnDef="titleJpn">
       <th mat-header-cell *matHeaderCellDef>Japanese Title</th>
       <td mat-cell *matCellDef="let anime">{{ anime.japaneseTitle }}</td>
     </ng-container>
     <!-- Aired Start Column -->
-    <ng-container matColumnDef="aired_start">
+    <ng-container matColumnDef="airedStart">
       <th mat-header-cell *matHeaderCellDef>Aired Start</th>
       <td mat-cell *matCellDef="let anime">
         {{ formatDate(anime.aired.start) }}

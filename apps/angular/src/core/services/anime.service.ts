@@ -24,10 +24,10 @@ export class AnimeService {
   }
 
   /**
-   * Get service.
+   * Fetch anime from server.
    * @param params Parameters for request.
    **/
-  public getAnime(params?: HttpParams): Observable<Pagination<Anime>> {
+  public fetchAnime(params?: HttpParams): Observable<Pagination<Anime>> {
     const animeResponse$ = this.apiService.get<PaginationDto<AnimeDto>>(`anime/anime/`, params);
     return animeResponse$.pipe(map(animes => PaginationMapper.fromDto(animes, animeDto => AnimeMapper.fromDto(animeDto))));
   }
