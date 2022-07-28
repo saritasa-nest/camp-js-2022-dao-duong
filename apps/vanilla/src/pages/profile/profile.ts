@@ -44,9 +44,9 @@ export function renderAvatar(imageURL: string | null): void {
   const profileSection = document.querySelector('.profile');
   assertNonNull(profileSection);
   profileSection.innerHTML += `
-  <li> Avatar: ${
+  <div> Avatar: ${
   imageURL ?
     `<img class="user-avatar" src="${imageURL}" alt="User Avatar" />` :
     'No avatar available'}
-  </li>`;
+  </div>`;
 }
