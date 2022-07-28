@@ -151,6 +151,5 @@ export class TableComponent {
 
   test(event: PageEvent): void {
     console.log(event);
-
   }
 }

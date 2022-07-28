@@ -14,6 +14,7 @@ import { TableComponent } from './table/table.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { SortComponent } from './sort/sort.component';
 import { SearchComponent } from './search/search.component';
+import { FilterComponent } from './filter/filter.component';
 
 /** Anime module. */
 @NgModule({
@@ -23,6 +24,7 @@ import { SearchComponent } from './search/search.component';
     PaginatorComponent,
     SortComponent,
     SearchComponent,
+    FilterComponent,
   ],
   imports: [
     CommonModule,

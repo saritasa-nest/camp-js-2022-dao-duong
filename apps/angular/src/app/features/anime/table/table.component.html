@@ -1,6 +1,7 @@
 <camp-search (search)="test($event)"></camp-search>
 <div class="anime-table__controller">
   <camp-sort (sortChange)="handleSortChange($event)" [selectedDirection]="sortDirection" [selectedOption]="sortOption"></camp-sort>
+  <camp-filter></camp-filter>
   <camp-paginator
     [length]="length"
     [pageSize]="pageSize"
