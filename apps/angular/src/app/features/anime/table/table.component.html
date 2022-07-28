@@ -1,5 +1,5 @@
 <div class="anime-table__controller">
-  <camp-sort (sortChange)="handleSortChange($event)"></camp-sort>
+  <camp-sort (sortChange)="handleSortChange($event)" [selectedDirection]="sortDirection" [selectedOption]="sortOption"></camp-sort>
   <camp-paginator
     [length]="length"
     [pageSize]="pageSize"
@@ -15,6 +15,9 @@
     mat-table
     [dataSource]="animeList"
     class="mat-elevation-z8 anime-table"
+    [trackBy]="trackAnimeById"
+    aria-label="anime"
+    aria-describedby="anime-table"
   >
     <!-- Image Column -->
     <ng-container matColumnDef="image">
@@ -24,17 +27,17 @@
       </td>
     </ng-container>
     <!-- English Title Column -->
-    <ng-container matColumnDef="title_eng">
+    <ng-container matColumnDef="titleEng">
       <th mat-header-cell *matHeaderCellDef>English Title</th>
       <td mat-cell *matCellDef="let anime">{{ anime.englishTitle }}</td>
     </ng-container>
     <!-- Japanese Title Column -->
-    <ng-container matColumnDef="title_jpn">
+    <ng-container matColumnDef="titleJpn">
       <th mat-header-cell *matHeaderCellDef>Japanese Title</th>
       <td mat-cell *matCellDef="let anime">{{ anime.japaneseTitle }}</td>
     </ng-container>
     <!-- Aired Start Column -->
-    <ng-container matColumnDef="aired_start">
+    <ng-container matColumnDef="airedStart">
       <th mat-header-cell *matHeaderCellDef>Aired Start</th>
       <td mat-cell *matCellDef="let anime">
         {{ convertDate(anime.aired.start) }}

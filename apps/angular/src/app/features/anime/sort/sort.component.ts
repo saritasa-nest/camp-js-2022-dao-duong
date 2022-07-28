@@ -3,6 +3,7 @@ import {
   Component,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
 
 /** Sort options. */
@@ -48,13 +49,23 @@ export class SortComponent {
   ];
 
   /** Selected option value for sorting options. */
-  public selectedOption = '';
+  @Input() public selectedOption = this.SORT_OPTIONS[0].value;
 
   /** Selected direction for sorting options. */
-  public selectedDirection = '';
+  @Input() public selectedDirection = this.SORT_DIRECTIONS[0].value;
 
   /** Handle selection change event. */
   public onSelectionChange(): void {
     this.sortChange.emit(this.selectedDirection + this.selectedOption);
   }
+
+  /**
+   * Table tracking function.
+   * @param _index Index of the anime.
+   * @param sortOption Anime data.
+   */
+  public trackSort(_index: number, sortOption: SortOption): string {
+    return sortOption.value;
+  }
+
 }

@@ -4,6 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeComponent } from './anime.component';
@@ -26,6 +27,8 @@ import { SortComponent } from './sort/sort.component';
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class AnimeModule {}

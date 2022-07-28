@@ -1,17 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { Anime } from '@js-camp/core/models/anime/anime';
 
-import {
-  BehaviorSubject,
-  map,
-  Observable,
-  shareReplay,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { map, Observable, switchMap, tap } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
@@ -32,7 +25,9 @@ export class TableComponent {
   public readonly animeList$: Observable<readonly Anime[]>;
 
   /** TODO. */
-  public readonly params$: BehaviorSubject<PaginationConfig> = new BehaviorSubject(DEFAULT_PAGINATION_OPTIONS);
+  // public readonly params$: BehaviorSubject<PaginationConfig> = new BehaviorSubject(DEFAULT_PAGINATION_OPTIONS);
+
+  public readonly params$: Observable<Params> = this.route.queryParams;
 
   /** Paginator page event. */
   public pageEvent!: PageEvent;
@@ -46,26 +41,30 @@ export class TableComponent {
   /** Anime table current page. */
   public currentPage = 0;
 
+  /** Anime table current page. */
+  public sortOption = '';
+
+  /** Anime table current page. */
+  public sortDirection = '';
+
   /** Anime table column. */
-  public displayedColumns: string[] = [
+  public displayedColumns = [
     'image',
-    'title_eng',
-    'title_jpn',
-    'aired_start',
+    'titleEng',
+    'titleJpn',
+    'airedStart',
     'type',
     'status',
-  ];
+  ] as const;
 
   public constructor(
     private animeService: AnimeService,
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.params$.next(this.route.snapshot.queryParams as PaginationConfig);
     this.animeList$ = this.params$.pipe(
       tap(params => {
-        this.currentPage = params.page - 1;
-        this.pageSize = params.limit;
+        this.setDataForControllingComponent(params);
       }),
       switchMap(params =>
         this.animeService.fetchAnime({
@@ -76,7 +75,6 @@ export class TableComponent {
         this.length = pagination.count;
       }),
       map(pagination => pagination.results),
-      shareReplay({ refCount: true, bufferSize: 1 }),
     );
   }
 
@@ -85,27 +83,18 @@ export class TableComponent {
    * @param event Paginator event emission.
    **/
   public handlePaginatorChange(event: PageEvent): void {
-    this.router.navigate(['/'], {
-      queryParams: {
-        ...(this.route.snapshot.queryParams as PaginationConfig),
-        limit: event.pageSize,
-
-        /**
-         * In vanilla projects, the initial page index is 1 but here the initial page index is 0.
-         * So we have to plus 1 to match the calculation.
-         */
-        page: event.pageIndex + 1,
-      },
-    });
-    this.params$.next({
-      ...(this.route.snapshot.queryParams as PaginationConfig),
+    const newParams = {
       limit: event.pageSize,
 
       /**
        * In vanilla projects, the initial page index is 1 but here the initial page index is 0.
-       * So we have to plus 1 to match the calculation.
+       * So I have to plus 1 to match the calculation.
        */
       page: event.pageIndex + 1,
+    };
+    this.router.navigate(['/'], {
+      queryParams: newParams,
+      queryParamsHandling: 'merge',
     });
   }
 
@@ -114,15 +103,12 @@ export class TableComponent {
    * @param event Sort event emission.
    **/
   public handleSortChange(event: PageEvent): void {
-    this.router.navigate(['/'], {
-      queryParams: {
-        ...(this.route.snapshot.queryParams as PaginationConfig),
-        ordering: event.toString(),
-      },
-    });
-    this.params$.next({
-      ...(this.route.snapshot.queryParams as PaginationConfig),
+    const newParams = {
       ordering: event.toString(),
+    };
+    this.router.navigate(['/'], {
+      queryParams: newParams,
+      queryParamsHandling: 'merge',
     });
   }
 
@@ -135,5 +121,31 @@ export class TableComponent {
       return date.toLocaleDateString('en-GB');
     }
     return 'None';
+  }
+
+  /**
+   * Table tracking function.
+   * @param _index Index of the anime.
+   * @param anime Anime data.
+   */
+  public trackAnimeById(_index: number, anime: Anime): number {
+    return anime.id;
+  }
+
+  /**
+   * Sync data from params fo controlling component.
+   * @param params URL params.
+   **/
+  public setDataForControllingComponent(params: Params): void {
+    if (params['ordering']) {
+      if (params['ordering'].includes('-')) {
+        this.sortOption = params['ordering'].slice(1);
+        this.sortDirection = '-';
+      } else {
+        this.sortOption = params['ordering'];
+      }
+    }
+    this.currentPage = params['page'] - 1;
+    this.pageSize = params['limit'];
   }
 }
