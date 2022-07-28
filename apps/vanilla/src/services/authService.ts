@@ -6,8 +6,8 @@ import { Register } from '@js-camp/core/models/register';
 import { User } from '@js-camp/core/models/user';
 
 import { api } from '../api/api';
-import { Utility } from '../namespaces/utility';
 import { Token, Url } from '../scripts/constants';
+import { navigate } from '../utils/navigate';
 
 import { ErrorService } from './errorService';
 import { StorageService } from './storageService';
@@ -68,15 +68,19 @@ export namespace AuthService {
     return AuthService.verifyToken(token);
   }
 
-  /** Check whether the user authenticated or not.*/
-  export async function navigateByAuthorization(): Promise<void> {
-    const currentLocation = window.location.pathname;
+  /** Navigate user to login if user is not authenticated.*/
+  export async function navigateToLoginIfNotAuthenticated(): Promise<void> {
     const isAuthenticated = await checkIsAuthenticated();
-    if ((currentLocation === Url.Home || currentLocation === Url.Profile) && !isAuthenticated) {
-      Utility.navigate(Url.Login);
+    if (!isAuthenticated) {
+      navigate(Url.Login);
     }
-    if ((currentLocation === Url.Login || currentLocation === Url.Register) && isAuthenticated) {
-      Utility.navigate(Url.Home);
+  }
+
+  /** Navigate user to home page if user is authenticated.*/
+  export async function navigateToHomeIfIsAuthenticated(): Promise<void> {
+    const isAuthenticated = await checkIsAuthenticated();
+    if (isAuthenticated) {
+      navigate(Url.Home);
     }
   }
 }

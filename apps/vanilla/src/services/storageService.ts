@@ -25,7 +25,7 @@ export namespace StorageService {
     if (value === null || value === '') {
       return null;
     }
-    return await JSON.parse(value) as T;
+    return JSON.parse(value) as T;
   }
 
   /**
