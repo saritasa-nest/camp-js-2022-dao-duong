@@ -14,6 +14,7 @@ window.addEventListener('load', (): void => {
 });
 
 const initHomepage = async(): Promise<void> => {
+  resetTableState();
   localStorage.setItem('active', FIRST_PAGE.toString());
   localStorage.setItem('sort', '');
   localStorage.setItem('search', '');

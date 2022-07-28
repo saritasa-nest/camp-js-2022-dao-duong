@@ -1,7 +1,7 @@
 import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
 
 import { getAnime } from './anime';
-import { renderAnimeTable } from './animeTable';
+import { renderTable } from './animeTable';
 
 import { ACTIVE_LS, FILTERING_TYPES, FIRST_PAGE, LIMIT, SEARCH_LS, SORT_LS, TYPE_LS } from './variables';
 
@@ -29,6 +29,6 @@ export function renderFilterOptions(): void {
     };
     const data = await getAnime(paginationConfig);
 
-    renderAnimeTable(data);
+    renderTable(data);
   });
 }
