@@ -5,6 +5,8 @@ import { LIMIT, FIRST_PAGE } from '../scripts/variables';
 
 import { renderTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
+import { renderFilterOptions } from '../scripts/filter';
+import { resetTableState } from '../scripts/functions';
 import { initSearch } from '../scripts/search';
 
 window.addEventListener('load', (): void => {
@@ -12,6 +14,7 @@ window.addEventListener('load', (): void => {
 });
 
 const initHomepage = async(): Promise<void> => {
+  resetTableState();
   localStorage.setItem('active', FIRST_PAGE.toString());
   localStorage.setItem('sort', '');
   localStorage.setItem('search', '');
@@ -19,11 +22,12 @@ const initHomepage = async(): Promise<void> => {
     limit: LIMIT,
     page: FIRST_PAGE,
     ordering: '',
+    type: '',
     search: '',
   };
-
   const anime = await getAnime(paginationConfig);
   renderTable(anime);
   renderSortOptions();
+  renderFilterOptions();
   initSearch();
 };
