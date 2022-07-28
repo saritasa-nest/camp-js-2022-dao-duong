@@ -31,6 +31,7 @@ export class AnimeService {
         ...PaginationMapper.toDto(options),
       },
     });
+
     const animeResponse$ = this.apiService.get<PaginationDto<AnimeDto>>(
       `anime/anime/`,
       params,

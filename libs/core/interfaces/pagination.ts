@@ -8,8 +8,8 @@ export interface PaginationConfig {
   readonly page: number;
 
   /** Sort order params for request query string. */
-  readonly ordering: string;
+  readonly ordering?: string;
 
   /** Query string. */
-  readonly search: string;
+  readonly search?: string;
 }

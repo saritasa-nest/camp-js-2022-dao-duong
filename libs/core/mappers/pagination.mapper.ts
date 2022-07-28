@@ -28,8 +28,8 @@ export namespace PaginationMapper {
     return {
       limit: config.limit.toString(),
       offset,
-      ordering: config.ordering,
-      search: config.search,
+      ordering: config.ordering ?? '',
+      search: config.search ?? '',
     } as PaginationOptionsDto;
   }
 }

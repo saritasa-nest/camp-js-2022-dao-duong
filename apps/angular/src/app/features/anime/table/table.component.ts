@@ -17,9 +17,7 @@ import { AnimeService } from '../../../../core/services/anime.service';
 
 const DEFAULT_PAGINATION_OPTIONS: PaginationConfig = {
   limit: 10,
-  page: 0,
-  ordering: '',
-  search: '',
+  page: 1,
 };
 
 /** Anime table component. */
@@ -34,7 +32,7 @@ export class TableComponent {
   public readonly animeList$: Observable<readonly Anime[]>;
 
   /** TODO. */
-  public readonly params$: BehaviorSubject<PaginationConfig>;
+  public readonly params$: BehaviorSubject<PaginationConfig> = new BehaviorSubject(DEFAULT_PAGINATION_OPTIONS);
 
   /** Paginator page event. */
   public pageEvent!: PageEvent;
@@ -63,10 +61,7 @@ export class TableComponent {
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.params$ = new BehaviorSubject({
-      ...DEFAULT_PAGINATION_OPTIONS,
-      ...this.route.snapshot.queryParams,
-    });
+    this.params$.next(this.route.snapshot.queryParams as PaginationConfig);
     this.animeList$ = this.params$.pipe(
       tap(params => {
         this.currentPage = params.page - 1;
