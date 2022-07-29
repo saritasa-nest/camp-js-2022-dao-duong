@@ -25,6 +25,7 @@ export class AnimeService {
    * @param options Pagination options.
    **/
   public fetchAnime(options: PaginationConfig): Observable<Pagination<Anime>> {
+
     // Handle params
     const params = new HttpParams({
       fromObject: {

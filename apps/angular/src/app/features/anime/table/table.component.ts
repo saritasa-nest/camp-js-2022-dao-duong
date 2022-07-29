@@ -8,9 +8,14 @@ import { map, Observable, switchMap, tap } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
-const DEFAULT_PAGINATION_OPTIONS: PaginationConfig = {
-  limit: 10,
-  page: 1,
+const FIRST_PAGE = 1;
+const DEFAULT_LIMIT = 10;
+
+const DEFAULT_PARAMS: PaginationConfig = {
+  limit: DEFAULT_LIMIT,
+  page: FIRST_PAGE,
+  ordering: '',
+  search: '',
 };
 
 /** Anime table component. */
@@ -25,7 +30,7 @@ export class TableComponent {
   public readonly animeList$: Observable<readonly Anime[]>;
 
   /** TODO. */
-  // public readonly params$: BehaviorSubject<PaginationConfig> = new BehaviorSubject(DEFAULT_PAGINATION_OPTIONS);
+  // public readonly params$: BehaviorSubject<PaginationConfig> = new BehaviorSubject(DEFAULT_PARAMS);
 
   public readonly params$: Observable<Params> = this.route.queryParams;
 
@@ -68,7 +73,7 @@ export class TableComponent {
       }),
       switchMap(params =>
         this.animeService.fetchAnime({
-          ...DEFAULT_PAGINATION_OPTIONS,
+          ...DEFAULT_PARAMS,
           ...params,
         })),
       tap(pagination => {
@@ -83,7 +88,7 @@ export class TableComponent {
    * @param event Paginator event emission.
    **/
   public handlePaginatorChange(event: PageEvent): void {
-    const newParams = {
+    const changedParams = {
       limit: event.pageSize,
 
       /**
@@ -92,8 +97,8 @@ export class TableComponent {
        */
       page: event.pageIndex + 1,
     };
-    this.router.navigate(['/'], {
-      queryParams: newParams,
+    this.router.navigate([], {
+      queryParams: changedParams,
       queryParamsHandling: 'merge',
     });
   }
@@ -103,11 +108,11 @@ export class TableComponent {
    * @param event Sort event emission.
    **/
   public handleSortChange(event: PageEvent): void {
-    const newParams = {
+    const changedParams = {
       ordering: event.toString(),
     };
-    this.router.navigate(['/'], {
-      queryParams: newParams,
+    this.router.navigate([], {
+      queryParams: changedParams,
       queryParamsHandling: 'merge',
     });
   }
@@ -116,7 +121,7 @@ export class TableComponent {
    * Convert response date object to readable format.
    * @param date Date data from response object.
    */
-  public convertDate(date: Date | null): string {
+  public formatDate(date: Date | null): string {
     if (date !== null) {
       return date.toLocaleDateString('en-GB');
     }
@@ -145,8 +150,8 @@ export class TableComponent {
         this.sortOption = params['ordering'];
       }
     }
-    this.currentPage = params['page'] - 1;
-    this.pageSize = params['limit'];
+    this.currentPage = params['page'] ?? FIRST_PAGE;
+    this.pageSize = params['limit'] ?? DEFAULT_LIMIT;
   }
 
   test(event: PageEvent): void {

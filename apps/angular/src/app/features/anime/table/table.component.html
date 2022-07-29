@@ -42,7 +42,7 @@
     <ng-container matColumnDef="airedStart">
       <th mat-header-cell *matHeaderCellDef>Aired Start</th>
       <td mat-cell *matCellDef="let anime">
-        {{ convertDate(anime.aired.start) }}
+        {{ anime.aired.start | date: 'dd/MM/yyyy' }}
       </td>
     </ng-container>
     <!-- Type Column -->

@@ -56,7 +56,8 @@ export class SortComponent {
 
   /** Handle selection change event. */
   public onSelectionChange(): void {
-    this.sortChange.emit(this.selectedDirection + this.selectedOption);
+    const sortValue = this.selectedDirection + this.selectedOption;
+    this.sortChange.emit(this.selectedOption ? sortValue : '');
   }
 
   /**
