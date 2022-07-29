@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+import { ApiConfigService } from '../services/api-config.service';
 
 /** Api key interceptor. */
 @Injectable()
 export class HttpApiKeyInterceptor implements HttpInterceptor {
-  public constructor() {}
+  public constructor(private readonly apiConfig: ApiConfigService) {}
 
   /**
    * Interceptor.
@@ -15,7 +15,7 @@ export class HttpApiKeyInterceptor implements HttpInterceptor {
    * @param next HttpHandler function.
    **/
   public intercept<T>(req: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
-    req.headers.set('Api-Key', environment.api_key);
+    req.headers.set('Api-Key', this.apiConfig.apiKey);
     return next.handle(req);
   }
 }
