@@ -114,5 +114,8 @@
   "bugs": {
     "url": "https://github.com/saritasa-nest/camp-js-2022-dao-duong/issues"
   },
-  "homepage": "https://github.com/saritasa-nest/camp-js-2022-dao-duong#readme"
+  "homepage": "https://github.com/saritasa-nest/camp-js-2022-dao-duong#readme",
+  "volta": {
+    "node": "16.15.0"
+  }
 }
