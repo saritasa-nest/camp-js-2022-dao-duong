@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { Anime } from '@js-camp/core/models/anime/anime';
 
-import { map, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
@@ -27,14 +28,16 @@ const DEFAULT_PARAMS: PaginationConfig = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent {
+
   /** Anime list observer. */
   public readonly animeList$: Observable<readonly Anime[]>;
 
-  /** TODO. */
   // public readonly params$: BehaviorSubject<PaginationConfig> = new BehaviorSubject(DEFAULT_PARAMS);
 
+  /** Param observer. */
   public readonly params$: Observable<Params> = this.route.queryParams;
 
+  // TODO: Figure out someway to fix these declarations.
   /** Paginator page event. */
   public pageEvent!: PageEvent;
 
@@ -59,6 +62,9 @@ export class TableComponent {
   /** Anime type value. */
   public search = '';
 
+  /** Anime pagination observer. */
+  public pagination$ = new BehaviorSubject<PaginationConfig>(DEFAULT_PARAMS);
+
   /** Anime table column. */
   public displayedColumns = [
     'image',
@@ -78,6 +84,9 @@ export class TableComponent {
       tap(params => {
         this.setDataForControllingComponent(params);
       }),
+      tap(params => {
+        this.pagination$.next({ ...DEFAULT_PARAMS, ...params });
+      }),
       switchMap(params =>
         this.animeService.fetchAnime({
           ...DEFAULT_PARAMS,
@@ -95,6 +104,15 @@ export class TableComponent {
    * @param event Paginator event emission.
    **/
   public handlePaginatorChange(event: PageEvent): void {
+    this.pagination$.next({
+      limit: event.pageSize,
+
+      /**
+       * In vanilla projects, the initial page index is 1 but here the initial page index is 0.
+       * So I have to plus 1 to match the calculation.
+       */
+      page: event.pageIndex,
+    });
     const changedParams = {
       limit: event.pageSize,
 
@@ -114,9 +132,10 @@ export class TableComponent {
    * Handle changes in sort.
    * @param event Sort event emission.
    **/
-  public handleSortChange(event: PageEvent): void {
+  public handleSortChange(event: Sort): void {
+    const direction = event.direction === 'asc' ? '' : '-';
     const changedParams = {
-      ordering: event.toString(),
+      ordering: direction + event.active,
     };
     this.router.navigate([], {
       queryParams: changedParams,
@@ -178,6 +197,7 @@ export class TableComponent {
    * Sync data from params fo controlling component.
    * @param params URL params.
    **/
+  // TODO: Improve this. Make it observable. THIS IS BAD CODE!!!
   public setDataForControllingComponent(params: Params): void {
     if (params['ordering']) {
       if (params['ordering'].includes('-')) {

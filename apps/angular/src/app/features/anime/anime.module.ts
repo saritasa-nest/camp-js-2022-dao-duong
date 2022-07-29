@@ -7,6 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSortModule } from '@angular/material/sort';
 
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeComponent } from './anime.component';
@@ -37,6 +38,7 @@ import { FilterComponent } from './filter/filter.component';
     ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
+    MatSortModule,
   ],
 })
 export class AnimeModule {}
