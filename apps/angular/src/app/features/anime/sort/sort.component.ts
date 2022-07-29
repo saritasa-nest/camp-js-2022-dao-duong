@@ -5,6 +5,7 @@ import {
   EventEmitter,
   Input,
 } from '@angular/core';
+import { Option } from '@js-camp/core/interfaces/option';
 
 /** Sort options. */
 export interface SortOption {
@@ -35,7 +36,7 @@ export class SortComponent {
   @Output() public sortChange = new EventEmitter();
 
   /** Available value for sorting options. */
-  public SORT_OPTIONS: readonly SortOption[] = [
+  public SORT_OPTIONS: readonly Option[] = [
     { text: 'Default', value: '' },
     { text: 'English Title', value: Ordering.EnglishTitle },
     { text: 'Aired Start', value: Ordering.AiredStart },
@@ -43,7 +44,7 @@ export class SortComponent {
   ];
 
   /** Available direction for sorting options. */
-  public SORT_DIRECTIONS: readonly SortOption[] = [
+  public SORT_DIRECTIONS: readonly Option[] = [
     { text: 'Ascending', value: '' },
     { text: 'Descending', value: '-' },
   ];

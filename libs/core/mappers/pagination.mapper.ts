@@ -23,13 +23,14 @@ export namespace PaginationMapper {
    * @param config Pagination configuration.
    */
   export function toDto(config: PaginationConfig): PaginationOptionsDto {
-    const offset = (config.limit * (config.page - 1)).toString();
+    const offset = (config.limit * config.page).toString();
 
     return {
       limit: config.limit.toString(),
       offset,
       ordering: config.ordering ?? '',
-      search: config.search ?? '',
+      search: config.search,
+      type: config.type,
     } as PaginationOptionsDto;
   }
 }

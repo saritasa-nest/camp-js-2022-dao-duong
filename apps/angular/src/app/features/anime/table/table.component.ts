@@ -8,14 +8,15 @@ import { map, Observable, switchMap, tap } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
-const FIRST_PAGE = 1;
+const DEFAULT_PAGE = 0;
 const DEFAULT_LIMIT = 10;
 
 const DEFAULT_PARAMS: PaginationConfig = {
   limit: DEFAULT_LIMIT,
-  page: FIRST_PAGE,
+  page: DEFAULT_PAGE,
   ordering: '',
   search: '',
+  type: '',
 };
 
 /** Anime table component. */
@@ -51,6 +52,12 @@ export class TableComponent {
 
   /** Anime table current page. */
   public sortDirection = '';
+
+  /** Anime type value. */
+  public type = '';
+
+  /** Anime type value. */
+  public search = '';
 
   /** Anime table column. */
   public displayedColumns = [
@@ -95,7 +102,7 @@ export class TableComponent {
        * In vanilla projects, the initial page index is 1 but here the initial page index is 0.
        * So I have to plus 1 to match the calculation.
        */
-      page: event.pageIndex + 1,
+      page: event.pageIndex,
     };
     this.router.navigate([], {
       queryParams: changedParams,
@@ -110,6 +117,36 @@ export class TableComponent {
   public handleSortChange(event: PageEvent): void {
     const changedParams = {
       ordering: event.toString(),
+    };
+    this.router.navigate([], {
+      queryParams: changedParams,
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  /**
+   * Handle changes in sort.
+   * @param event Type event emission.
+   **/
+  public handleTypeChange(event: PageEvent): void {
+    const changedParams = {
+      page: DEFAULT_PAGE,
+      type: event.toString(),
+    };
+    this.router.navigate([], {
+      queryParams: changedParams,
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  /**
+   * Handle changes in sort.
+   * @param event Type event emission.
+   **/
+  public handleSearch(event: PageEvent): void {
+    const changedParams = {
+      page: DEFAULT_PAGE,
+      search: event.toString(),
     };
     this.router.navigate([], {
       queryParams: changedParams,
@@ -150,11 +187,9 @@ export class TableComponent {
         this.sortOption = params['ordering'];
       }
     }
-    this.currentPage = params['page'] ?? FIRST_PAGE;
+    this.currentPage = params['page'] ?? DEFAULT_PAGE;
     this.pageSize = params['limit'] ?? DEFAULT_LIMIT;
-  }
-
-  test(event: PageEvent): void {
-    console.log(event);
+    this.type = params['type'] ?? '';
+    this.search = params['search'] ?? '';
   }
 }
