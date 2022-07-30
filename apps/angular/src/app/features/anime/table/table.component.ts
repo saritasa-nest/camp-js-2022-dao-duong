@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Sort } from '@angular/material/sort';
+import { Sort, SortDirection } from '@angular/material/sort';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { Anime } from '@js-camp/core/models/anime/anime';
 
-import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, combineLatestWith, map, Observable, switchMap, tap } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
@@ -54,7 +54,7 @@ export class TableComponent {
   public sortOption = '';
 
   /** Anime table current page. */
-  public sortDirection = '';
+  public sortDirection: SortDirection = '';
 
   /** Anime type value. */
   public type = '';
@@ -64,6 +64,12 @@ export class TableComponent {
 
   /** Anime pagination observer. */
   public pagination$ = new BehaviorSubject<PaginationConfig>(DEFAULT_PARAMS);
+
+  /** Sort Observer. */
+  public sortObservers$ = new BehaviorSubject<Sort>({
+    active: '',
+    direction: '',
+  });
 
   /** Anime table column. */
   public displayedColumns = [
@@ -87,11 +93,10 @@ export class TableComponent {
       tap(params => {
         this.pagination$.next({ ...DEFAULT_PARAMS, ...params });
       }),
-      switchMap(params =>
-        this.animeService.fetchAnime({
-          ...DEFAULT_PARAMS,
-          ...params,
-        })),
+      switchMap(params => this.animeService.fetchAnime({
+        ...DEFAULT_PARAMS,
+        ...params,
+      })),
       tap(pagination => {
         this.length = pagination.count;
       }),
@@ -106,20 +111,10 @@ export class TableComponent {
   public handlePaginatorChange(event: PageEvent): void {
     this.pagination$.next({
       limit: event.pageSize,
-
-      /**
-       * In vanilla projects, the initial page index is 1 but here the initial page index is 0.
-       * So I have to plus 1 to match the calculation.
-       */
       page: event.pageIndex,
     });
     const changedParams = {
       limit: event.pageSize,
-
-      /**
-       * In vanilla projects, the initial page index is 1 but here the initial page index is 0.
-       * So I have to plus 1 to match the calculation.
-       */
       page: event.pageIndex,
     };
     this.router.navigate([], {
@@ -174,17 +169,6 @@ export class TableComponent {
   }
 
   /**
-   * Convert response date object to readable format.
-   * @param date Date data from response object.
-   */
-  public formatDate(date: Date | null): string {
-    if (date !== null) {
-      return date.toLocaleDateString('en-GB');
-    }
-    return 'None';
-  }
-
-  /**
    * Table tracking function.
    * @param _index Index of the anime.
    * @param anime Anime data.
@@ -202,9 +186,10 @@ export class TableComponent {
     if (params['ordering']) {
       if (params['ordering'].includes('-')) {
         this.sortOption = params['ordering'].slice(1);
-        this.sortDirection = '-';
+        this.sortDirection = 'desc';
       } else {
         this.sortOption = params['ordering'];
+        this.sortDirection = 'asc';
       }
     }
     this.currentPage = params['page'] ?? DEFAULT_PAGE;

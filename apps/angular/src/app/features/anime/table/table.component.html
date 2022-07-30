@@ -1,6 +1,5 @@
 <camp-search (search)="handleSearch($event)" [searchValue]="search"></camp-search>
 <div class="anime-table__controller">
-  <camp-sort (sortChange)="handleSortChange($event)" [selectedDirection]="sortDirection" [selectedOption]="sortOption"></camp-sort>
   <camp-filter (typeChange)="handleTypeChange($event)" [selectedType]="type"></camp-filter>
   <camp-paginator
     *ngIf="pagination$ | async as pagination"
@@ -19,6 +18,9 @@
     mat-table
     matSort
     (matSortChange)="handleSortChange($event)"
+    [matSortActive]="sortOption"
+    [matSortDirection]="sortDirection"
+
     class="mat-elevation-z8 anime-table"
     [trackBy]="trackAnimeById"
     aria-label="anime"
