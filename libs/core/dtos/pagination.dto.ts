@@ -27,4 +27,7 @@ export interface PaginationOptionsDto {
 
   /** Search query. */
   readonly search: string;
+
+  /** Type query. */
+  readonly type__in: readonly string[];
 }

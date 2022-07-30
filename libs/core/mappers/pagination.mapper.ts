@@ -30,7 +30,7 @@ export namespace PaginationMapper {
       offset,
       ordering: config.ordering ?? '',
       search: config.search,
-      type: config.type,
+      type__in: [config.type],
     } as PaginationOptionsDto;
   }
 }
