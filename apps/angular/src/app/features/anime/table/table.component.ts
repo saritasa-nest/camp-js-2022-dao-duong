@@ -30,12 +30,7 @@ export class TableComponent implements OnInit {
   /** Anime list observer. */
   public readonly animeList$: Observable<readonly Anime[]>;
 
-  // public readonly params$: BehaviorSubject<PaginationConfig> = new BehaviorSubject(DEFAULT_PARAMS);
-  // TODO: Figure out someway to fix these declarations.
-  /** Paginator page event. */
-  public readonly params$: Observable<Params> = this.route.queryParams;
-
-  /** Paginator page event. */
+  /** Default page size value. */
   public pageSize = DEFAULT_LIMIT;
 
   /** Anime length. */
@@ -44,16 +39,16 @@ export class TableComponent implements OnInit {
   /** Anime type value. */
   public animeTypeList = Object.values(AnimeType);
 
-  /** Anime type value. */
+  /** Anime search from control. */
   public readonly searchControl = new FormControl(DEFAULT_SEARCH);
 
-  /** Anime type value. */
+  /** Type filter form control. */
   public readonly filterTypeControl = new FormControl();
 
-  /** Sort Observer. */
+  /** Current page observer. */
   public currentPage$ = new BehaviorSubject<number>(DEFAULT_PAGE);
 
-  /** Sort Observer. */
+  /** Sort observer. */
   public sortObservers$: BehaviorSubject<Sort> = new BehaviorSubject<Sort>(DEFAULT_SORT);
 
   /** Anime table column. */
@@ -69,7 +64,6 @@ export class TableComponent implements OnInit {
   public constructor(
     private readonly animeService: AnimeService,
     private readonly route: ActivatedRoute,
-    private readonly router: Router,
   ) {
     const params$ = this.currentPage$.pipe(
       combineLatestWith(
