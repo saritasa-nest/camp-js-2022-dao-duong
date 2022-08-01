@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Anime } from '@js-camp/core/models/anime/anime';
 import { AnimeType } from '@js-camp/core/utils/types/animeType';
 
@@ -31,13 +31,13 @@ export class TableComponent implements OnInit {
   public readonly animeList$: Observable<readonly Anime[]>;
 
   /** Default page size value. */
-  public pageSize = DEFAULT_LIMIT;
+  public readonly pageSize = DEFAULT_LIMIT;
 
   /** Anime length. */
   public length = 0;
 
   /** Anime type value. */
-  public animeTypeList = Object.values(AnimeType);
+  public readonly animeTypeList = Object.values(AnimeType);
 
   /** Anime search from control. */
   public readonly searchControl = new FormControl(DEFAULT_SEARCH);
@@ -46,10 +46,10 @@ export class TableComponent implements OnInit {
   public readonly filterTypeControl = new FormControl();
 
   /** Current page observer. */
-  public currentPage$ = new BehaviorSubject<number>(DEFAULT_PAGE);
+  public readonly currentPage$ = new BehaviorSubject<number>(DEFAULT_PAGE);
 
   /** Sort observer. */
-  public sortObservers$: BehaviorSubject<Sort> = new BehaviorSubject<Sort>(DEFAULT_SORT);
+  public readonly sortObservers$ = new BehaviorSubject<Sort>(DEFAULT_SORT);
 
   /** Anime table column. */
   public displayedColumns = [
