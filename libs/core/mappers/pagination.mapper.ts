@@ -29,8 +29,8 @@ export namespace PaginationMapper {
       limit: config.limit.toString(),
       offset,
       ordering: config.ordering ?? '',
-      search: config.search,
-      type__in: [config.type],
+      search: config.search ?? '',
+      type__in: config.type ?? [],
     } as PaginationOptionsDto;
   }
 }
