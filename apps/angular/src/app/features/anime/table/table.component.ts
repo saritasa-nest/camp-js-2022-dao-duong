@@ -51,6 +51,9 @@ export class TableComponent implements OnInit {
   /** Sort observer. */
   public readonly sortObservers$ = new BehaviorSubject<Sort>(DEFAULT_SORT);
 
+  /** Sort observer. */
+  public readonly isLoading$ = new BehaviorSubject<boolean>(false);
+
   /** Anime table column. */
   public displayedColumns = [
     'image',
@@ -80,6 +83,7 @@ export class TableComponent implements OnInit {
       debounceTime(500),
     );
     this.animeList$ = params$.pipe(
+      tap(() => this.isLoading$.next(true)),
       switchMap(([currentPage, search, filter, sort]) => this.animeService.fetchAnime({
         limit: DEFAULT_LIMIT,
         page: currentPage,
@@ -91,6 +95,7 @@ export class TableComponent implements OnInit {
         this.length = animeList.count;
         return animeList.results;
       }),
+      tap(() => this.isLoading$.next(false)),
     );
   }
 

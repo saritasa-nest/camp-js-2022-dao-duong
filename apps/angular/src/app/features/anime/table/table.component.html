@@ -17,17 +17,17 @@
   ></camp-paginator>
 </div>
 <div
-  *ngIf="animeList$ | async as animeList; else loading"
+  *ngIf="animeList$ | async as animeList"
   class="anime-table__container"
 >
   <table
+    *ngIf="(isLoading$|async) === false"
     [dataSource]="animeList"
     mat-table
     matSort
     (matSortChange)="handleSortChange($event)"
     [matSortActive]="(sortObservers$ | async)!.active"
     [matSortDirection]="(sortObservers$ | async)!.direction"
-
     class="mat-elevation-z8 anime-table"
     [trackBy]="trackAnimeById"
     aria-label="anime"
@@ -72,8 +72,8 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </div>
-<ng-template #loading>
-  <div class="spinner">
+
+<div class="spinner" *ngIf="isLoading$|async">
     <mat-spinner color="accent"></mat-spinner>
-  </div>
-</ng-template>
+</div>
+
