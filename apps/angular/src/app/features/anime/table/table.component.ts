@@ -1,25 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { Sort, SortDirection } from '@angular/material/sort';
+import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { Anime } from '@js-camp/core/models/anime/anime';
+import { AnimeType } from '@js-camp/core/utils/types/animeType';
 
-import { BehaviorSubject, combineLatestWith, debounceTime, map, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, combineLatestWith, debounceTime, map, Observable, startWith, switchMap, tap } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
 const DEFAULT_PAGE = 0;
 const DEFAULT_LIMIT = 10;
-
-const DEFAULT_PARAMS: PaginationConfig = {
-  limit: DEFAULT_LIMIT,
-  page: DEFAULT_PAGE,
-  ordering: '',
-  search: '',
-  type: '',
-};
-
+const DEFAULT_SEARCH = '';
 const DEFAULT_SORT: Sort = {
   active: '',
   direction: '',
@@ -32,7 +25,7 @@ const DEFAULT_SORT: Sort = {
   styleUrls: ['./table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent {
+export class TableComponent implements OnInit {
 
   /** Anime list observer. */
   public readonly animeList$: Observable<readonly Anime[]>;
@@ -40,40 +33,28 @@ export class TableComponent {
   // public readonly params$: BehaviorSubject<PaginationConfig> = new BehaviorSubject(DEFAULT_PARAMS);
   // TODO: Figure out someway to fix these declarations.
   /** Paginator page event. */
-  public pageEvent!: PageEvent;
+  public readonly params$: Observable<Params> = this.route.queryParams;
+
+  /** Paginator page event. */
+  public pageSize = DEFAULT_LIMIT;
 
   /** Anime length. */
   public length = 0;
 
-  /** Anime page size. */
-  public pageSize = 10;
-
-  /** Anime table current page. */
-  public currentPage = 0;
-
-  /** Anime table current page. */
-  public sortOption = '';
-
-  /** Anime table current page. */
-  public sortDirection: SortDirection = '';
+  /** Anime type value. */
+  public animeTypeList = Object.values(AnimeType);
 
   /** Anime type value. */
-  public type = '';
+  public readonly searchControl = new FormControl(DEFAULT_SEARCH);
 
   /** Anime type value. */
-  public search = '';
-
-  /** Anime pagination observer. */
-  public pagination$ = new BehaviorSubject<PaginationConfig>(DEFAULT_PARAMS);
+  public readonly filterTypeControl = new FormControl();
 
   /** Sort Observer. */
-  public currentPageObserver$: BehaviorSubject<number> = new BehaviorSubject<number>(DEFAULT_PAGE);
+  public currentPage$ = new BehaviorSubject<number>(DEFAULT_PAGE);
 
   /** Sort Observer. */
   public sortObservers$: BehaviorSubject<Sort> = new BehaviorSubject<Sort>(DEFAULT_SORT);
-
-  /** Sort Observer. */
-  public filterObservers$ = new BehaviorSubject<string>('');
 
   /** Anime table column. */
   public displayedColumns = [
@@ -90,41 +71,41 @@ export class TableComponent {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
   ) {
-    const params$ = this.currentPageObserver$.pipe(
-      combineLatestWith(this.sortObservers$),
-      debounceTime(300),
+    const params$ = this.currentPage$.pipe(
+      combineLatestWith(
+        this.searchControl.valueChanges.pipe(
+          tap(() => this.currentPage$.next(DEFAULT_PAGE)),
+          startWith(this.searchControl.value),
+        ),
+        this.filterTypeControl.valueChanges.pipe(
+          tap(() => this.currentPage$.next(DEFAULT_PAGE)),
+          startWith(this.filterTypeControl.value),
+        ),
+        this.sortObservers$,
+      ),
+      debounceTime(500),
     );
     this.animeList$ = params$.pipe(
-      tap(([page, sort]) => {
-        console.log(sort);
-      }),
-      switchMap(([page, sort]) => this.animeService.fetchAnime({ limit: DEFAULT_LIMIT, page, ...sort })),
+      switchMap(([currentPage, search, filter, sort]) => this.animeService.fetchAnime({
+        limit: DEFAULT_LIMIT,
+        page: currentPage,
+        ordering: ((sort.direction === 'desc' ? '-' : '') + sort.active),
+        search: this.searchControl.value,
+        type: this.filterTypeControl.value ? this.filterTypeControl.value.toString() : [],
+      })),
       map(animeList => {
         this.length = animeList.count;
         return animeList.results;
       }),
     );
+  }
 
-    // this.animeList$ = this.params$.pipe(
-    //   tap(params => {
-    //     this.pagination$.next({ ...DEFAULT_PARAMS, ...params });
-    //   }),
-    //   switchMap(params => this.animeService.fetchAnime({
-    //     ...DEFAULT_PARAMS,
-    //     ...params,
-    //   })),
-    //   tap(pagination => {
-    //     this.length = pagination.count;
-    //   }),
-    //   map(pagination => pagination.results),
-    // );
-    // this.test$ = this.params$.pipe(
-    //   combineLatestWith(this.sortObservers$, this.filterObservers$),
-    //   map(([params, sort, filter]) => {
-    //     console.log({ ...params, ...sort, filter });
-    //   }),
-    // );
-    // this.test$.subscribe();
+  /** Set data from url params to components.*/
+  public ngOnInit(): void {
+    this.route.queryParams.pipe(map(params => {
+      this.setDataFromParamsToComponent(params);
+    })).subscribe()
+      .unsubscribe();
   }
 
   /**
@@ -132,19 +113,7 @@ export class TableComponent {
    * @param event Paginator event emission.
    **/
   public handlePaginatorChange(event: PageEvent): void {
-    // this.pagination$.next({
-    //   limit: event.pageSize,
-    //   page: event.pageIndex,
-    // });
-    // const changedParams = {
-    //   limit: event.pageSize,
-    //   page: event.pageIndex,
-    // };
-    // this.router.navigate([], {
-    //   queryParams: changedParams,
-    //   queryParamsHandling: 'merge',
-    // });
-    this.currentPageObserver$.next(event.pageIndex);
+    this.currentPage$.next(event.pageIndex);
   }
 
   /**
@@ -152,48 +121,9 @@ export class TableComponent {
    * @param event Sort event emission.
    **/
   public handleSortChange(event: Sort): void {
-    const direction = event.direction === 'asc' ? '' : '-';
-    const changedParams = {
-      ordering: direction + event.active,
-    };
     this.sortObservers$.next({
-      active: event.active,
+      active: event.direction === '' ? '' : event.active,
       direction: event.direction,
-    });
-
-    // this.router.navigate([], {
-    //   queryParams: changedParams,
-    //   queryParamsHandling: 'merge',
-    // });
-  }
-
-  /**
-   * Handle changes in type select.
-   * @param event Type event emission.
-   **/
-  public handleTypeChange(event: PageEvent): void {
-    const changedParams = {
-      page: DEFAULT_PAGE,
-      type: event.toString(),
-    };
-    this.router.navigate([], {
-      queryParams: changedParams,
-      queryParamsHandling: 'merge',
-    });
-  }
-
-  /**
-   * Handle changes in sort.
-   * @param event Type event emission.
-   **/
-  public handleSearch(event: PageEvent): void {
-    const changedParams = {
-      page: DEFAULT_PAGE,
-      search: event.toString(),
-    };
-    this.router.navigate([], {
-      queryParams: changedParams,
-      queryParamsHandling: 'merge',
     });
   }
 
@@ -211,14 +141,17 @@ export class TableComponent {
    * @param params URL params.
    **/
   // TODO: Improve this. Make it observable. THIS IS BAD CODE!!!
-  // public setDataForControllingComponent(params: Params): void {
-  //   if (params['ordering']) {
-  //     this.sortDirection = params['ordering'].includes('-') ? 'desc' : 'asc';
-  //     this.sortOption = params['ordering'].replace('-', '');
-  //   }
-  //   this.currentPage = params['page'] ?? DEFAULT_PAGE;
-  //   this.pageSize = params['limit'] ?? DEFAULT_LIMIT;
-  //   this.type = params['type'] ?? '';
-  //   this.search = params['search'] ?? '';
-  // }
+  public setDataFromParamsToComponent(params: Params): void {
+    if (params['ordering']) {
+      this.sortObservers$.next({
+        active: params['ordering'].replace('-', ''),
+        direction: params['ordering'].includes('-') ? 'desc' : 'asc',
+      });
+    }
+    this.currentPage$.next(params['page'] || DEFAULT_PAGE);
+    this.searchControl.setValue(params['search'] || '');
+    if (params['type']) {
+      this.filterTypeControl.setValue(params['type'].split(','));
+    }
+  }
 }

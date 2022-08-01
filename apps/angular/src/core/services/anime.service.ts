@@ -11,6 +11,8 @@ import { AnimeMapper } from '@js-camp/core/mappers/anime/anime.mapper';
 
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
+import { Router } from '@angular/router';
+
 import { ApiService } from './api.service';
 
 /** Api service. */
@@ -18,13 +20,14 @@ import { ApiService } from './api.service';
   providedIn: 'root',
 })
 export class AnimeService {
-  public constructor(private apiService: ApiService) {}
+  public constructor(private apiService: ApiService, private readonly router: Router) {}
 
   /**
    * Get service.
    * @param options Pagination options.
    **/
   public fetchAnime(options: PaginationConfig): Observable<Pagination<Anime>> {
+    this.setUrl(options);
 
     // Handle params
     const params = new HttpParams({
@@ -42,5 +45,16 @@ export class AnimeService {
         PaginationMapper.fromDto(animes, animeDto =>
           AnimeMapper.fromDto(animeDto))),
     );
+  }
+
+  /**
+   * Set params to url.
+   * @param params Parameter to set.
+   **/
+  public setUrl(params: PaginationConfig): void {
+    this.router.navigate([], {
+      queryParams: params,
+      queryParamsHandling: 'merge',
+    });
   }
 }

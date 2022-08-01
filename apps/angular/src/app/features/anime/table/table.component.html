@@ -1,11 +1,18 @@
-<!-- <camp-search (search)="handleSearch($event)" [searchValue]="search"></camp-search> -->
+<mat-form-field class="search-form-field" appearance="fill">
+  <mat-label>Search here</mat-label>
+  <input matInput type="text"  class="search__input" [formControl]="searchControl">
+</mat-form-field>
+<mat-form-field class="filter-form-field" appearance="fill">
+  <mat-label>Type</mat-label>
+  <mat-select [formControl]="filterTypeControl" multiple>
+    <mat-option *ngFor="let type of animeTypeList" [value]="type">{{type}}</mat-option>
+  </mat-select>
+</mat-form-field>
 <div class="anime-table__controller">
-  <!-- <camp-filter (typeChange)="handleTypeChange($event)" [selectedType]="type"></camp-filter> -->
   <camp-paginator
-    *ngIf="pagination$ | async as pagination"
     [length]="length"
-    [pageSize]="pagination.limit"
-    [pageIndex]="pagination.page"
+    [pageIndex]="(currentPage$ | async)!"
+    [pageSize]="pageSize"
     (paginatorChange)="handlePaginatorChange($event)"
   ></camp-paginator>
 </div>
@@ -18,8 +25,8 @@
     mat-table
     matSort
     (matSortChange)="handleSortChange($event)"
-    [matSortActive]="sortOption"
-    [matSortDirection]="sortDirection"
+    [matSortActive]="(sortObservers$ | async)!.active"
+    [matSortDirection]="(sortObservers$ | async)!.direction"
 
     class="mat-elevation-z8 anime-table"
     [trackBy]="trackAnimeById"

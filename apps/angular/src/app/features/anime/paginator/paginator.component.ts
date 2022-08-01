@@ -28,9 +28,6 @@ export class PaginatorComponent {
   /** Paginator change event. */
   @Output() public paginatorChange = new EventEmitter();
 
-  /** Paginator page options. */
-  public pageSizeOptions: number[] = [10, 15, 20];
-
   /** Paginator. */
   @ViewChild(MatPaginator) public paginator!: MatPaginator;
 
