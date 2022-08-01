@@ -51,7 +51,7 @@ export class TableComponent implements OnInit {
   /** Sort observer. */
   public readonly sortObservers$ = new BehaviorSubject<Sort>(DEFAULT_SORT);
 
-  /** Sort observer. */
+  /** Loading state observer. */
   public readonly isLoading$ = new BehaviorSubject<boolean>(false);
 
   /** Anime table column. */
