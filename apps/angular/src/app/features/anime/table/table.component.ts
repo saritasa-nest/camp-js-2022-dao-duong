@@ -19,6 +19,7 @@ import {
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
+const DEFAULT_LENGTH = 0;
 const DEFAULT_PAGE = 0;
 const DEFAULT_LIMIT = 15;
 const DEFAULT_SEARCH = '';
@@ -42,7 +43,7 @@ export class TableComponent implements OnInit {
   public readonly pageSize = DEFAULT_LIMIT;
 
   /** Anime length. */
-  public length = 0;
+  public length = DEFAULT_LENGTH;
 
   /** Anime type value. */
   public readonly animeTypeList = Object.values(AnimeType);

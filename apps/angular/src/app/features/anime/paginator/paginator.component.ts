@@ -29,7 +29,7 @@ export class PaginatorComponent {
   @Output() public paginatorChange = new EventEmitter();
 
   /** Paginator. */
-  @ViewChild(MatPaginator) public paginator!: MatPaginator;
+  @ViewChild(MatPaginator) public readonly paginator!: MatPaginator;
 
   /**
    * Handle change event from paginator.
