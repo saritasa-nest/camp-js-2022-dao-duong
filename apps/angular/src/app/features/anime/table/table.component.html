@@ -88,3 +88,8 @@
 <div class="loading__spinner" *ngIf="isLoading$ | async">
   <mat-spinner color="accent"></mat-spinner>
 </div>
+<ng-template #loading>
+  <div class="spinner">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+</ng-template>
