@@ -2,9 +2,21 @@
   width: 100%;
 }
 
-.anime-table__controller {
+.anime-table__container {
+  position: relative;
+}
+
+.loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgb(0 0 0 / 15%);
+  z-index: 1;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
 }
 
 .loading__spinner {
