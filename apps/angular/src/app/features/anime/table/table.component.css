@@ -6,7 +6,7 @@
   position: relative;
 }
 
-.loading-shade {
+.loading__shade {
   position: absolute;
   top: 0;
   left: 0;
@@ -20,7 +20,7 @@
 }
 
 .loading__spinner {
-  position: fixed; /* or absolute */
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

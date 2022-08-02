@@ -92,6 +92,7 @@ export class TableComponent implements OnInit {
     );
     this.animeList$ = params$.pipe(
       tap(() => this.isLoading$.next(true)),
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       switchMap(([currentPage, search, filter, sort]) =>
         this.animeService.fetchAnime({
           limit: DEFAULT_LIMIT,
