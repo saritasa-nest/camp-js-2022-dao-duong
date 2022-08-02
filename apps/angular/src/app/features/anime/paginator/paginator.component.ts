@@ -26,7 +26,7 @@ export class PaginatorComponent {
   @Input() public pageIndex = 0;
 
   /** Paginator change event. */
-  @Output() public paginatorChange = new EventEmitter();
+  @Output() public readonly paginatorChange = new EventEmitter();
 
   /** Paginator. */
   @ViewChild(MatPaginator) public readonly paginator!: MatPaginator;
