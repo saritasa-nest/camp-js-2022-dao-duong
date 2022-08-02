@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
+    title: 'Anime',
     loadChildren: () =>
       import('./features/anime/anime.module').then(m => m.AnimeModule),
   },
