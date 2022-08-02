@@ -23,19 +23,16 @@ export class AnimeService {
   public constructor(private readonly apiService: ApiService, private readonly router: Router) {}
 
   /**
-   * Get service.
-   * @param options Pagination options.
+   * Fetch anime data from server.
+   * @param config Configuration for request.
    **/
-  public fetchAnime(options: PaginationConfig): Observable<Pagination<Anime>> {
-    this.setUrl(options);
-
-    // Handle params
+  public fetchAnime(config: PaginationConfig): Observable<Pagination<Anime>> {
+    this.setUrl(config);
     const params = new HttpParams({
       fromObject: {
-        ...PaginationMapper.toDto(options),
+        ...PaginationMapper.toDto(config),
       },
     });
-
     const animeResponse$ = this.apiService.get<PaginationDto<AnimeDto>>(
       `anime/anime/`,
       params,
@@ -49,7 +46,7 @@ export class AnimeService {
 
   /**
    * Set params to url.
-   * @param params Parameter to set.
+   * @param params Parameter values to set.
    **/
   public setUrl(params: PaginationConfig): void {
     this.router.navigate([], {

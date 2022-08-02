@@ -6,7 +6,16 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Anime } from '@js-camp/core/models/anime/anime';
 import { AnimeType } from '@js-camp/core/utils/types/animeType';
 
-import { BehaviorSubject, combineLatestWith, debounceTime, map, Observable, startWith, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatestWith,
+  debounceTime,
+  map,
+  Observable,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
@@ -26,7 +35,6 @@ const DEFAULT_SORT: Sort = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements OnInit {
-
   /** Anime list observer. */
   public readonly animeList$: Observable<readonly Anime[]>;
 
@@ -84,16 +92,19 @@ export class TableComponent implements OnInit {
     );
     this.animeList$ = params$.pipe(
       tap(() => this.isLoading$.next(true)),
-      switchMap(([currentPage, search, filter, sort]) => this.animeService.fetchAnime({
-        limit: DEFAULT_LIMIT,
-        page: currentPage,
-        ordering: ((sort.direction === 'desc' ? '-' : '') + sort.active),
-        search: this.searchControl.value,
-        type: this.filterTypeControl.value ? this.filterTypeControl.value.toString() : [],
-      })),
-      map(animeList => {
-        this.length = animeList.count;
-        return animeList.results;
+      switchMap(([currentPage, search, filter, sort]) =>
+        this.animeService.fetchAnime({
+          limit: DEFAULT_LIMIT,
+          page: currentPage,
+          ordering: (sort.direction === 'desc' ? '-' : '') + sort.active,
+          search: this.searchControl.value,
+          type: this.filterTypeControl.value ?
+            this.filterTypeControl.value.toString() :
+            [],
+        })),
+      map(animeResponse => {
+        this.length = animeResponse.count;
+        return animeResponse.results;
       }),
       tap(() => this.isLoading$.next(false)),
     );
@@ -101,9 +112,13 @@ export class TableComponent implements OnInit {
 
   /** Set data from url params to components.*/
   public ngOnInit(): void {
-    this.route.queryParams.pipe(map(params => {
-      this.setDataFromParamsToComponent(params);
-    })).subscribe()
+    this.route.queryParams
+      .pipe(
+        map(params => {
+          this.setDataFromParamsToComponent(params);
+        }),
+      )
+      .subscribe()
       .unsubscribe();
   }
 
@@ -139,7 +154,7 @@ export class TableComponent implements OnInit {
    * Sync data from params to components.
    * @param params Params value from URL.
    **/
-  public setDataFromParamsToComponent(params: Params): void {
+  private setDataFromParamsToComponent(params: Params): void {
     if (params['ordering']) {
       this.sortObservers$.next({
         active: params['ordering'].replace('-', ''),
