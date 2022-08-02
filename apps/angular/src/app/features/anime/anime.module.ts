@@ -13,9 +13,6 @@ import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeComponent } from './anime.component';
 import { TableComponent } from './table/table.component';
 import { PaginatorComponent } from './paginator/paginator.component';
-import { SortComponent } from './sort/sort.component';
-import { SearchComponent } from './search/search.component';
-import { FilterComponent } from './filter/filter.component';
 
 /** Anime module. */
 @NgModule({
@@ -23,9 +20,6 @@ import { FilterComponent } from './filter/filter.component';
     AnimeComponent,
     TableComponent,
     PaginatorComponent,
-    SortComponent,
-    SearchComponent,
-    FilterComponent,
   ],
   imports: [
     CommonModule,
