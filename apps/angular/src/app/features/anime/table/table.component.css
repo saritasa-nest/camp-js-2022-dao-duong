@@ -18,3 +18,10 @@
   max-width: 150px;
   max-height: 150px;
 }
+
+.search__form-field,
+.type__form-field {
+  display: block;
+  max-width: 40%;
+  padding-left: 20px;
+}

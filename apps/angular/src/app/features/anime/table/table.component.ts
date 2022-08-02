@@ -11,7 +11,7 @@ import { BehaviorSubject, combineLatestWith, debounceTime, map, Observable, star
 import { AnimeService } from '../../../../core/services/anime.service';
 
 const DEFAULT_PAGE = 0;
-const DEFAULT_LIMIT = 10;
+const DEFAULT_LIMIT = 15;
 const DEFAULT_SEARCH = '';
 const DEFAULT_SORT: Sort = {
   active: '',
@@ -80,7 +80,7 @@ export class TableComponent implements OnInit {
         ),
         this.sortObservers$,
       ),
-      debounceTime(500),
+      debounceTime(700),
     );
     this.animeList$ = params$.pipe(
       tap(() => this.isLoading$.next(true)),
@@ -136,10 +136,9 @@ export class TableComponent implements OnInit {
   }
 
   /**
-   * Sync data from params fo controlling component.
-   * @param params URL params.
+   * Sync data from params to components.
+   * @param params Params value from URL.
    **/
-  // TODO: Improve this. Make it observable. THIS IS BAD CODE!!!
   public setDataFromParamsToComponent(params: Params): void {
     if (params['ordering']) {
       this.sortObservers$.next({
