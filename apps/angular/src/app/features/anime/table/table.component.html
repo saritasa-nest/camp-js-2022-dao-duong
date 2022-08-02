@@ -43,7 +43,6 @@
     </ng-container>
     <!-- English Title Column -->
     <ng-container matColumnDef="titleEng">
-      <!-- TODO: Maybe rename mat-sort=header. NOT USE DIRECTLY BACKEND VALUE. Maybe implement mappers -->
       <th mat-header-cell *matHeaderCellDef mat-sort-header="title_eng">
         English Title
       </th>
@@ -88,8 +87,3 @@
 <div class="loading__spinner" *ngIf="isLoading$ | async">
   <mat-spinner color="accent"></mat-spinner>
 </div>
-<ng-template #loading>
-  <div class="spinner">
-    <mat-spinner color="accent"></mat-spinner>
-  </div>
-</ng-template>

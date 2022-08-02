@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
@@ -11,19 +16,22 @@ import {
   combineLatestWith,
   debounceTime,
   map,
+  merge,
   Observable,
   startWith,
+  Subject,
   switchMap,
+  takeUntil,
   tap,
 } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
-const DEFAULT_LENGTH = 0;
-const DEFAULT_PAGE = 0;
-const DEFAULT_LIMIT = 15;
-const DEFAULT_SEARCH = '';
-const DEFAULT_SORT: Sort = {
+const INITIAL_LENGTH = 0;
+const INITIAL_PAGE = 0;
+const INITIAL_LIMIT = 15;
+const INITIAL_SEARCH = '';
+const INITIAL_SORT: Sort = {
   active: '',
   direction: '',
 };
@@ -35,30 +43,33 @@ const DEFAULT_SORT: Sort = {
   styleUrls: ['./table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
+  /** Subscription manager. */
+  public readonly subscriptionDestroy$: Subject<boolean> = new Subject();
+
   /** Anime list observer. */
   public readonly animeList$: Observable<readonly Anime[]>;
 
-  /** Default page size value. */
-  public readonly pageSize = DEFAULT_LIMIT;
+  /** Initial page size value. */
+  public readonly pageSize = INITIAL_LIMIT;
 
   /** Anime length. */
-  public length = DEFAULT_LENGTH;
+  public length = INITIAL_LENGTH;
 
   /** Anime type value. */
   public readonly animeTypeList = Object.values(AnimeType);
 
   /** Anime search from control. */
-  public readonly searchControl = new FormControl(DEFAULT_SEARCH);
+  public readonly searchControl = new FormControl(INITIAL_SEARCH);
 
   /** Type filter form control. */
   public readonly filterTypeControl = new FormControl();
 
   /** Current page observer. */
-  public readonly currentPage$ = new BehaviorSubject<number>(DEFAULT_PAGE);
+  public readonly currentPage$ = new BehaviorSubject<number>(INITIAL_PAGE);
 
   /** Sort observer. */
-  public readonly sortObservers$ = new BehaviorSubject<Sort>(DEFAULT_SORT);
+  public readonly sortObservers$ = new BehaviorSubject<Sort>(INITIAL_SORT);
 
   /** Loading state observer. */
   public readonly isLoading$ = new BehaviorSubject<boolean>(false);
@@ -80,11 +91,11 @@ export class TableComponent implements OnInit {
     const params$ = this.currentPage$.pipe(
       combineLatestWith(
         this.searchControl.valueChanges.pipe(
-          tap(() => this.currentPage$.next(DEFAULT_PAGE)),
+          tap(() => this.currentPage$.next(INITIAL_PAGE)),
           startWith(this.searchControl.value),
         ),
         this.filterTypeControl.valueChanges.pipe(
-          tap(() => this.currentPage$.next(DEFAULT_PAGE)),
+          tap(() => this.currentPage$.next(INITIAL_PAGE)),
           startWith(this.filterTypeControl.value),
         ),
         this.sortObservers$,
@@ -96,7 +107,7 @@ export class TableComponent implements OnInit {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       switchMap(([currentPage, search, filter, sort]) =>
         this.animeService.fetchAnime({
-          limit: DEFAULT_LIMIT,
+          limit: INITIAL_LIMIT,
           page: currentPage,
           ordering: (sort.direction === 'desc' ? '-' : '') + sort.active,
           search: this.searchControl.value,
@@ -122,6 +133,16 @@ export class TableComponent implements OnInit {
       )
       .subscribe()
       .unsubscribe();
+
+    const resetPaginationSideEffect$ = merge(
+      this.searchControl.valueChanges,
+      this.filterTypeControl.valueChanges,
+    ).pipe(tap(() => this.currentPage$.next(INITIAL_PAGE)));
+
+    // Merge all side effects and subscribe.
+    merge(resetPaginationSideEffect$)
+      .pipe(takeUntil(this.subscriptionDestroy$))
+      .subscribe();
   }
 
   /**
@@ -163,10 +184,16 @@ export class TableComponent implements OnInit {
         direction: params['ordering'].includes('-') ? 'desc' : 'asc',
       });
     }
-    this.currentPage$.next(params['page'] || DEFAULT_PAGE);
+    this.currentPage$.next(params['page'] || INITIAL_PAGE);
     this.searchControl.setValue(params['search'] || '');
     if (params['type']) {
       this.filterTypeControl.setValue(params['type'].split(','));
     }
+  }
+
+  /** Destroy subscriptions. */
+  public ngOnDestroy(): void {
+    this.subscriptionDestroy$.next(true);
+    this.subscriptionDestroy$.complete();
   }
 }
