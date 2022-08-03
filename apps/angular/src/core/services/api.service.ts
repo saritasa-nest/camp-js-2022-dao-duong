@@ -14,15 +14,11 @@ export class ApiService {
     private readonly apiConfig: ApiConfigService,
   ) {}
 
-  private formatErrors(error: unknown): Error {
-    return new Error(`${error}`);
-  }
-
   /**
    * Get service.
    * @param path Url path.
    * @param params Parameters for request.
-   **/
+   */
   public get<T>(
     path: string,
     params: HttpParams = new HttpParams(),

@@ -25,7 +25,7 @@ export class AnimeService {
   /**
    * Fetch anime data from server.
    * @param config Configuration for request.
-   **/
+   */
   public fetchAnime(config: PaginationConfig): Observable<Pagination<Anime>> {
     this.setUrl(config);
     const params = new HttpParams({
@@ -47,7 +47,7 @@ export class AnimeService {
   /**
    * Set params to url.
    * @param params Parameter values to set.
-   **/
+   */
   public setUrl(params: PaginationConfig): void {
     this.router.navigate([], {
       queryParams: params,

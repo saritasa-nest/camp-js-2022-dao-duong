@@ -121,8 +121,9 @@ export class TableComponent implements OnInit, OnDestroy {
     );
   }
 
-  /** Set data from url params to components.*/
+  /** On init lifecycle.*/
   public ngOnInit(): void {
+    // Set data from url params to components.
     this.route.queryParams
       .pipe(
         map(params => {
@@ -132,6 +133,7 @@ export class TableComponent implements OnInit, OnDestroy {
       .subscribe()
       .unsubscribe();
 
+    // Declare side effects
     const resetPaginationSideEffect$ = merge(
       this.searchControl.valueChanges,
       this.filterTypeControl.valueChanges,
@@ -146,7 +148,7 @@ export class TableComponent implements OnInit, OnDestroy {
   /**
    * Handle changes in paginator.
    * @param event Paginator event emission.
-   **/
+   */
   public handlePaginatorChange(event: PageEvent): void {
     this.currentPage$.next(event.pageIndex);
   }
@@ -154,7 +156,7 @@ export class TableComponent implements OnInit, OnDestroy {
   /**
    * Handle changes in sort.
    * @param event Sort event emission.
-   **/
+   */
   public handleSortChange(event: Sort): void {
     this.sortObservers$.next({
       active: event.direction === '' ? '' : event.active,
@@ -174,7 +176,7 @@ export class TableComponent implements OnInit, OnDestroy {
   /**
    * Sync data from params to components.
    * @param params Params value from URL.
-   **/
+   */
   private setDataFromParamsToComponent(params: Params): void {
     if (params['ordering']) {
       this.sortObservers$.next({
@@ -182,11 +184,11 @@ export class TableComponent implements OnInit, OnDestroy {
         direction: params['ordering'].includes('-') ? 'desc' : 'asc',
       });
     }
-    this.currentPage$.next(params['page'] || INITIAL_PAGE);
-    this.searchControl.setValue(params['search'] || '');
     if (params['type']) {
       this.filterTypeControl.setValue(params['type'].split(','));
     }
+    this.currentPage$.next(params['page'] || INITIAL_PAGE);
+    this.searchControl.setValue(params['search'] || '');
   }
 
   /** Destroy subscriptions. */
