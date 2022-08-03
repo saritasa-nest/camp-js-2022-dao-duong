@@ -98,8 +98,7 @@ export class TableComponent implements OnInit, OnDestroy {
       debounceTime(700),
     );
     this.animeList$ = params$.pipe(
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      switchMap(([currentPage, search, filter, sort]) =>
+      switchMap(([currentPage, _search, _filter, sort]) =>
         this.animeService.fetchAnime({
           limit: this.pageSize,
           page: currentPage,
