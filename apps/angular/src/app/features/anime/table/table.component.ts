@@ -29,7 +29,7 @@ import { AnimeService } from '../../../../core/services/anime.service';
 
 const INITIAL_LENGTH = 0;
 const INITIAL_PAGE = 0;
-const INITIAL_LIMIT = 15;
+const INITIAL_LIMIT = 25;
 const INITIAL_SEARCH = '';
 const INITIAL_SORT: Sort = {
   active: '',
@@ -71,9 +71,6 @@ export class TableComponent implements OnInit, OnDestroy {
   /** Sort observer. */
   public readonly sortObservers$ = new BehaviorSubject<Sort>(INITIAL_SORT);
 
-  /** Loading state observer. */
-  public readonly isLoading$ = new BehaviorSubject<boolean>(false);
-
   /** Anime table column. */
   public displayedColumns = [
     'image',
@@ -101,11 +98,10 @@ export class TableComponent implements OnInit, OnDestroy {
       debounceTime(700),
     );
     this.animeList$ = params$.pipe(
-      tap(() => this.isLoading$.next(true)),
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       switchMap(([currentPage, search, filter, sort]) =>
         this.animeService.fetchAnime({
-          limit: INITIAL_LIMIT,
+          limit: this.pageSize,
           page: currentPage,
           ordering: (sort.direction === 'desc' ? '-' : '') + sort.active,
           search: this.searchControl.value,
@@ -117,7 +113,6 @@ export class TableComponent implements OnInit, OnDestroy {
         this.length = animeResponse.count;
         return animeResponse.results;
       }),
-      tap(() => this.isLoading$.next(false)),
     );
   }
 
@@ -139,8 +134,10 @@ export class TableComponent implements OnInit, OnDestroy {
       this.filterTypeControl.valueChanges,
     ).pipe(tap(() => this.currentPage$.next(INITIAL_PAGE)));
 
+    const goToTopSideEffect$ = this.currentPage$.pipe((tap(() => this.goToTop())));
+
     // Merge all side effects and subscribe.
-    merge(resetPaginationSideEffect$)
+    merge(resetPaginationSideEffect$, goToTopSideEffect$)
       .pipe(takeUntil(this.subscriptionDestroy$))
       .subscribe();
   }
@@ -189,6 +186,14 @@ export class TableComponent implements OnInit, OnDestroy {
     }
     this.currentPage$.next(params['page'] || INITIAL_PAGE);
     this.searchControl.setValue(params['search'] || '');
+  }
+
+  /** Scroll to top of page. */
+  public goToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
 
   /** Destroy subscriptions. */
