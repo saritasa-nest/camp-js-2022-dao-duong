@@ -82,8 +82,9 @@
     (paginatorChange)="handlePaginatorChange($event)"
     class="table__paginator"
   ></camp-paginator>
-  <div class="loading__shade" *ngIf="isLoading$ | async"></div>
 </div>
-<div class="loading__spinner" *ngIf="isLoading$ | async">
-  <mat-spinner color="accent"></mat-spinner>
+<div class="loading__shade" *ngIf="isLoading$ | async">
+  <div class="loading__spinner">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
 </div>

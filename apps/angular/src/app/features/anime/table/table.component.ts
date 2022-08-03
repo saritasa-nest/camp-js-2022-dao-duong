@@ -91,11 +91,9 @@ export class TableComponent implements OnInit, OnDestroy {
     const params$ = this.currentPage$.pipe(
       combineLatestWith(
         this.searchControl.valueChanges.pipe(
-          tap(() => this.currentPage$.next(INITIAL_PAGE)),
           startWith(this.searchControl.value),
         ),
         this.filterTypeControl.valueChanges.pipe(
-          tap(() => this.currentPage$.next(INITIAL_PAGE)),
           startWith(this.filterTypeControl.value),
         ),
         this.sortObservers$,
