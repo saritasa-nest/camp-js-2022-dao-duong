@@ -191,7 +191,7 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   /** Scroll to top of page. */
-  public goToTop(): void {
+  private goToTop(): void {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',

@@ -31,13 +31,14 @@ export class AnimeService {
    */
   public fetchAnime(config: PaginationConfig): Observable<Pagination<Anime>> {
     this.setUrl(config);
+    const path = 'anime/anime/';
     const params = new HttpParams({
       fromObject: {
         ...PaginationMapper.toDto(config),
       },
     });
     const animeResponse$ = this.apiService.get<PaginationDto<AnimeDto>>(
-      `anime/anime/`,
+      path,
       params,
     );
     return animeResponse$.pipe(
