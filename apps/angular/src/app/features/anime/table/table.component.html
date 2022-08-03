@@ -78,13 +78,16 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-  <camp-paginator
+  <mat-paginator
+    showFirstLastButtons
     [length]="length"
-    [pageIndex]="(currentPage$ | async)!"
     [pageSize]="pageSize"
-    (paginatorChange)="handlePaginatorChange($event)"
+    [pageIndex]="(currentPage$ | async)!"
+    (page)="handlePaginatorChange($event)"
+    aria-label="Select pages"
     class="table__paginator"
-  ></camp-paginator>
+  >
+  </mat-paginator>
 </div>
 <ng-template #Loading>
   <div class="loading__spinner">

@@ -12,14 +12,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeComponent } from './anime.component';
 import { TableComponent } from './table/table.component';
-import { PaginatorComponent } from './paginator/paginator.component';
 
 /** Anime module. */
 @NgModule({
   declarations: [
     AnimeComponent,
     TableComponent,
-    PaginatorComponent,
   ],
   imports: [
     CommonModule,
