@@ -21,7 +21,7 @@ export class ApiService {
    */
   public get<T>(
     path: string,
-    params: HttpParams = new HttpParams(),
+    params?: HttpParams,
   ): Observable<T> {
     return this.http.get<T>(`${this.apiConfig.apiUrl}${path}`, { params });
   }
