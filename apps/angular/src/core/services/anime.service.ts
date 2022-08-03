@@ -20,7 +20,10 @@ import { ApiService } from './api.service';
   providedIn: 'root',
 })
 export class AnimeService {
-  public constructor(private readonly apiService: ApiService, private readonly router: Router) {}
+  public constructor(
+    private readonly apiService: ApiService,
+    private readonly router: Router,
+  ) {}
 
   /**
    * Fetch anime data from server.

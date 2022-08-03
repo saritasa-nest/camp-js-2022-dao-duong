@@ -16,7 +16,10 @@
   </mat-select>
 </mat-form-field>
 
-<div *ngIf="(animeList$ | async) as animeList; else Loading " class="anime-table__container">
+<div
+  *ngIf="animeList$ | async as animeList; else Loading"
+  class="anime-table__container"
+>
   <table
     [dataSource]="animeList"
     mat-table
@@ -84,9 +87,7 @@
   ></camp-paginator>
 </div>
 <ng-template #Loading>
-  <div class="loading__shade">
-    <div class="loading__spinner">
-      <mat-spinner color="accent"></mat-spinner>
-    </div>
+  <div class="loading__spinner">
+    <mat-spinner color="accent"></mat-spinner>
   </div>
 </ng-template>

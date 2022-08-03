@@ -134,7 +134,9 @@ export class TableComponent implements OnInit, OnDestroy {
       this.filterTypeControl.valueChanges,
     ).pipe(tap(() => this.currentPage$.next(INITIAL_PAGE)));
 
-    const goToTopSideEffect$ = this.currentPage$.pipe((tap(() => this.goToTop())));
+    const goToTopSideEffect$ = this.currentPage$.pipe(
+      tap(() => this.goToTop()),
+    );
 
     // Merge all side effects and subscribe.
     merge(resetPaginationSideEffect$, goToTopSideEffect$)
