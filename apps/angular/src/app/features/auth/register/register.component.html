@@ -1,2 +1,35 @@
-<p>register works!</p>
 <a routerLink="/" routerLinkActive="active">Home</a>
+<button mat-raised-button color="accent" type="button" (click)="logout()" class="logout__button">Logout</button>
+<mat-card>
+  <mat-card-title>Register</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input type="email" matInput placeholder="Username" formControlName="email" required autocomplete="email">
+          <mat-error *ngIf="registerForm.controls.email.invalid">Please check your email</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input type="text" matInput placeholder="Password" formControlName="firstName" autocomplete="given-name">
+          <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input type="text" matInput placeholder="Username" formControlName="lastName" autocomplete="family-name">
+          <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input type="password" matInput placeholder="Username" formControlName="password" required>
+          <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Confirm Password</mat-label>
+          <input type="password" matInput placeholder="Username" formControlName="confirmPassword" required>
+          <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+        <div class="submit"><button type="submit" mat-raised-button color="primary">Register</button></div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -6,7 +6,7 @@
     <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
         <mat-form-field>
           <mat-label>Username</mat-label>
-          <input type="text" matInput placeholder="Username" formControlName="email">
+          <input type="email" matInput placeholder="Username" formControlName="email">
           <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
         </mat-form-field>
         <mat-form-field>
