@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Login } from '@js-camp/core/models/auth/login';
 import { Register } from '@js-camp/core/models/auth/register';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
-import { JwtService } from './jwt.service';
+import { AuthService } from './auth.service';
 
 /** Api service. */
 @Injectable({
@@ -13,13 +13,22 @@ import { JwtService } from './jwt.service';
 export class UserService {
   public constructor(
     private readonly apiService: ApiService,
-    private readonly jwtService: JwtService,
+    private readonly authService: AuthService,
   ) {}
 
-  public attemptAuth(type: string, credentials: Login | Register): Observable<void> {
-    const path = (type === 'login' ? 'auth/login/' : 'auth/register/');
-    return this.apiService.post(path, credentials).pipe(map((response => {
-      console.log(response);
-    })));
+  /**
+   * Handle user login.
+   * @param credentials Login credentials.
+   */
+  public login(credentials: Login): Observable<void> {
+    return this.authService.login(credentials);
+  }
+
+  /**
+   * Handle user registration.
+   * @param credentials Register credentials.
+   */
+  public register(credentials: Register): Observable<void> {
+    return this.authService.register(credentials);
   }
 }
