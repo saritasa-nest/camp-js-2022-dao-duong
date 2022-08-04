@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
-import { HttpApiKeyInterceptor } from '../core/interceptors/apiKey.interceptor';
+import { HttpApiInterceptor } from '../core/interceptors/api.interceptor';
 
 import { SharedModule } from './../shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,7 +23,7 @@ import { AppComponent } from './app.component';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: HttpApiKeyInterceptor,
+      useClass: HttpApiInterceptor,
       multi: true,
     },
   ],

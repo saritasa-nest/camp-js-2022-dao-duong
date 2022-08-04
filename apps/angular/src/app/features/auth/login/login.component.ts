@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
+import { UserService } from '../../../../core/services/';
+
 @Component({
   selector: 'camp-login',
   templateUrl: './login.component.html',
@@ -7,7 +9,12 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
-  constructor() {}
+  constructor(private readonly userService: UserService) {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {
+    this.userService.login({
+      email: 'psg9615@gmail.com',
+      password: 'Dao0358937727',
+    }).subscribe();
+  }
 }
