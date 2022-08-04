@@ -25,4 +25,16 @@ export class ApiService {
   ): Observable<T> {
     return this.http.get<T>(`${this.apiConfig.apiUrl}${path}`, { params });
   }
+
+  /**
+   * Get service.
+   * @param path Url path.
+   * @param body Body data for the request.
+   */
+  public post<T>(
+    path: string,
+    body?: Object,
+  ): Observable<T> {
+    return this.http.post<T>(`${this.apiConfig.apiUrl}${path}`, JSON.stringify(body));
+  }
 }
