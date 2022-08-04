@@ -1,8 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Register } from '@js-camp/core/models/auth/register';
+import { HttpError } from '@js-camp/core/models/httpError';
 
-import { UserService } from '../../../../core/services/';
+import { catchError, Subject, takeUntil, tap, throwError } from 'rxjs';
+
+import { UserService, UrlService } from '../../../../core/services/';
 
 /** Register component. */
 @Component({
@@ -11,10 +14,13 @@ import { UserService } from '../../../../core/services/';
   styleUrls: ['./register.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
+  private readonly subscribtionDestroyed$: Subject<boolean> = new Subject();
+
   public constructor(
     private readonly userService: UserService,
     private readonly formBuilder: FormBuilder,
+    private readonly urlService: UrlService,
   ) {}
 
   /** Register form controls. */
@@ -28,12 +34,18 @@ export class RegisterComponent {
 
   /** Handle form submission. */
   public submitForm(): void {
-    this.registerForm.markAllAsTouched();
-    if (this.registerForm.invalid) {
-      return;
-    }
     this.userService
       .register(this.registerForm.value as Register)
+      .pipe(
+        tap(() => this.urlService.navigateToHome()),
+        catchError((error: unknown) => {
+          if (error instanceof HttpError) {
+            console.log(error);
+          }
+          return throwError(() => error);
+        }),
+        takeUntil(this.subscribtionDestroyed$),
+      )
       .subscribe();
   }
 
@@ -49,5 +61,11 @@ export class RegisterComponent {
    */
   public validateConfirmPassword(password: string, confirmPassword: string): boolean {
     return password === confirmPassword;
+  }
+
+  /** On destroy lifecycle hook. */
+  public ngOnDestroy(): void {
+    this.subscribtionDestroyed$.next(true);
+    this.subscribtionDestroyed$.complete();
   }
 }

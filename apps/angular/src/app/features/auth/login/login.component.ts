@@ -37,11 +37,11 @@ export class LoginComponent implements OnDestroy {
       .login(this.loginForm.value as Login)
       .pipe(
         tap(() => this.urlService.navigateToHome()),
-        takeUntil(this.subscribtionDestroyed$),
         catchError((error: unknown) => {
           console.log(error);
           return throwError(() => error);
         }),
+        takeUntil(this.subscribtionDestroyed$),
       )
       .subscribe();
   }
