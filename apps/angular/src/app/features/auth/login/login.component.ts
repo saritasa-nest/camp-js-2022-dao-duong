@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Login } from '@js-camp/core/models/auth/login';
 
 import { UserService } from '../../../../core/services/';
 
@@ -9,12 +11,25 @@ import { UserService } from '../../../../core/services/';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
-  constructor(private readonly userService: UserService) {}
+  public constructor(
+    private readonly userService: UserService,
+    private readonly fb: FormBuilder,
+  ) {}
 
-  public ngOnInit(): void {
-    this.userService.login({
-      email: 'psg9615@gmail.com',
-      password: 'Dao0358937727',
-    }).subscribe();
+  public loginForm = this.fb.group({
+    email: ['', Validators.required, Validators.email],
+    password: ['', Validators.required],
+  });
+
+  public ngOnInit(): void {}
+
+  public submitForm(): void {
+    this.userService
+      .login(this.loginForm.value as Login)
+      .subscribe();
+  }
+
+  public logout(): void {
+    this.userService.logout();
   }
 }
