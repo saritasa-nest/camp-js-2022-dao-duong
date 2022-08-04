@@ -14,11 +14,11 @@ import { UserService } from '../../../../core/services/';
 export class RegisterComponent {
   public constructor(
     private readonly userService: UserService,
-    private readonly fb: FormBuilder,
+    private readonly formBuilder: FormBuilder,
   ) {}
 
   /** Register form controls. */
-  public readonly registerForm = this.fb.group({
+  public readonly registerForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     firstName: [''],
     lastName: [''],
@@ -40,5 +40,14 @@ export class RegisterComponent {
   /** Handle logout. */
   public logout(): void {
     this.userService.logout();
+  }
+
+  /**
+   * Validate password confirmation.
+   * @param password Password value.
+   * @param confirmPassword Password confirmation value.
+   */
+  public validateConfirmPassword(password: string, confirmPassword: string): boolean {
+    return password === confirmPassword;
   }
 }
