@@ -26,7 +26,7 @@ export class TableComponent {
     'status',
   ] as const;
 
-  public constructor(private animeService: AnimeService) {
+  public constructor(private readonly animeService: AnimeService) {
     this.animeList$ = this.animeService.fetchAnime();
   }
 

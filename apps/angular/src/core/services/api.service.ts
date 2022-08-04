@@ -22,6 +22,6 @@ export class ApiService {
    * @param params Parameters for request.
    **/
   public get<T>(path: string, params: HttpParams = new HttpParams()): Observable<T> {
-    return this.http.get<T>(`${environment.api_url}${path}`, { params });
+    return this.http.get<T>(`${environment.apiUrl}${path}`, { params });
   }
 }
