@@ -25,7 +25,7 @@ import {
   tap,
 } from 'rxjs';
 
-import { AnimeService } from '../../../../core/services/anime.service';
+import { AnimeService } from '../../../../core/services';
 
 const INITIAL_LENGTH = 0;
 const INITIAL_PAGE = 0;
