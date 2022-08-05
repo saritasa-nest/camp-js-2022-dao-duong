@@ -29,7 +29,7 @@ export namespace Navbar {
     navbar.innerHTML += `<button type="button" class="logout-btn">Logout</button>`;
     const logoutButton = document.querySelector('.logout-btn');
     assertNonNull(logoutButton);
-    logoutButton.addEventListener('click', async () => {
+    logoutButton.addEventListener('click', async() => {
       await AuthService.logout();
       navigate(Url.Login);
     });
