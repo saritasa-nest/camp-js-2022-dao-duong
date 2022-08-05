@@ -21,7 +21,7 @@ export namespace Navbar {
   }
 
   /** Render logout button. */
-  export function renderLogoutButton(): void {
+  function renderLogoutButton(): void {
     const navbar = document.querySelector('.navbar');
     assertNonNull(navbar);
     navbar.innerHTML += `<button type="button" class="logout-btn btn-right">Logout</button>`;
