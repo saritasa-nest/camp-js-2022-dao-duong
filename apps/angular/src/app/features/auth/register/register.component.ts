@@ -1,8 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Register } from '@js-camp/core/models/auth/register';
-import { HttpError } from '@js-camp/core/models/httpError';
-
 import { catchError, Subject, takeUntil, tap, throwError } from 'rxjs';
 
 import { UserService, UrlService } from '../../../../core/services/';
@@ -15,7 +14,7 @@ import { UserService, UrlService } from '../../../../core/services/';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent implements OnDestroy {
-  private readonly subscribtionDestroyed$: Subject<boolean> = new Subject();
+  private readonly subscriptionDestroyed$: Subject<boolean> = new Subject();
 
   public constructor(
     private readonly userService: UserService,
@@ -39,19 +38,14 @@ export class RegisterComponent implements OnDestroy {
       .pipe(
         tap(() => this.urlService.navigateToHome()),
         catchError((error: unknown) => {
-          if (error instanceof HttpError) {
+          if (error instanceof HttpErrorResponse) {
             console.log(error);
           }
           return throwError(() => error);
         }),
-        takeUntil(this.subscribtionDestroyed$),
+        takeUntil(this.subscriptionDestroyed$)
       )
       .subscribe();
-  }
-
-  /** Handle logout. */
-  public logout(): void {
-    this.userService.logout();
   }
 
   /**
@@ -59,13 +53,16 @@ export class RegisterComponent implements OnDestroy {
    * @param password Password value.
    * @param confirmPassword Password confirmation value.
    */
-  public validateConfirmPassword(password: string, confirmPassword: string): boolean {
+  public validateConfirmPassword(
+    password: string,
+    confirmPassword: string,
+  ): boolean {
     return password === confirmPassword;
   }
 
   /** On destroy lifecycle hook. */
   public ngOnDestroy(): void {
-    this.subscribtionDestroyed$.next(true);
-    this.subscribtionDestroyed$.complete();
+    this.subscriptionDestroyed$.next(true);
+    this.subscriptionDestroyed$.complete();
   }
 }

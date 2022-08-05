@@ -3,3 +3,9 @@
   font-size: 3rem;
   font-weight: normal;
 }
+
+.logout__button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

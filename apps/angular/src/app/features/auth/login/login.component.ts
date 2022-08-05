@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Login } from '@js-camp/core/models/auth/login';
 
-import { catchError, map, Subject, takeUntil, tap, throwError } from 'rxjs';
+import { catchError, Subject, takeUntil, tap, throwError } from 'rxjs';
 
 import { UrlService } from '../../../../core/services/url.service';
 
@@ -17,7 +17,7 @@ import { UserService } from '../../../../core/services/';
 })
 export class LoginComponent implements OnDestroy {
   // Rename this please!!!
-  private readonly subscribtionDestroyed$: Subject<boolean> = new Subject();
+  private readonly subscriptionDestroyed$: Subject<boolean> = new Subject();
 
   public constructor(
     private readonly userService: UserService,
@@ -41,19 +41,14 @@ export class LoginComponent implements OnDestroy {
           console.log(error);
           return throwError(() => error);
         }),
-        takeUntil(this.subscribtionDestroyed$),
+        takeUntil(this.subscriptionDestroyed$),
       )
       .subscribe();
   }
 
-  /** Handle logout. */
-  public logout(): void {
-    this.userService.logout();
-  }
-
   /** On destroy lifecycle hook. */
   public ngOnDestroy(): void {
-    this.subscribtionDestroyed$.next(true);
-    this.subscribtionDestroyed$.complete();
+    this.subscriptionDestroyed$.next(true);
+    this.subscriptionDestroyed$.complete();
   }
 }

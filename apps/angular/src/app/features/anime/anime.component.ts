@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+import { UrlService, UserService } from '../../../core/services';
+
 /** Anime component. */
 @Component({
   selector: 'camp-anime',
@@ -7,4 +9,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./anime.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimeComponent {}
+export class AnimeComponent {
+  public constructor(private userService: UserService, private urlService: UrlService) {}
+
+  /** Handle logout. */
+  public logout(): void {
+    this.userService.logout();
+    this.urlService.navigateToLogin();
+  }
+}
