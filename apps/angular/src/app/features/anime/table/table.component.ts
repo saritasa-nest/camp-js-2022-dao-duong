@@ -23,6 +23,7 @@ import {
   switchMap,
   takeUntil,
   tap,
+  take,
 } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services';
@@ -45,7 +46,7 @@ const INITIAL_SORT: Sort = {
 })
 export class TableComponent implements OnInit, OnDestroy {
   /** Subscription manager. */
-  public readonly subscriptionDestroy$: Subject<boolean> = new Subject();
+  private readonly subscriptionDestroy$: Subject<boolean> = new Subject();
 
   /** Anime list observer. */
   public readonly animeList$: Observable<readonly Anime[]>;
@@ -115,19 +116,18 @@ export class TableComponent implements OnInit, OnDestroy {
     );
   }
 
-  /** On init lifecycle.*/
+  /** @inheritdoc */
   public ngOnInit(): void {
-    // Set data from url params to components.
-    this.route.queryParams
-      .pipe(
-        map(params => {
-          this.setDataFromParamsToComponent(params);
-        }),
-      )
-      .subscribe()
-      .unsubscribe();
 
     // Declare side effects
+    const setDataFromParamsSideEffect$ = this.route.queryParams
+      .pipe(
+        map(params => {
+        this.setDataFromParamsToComponent(params);
+      }),
+        take(1),
+      );
+
     const resetPaginationSideEffect$ = merge(
       this.searchControl.valueChanges,
       this.filterTypeControl.valueChanges,
@@ -138,7 +138,7 @@ export class TableComponent implements OnInit, OnDestroy {
     );
 
     // Merge all side effects and subscribe.
-    merge(resetPaginationSideEffect$, goToTopSideEffect$)
+    merge(resetPaginationSideEffect$, goToTopSideEffect$, setDataFromParamsSideEffect$)
       .pipe(takeUntil(this.subscriptionDestroy$))
       .subscribe();
   }
