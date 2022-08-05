@@ -15,18 +15,6 @@ export const NUMBER_OF_PAGES = 9;
 /** Number of items per request. */
 export const LIMIT = 10;
 
-/** Local storage key for active page. */
-export const ACTIVE_LS = 'ACTIVE';
-
-/** Local storage key for sort settings. */
-export const SORT_LS = 'SORT';
-
-/** Local storage key for type. */
-export const TYPE_LS = 'TYPE';
-
-/** Local storage key for search. */
-export const SEARCH_LS = 'SEARCH';
-
 /** Available options for sorting. */
 export enum Ordering {
   EnglishTitle = 'title_eng',

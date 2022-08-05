@@ -4,7 +4,9 @@ import { AnimeService } from '../services/animeService';
 
 import { renderTable } from './animeTable';
 
-import { ACTIVE_LS, FILTERING_TYPES, FIRST_PAGE, LIMIT, SEARCH_LS, SORT_LS, TYPE_LS } from './variables';
+import { FIRST_PAGE, LIMIT, FILTERING_TYPES } from './variables';
+
+import { PaginationLocalStorage } from './constants';
 
 /** Render filtering.*/
 export function renderFilterOptions(): void {
@@ -14,10 +16,10 @@ export function renderFilterOptions(): void {
     filterElement.innerHTML += `<option value="${type.value}" class="type">${type.text}</option>`;
   });
   filterElement.addEventListener('change', async() => {
-    localStorage.setItem(ACTIVE_LS, FIRST_PAGE.toString());
-    localStorage.setItem(TYPE_LS, filterElement.value);
-    const sortSetting = localStorage.getItem(SORT_LS);
-    const searchQuery = localStorage.getItem(SEARCH_LS);
+    localStorage.setItem(PaginationLocalStorage.active, FIRST_PAGE.toString());
+    localStorage.setItem(PaginationLocalStorage.type, filterElement.value);
+    const sortSetting = localStorage.getItem(PaginationLocalStorage.sort);
+    const searchQuery = localStorage.getItem(PaginationLocalStorage.search);
     assertNonNull(sortSetting);
     assertNonNull(searchQuery);
 
