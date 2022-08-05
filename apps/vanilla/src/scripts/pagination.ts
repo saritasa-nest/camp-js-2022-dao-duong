@@ -69,9 +69,9 @@ export async function renderPagination(displayPages: number): Promise<void> {
       const sortSetting = await StorageService.get<string>(PaginationLocalStorage.sort);
       const searchQuery = await StorageService.get<string>(PaginationLocalStorage.search);
       const filterType = await StorageService.get<string>(PaginationLocalStorage.type);
+      assertNonNull(filterType);
       assertNonNull(sortSetting);
       assertNonNull(searchQuery);
-      assertNonNull(filterType);
 
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,

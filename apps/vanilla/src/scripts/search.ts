@@ -21,6 +21,8 @@ export function initSearch(): void {
     StorageService.set(PaginationLocalStorage.active, FIRST_PAGE);
     StorageService.set<string>(PaginationLocalStorage.search, searchInputElement.value);
     const orderingOptions = await StorageService.get<string>(PaginationLocalStorage.sort);
+    const filterType = await StorageService.get<string>(PaginationLocalStorage.type);
+    assertNonNull(filterType);
     assertNonNull(orderingOptions);
 
     const paginationConfig = {

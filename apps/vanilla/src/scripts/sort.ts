@@ -35,9 +35,11 @@ export function renderSortOptions(): void {
       const sortSetting = sortDirection.value + sortOption.value;
       const currentPage = await StorageService.get<number>(PaginationLocalStorage.active);
       const searchQuery = await StorageService.get<string>(PaginationLocalStorage.search);
+      const filterType = await StorageService.get<string>(PaginationLocalStorage.type);
       StorageService.set<string>(PaginationLocalStorage.sort, sortSetting);
       assertNonNull(searchQuery);
       assertNonNull(currentPage);
+      assertNonNull(filterType);
       setDirectionState(hasSortOption(sortOption.value));
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,

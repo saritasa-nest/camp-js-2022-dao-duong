@@ -1,6 +1,7 @@
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
-import { getAnime } from './anime';
+import { AnimeService } from '../services/animeService';
+
 import { renderTable } from './animeTable';
 
 import { ACTIVE_LS, FILTERING_TYPES, FIRST_PAGE, LIMIT, SEARCH_LS, SORT_LS, TYPE_LS } from './variables';
@@ -27,8 +28,7 @@ export function renderFilterOptions(): void {
       type: filterElement.value,
       search: searchQuery,
     };
-    const data = await getAnime(paginationConfig);
-
-    renderTable(data);
+    const animeList = await AnimeService.getAnime(paginationConfig);
+    renderTable(animeList);
   });
 }
