@@ -62,15 +62,18 @@ export namespace AuthService {
     return AuthService.verifyToken(accessToken);
   }
 
-  /** Navigate user based on authorization. */
-  export async function navigateByAuthorization(): Promise<void> {
-    const currentLocation = window.location.pathname;
-
+  /** Navigate user to login if user is not authenticated.*/
+  export async function navigateToLoginIfNotAuthenticated(): Promise<void> {
     const isAuthenticated = await checkIsAuthenticated();
-    if ((currentLocation === Url.Detail || currentLocation === Url.Profile) && !isAuthenticated) {
+    if (!isAuthenticated) {
       navigate(Url.Login);
     }
-    if ((currentLocation === Url.Login || currentLocation === Url.Register) && isAuthenticated) {
+  }
+
+  /** Navigate user to home page if user is authenticated.*/
+  export async function navigateToHomeIfIsAuthenticated(): Promise<void> {
+    const isAuthenticated = await checkIsAuthenticated();
+    if (isAuthenticated) {
       navigate(Url.Home);
     }
   }

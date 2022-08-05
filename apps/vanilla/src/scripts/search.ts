@@ -27,6 +27,7 @@ export function initSearch(): void {
       limit: LIMIT,
       page: FIRST_PAGE,
       ordering: orderingOptions,
+      type: filterType,
       search: searchInputElement.value,
     };
     const animeList = await AnimeService.getAnime(paginationConfig);

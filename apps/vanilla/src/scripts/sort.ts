@@ -39,11 +39,11 @@ export function renderSortOptions(): void {
       assertNonNull(searchQuery);
       assertNonNull(currentPage);
       setDirectionState(hasSortOption(sortOption.value));
-
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: currentPage,
         ordering: sortSetting,
+        type: filterType,
         search: searchQuery,
       };
       const animeList = await AnimeService.getAnime(paginationConfig);

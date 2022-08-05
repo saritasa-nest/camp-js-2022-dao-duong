@@ -9,7 +9,7 @@ import { AuthService } from '../../services/authService';
 import { StorageService } from '../../services/storageService';
 
 window.addEventListener('load', async() => {
-  await AuthService.navigateByAuthorization();
+  await AuthService.navigateToLoginIfNotAuthenticated();
   await Navbar.render();
   const params = new URLSearchParams(window.location.search);
   const animeId = await StorageService.get<string>(CLICKED_ANIME) || params.get('id');
