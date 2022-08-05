@@ -4,11 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./index.css" />
-    <title>Home</title>
+    <title>Anime App</title>
   </head>
   <body class="default-layout">
-    <h1 class="title">Homepage</h1>
-    <div class="profile">
+    <h1 class="title">Main page ⚡</h1>
+    <!-- Search -->
+    <div class="search">
+      <input type="search" class="search__input"/>
+      <button class="btn search__button" type="button">Search</button>
+    </div>
+    <ul class="pagination">
+    </ul>
+    <!-- Select section -->
+    <div class="sort">
+      <label> Sort by
+        <select class="browser-default sort__select-element sort__option">
+        </select>
+      </label>
+      <label> Order
+        <select class="browser-default sort__select-element sort__direction">
+        </select>
+      </label>
+    </div>
+    <!-- Filter section -->
+    <div class="filter">
+      <label> Type
+        <select class="browser-default filter__select-type">
+        </select>
+      </label>
+    </div>
+    <div class="anime-table">
     </div>
     <script type="module" src="./index.ts"></script>
   </body>

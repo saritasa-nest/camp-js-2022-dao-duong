@@ -1,11 +1,17 @@
 :root {
-  --heading-color-1: #ffb57a;
-  --heading-color-2: #f16a00;
-  --heading-color-3: #7bf8ff;
   --primary-text-color: #28195f;
   --primary-text-contrast-color: #fff;
   --primary-background-color: #f16a00;
   --error-text-color: #b8020f;
   --secondary-background-color: #6d5545;
   --default-layout-width: 90%;
+
+  /* Heading */
+  --heading-color-1: #ffb57a;
+  --heading-color-2: #f16a00;
+  --heading-color-3: #7bf8ff;
+
+  /* Active */
+  --active-background-color: #ff8525;
+  --active-text-color: #fff;
 }
