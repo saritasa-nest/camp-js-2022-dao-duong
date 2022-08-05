@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TokenDto } from '@js-camp/core/dtos/auth/token.dto';
 import { Login } from '@js-camp/core/models/auth/login';
 import { Register } from '@js-camp/core/models/auth/register';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
@@ -36,10 +36,6 @@ export class UserService {
         map(response => {
           this.jwtService.saveToken(response);
         }),
-        catchError((error: unknown) => {
-          this.jwtService.destroyToken();
-          return throwError(() => error);
-        }),
       );
   }
 
@@ -53,11 +49,6 @@ export class UserService {
       .pipe(
         map(response => {
           this.jwtService.saveToken(response);
-        }),
-        catchError((error: unknown) => {
-          this.jwtService.destroyToken();
-
-          return throwError(() => error);
         }),
       );
   }

@@ -14,12 +14,10 @@
         />
         <mat-error
           *ngIf="
-            registerForm.controls.email.invalid ||
-            registerForm.controls.email.dirty ||
-            registerForm.controls.email.touched
+            registerForm.controls.email.hasError('email')
           "
         >
-          Check your email
+        check email
         </mat-error>
       </mat-form-field>
       <mat-form-field>
@@ -66,7 +64,7 @@
         <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
       </mat-form-field>
       <div class="submit">
-        <button type="submit" mat-raised-button color="primary">
+        <button type="submit" mat-raised-button color="primary" [disabled]="registerForm.invalid">
           Register
         </button>
       </div>

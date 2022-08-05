@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Register } from '@js-camp/core/models/auth/register';
+import { getError } from 'apps/angular/src/core/utils/getError';
 import { catchError, Subject, takeUntil, tap, throwError } from 'rxjs';
 
 import { UserService, UrlService } from '../../../../core/services/';
@@ -38,12 +39,13 @@ export class RegisterComponent implements OnDestroy {
       .pipe(
         tap(() => this.urlService.navigateToHome()),
         catchError((error: unknown) => {
-          if (error instanceof HttpErrorResponse) {
-            console.log(error);
+          const errorData = getError(error).data;
+          for (const err in errorData) {
+            console.log(err);
           }
           return throwError(() => error);
         }),
-        takeUntil(this.subscriptionDestroyed$)
+        takeUntil(this.subscriptionDestroyed$),
       )
       .subscribe();
   }
