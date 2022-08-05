@@ -1,5 +1,8 @@
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
+import { Navbar } from '../namespaces/navbar';
+import { AuthService } from '../services/authService';
+
 import { getAnime } from '../scripts/anime';
 import { LIMIT, FIRST_PAGE } from '../scripts/variables';
 
@@ -9,10 +12,11 @@ import { renderFilterOptions } from '../scripts/filter';
 import { resetTableState } from '../scripts/functions';
 import { initSearch } from '../scripts/search';
 
-window.addEventListener('load', (): void => {
+window.addEventListener('load', async() => {
   initHomepage();
+  await AuthService.navigateToLoginIfNotAuthenticated();
+  Navbar.renderNavbar();
 });
-
 const initHomepage = async(): Promise<void> => {
   resetTableState();
   localStorage.setItem('active', FIRST_PAGE.toString());
