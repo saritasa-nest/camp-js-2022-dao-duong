@@ -5,6 +5,7 @@ import { LIMIT, FIRST_PAGE, DEFAULT_SORT, DEFAULT_SEARCH } from '../scripts/vari
 
 import { renderTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
+import { renderFilterOptions } from '../scripts/filter';
 import { initSearch } from '../scripts/search';
 
 import { Navbar } from '../namespaces/navbar';
@@ -22,11 +23,13 @@ const initHomepage = async(): Promise<void> => {
     limit: LIMIT,
     page: FIRST_PAGE,
     ordering: '',
+    type: '',
     search: '',
   };
   const anime = await AnimeService.getAnime(paginationConfig);
   renderTable(anime);
   renderSortOptions();
+  renderFilterOptions();
   initSearch();
 };
 
