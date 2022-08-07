@@ -1,4 +1,3 @@
-<a routerLink="/auth/register" routerLinkActive="active">Register</a>
 <mat-card>
   <mat-card-title>Login</mat-card-title>
   <mat-card-content>
@@ -10,6 +9,7 @@
           matInput
           placeholder="Username"
           formControlName="email"
+          autocomplete="email"
         />
         <mat-error
           *ngIf="
@@ -36,6 +36,7 @@
         </mat-error>
       </mat-form-field>
       <div class="submit">
+        <a routerLink="/auth/register">Create account?</a>
         <button type="submit" mat-raised-button color="primary">Login</button>
       </div>
     </form>

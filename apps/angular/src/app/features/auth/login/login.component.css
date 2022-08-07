@@ -17,7 +17,8 @@ mat-card-content {
 
 .submit {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .error {
