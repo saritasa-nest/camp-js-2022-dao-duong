@@ -1,12 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Login } from '@js-camp/core/models/auth/login';
 
-import { catchError, Subject, takeUntil, tap, throwError } from 'rxjs';
+import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 
 import { UrlService } from '../../../../core/services/url.service';
 
-import { UserService } from '../../../../core/services/';
+import { ErrorService, UserService } from '../../../../core/services/';
 
 /** Login component. */
 @Component({
@@ -23,6 +23,8 @@ export class LoginComponent implements OnDestroy {
     private readonly userService: UserService,
     private readonly formBuilder: FormBuilder,
     private readonly urlService: UrlService,
+    private readonly errorService: ErrorService,
+    private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   /** Login form controls. */
@@ -37,13 +39,20 @@ export class LoginComponent implements OnDestroy {
       .login(this.loginForm.value as Login)
       .pipe(
         tap(() => this.urlService.navigateToHome()),
-        catchError((error: unknown) => {
-          console.log(error);
-          return throwError(() => error);
-        }),
+        catchError((error: unknown) => of(this.handleError(error))),
         takeUntil(this.subscriptionDestroyed$),
       )
       .subscribe();
+  }
+
+  /**
+   * Handle error from server.
+   * @param error Error from server.
+   */
+  private handleError(error: unknown): void {
+    const errorData = this.errorService.getError(error);
+    this.errorService.showErrorToForm(errorData, this.loginForm);
+    this.changeDetectorRef.markForCheck();
   }
 
   /** On destroy lifecycle hook. */

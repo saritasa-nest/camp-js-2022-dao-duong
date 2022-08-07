@@ -11,7 +11,15 @@
           placeholder="Username"
           formControlName="email"
         />
-        <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        <mat-error
+          *ngIf="
+            loginForm.controls.email.hasError('email')
+          "
+        >
+        <ul>
+          <li *ngFor="let error of loginForm.controls.email.getError('email')">{{error}}</li>
+        </ul>
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Password</mat-label>
@@ -21,6 +29,11 @@
           placeholder="Password"
           formControlName="password"
         />
+        <mat-error *ngIf="loginForm.controls.password.hasError('password')">
+          <ul>
+            <li *ngFor="let error of loginForm.controls.password.getError('password')">{{error}}</li>
+          </ul>
+        </mat-error>
       </mat-form-field>
       <div class="submit">
         <button type="submit" mat-raised-button color="primary">Login</button>

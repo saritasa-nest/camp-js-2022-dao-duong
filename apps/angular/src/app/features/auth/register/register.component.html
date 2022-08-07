@@ -31,7 +31,15 @@
           formControlName="firstName"
           autocomplete="given-name"
         />
-        <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        <mat-error
+          *ngIf="
+            registerForm.controls.firstName.hasError('firstName')
+          "
+        >
+        <ul>
+          <li *ngFor="let error of registerForm.controls.firstName.getError('firstName')">{{error}}</li>
+        </ul>
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Last Name</mat-label>
@@ -42,7 +50,15 @@
           formControlName="lastName"
           autocomplete="family-name"
         />
-        <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        <mat-error
+          *ngIf="
+            registerForm.controls.lastName.hasError('lastName')
+          "
+        >
+        <ul>
+          <li *ngFor="let error of registerForm.controls.lastName.getError('lastName')">{{error}}</li>
+        </ul>
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Password</mat-label>
