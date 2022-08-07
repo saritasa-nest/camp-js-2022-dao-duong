@@ -1,4 +1,9 @@
 :root {
+  --primary-text-color: #28195f;
+  --primary-text-contrast-color: #fff;
+  --primary-background-color: #f16a00;
+  --error-text-color: #b8020f;
+  --secondary-background-color: #6d5545;
   --default-layout-width: 90%;
 
   /* Heading colors */

@@ -8,7 +8,7 @@ import { ErrorService } from '../../services/errorService';
 import { navigate } from '../../utils/navigate';
 
 window.addEventListener('load', async() => {
-  await AuthService.navigateByAuthorization();
+  await AuthService.navigateToHomeIfIsAuthenticated();
 });
 
 const registerForm = document.querySelector<HTMLFormElement>('.form');
