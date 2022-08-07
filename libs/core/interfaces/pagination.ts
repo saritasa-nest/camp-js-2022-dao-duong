@@ -10,9 +10,6 @@ export interface PaginationConfig {
   /** Sort order params for request query string. */
   readonly ordering: string | null;
 
-  /** Type for request query string. */
-  readonly type: string;
-
   /** Query string. */
   readonly search: string | null;
 
