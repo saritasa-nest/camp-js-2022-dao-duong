@@ -67,6 +67,8 @@ export async function renderPagination(displayPages: number): Promise<void> {
       StorageService.set(PaginationLocalStorage.active, parseInt(currentIndex, 10));
       const sortSetting = await StorageService.get<string>(PaginationLocalStorage.sort);
       const searchQuery = await StorageService.get<string>(PaginationLocalStorage.search);
+      const filterType = await StorageService.get<string>(PaginationLocalStorage.type);
+      assertNonNull(filterType);
       assertNonNull(sortSetting);
       assertNonNull(searchQuery);
 
@@ -74,6 +76,7 @@ export async function renderPagination(displayPages: number): Promise<void> {
         limit: LIMIT,
         page: parseInt(currentIndex, 10),
         ordering: sortSetting,
+        type: filterType,
         search: searchQuery,
       };
       const animeList = await AnimeService.getAnime(paginationConfig);
