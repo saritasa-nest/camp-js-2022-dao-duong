@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AuthRoutingModule } from './auth-routing.module';
@@ -20,6 +21,7 @@ import { RegisterComponent } from './register/register.component';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
   ],
 })
 export class AuthModule {}

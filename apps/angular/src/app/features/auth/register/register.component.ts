@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Register } from '@js-camp/core/models/auth/register';
 import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 
@@ -21,6 +22,7 @@ export class RegisterComponent implements OnDestroy {
     private readonly urlService: UrlService,
     private readonly errorService: ErrorService,
     private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly snackBar: MatSnackBar,
   ) {}
 
   /** Register form controls. */
@@ -30,6 +32,8 @@ export class RegisterComponent implements OnDestroy {
     lastName: [''],
     password: ['', Validators.required],
     confirmPassword: ['', Validators.required],
+  }, {
+    updateOn: 'blur',
   });
 
   /** Handle form submission. */
@@ -63,6 +67,7 @@ export class RegisterComponent implements OnDestroy {
   private handleError(error: unknown): void {
     const errorData = this.errorService.getError(error);
     this.errorService.showErrorToForm(errorData, this.registerForm);
+    this.errorService.openErrorDetailSnackBar(errorData, this.snackBar);
     this.changeDetectorRef.markForCheck();
   }
 

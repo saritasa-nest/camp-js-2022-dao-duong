@@ -4,6 +4,8 @@ import { Login } from '@js-camp/core/models/auth/login';
 
 import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { UrlService } from '../../../../core/services/url.service';
 
 import { ErrorService, UserService } from '../../../../core/services/';
@@ -25,6 +27,7 @@ export class LoginComponent implements OnDestroy {
     private readonly urlService: UrlService,
     private readonly errorService: ErrorService,
     private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly snackBar: MatSnackBar,
   ) {}
 
   /** Login form controls. */
@@ -53,6 +56,7 @@ export class LoginComponent implements OnDestroy {
     const errorData = this.errorService.getError(error);
     this.errorService.showErrorToForm(errorData, this.loginForm);
     this.changeDetectorRef.markForCheck();
+    this.errorService.openErrorDetailSnackBar(errorData, this.snackBar);
   }
 
   /** On destroy lifecycle hook. */

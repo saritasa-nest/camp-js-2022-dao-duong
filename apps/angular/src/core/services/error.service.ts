@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { HttpErrorMapper } from '@js-camp/core/mappers/httpError.mapper';
 import { HttpError } from '@js-camp/core/models/httpError';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 /** Error service. */
 @Injectable({
@@ -38,5 +39,19 @@ export class ErrorService {
       }
     });
     }
+  }
+
+  /**
+   * Change error from server to more readable error.
+   * @param error Error from server.
+   * @param snackBar Snack bar element.
+   */
+  public openErrorDetailSnackBar(error: HttpError, snackBar: MatSnackBar): void {
+    const snackBarMessage = error.detail || '';
+    const snackBarAction = 'Close';
+    const snackBarDuration = 5000;
+    snackBar.open(snackBarMessage, snackBarAction, {
+      duration: snackBarDuration,
+    });
   }
 }
