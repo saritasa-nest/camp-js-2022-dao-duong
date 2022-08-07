@@ -9,14 +9,14 @@ import { UserService } from '../../services/userService';
 import { convertDate } from '../../utils/convertDate';
 
 window.addEventListener('load', async(): Promise<void> => {
-  await AuthService.navigateByAuthorization();
+  await AuthService.navigateToLoginIfNotAuthenticated();
   await Navbar.render();
   renderUserProfile();
 });
 
 /** Render user profile. */
 export async function renderUserProfile(): Promise<void> {
-  const user = await AuthService.getUser();
+  const user = await UserService.getUser();
   renderDetail(user);
   renderAvatar(user.avatar);
 }

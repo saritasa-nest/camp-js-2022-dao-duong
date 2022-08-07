@@ -7,14 +7,10 @@ import { Login } from '@js-camp/core/models/auth/login';
 import { Register } from '@js-camp/core/models/auth/register';
 
 import { api } from '../api/api';
-
 import { Token, Url } from '../scripts/constants';
 import { navigate } from '../utils/navigate';
 
-import { User } from '@js-camp/core/models/user';
-
 import { ErrorService } from './errorService';
-
 import { StorageService } from './storageService';
 
 export namespace AuthService {
@@ -42,12 +38,6 @@ export namespace AuthService {
   /** Logout service.*/
   export async function logout(): Promise<void> {
     await StorageService.clearToken();
-  }
-
-  /** Get user.*/
-  export async function getUser(): Promise<User> {
-    const { data } = await api.get('/users/profile/');
-    return UserMapper.fromDto(data);
   }
 
   /**

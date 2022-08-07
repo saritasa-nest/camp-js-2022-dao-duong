@@ -2,10 +2,7 @@ import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
 import { AnimeService } from '../services/animeService';
 import { LIMIT, FIRST_PAGE, DEFAULT_SORT, DEFAULT_SEARCH } from '../scripts/variables';
-import { Navbar } from '../namespaces/navbar';
 import { AuthService } from '../services/authService';
-
-import { getAnime } from '../scripts/anime';
 
 import { renderTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
@@ -20,7 +17,7 @@ window.addEventListener('load', async(): Promise<void> => {
   await Navbar.render();
   initHomepage();
   await AuthService.navigateToLoginIfNotAuthenticated();
-  Navbar.renderNavbar();
+  Navbar.render();
 });
 const initHomepage = async(): Promise<void> => {
   resetTableState();
