@@ -1,11 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Register } from '@js-camp/core/models/auth/register';
-import { getError } from 'apps/angular/src/core/utils/getError';
-import { catchError, Subject, takeUntil, tap, throwError } from 'rxjs';
+import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 
-import { UserService, UrlService } from '../../../../core/services/';
+import { UserService, UrlService, ErrorService } from '../../../../core/services/';
 
 /** Register component. */
 @Component({
@@ -21,6 +19,8 @@ export class RegisterComponent implements OnDestroy {
     private readonly userService: UserService,
     private readonly formBuilder: FormBuilder,
     private readonly urlService: UrlService,
+    private readonly errorService: ErrorService,
+    private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   /** Register form controls. */
@@ -38,13 +38,7 @@ export class RegisterComponent implements OnDestroy {
       .register(this.registerForm.value as Register)
       .pipe(
         tap(() => this.urlService.navigateToHome()),
-        catchError((error: unknown) => {
-          const errorData = getError(error).data;
-          for (const err in errorData) {
-            console.log(err);
-          }
-          return throwError(() => error);
-        }),
+        catchError((error: unknown) => of(this.handleError(error))),
         takeUntil(this.subscriptionDestroyed$),
       )
       .subscribe();
@@ -60,6 +54,16 @@ export class RegisterComponent implements OnDestroy {
     confirmPassword: string,
   ): boolean {
     return password === confirmPassword;
+  }
+
+  /**
+   * Handle error from server.
+   * @param error Error from server.
+   */
+  private handleError(error: unknown): void {
+    const errorData = this.errorService.getError(error);
+    this.errorService.showErrorToForm(errorData, this.registerForm);
+    this.changeDetectorRef.markForCheck();
   }
 
   /** On destroy lifecycle hook. */

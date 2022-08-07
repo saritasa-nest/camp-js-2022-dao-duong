@@ -17,7 +17,9 @@
             registerForm.controls.email.hasError('email')
           "
         >
-        check email
+        <ul>
+          <li *ngFor="let error of registerForm.controls.email.getError('email')">{{error}}</li>
+        </ul>
         </mat-error>
       </mat-form-field>
       <mat-form-field>
@@ -50,7 +52,11 @@
           placeholder="First name"
           formControlName="password"
         />
-        <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        <mat-error *ngIf="registerForm.controls.password.hasError('password')">
+          <ul>
+            <li *ngFor="let error of registerForm.controls.password.getError('password')">{{error}}</li>
+          </ul>
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Confirm Password</mat-label>

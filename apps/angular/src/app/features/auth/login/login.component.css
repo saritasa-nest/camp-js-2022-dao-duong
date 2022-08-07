@@ -17,7 +17,7 @@ mat-card-content {
 
 .submit {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .error {
