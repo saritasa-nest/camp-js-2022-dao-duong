@@ -3,6 +3,7 @@
   <camp-table></camp-table>
 </div>
 <button
+  *ngIf="isAuthenticated$ | async"
   mat-raised-button
   color="accent"
   type="button"
