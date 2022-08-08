@@ -2,7 +2,7 @@
   <mat-card-title>Login</mat-card-title>
   <mat-card-content>
     <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
-      <mat-form-field>
+      <mat-form-field class="login__form-field">
         <mat-label>Username</mat-label>
         <input
           type="email"
@@ -20,7 +20,7 @@
           </div>
         </mat-error>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="login__form-field">
         <mat-label>Password</mat-label>
         <input
           type="password"
@@ -35,7 +35,7 @@
         </mat-error>
       </mat-form-field>
       <div class="submit">
-        <a routerLink="/auth/register">Create account?</a>
+        <a routerLink="/auth/register" class="submit__link">Create account?</a>
         <button
           type="submit"
           mat-raised-button
