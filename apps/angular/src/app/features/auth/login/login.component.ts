@@ -6,9 +6,7 @@ import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { UrlService } from '../../../../core/services/url.service';
-
-import { ErrorService, UserService } from '../../../../core/services/';
+import { ErrorService, UserService, NavigateService } from '../../../../core/services/';
 
 /** Login component. */
 @Component({
@@ -24,7 +22,7 @@ export class LoginComponent implements OnDestroy {
   public constructor(
     private readonly userService: UserService,
     private readonly formBuilder: FormBuilder,
-    private readonly urlService: UrlService,
+    private readonly navigateService: NavigateService,
     private readonly errorService: ErrorService,
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly snackBar: MatSnackBar,
@@ -41,7 +39,7 @@ export class LoginComponent implements OnDestroy {
     this.userService
       .login(this.loginForm.value as Login)
       .pipe(
-        tap(() => this.urlService.navigateToHome()),
+        tap(() => this.navigateService.navigateToHome()),
         catchError((error: unknown) => of(this.handleError(error))),
         takeUntil(this.subscriptionDestroyed$),
       )

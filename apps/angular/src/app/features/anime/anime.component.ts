@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { UrlService, UserService } from '../../../core/services';
+import { NavigateService, UserService } from '../../../core/services';
 
 /** Anime component. */
 @Component({
@@ -16,13 +16,13 @@ export class AnimeComponent {
   /** User authentication status observer. */
   public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
 
-  public constructor(private userService: UserService, private urlService: UrlService) {
+  public constructor(private userService: UserService, private navigateService: NavigateService) {
     this.isAuthenticatedSubject$.next(this.userService.isAuthenticated());
   }
 
   /** Handle logout. */
   public logout(): void {
     this.userService.logout();
-    this.urlService.navigateToLogin();
+    this.navigateService.navigateToLogin();
   }
 }

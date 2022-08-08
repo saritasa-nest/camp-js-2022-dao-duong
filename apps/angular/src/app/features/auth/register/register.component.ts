@@ -5,7 +5,7 @@ import { Register } from '@js-camp/core/models/auth/register';
 
 import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 
-import { UserService, UrlService, ErrorService } from '../../../../core/services/';
+import { UserService, NavigateService, ErrorService } from '../../../../core/services/';
 
 /** Register component. */
 @Component({
@@ -20,7 +20,7 @@ export class RegisterComponent implements OnDestroy {
   public constructor(
     private readonly userService: UserService,
     private readonly formBuilder: FormBuilder,
-    private readonly urlService: UrlService,
+    private readonly navigateService: NavigateService,
     private readonly errorService: ErrorService,
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly snackBar: MatSnackBar,
@@ -43,7 +43,7 @@ export class RegisterComponent implements OnDestroy {
       this.userService
         .register(this.registerForm.value as Register)
         .pipe(
-          tap(() => this.urlService.navigateToHome()),
+          tap(() => this.navigateService.navigateToHome()),
           catchError((error: unknown) => of(this.handleError(error))),
           takeUntil(this.subscriptionDestroyed$),
         )
