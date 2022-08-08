@@ -53,15 +53,13 @@ export class UserService {
   }
 
   /** Login. */
-  public logout(): void {
-    this.jwtService.destroyToken().subscribe();
+  public logout(): Observable<void> {
+    return this.jwtService.destroyToken();
   }
 
   /** Login. */
-  public isAuthenticated(): boolean {
-    if (this.jwtService.getTokens()) {
-      return true;
-    }
-    return false;
+  public isAuthenticated(): Observable<boolean> {
+    const token$ = this.jwtService.getTokens();
+    return token$.pipe(map(tokens => tokens !== null));
   }
 }

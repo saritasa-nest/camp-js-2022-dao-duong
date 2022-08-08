@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Token } from '@js-camp/core/models/auth/token';
 
-import { defer, merge, Observable, ReplaySubject, takeUntil, tap } from 'rxjs';
+import { defer, merge, Observable, ReplaySubject, tap } from 'rxjs';
 
 import { StorageService } from './storage.service';
 
@@ -20,7 +20,7 @@ export class JwtService {
   public constructor(private readonly storageService: StorageService) {
     const tokenFromStorage$ = defer(() =>
       this.storageService.get<Token>(TOKEN_KEY));
-    this.token$ = merge(tokenFromStorage$, this.tokenSubject$).pipe(takeUntil(this.tokenSubject$));
+    this.token$ = merge(tokenFromStorage$, this.tokenSubject$);
   }
 
   /** Get refresh token from local storage. */
@@ -38,8 +38,6 @@ export class JwtService {
 
   /** Destroy token from local storage. */
   public destroyToken(): Observable<void> {
-    this.tokenSubject$.next(null);
-    this.tokenSubject$.complete();
-    return defer(() => this.storageService.remove(TOKEN_KEY));
+    return defer(() => this.storageService.remove(TOKEN_KEY)).pipe(tap(() => this.tokenSubject$.next(null)));
   }
 }
