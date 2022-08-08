@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { TokenDto } from '@js-camp/core/dtos/auth/token.dto';
+import { TokenMapper } from '@js-camp/core/mappers/auth/token.mapper';
 import { Login } from '@js-camp/core/models/auth/login';
 import { Register } from '@js-camp/core/models/auth/register';
-import { map, Observable } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
@@ -33,9 +34,8 @@ export class UserService {
     return this.apiService
       .post<TokenDto>(AuthEndpoint.loginPath, credentials)
       .pipe(
-        map(response => {
-          this.jwtService.saveToken(response);
-        }),
+        map(response => TokenMapper.fromDto(response)),
+        switchMap(tokens => this.jwtService.saveToken(tokens)),
       );
   }
 
@@ -47,20 +47,19 @@ export class UserService {
     return this.apiService
       .post<TokenDto>(AuthEndpoint.registerPath, credentials)
       .pipe(
-        map(response => {
-          this.jwtService.saveToken(response);
-        }),
+        map(response => TokenMapper.fromDto(response)),
+        switchMap(tokens => this.jwtService.saveToken(tokens)),
       );
   }
 
   /** Login. */
   public logout(): void {
-    this.jwtService.destroyToken();
+    this.jwtService.destroyToken().subscribe();
   }
 
   /** Login. */
   public isAuthenticated(): boolean {
-    if (this.jwtService.getAccessToken()) {
+    if (this.jwtService.getTokens()) {
       return true;
     }
     return false;

@@ -1,39 +1,45 @@
 import { Injectable } from '@angular/core';
-import { TokenDto } from '@js-camp/core/dtos/auth/token.dto';
+import { Token } from '@js-camp/core/models/auth/token';
 
-/** Type of token. */
-enum Token {
-  Refresh = 'REFRESH_TOKEN',
-  Access = 'ACCESS_TOKEN',
-}
+import { defer, merge, Observable, ReplaySubject, takeUntil, tap } from 'rxjs';
+
+import { StorageService } from './storage.service';
+
+const TOKEN_KEY = 'TOKENS';
 
 /** Api service. */
 @Injectable({
   providedIn: 'root',
 })
 export class JwtService {
-  /** Get access token from local storage. */
-  public getAccessToken(): string | null {
-    return window.localStorage.getItem(Token.Access);
+  private tokenSubject$ = new ReplaySubject<Token | null>(1);
+
+  /** Token observer. */
+  private token$: Observable<Token | null>;
+
+  public constructor(private readonly storageService: StorageService) {
+    const tokenFromStorage$ = defer(() =>
+      this.storageService.get<Token>(TOKEN_KEY));
+    this.token$ = merge(tokenFromStorage$, this.tokenSubject$).pipe(takeUntil(this.tokenSubject$));
   }
 
   /** Get refresh token from local storage. */
-  public getRefreshToken(): string | null {
-    return window.localStorage.getItem(Token.Refresh);
+  public getTokens(): Observable<Token | null> {
+    return this.token$;
   }
 
   /**
    * Save token to local storage.
    * @param token Token received from server.
    */
-  public saveToken(token: TokenDto): void {
-    window.localStorage.setItem(Token.Access, token.access);
-    window.localStorage.setItem(Token.Refresh, token.refresh);
+  public saveToken(token: Token): Observable<void> {
+    return defer(() => this.storageService.set(TOKEN_KEY, token)).pipe(tap(() => this.tokenSubject$.next(token)));
   }
 
   /** Destroy token from local storage. */
-  public destroyToken(): void {
-    window.localStorage.removeItem(Token.Access);
-    window.localStorage.removeItem(Token.Refresh);
+  public destroyToken(): Observable<void> {
+    this.tokenSubject$.next(null);
+    this.tokenSubject$.complete();
+    return defer(() => this.storageService.remove(TOKEN_KEY));
   }
 }
