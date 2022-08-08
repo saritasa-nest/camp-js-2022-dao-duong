@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, ChangeDetectorRef } from
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Register } from '@js-camp/core/models/auth/register';
+
 import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 
 import { UserService, UrlService, ErrorService } from '../../../../core/services/';
@@ -38,14 +39,19 @@ export class RegisterComponent implements OnDestroy {
 
   /** Handle form submission. */
   public submitForm(): void {
-    this.userService
-      .register(this.registerForm.value as Register)
-      .pipe(
-        tap(() => this.urlService.navigateToHome()),
-        catchError((error: unknown) => of(this.handleError(error))),
-        takeUntil(this.subscriptionDestroyed$),
-      )
-      .subscribe();
+    if (this.validateConfirmPassword(this.registerForm.controls.password.value, this.registerForm.controls.confirmPassword.value)) {
+      this.userService
+        .register(this.registerForm.value as Register)
+        .pipe(
+          tap(() => this.urlService.navigateToHome()),
+          catchError((error: unknown) => of(this.handleError(error))),
+          takeUntil(this.subscriptionDestroyed$),
+        )
+        .subscribe();
+    } else {
+      this.registerForm.controls.confirmPassword.setErrors({ passwordMismatch: true });
+      this.changeDetectorRef.detectChanges();
+    }
   }
 
   /**
@@ -54,9 +60,12 @@ export class RegisterComponent implements OnDestroy {
    * @param confirmPassword Password confirmation value.
    */
   public validateConfirmPassword(
-    password: string,
-    confirmPassword: string,
+    password: string | null,
+    confirmPassword: string | null,
   ): boolean {
+    if (!password || !confirmPassword) {
+      return false;
+    }
     return password === confirmPassword;
   }
 

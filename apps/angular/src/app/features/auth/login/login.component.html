@@ -11,14 +11,13 @@
           formControlName="email"
           autocomplete="email"
         />
-        <mat-error
-          *ngIf="
-            loginForm.controls.email.hasError('email')
-          "
-        >
-        <ul>
-          <li *ngFor="let error of loginForm.controls.email.getError('email')">{{error}}</li>
-        </ul>
+        <mat-error *ngIf="loginForm.controls.email.invalid">
+          <div *ngIf="loginForm.controls.email.errors?.['required']">
+            Email is required.
+          </div>
+          <div *ngIf="loginForm.controls.email.errors?.['email']">
+            Please check your email.
+          </div>
         </mat-error>
       </mat-form-field>
       <mat-form-field>
@@ -29,15 +28,22 @@
           placeholder="Password"
           formControlName="password"
         />
-        <mat-error *ngIf="loginForm.controls.password.hasError('password')">
-          <ul>
-            <li *ngFor="let error of loginForm.controls.password.getError('password')">{{error}}</li>
-          </ul>
+        <mat-error *ngIf="loginForm.controls.password.invalid">
+          <div *ngIf="loginForm.controls.email.errors?.['required']">
+            Password is required.
+          </div>
         </mat-error>
       </mat-form-field>
       <div class="submit">
         <a routerLink="/auth/register">Create account?</a>
-        <button type="submit" mat-raised-button color="primary">Login</button>
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="loginForm.invalid"
+        >
+          Login
+        </button>
       </div>
     </form>
   </mat-card-content>
