@@ -7,8 +7,18 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
-  { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
+  {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login',
+    canActivate: [NoAuthGuard],
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    title: 'Register',
+    canActivate: [NoAuthGuard],
+  },
 ];
 
 /** Auth routing module. */
@@ -16,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {}
