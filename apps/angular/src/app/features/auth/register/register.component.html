@@ -11,14 +11,14 @@
           formControlName="email"
           autocomplete="email"
         />
-        <mat-error *ngIf="registerForm.controls.email.invalid">
-          <div *ngIf="registerForm.controls.email.hasError('required')">
+        <mat-error *ngIf="registerForm.controls['email'].invalid">
+          <div *ngIf="registerForm.controls['email'].hasError('required')">
             Email is required.
           </div>
-          <ul *ngIf="registerForm.controls.email.hasError('email')">
+          <ul *ngIf="registerForm.controls['email'].hasError('email')">
             <li
               *ngFor="
-                let error of registerForm.controls.email.getError('email')
+                let error of registerForm.controls['email'].getError('email')
               "
             >
               {{ error }}
@@ -54,14 +54,14 @@
           placeholder="First name"
           formControlName="password"
         />
-        <mat-error *ngIf="registerForm.controls.password.invalid">
-          <div *ngIf="registerForm.controls.password.hasError('required')">
+        <mat-error *ngIf="registerForm.controls['password'].invalid">
+          <div *ngIf="registerForm.controls['password'].hasError('required')">
             Password is required.
           </div>
-          <ul *ngIf="registerForm.controls.password.hasError('password')">
+          <ul *ngIf="registerForm.controls['password'].hasError('password')">
             <li
               *ngFor="
-                let error of registerForm.controls.password.getError('password')
+                let error of registerForm.controls['password'].getError('password')
               "
             >
               {{ error }}
@@ -78,13 +78,13 @@
           formControlName="confirmPassword"
           required
         />
-        <mat-error *ngIf="registerForm.controls.confirmPassword.invalid">
-          <div *ngIf="registerForm.controls.password.hasError('required')">
+        <mat-error *ngIf="registerForm.controls['confirmPassword'].invalid">
+          <div *ngIf="registerForm.controls['confirmPassword'].hasError('required')">
             Confirm password is required.
           </div>
           <div
             *ngIf="
-              registerForm.controls.confirmPassword.hasError('passwordMismatch')
+              registerForm.controls['confirmPassword'].hasError('passwordMismatch')
             "
           >
             Password mismatch. Please check your password and try again.

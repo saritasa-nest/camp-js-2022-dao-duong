@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Register } from '@js-camp/core/models/auth/register';
 
@@ -17,6 +17,9 @@ import { AuthService, NavigateService, ErrorService } from '../../../../core/ser
 export class RegisterComponent implements OnDestroy {
   private readonly subscriptionDestroyed$: Subject<boolean> = new Subject();
 
+  /** Register form group. */
+  public readonly registerForm: FormGroup;
+
   public constructor(
     private readonly authService: AuthService,
     private readonly formBuilder: FormBuilder,
@@ -24,22 +27,21 @@ export class RegisterComponent implements OnDestroy {
     private readonly errorService: ErrorService,
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly snackBar: MatSnackBar,
-  ) {}
-
-  /** Register form controls. */
-  public readonly registerForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    firstName: [''],
-    lastName: [''],
-    password: ['', Validators.required],
-    confirmPassword: ['', Validators.required],
-  }, {
-    updateOn: 'blur',
-  });
+  ) {
+    this.registerForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      firstName: [''],
+      lastName: [''],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+    }, {
+      updateOn: 'blur',
+    });
+  }
 
   /** Handle form submission. */
   public submitForm(): void {
-    if (this.validateConfirmPassword(this.registerForm.controls.password.value, this.registerForm.controls.confirmPassword.value)) {
+    if (this.validateConfirmPassword(this.registerForm.controls['password'].value, this.registerForm.controls['confirmPassword'].value)) {
       this.authService
         .register(this.registerForm.value as Register)
         .pipe(
@@ -49,7 +51,7 @@ export class RegisterComponent implements OnDestroy {
         )
         .subscribe();
     } else {
-      this.registerForm.controls.confirmPassword.setErrors({ passwordMismatch: true });
+      this.registerForm.controls['confirmPassword'].setErrors({ passwordMismatch: true });
       this.changeDetectorRef.detectChanges();
     }
   }
@@ -80,7 +82,7 @@ export class RegisterComponent implements OnDestroy {
     this.changeDetectorRef.markForCheck();
   }
 
-  /** On destroy lifecycle hook. */
+  /** @inheritdoc */
   public ngOnDestroy(): void {
     this.subscriptionDestroyed$.next(true);
     this.subscriptionDestroyed$.complete();

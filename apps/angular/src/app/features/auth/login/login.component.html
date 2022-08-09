@@ -11,11 +11,11 @@
           formControlName="email"
           autocomplete="email"
         />
-        <mat-error *ngIf="loginForm.controls.email.invalid">
-          <div *ngIf="loginForm.controls.email.errors?.['required']">
+        <mat-error *ngIf="loginForm.controls['email'].invalid">
+          <div *ngIf="loginForm.controls['email'].errors?.['required']">
             Email is required.
           </div>
-          <div *ngIf="loginForm.controls.email.errors?.['email']">
+          <div *ngIf="loginForm.controls['email'].errors?.['email']">
             Please check your email.
           </div>
         </mat-error>
@@ -28,8 +28,8 @@
           placeholder="Password"
           formControlName="password"
         />
-        <mat-error *ngIf="loginForm.controls.password.invalid">
-          <div *ngIf="loginForm.controls.email.errors?.['required']">
+        <mat-error *ngIf="loginForm.controls['password'].invalid">
+          <div *ngIf="loginForm.controls['email'].errors?.['required']">
             Password is required.
           </div>
         </mat-error>
