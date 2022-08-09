@@ -1,10 +1,12 @@
 .navbar {
   justify-content: space-between;
   margin-bottom: 40px;
+  position: fixed;
+  z-index: 10;
+  top: 0;
 }
 
-.title {
-  padding: 20px;
+.navbar__title {
   font-size: 2rem;
   font-weight: normal;
 }

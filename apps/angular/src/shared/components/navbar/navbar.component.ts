@@ -17,15 +17,18 @@ export class NavbarComponent implements OnDestroy {
   /** Check whether user authenticated or not. */
   public isAuthenticated$: Observable<boolean>;
 
-  public constructor(private authService: AuthService, private navigateService: NavigateService) {
+  public constructor(
+    private authService: AuthService,
+    private navigateService: NavigateService,
+  ) {
     this.isAuthenticated$ = this.authService.checkAuthentication();
   }
 
   /** Handle logout. */
   public logout(): void {
-    this.authService.logout().pipe(
-      tap(() => this.navigateService.navigateToLogin()),
-    )
+    this.authService
+      .logout()
+      .pipe(tap(() => this.navigateService.navigateToLogin()))
       .subscribe();
   }
 
