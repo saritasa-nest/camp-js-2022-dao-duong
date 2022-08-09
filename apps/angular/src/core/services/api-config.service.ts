@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 
-/** App-specific implementation of app config. */
+/** Configuration for api service. */
 @Injectable({
   providedIn: 'root',
 })

@@ -23,7 +23,7 @@ export class JwtService {
     this.token$ = merge(tokenFromStorage$, this.tokenSubject$);
   }
 
-  /** Get refresh token from local storage. */
+  /** Get token from local storage. */
   public getTokens(): Observable<Token | null> {
     return this.token$;
   }

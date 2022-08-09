@@ -51,12 +51,12 @@ export class AuthService {
       );
   }
 
-  /** Logout. */
+  /** Handle Logout. */
   public logout(): Observable<void> {
     return this.jwtService.destroyToken();
   }
 
-  /** Check whether authenticated or not. */
+  /** Check whether user is authenticated or not. */
   public checkAuthentication(): Observable<boolean> {
     const token$ = this.jwtService.getTokens();
     return token$.pipe(map(tokens => tokens !== null));

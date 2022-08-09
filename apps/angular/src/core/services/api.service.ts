@@ -27,7 +27,7 @@ export class ApiService {
   }
 
   /**
-   * Get service.
+   * Post service.
    * @param path Url path.
    * @param body Body data for the request.
    */

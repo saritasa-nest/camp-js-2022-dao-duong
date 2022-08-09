@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { Router } from '@angular/router';
+import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
-/** Api service. */
+/** Navigate service. */
 @Injectable({
   providedIn: 'root',
 })
@@ -19,5 +20,16 @@ export class NavigateService {
   /** Navigate to login page. */
   public navigateToLogin(): void {
     this.router.navigate(['auth/login']);
+  }
+
+  /**
+   * Set params to url.
+   * @param params Parameter values to set.
+   */
+  public setUrl(params: PaginationConfig): void {
+    this.router.navigate([], {
+      queryParams: params,
+      queryParamsHandling: 'merge',
+    });
   }
 }
