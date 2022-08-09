@@ -1,30 +1,5 @@
-<h1 class="title">Anime</h1>
+<camp-navbar></camp-navbar>
 <div>
   <camp-table></camp-table>
 </div>
-<button
-  *ngIf="isAuthenticated$ | async"
-  mat-raised-button
-  color="accent"
-  type="button"
-  (click)="logout()"
-  class="button_top-right"
->
-  Logout
-</button>
 
-<a
-  *ngIf="(isAuthenticated$ | async) === false"
-  routerLink="/auth/login"
-  routerLinkActive="active"
-  class="login-link"
->
-  <button
-    mat-raised-button
-    color="accent"
-    type="button"
-    class="button_top-right"
-  >
-    Login
-  </button>
-</a>

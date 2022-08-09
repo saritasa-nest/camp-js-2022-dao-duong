@@ -1,0 +1,19 @@
+.navbar {
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.title {
+  padding: 20px;
+  font-size: 2rem;
+  font-weight: normal;
+}
+
+.navbar__links {
+  font-size: 1rem;
+}
+
+.navbar__link {
+  text-decoration: none;
+  color: white;
+}
