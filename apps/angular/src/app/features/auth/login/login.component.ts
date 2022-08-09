@@ -29,7 +29,6 @@ export class LoginComponent implements OnDestroy {
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly snackBar: MatSnackBar,
   ) {
-    /** Login form controls. */
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],

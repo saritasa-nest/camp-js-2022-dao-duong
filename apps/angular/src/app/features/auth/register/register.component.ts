@@ -34,8 +34,6 @@ export class RegisterComponent implements OnDestroy {
       lastName: [''],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-    }, {
-      updateOn: 'blur',
     });
   }
 
