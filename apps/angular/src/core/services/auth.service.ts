@@ -58,7 +58,7 @@ export class AuthService {
   }
 
   /** Check whether authenticated or not. */
-  public isAuthenticated(): Observable<boolean> {
+  public checkAuthentication(): Observable<boolean> {
     const token$ = this.jwtService.getTokens();
     return token$.pipe(map(tokens => tokens !== null));
   }
