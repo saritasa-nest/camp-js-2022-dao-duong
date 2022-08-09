@@ -7,10 +7,10 @@ import { Login } from '@js-camp/core/models/auth/login';
 import { Register } from '@js-camp/core/models/auth/register';
 
 import { api } from '../api/api';
-
 import { Token, Url } from '../scripts/constants';
 import { navigate } from '../utils/navigate';
 
+import { ErrorService } from './errorService';
 import { StorageService } from './storageService';
 
 export namespace AuthService {
@@ -31,13 +31,13 @@ export namespace AuthService {
    */
   export async function register(registerData: Register): Promise<void> {
     const userRegisterDto = RegisterMapper.toDto(registerData);
-    const registerResponse = await api.post('/auth/register/', userRegisterDto);
-    StorageService.setToken(registerResponse.data);
+    const { data } = await api.post('/auth/register/', userRegisterDto);
+    StorageService.setToken(data);
   }
 
-  /** Logout service. */
+  /** Logout service.*/
   export async function logout(): Promise<void> {
-    StorageService.clearToken();
+    await StorageService.clearToken();
   }
 
   /**
@@ -49,28 +49,32 @@ export namespace AuthService {
       await api.post('/auth/token/verify/', { token: accessToken });
       return true;
     } catch (error: unknown) {
+      ErrorService.renderInputError(error);
       return false;
     }
   }
 
-  /** Check whether the user authenticated or not. */
+  /** Check whether the user authenticated or not.*/
   export async function checkIsAuthenticated(): Promise<boolean> {
-    const accessToken = await StorageService.get<string>(Token.Access);
-    if (accessToken === null) {
+    const token = await StorageService.get<string>(Token.Access);
+    if (token === null) {
       return false;
     }
-    return AuthService.verifyToken(accessToken);
+    return AuthService.verifyToken(token);
   }
 
-  /** Navigate user based on authorization. */
-  export async function navigateByAuthorization(): Promise<void> {
-    const currentLocation = window.location.pathname;
-
+  /** Navigate user to login if user is not authenticated.*/
+  export async function navigateToLoginIfNotAuthenticated(): Promise<void> {
     const isAuthenticated = await checkIsAuthenticated();
-    if ((currentLocation === Url.Detail || currentLocation === Url.Profile) && !isAuthenticated) {
+    if (!isAuthenticated) {
       navigate(Url.Login);
     }
-    if ((currentLocation === Url.Login || currentLocation === Url.Register) && isAuthenticated) {
+  }
+
+  /** Navigate user to home page if user is authenticated.*/
+  export async function navigateToHomeIfIsAuthenticated(): Promise<void> {
+    const isAuthenticated = await checkIsAuthenticated();
+    if (isAuthenticated) {
       navigate(Url.Home);
     }
   }

@@ -6,12 +6,12 @@ export interface ErrorData {
 /** HTTP error Dto. */
 export interface HttpErrorDto {
 
-  /** Error detail. */
+  /** Human-readable representation of error. */
   readonly detail: string;
 
-  /** Error data. */
+  /** Object containing messages related to incorrect fields. */
   readonly data?: ErrorData;
 
-  /** Error code. */
+  /** HTTP status code for the error. */
   readonly code?: string;
 }

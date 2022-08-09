@@ -46,5 +46,4 @@ export class AnimeService {
           AnimeMapper.fromDto(animeDto))),
     );
   }
-
 }
