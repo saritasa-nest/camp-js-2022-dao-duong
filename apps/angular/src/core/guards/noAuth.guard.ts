@@ -14,7 +14,7 @@ export class NoAuthGuard implements CanActivate {
     private readonly authService: AuthService,
   ) {}
 
-  /** Can activate. */
+  /** Can activate function for auth routes. */
   public canActivate(): Observable<boolean> {
     return this.authService.checkAuthentication().pipe(
       map(isAuth => {

@@ -12,7 +12,6 @@ import { JwtService } from './jwt.service';
 export enum AuthEndpoint {
   loginPath = 'auth/login/',
   registerPath = 'auth/register/',
-  refreshPath = 'auth/refresh/',
 }
 
 /** Api service. */
