@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { map, Observable, Subject, tap } from 'rxjs';
 
-import { NavigateService, UserService } from '../../../core/services';
+import { NavigateService, AuthService } from '../../../core/services';
 
 /** Anime component. */
 @Component({
@@ -17,13 +17,13 @@ export class AnimeComponent implements OnDestroy {
   /** Check whether user authenticated or not. */
   public isAuthenticated$: Observable<boolean>;
 
-  public constructor(private userService: UserService, private navigateService: NavigateService) {
-    this.isAuthenticated$ = this.userService.isAuthenticated().pipe(map(status => status));
+  public constructor(private authService: AuthService, private navigateService: NavigateService) {
+    this.isAuthenticated$ = this.authService.isAuthenticated().pipe(map(status => status));
   }
 
   /** Handle logout. */
   public logout(): void {
-    this.userService.logout().pipe(
+    this.authService.logout().pipe(
       tap(() => this.navigateService.navigateToLogin()),
     )
       .subscribe();

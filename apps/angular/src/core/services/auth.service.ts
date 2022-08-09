@@ -19,7 +19,7 @@ export enum AuthEndpoint {
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class AuthService {
 
   public constructor(
     private readonly apiService: ApiService,
@@ -27,7 +27,7 @@ export class UserService {
   ) {}
 
   /**
-   * Handle user login.
+   * Handle login.
    * @param credentials Login credentials.
    */
   public login(credentials: Login): Observable<void> {
@@ -40,7 +40,7 @@ export class UserService {
   }
 
   /**
-   * Handle user registration.
+   * Handle registration.
    * @param credentials Register credentials.
    */
   public register(credentials: Register): Observable<void> {
@@ -57,7 +57,7 @@ export class UserService {
     return this.jwtService.destroyToken();
   }
 
-  /** Check whether user authenticated or not. */
+  /** Check whether authenticated or not. */
   public isAuthenticated(): Observable<boolean> {
     const token$ = this.jwtService.getTokens();
     return token$.pipe(map(tokens => tokens !== null));

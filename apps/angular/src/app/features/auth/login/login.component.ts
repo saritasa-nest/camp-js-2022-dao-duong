@@ -6,7 +6,7 @@ import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ErrorService, UserService, NavigateService } from '../../../../core/services/';
+import { ErrorService, AuthService, NavigateService } from '../../../../core/services/';
 
 /** Login component. */
 @Component({
@@ -20,7 +20,7 @@ export class LoginComponent implements OnDestroy {
   private readonly subscriptionDestroyed$: Subject<boolean> = new Subject();
 
   public constructor(
-    private readonly userService: UserService,
+    private readonly authService: AuthService,
     private readonly formBuilder: FormBuilder,
     private readonly navigateService: NavigateService,
     private readonly errorService: ErrorService,
@@ -36,7 +36,7 @@ export class LoginComponent implements OnDestroy {
 
   /** Handle form submission. */
   public submitForm(): void {
-    this.userService
+    this.authService
       .login(this.loginForm.value as Login)
       .pipe(
         tap(() => this.navigateService.navigateToHome()),

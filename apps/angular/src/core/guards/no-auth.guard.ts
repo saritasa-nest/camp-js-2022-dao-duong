@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable, map } from 'rxjs';
 
-import { NavigateService } from '../services';
-
-import { UserService } from '../services/user.service';
+import { NavigateService, AuthService } from '../services';
 
 /** Auth guard service. */
 @Injectable({
@@ -13,12 +11,12 @@ import { UserService } from '../services/user.service';
 export class NoAuthGuard implements CanActivate {
   public constructor(
     private readonly navigateService: NavigateService,
-    private readonly userService: UserService,
+    private readonly authService: AuthService,
   ) {}
 
   /** Can activate. */
   public canActivate(): Observable<boolean> {
-    return this.userService.isAuthenticated().pipe(
+    return this.authService.isAuthenticated().pipe(
       map(isAuth => {
         if (isAuth) {
           this.navigateService.navigateToHome();
