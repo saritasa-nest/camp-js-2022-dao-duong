@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { Subject, Observable, tap } from 'rxjs';
 
@@ -19,9 +18,8 @@ export class NavbarComponent implements OnDestroy {
   public isAuthenticated$: Observable<boolean>;
 
   public constructor(
-    private authService: AuthService,
-    private navigateService: NavigateService,
-    protected readonly router: Router,
+    private readonly authService: AuthService,
+    private readonly navigateService: NavigateService,
   ) {
     this.isAuthenticated$ = this.authService.checkAuthentication();
   }

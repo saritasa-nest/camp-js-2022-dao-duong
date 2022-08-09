@@ -1,9 +1,9 @@
-<div *ngIf="router.url !== '/auth/login' && router.url !== '/auth/register'" >
+<nav class="navbar__container">
   <mat-toolbar class="navbar" color="primary">
     <a routerLink="/" class="navbar__link">
       <h1 class="navbar__title">Anime</h1>
     </a>
-    <div class="auth__button">
+    <div class="auth__buttons">
       <button
         *ngIf="isAuthenticated$ | async"
         mat-raised-button
@@ -14,21 +14,36 @@
       >
         Logout
       </button>
-      <a
-        *ngIf="(isAuthenticated$ | async) === false"
-        routerLink="/auth/login"
-        routerLinkActive="active"
-        class="navbar__link"
-      >
-        <button
-          mat-raised-button
-          color="accent"
-          type="button"
-          class="button_top-right"
+      <div *ngIf="(isAuthenticated$ | async) === false">
+        <a
+          routerLink="/auth/login"
+          routerLinkActive="active"
+          class="navbar__link"
         >
-          Login
-        </button>
-      </a>
+          <button
+            mat-raised-button
+            color="accent"
+            type="button"
+            class="button_top-right"
+          >
+            Login
+          </button>
+        </a>
+        <a
+          routerLink="/auth/register"
+          routerLinkActive="active"
+          class="navbar__link"
+        >
+          <button
+            mat-raised-button
+            color="accent"
+            type="button"
+            class="button_top-right"
+          >
+            Register
+          </button>
+        </a>
+      </div>
     </div>
   </mat-toolbar>
-</div>
+</nav>
