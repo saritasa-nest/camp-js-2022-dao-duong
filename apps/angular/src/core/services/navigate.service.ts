@@ -26,7 +26,7 @@ export class NavigateService {
    * Set params to url.
    * @param params Parameter values to set.
    */
-  public setUrl(params: PaginationConfig): void {
+  public navigateWithSpecifyParams(params: PaginationConfig): void {
     this.router.navigate([], {
       queryParams: params,
       queryParamsHandling: 'merge',
