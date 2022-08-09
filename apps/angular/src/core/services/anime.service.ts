@@ -12,7 +12,7 @@ import { AnimeMapper } from '@js-camp/core/mappers/anime/anime.mapper';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
 import { ApiService } from './api.service';
-import { UrlService } from './url.service';
+import { NavigateService } from './navigate.service';
 
 /** Api service. */
 @Injectable({
@@ -21,7 +21,7 @@ import { UrlService } from './url.service';
 export class AnimeService {
   public constructor(
     private readonly apiService: ApiService,
-    private readonly urlService: UrlService,
+    private readonly navigateService: NavigateService,
   ) {}
 
   /**
@@ -29,7 +29,7 @@ export class AnimeService {
    * @param config Configuration for request.
    */
   public fetchAnime(config: PaginationConfig): Observable<Pagination<Anime>> {
-    this.urlService.setUrl(config);
+    this.navigateService.navigateWithSpecifyParams(config);
     const path = 'anime/anime/';
     const params = new HttpParams({
       fromObject: {
