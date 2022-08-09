@@ -11,7 +11,7 @@ import { ApiConfigService } from '../services/api-config.service';
 
 /** Api key interceptor. */
 @Injectable()
-export class HttpApiInterceptor implements HttpInterceptor {
+export class HttpApiKeyInterceptor implements HttpInterceptor {
   public constructor(private readonly apiConfig: ApiConfigService) {}
 
   /**
