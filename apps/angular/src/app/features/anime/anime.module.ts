@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 import { SharedModule } from '../../../../src/shared/shared.module';
 
@@ -34,6 +35,7 @@ import { DetailComponent } from './detail/detail.component';
     MatIconModule,
     MatSortModule,
     MatButtonModule,
+    MatCardModule,
   ],
 })
 export class AnimeModule {}
