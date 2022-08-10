@@ -25,4 +25,12 @@ export class DetailComponent {
       switchMap(params => this.animeService.fetchAnimeById(params['id'])),
     );
   }
+
+  /**
+   * Open trailer video.
+   * @param trailerId The id of the trailer to open.
+   */
+  public openTrailer(trailerId: string): void {
+    console.log(trailerId);
+  }
 }

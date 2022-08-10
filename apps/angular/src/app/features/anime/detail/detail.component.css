@@ -1,6 +1,10 @@
-.detail-card__container {
+.anime-detail__container {
   max-width: 70%;
   margin: auto;
+}
+
+.anime-detail__title {
+  font-size: 24px;
 }
 
 .anime-detail__content {
@@ -25,4 +29,8 @@
 .anime-detail__genres,
 .anime-detail__studios {
   margin: 0;
+}
+
+.trailer__button {
+  width: 100%;
 }

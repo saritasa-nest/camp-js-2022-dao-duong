@@ -1,7 +1,7 @@
-<div class="detail-card__container">
+<div class="anime-detail__container">
   <mat-card *ngIf="anime$ | async as anime">
     <mat-card-header>
-      <mat-card-title>{{
+      <mat-card-title class="anime-detail__title">{{
         anime.englishTitle || anime.japaneseTitle
       }}</mat-card-title>
       <mat-card-subtitle *ngIf="anime.englishTitle">{{
@@ -15,6 +15,7 @@
           [alt]="(anime.englishTitle || anime.japaneseTitle) + ' image'"
           class="anime-detail__image"
         />
+        <button *ngIf="anime.youtubeTrailerId" type="button" mat-raised-button color="primary" class="trailer__button" (click)="openTrailer(anime.youtubeTrailerId)">Trailer</button>
       </div>
       <mat-card-content>
         <div class="anime-detail__field">
@@ -42,7 +43,10 @@
         </div>
         <div class="anime-detail__field">
           <p class="anime-detail__field-title">Genres</p>
-          <mat-chip-list aria-label="List of genre" class="anime-detail__genres">
+          <mat-chip-list
+            aria-label="List of genre"
+            class="anime-detail__genres"
+          >
             <mat-chip *ngFor="let genre of anime.genreList">{{
               genre.name
             }}</mat-chip>
@@ -63,3 +67,4 @@
     </div>
   </mat-card>
 </div>
+<camp-modal>test</camp-modal>
