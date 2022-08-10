@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from '../../../core/guards';
+
 import { AnimeComponent } from './anime.component';
 import { TableComponent } from './table/table.component';
 import { DetailComponent } from './detail/detail.component';
@@ -17,6 +19,7 @@ const routes: Routes = [
       {
         path: ':id',
         component: DetailComponent,
+        canActivate: [AuthGuard],
       },
     ],
   },

@@ -11,8 +11,12 @@ import { AnimeMapper } from '@js-camp/core/mappers/anime/anime.mapper';
 
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
-import { ApiService } from './api.service';
+import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
+import { AnimeDetailDto } from '@js-camp/core/dtos/anime/animeDetail.dto';
+import { AnimeDetailMapper } from '@js-camp/core/mappers/anime/animeDetail.mapper';
+
 import { NavigateService } from './navigate.service';
+import { ApiService } from './api.service';
 
 /** Anime service. */
 @Injectable({
@@ -45,5 +49,15 @@ export class AnimeService {
         PaginationMapper.fromDto(animes, animeDto =>
           AnimeMapper.fromDto(animeDto))),
     );
+  }
+
+  /**
+   * Fetch anime data by id from server.
+   * @param animeId Id of the anime.
+   */
+  public fetchAnimeById(animeId: number): Observable<AnimeDetail> {
+    const path = `anime/anime/${animeId}/`;
+    const animeResponse$ = this.apiService.get<AnimeDetailDto>(path);
+    return animeResponse$.pipe(map(anime => AnimeDetailMapper.fromDto(anime)));
   }
 }
