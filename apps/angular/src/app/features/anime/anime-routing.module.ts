@@ -19,6 +19,7 @@ const routes: Routes = [
       {
         path: ':id',
         component: DetailComponent,
+        title: 'Anime Detail',
         canActivate: [AuthGuard],
       },
     ],
