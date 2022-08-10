@@ -5,6 +5,11 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'anime',
+    pathMatch: 'full',
+  },
+  {
+    path: 'anime',
     loadChildren: () =>
       import('./features/anime/anime.module').then(m => m.AnimeModule),
   },
