@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AnimeComponent } from './anime.component';
 import { TableComponent } from './table/table.component';
+import { DetailComponent } from './detail/detail.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
       {
         path: '',
         component: TableComponent,
+      },
+      {
+        path: ':id',
+        component: DetailComponent,
       },
     ],
   },
