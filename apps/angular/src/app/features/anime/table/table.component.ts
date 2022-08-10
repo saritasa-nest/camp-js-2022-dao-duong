@@ -14,7 +14,7 @@ import { AnimeService } from '../../../../core/services/anime.service';
 })
 export class TableComponent {
   /** Anime list observer. */
-  public animeList$: Observable<Pagination<Anime>>;
+  public readonly animeList$: Observable<Pagination<Anime>>;
 
   /** Anime table column. */
   public readonly displayedColumns = [
