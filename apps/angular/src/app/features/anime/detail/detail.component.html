@@ -1,19 +1,65 @@
-<mat-card *ngIf="anime$ | async as anime">
-  <mat-card-header>
-    <mat-card-title>{{
-      anime.englishTitle || anime.japaneseTitle
-    }}</mat-card-title>
-    <mat-card-subtitle *ngIf="anime.englishTitle">{{
-      anime.japaneseTitle
-    }}</mat-card-subtitle>
-  </mat-card-header>
-  <div class="anime-detail__content">
-    <img
-      [src]="anime.image"
-      [alt]="(anime.englishTitle || anime.japaneseTitle) + ' image'"
-    />
-    <mat-card-content>
-      {{anime$ | async | json}}
-    </mat-card-content>
-  </div>
-</mat-card>
+<div class="detail-card__container">
+  <mat-card *ngIf="anime$ | async as anime">
+    <mat-card-header>
+      <mat-card-title>{{
+        anime.englishTitle || anime.japaneseTitle
+      }}</mat-card-title>
+      <mat-card-subtitle *ngIf="anime.englishTitle">{{
+        anime.japaneseTitle
+      }}</mat-card-subtitle>
+    </mat-card-header>
+    <div class="anime-detail__content">
+      <div class="anime-detail__media">
+        <img
+          [src]="anime.image"
+          [alt]="(anime.englishTitle || anime.japaneseTitle) + ' image'"
+          class="anime-detail__image"
+        />
+      </div>
+      <mat-card-content>
+        <div class="anime-detail__field">
+          <p class="anime-detail__field-title">Type:</p>
+          <span>{{ anime.type }}</span>
+        </div>
+        <div class="anime-detail__field">
+          <p class="anime-detail__field-title">Status:</p>
+          <span>{{ anime.status }}</span>
+        </div>
+        <div class="anime-detail__field">
+          <p class="anime-detail__field-title">Airing:</p>
+          <span>{{ anime.airing ? "Yes" : "No" }}</span>
+        </div>
+        <div class="anime-detail__field">
+          <p class="anime-detail__field-title">Aired time:</p>
+          <span
+            >{{ (anime.aired.start | date: "dd/MM/yyyy") ?? "" }} -
+            {{ (anime.aired.end | date: "dd/MM/yyyy") ?? "" }}</span
+          >
+        </div>
+        <div class="anime-detail__field">
+          <p class="anime-detail__field-title">Synopsis:</p>
+          <p>{{ anime.synopsis }}</p>
+        </div>
+        <div class="anime-detail__field">
+          <p class="anime-detail__field-title">Genres</p>
+          <mat-chip-list aria-label="List of genre" class="anime-detail__genres">
+            <mat-chip *ngFor="let genre of anime.genreList">{{
+              genre.name
+            }}</mat-chip>
+          </mat-chip-list>
+        </div>
+        <div class="anime-detail__field">
+          <p class="anime-detail__field-title">Studios</p>
+          <mat-chip-list
+            aria-label="List of studio"
+            class="anime-detail__studios"
+          >
+            <mat-chip *ngFor="let studio of anime.studioList">{{
+              studio.name
+            }}</mat-chip>
+          </mat-chip-list>
+        </div>
+      </mat-card-content>
+    </div>
+  </mat-card>
+</div>

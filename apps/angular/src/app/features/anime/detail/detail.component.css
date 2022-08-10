@@ -1,3 +1,28 @@
+.detail-card__container {
+  max-width: 70%;
+  margin: auto;
+}
+
 .anime-detail__content {
   display: flex;
+}
+
+.anime-detail__media {
+  padding-right: 40px;
+}
+
+.anime-detail__image {
+  max-width: 300px;
+}
+
+.anime-detail__field-title {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bold;
+  padding-right: 10px;
+}
+
+.anime-detail__genres,
+.anime-detail__studios {
+  margin: 0;
 }
