@@ -25,7 +25,7 @@ export class ErrorService {
   }
 
   /**
-   * Change error from server to more readable error.
+   * Show error message from server to form field.
    * @param error Error from server.
    * @param form Form group to set error.
    */
@@ -42,7 +42,7 @@ export class ErrorService {
   }
 
   /**
-   * Change error from server to more readable error.
+   * Open snackbar display error detail.
    * @param error Error from server.
    * @param snackBar Snack bar element.
    */

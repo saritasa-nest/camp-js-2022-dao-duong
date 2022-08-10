@@ -12,10 +12,10 @@ const TOKEN_KEY = 'TOKENS';
   providedIn: 'root',
 })
 export class JwtService {
-  private tokenSubject$ = new ReplaySubject<Token | null>(1);
+  private readonly tokenSubject$ = new ReplaySubject<Token | null>(1);
 
   /** Token observer. */
-  private token$: Observable<Token | null>;
+  private readonly token$: Observable<Token | null>;
 
   public constructor(private readonly storageService: StorageService) {
     const tokenFromStorage$ = defer(() =>
