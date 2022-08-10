@@ -26,7 +26,7 @@ import {
   take,
 } from 'rxjs';
 
-import { AnimeService } from '../../../../core/services';
+import { AnimeService, NavigateService } from '../../../../core/services';
 
 const INITIAL_LENGTH = 0;
 const INITIAL_PAGE = 0;
@@ -85,6 +85,7 @@ export class TableComponent implements OnInit, OnDestroy {
   public constructor(
     private readonly animeService: AnimeService,
     private readonly route: ActivatedRoute,
+    private readonly navigateService: NavigateService,
   ) {
     const params$ = this.currentPage$.pipe(
       combineLatestWith(
@@ -186,7 +187,7 @@ export class TableComponent implements OnInit, OnDestroy {
       this.filterTypeControl.setValue(params['type'].split(','));
     }
     this.currentPage$.next(params['page'] || INITIAL_PAGE);
-    this.searchControl.setValue(params['search'] || '');
+    this.searchControl.setValue(params['search'] || INITIAL_SEARCH);
   }
 
   /** Scroll to top of page. */
@@ -195,6 +196,14 @@ export class TableComponent implements OnInit, OnDestroy {
       top: 0,
       behavior: 'smooth',
     });
+  }
+
+  /**
+   * Open detail page when click on table row.
+   * @param anime Anime data.
+   */
+  public openDetailPage(anime: Anime): void {
+    this.navigateService.navigateToDetailPage(anime.id);
   }
 
   /** Destroy subscriptions. */

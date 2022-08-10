@@ -32,4 +32,12 @@ export class NavigateService {
       queryParamsHandling: 'merge',
     });
   }
+
+  /**
+   * Navigate to anime detail page.
+   * @param animeId Id of the anime.
+   */
+  public navigateToDetailPage(animeId: number): void {
+    this.router.navigate(['/anime', animeId]);
+  }
 }
