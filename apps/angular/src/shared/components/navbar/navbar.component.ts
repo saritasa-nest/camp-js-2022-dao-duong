@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 
-import { Subject, Observable, tap } from 'rxjs';
+import { Subject, Observable, tap, takeUntil } from 'rxjs';
 
 import { AuthService, NavigateService } from '../../../core/services';
 
@@ -19,7 +19,7 @@ export class NavbarComponent implements OnDestroy {
 
   public constructor(
     private readonly authService: AuthService,
-    private readonly navigateService: NavigateService,
+    private readonly navigateService: NavigateService
   ) {
     this.isAuthenticated$ = this.authService.checkAuthentication();
   }
@@ -28,7 +28,10 @@ export class NavbarComponent implements OnDestroy {
   public logout(): void {
     this.authService
       .logout()
-      .pipe(tap(() => this.navigateService.navigateToLogin()))
+      .pipe(
+        tap(() => this.navigateService.navigateToLogin()),
+        takeUntil(this.subscriptionDestroyed$)
+      )
       .subscribe();
   }
 
