@@ -14,8 +14,18 @@
           [src]="anime.image"
           [alt]="(anime.englishTitle || anime.japaneseTitle) + ' image'"
           class="anime-detail__image"
+          (click)="openFullSizeImage(anime.image)"
         />
-        <button *ngIf="anime.youtubeTrailerId" type="button" mat-raised-button color="primary" class="trailer__button" (click)="openTrailer(anime.youtubeTrailerId)">Trailer</button>
+        <button
+          *ngIf="anime.youtubeTrailerId"
+          type="button"
+          mat-raised-button
+          color="primary"
+          class="trailer__button"
+          (click)="openTrailer(anime.youtubeTrailerId)"
+        >
+          Trailer
+        </button>
       </div>
       <mat-card-content>
         <div class="anime-detail__field">
@@ -67,4 +77,20 @@
     </div>
   </mat-card>
 </div>
-<camp-modal>test</camp-modal>
+<camp-modal *ngIf="(mediaTrailerUrl$ | async) || (mediaImageUrl$ | async)" (closeModal)="closeModal()">
+  <iframe
+    *ngIf="mediaTrailerUrl$ | async as trailer"
+    [src]="trailer"
+    title="Trailer"
+    frameborder="0"
+    allowfullscreen
+    class="modal__content anime-trailer"
+  >
+  </iframe>
+  <img
+    *ngIf="mediaImageUrl$ | async as image"
+    [src]="image"
+    alt="Anime Image"
+    class="modal__content"
+  />
+</camp-modal>

@@ -21,7 +21,11 @@ import { DetailComponent } from './detail/detail.component';
 
 /** Anime module. */
 @NgModule({
-  declarations: [AnimeComponent, TableComponent, DetailComponent],
+  declarations: [
+    AnimeComponent,
+    TableComponent,
+    DetailComponent,
+  ],
   imports: [
     CommonModule,
     AnimeRoutingModule,

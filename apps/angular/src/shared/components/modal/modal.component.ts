@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 
 /** Login component. */
 @Component({
@@ -8,5 +8,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent {
+  @Output() public closeModal = new EventEmitter();
 
+  public onModalClose(): void {
+    this.closeModal.emit();
+  }
 }

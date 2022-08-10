@@ -32,3 +32,12 @@
 .modal-wrapper__inner .video {
   width: 60%;
 }
+
+.modal__close-button {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+}
