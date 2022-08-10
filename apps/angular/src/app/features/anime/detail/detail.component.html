@@ -1,9 +1,19 @@
 <mat-card *ngIf="anime$ | async as anime">
-  <mat-card-header>{{anime.englishTitle}}</mat-card-header>
+  <mat-card-header>
+    <mat-card-title>{{
+      anime.englishTitle || anime.japaneseTitle
+    }}</mat-card-title>
+    <mat-card-subtitle *ngIf="anime.englishTitle">{{
+      anime.japaneseTitle
+    }}</mat-card-subtitle>
+  </mat-card-header>
   <div class="anime-detail__content">
-    <img [src]="anime.image" [alt]="(anime.englishTitle || anime.japaneseTitle)+' image'">
+    <img
+      [src]="anime.image"
+      [alt]="(anime.englishTitle || anime.japaneseTitle) + ' image'"
+    />
     <mat-card-content>
-      {{anime}}
+      {{anime$ | async | json}}
     </mat-card-content>
   </div>
 </mat-card>
