@@ -12,7 +12,7 @@ const TOKEN_KEY = 'TOKENS';
   providedIn: 'root',
 })
 export class JwtService {
-  private readonly tokenSubject$ = new ReplaySubject<Token | null>(1);
+  private readonly tokenUpdated$ = new ReplaySubject<Token | null>(1);
 
   /** Token observer. */
   private readonly token$: Observable<Token | null>;
@@ -20,7 +20,7 @@ export class JwtService {
   public constructor(private readonly storageService: StorageService) {
     const tokenFromStorage$ = defer(() =>
       this.storageService.get<Token>(TOKEN_KEY));
-    this.token$ = merge(tokenFromStorage$, this.tokenSubject$);
+    this.token$ = merge(tokenFromStorage$, this.tokenUpdated$);
   }
 
   /** Get token from local storage. */
@@ -33,11 +33,11 @@ export class JwtService {
    * @param token Token received from server.
    */
   public saveToken(token: Token): Observable<void> {
-    return defer(() => this.storageService.set(TOKEN_KEY, token)).pipe(tap(() => this.tokenSubject$.next(token)));
+    return defer(() => this.storageService.set(TOKEN_KEY, token)).pipe(tap(() => this.tokenUpdated$.next(token)));
   }
 
   /** Destroy token from local storage. */
   public destroyToken(): Observable<void> {
-    return defer(() => this.storageService.remove(TOKEN_KEY)).pipe(tap(() => this.tokenSubject$.next(null)));
+    return defer(() => this.storageService.remove(TOKEN_KEY)).pipe(tap(() => this.tokenUpdated$.next(null)));
   }
 }
