@@ -4,7 +4,7 @@ import { Subject, Observable, tap, takeUntil } from 'rxjs';
 
 import { AuthService, NavigateService } from '../../../core/services';
 
-/** Login component. */
+/** Navbar component. */
 @Component({
   selector: 'camp-navbar',
   templateUrl: './navbar.component.html',
@@ -19,7 +19,7 @@ export class NavbarComponent implements OnDestroy {
 
   public constructor(
     private readonly authService: AuthService,
-    private readonly navigateService: NavigateService
+    private readonly navigateService: NavigateService,
   ) {
     this.isAuthenticated$ = this.authService.checkAuthentication();
   }
@@ -30,9 +30,11 @@ export class NavbarComponent implements OnDestroy {
       .logout()
       .pipe(
         tap(() => this.navigateService.navigateToLogin()),
-        takeUntil(this.subscriptionDestroyed$)
+        takeUntil(this.subscriptionDestroyed$),
       )
-      .subscribe();
+      .subscribe({
+        next: () => this.navigateService.navigateToLogin(),
+      });
   }
 
   /** @inheritdoc */

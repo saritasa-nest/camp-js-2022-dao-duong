@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Register } from '@js-camp/core/models/auth/register';
 
-import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
+import { catchError, of, Subject, takeUntil } from 'rxjs';
 
 import { AuthService, NavigateService, ErrorService } from '../../../../core/services/';
 
@@ -38,16 +38,17 @@ export class RegisterComponent implements OnDestroy {
   }
 
   /** Handle form submission. */
-  public submitForm(): void {
+  public onFormSubmit(): void {
     if (this.validateConfirmPassword(this.registerForm.controls['password'].value, this.registerForm.controls['confirmPassword'].value)) {
       this.authService
         .register(this.registerForm.value as Register)
         .pipe(
-          tap(() => this.navigateService.navigateToHome()),
           catchError((error: unknown) => of(this.handleError(error))),
           takeUntil(this.subscriptionDestroyed$),
         )
-        .subscribe();
+        .subscribe({
+          next: () => this.navigateService.navigateToHome(),
+        });
     } else {
       this.registerForm.controls['confirmPassword'].setErrors({ passwordMismatch: true });
       this.changeDetectorRef.detectChanges();
