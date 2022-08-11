@@ -36,6 +36,7 @@ const INITIAL_SORT: Sort = {
   active: '',
   direction: '',
 };
+const DEBOUNCE_TIME = 700;
 
 /** Anime table component. */
 @Component({
@@ -72,6 +73,9 @@ export class TableComponent implements OnInit, OnDestroy {
   /** Sort observer. */
   public readonly sortObservers$ = new BehaviorSubject<Sort>(INITIAL_SORT);
 
+  /** Loading state observer. */
+  public isLoading$ = new BehaviorSubject<boolean>(false);
+
   /** Anime table column. */
   public displayedColumns = [
     'image',
@@ -96,7 +100,7 @@ export class TableComponent implements OnInit, OnDestroy {
         ),
         this.sortObservers$,
       ),
-      debounceTime(700),
+      debounceTime(DEBOUNCE_TIME),
     );
     this.animeList$ = params$.pipe(
       switchMap(([currentPage, _search, _filter, sort]) =>
@@ -118,15 +122,13 @@ export class TableComponent implements OnInit, OnDestroy {
 
   /** @inheritdoc */
   public ngOnInit(): void {
-
     // Declare side effects
-    const setDataFromParamsSideEffect$ = this.route.queryParams
-      .pipe(
-        map(params => {
+    const setDataFromParamsSideEffect$ = this.route.queryParams.pipe(
+      map(params => {
         this.setDataFromParamsToComponent(params);
       }),
-        take(1),
-      );
+      take(1),
+    );
 
     const resetPaginationSideEffect$ = merge(
       this.searchControl.valueChanges,
@@ -138,7 +140,11 @@ export class TableComponent implements OnInit, OnDestroy {
     );
 
     // Merge all side effects and subscribe.
-    merge(resetPaginationSideEffect$, goToTopSideEffect$, setDataFromParamsSideEffect$)
+    merge(
+      resetPaginationSideEffect$,
+      goToTopSideEffect$,
+      setDataFromParamsSideEffect$,
+    )
       .pipe(takeUntil(this.subscriptionDestroy$))
       .subscribe();
   }
@@ -191,9 +197,11 @@ export class TableComponent implements OnInit, OnDestroy {
 
   /** Scroll to top of page. */
   private goToTop(): void {
+    const TOP_OF_PAGE = 0;
+    const SCROLL_BEHAVIOR = 'smooth';
     window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
+      top: TOP_OF_PAGE,
+      behavior: SCROLL_BEHAVIOR,
     });
   }
 
