@@ -135,14 +135,14 @@ export class TableComponent implements OnInit, OnDestroy {
       this.filterTypeControl.valueChanges,
     ).pipe(tap(() => this.currentPage$.next(INITIAL_PAGE)));
 
-    const goToTopSideEffect$ = this.currentPage$.pipe(
-      tap(() => this.goToTop()),
+    const goToTopOfPageSideEffect$ = this.currentPage$.pipe(
+      tap(() => this.goToTopOfPage()),
     );
 
     // Merge all side effects and subscribe.
     merge(
       resetPaginationSideEffect$,
-      goToTopSideEffect$,
+      goToTopOfPageSideEffect$,
       setDataFromParamsSideEffect$,
     )
       .pipe(takeUntil(this.subscriptionDestroy$))
@@ -196,12 +196,10 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   /** Scroll to top of page. */
-  private goToTop(): void {
-    const TOP_OF_PAGE = 0;
-    const SCROLL_BEHAVIOR = 'smooth';
+  private goToTopOfPage(): void {
     window.scrollTo({
-      top: TOP_OF_PAGE,
-      behavior: SCROLL_BEHAVIOR,
+      top: 0,
+      behavior: 'smooth',
     });
   }
 
