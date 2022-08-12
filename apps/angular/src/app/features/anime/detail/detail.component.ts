@@ -6,6 +6,9 @@ import { switchMap, Observable, Subject, BehaviorSubject } from 'rxjs';
 
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
+import { Genre } from '@js-camp/core/models/anime/genre';
+import { Studio } from '@js-camp/core/models/anime/studio';
+
 import { AnimeService } from '../../../../core/services';
 
 /** Anime detail component. */
@@ -67,6 +70,15 @@ export class DetailComponent implements OnDestroy {
   public closeModal(): void {
     this._mediaTrailerUrl$.next('');
     this._mediaImageUrl$.next('');
+  }
+
+  /**
+   * Track by id function.
+   * @param _index Index of the item in the list.
+   * @param listItem List item data to track.
+   */
+  public trackById(_index: number, listItem: Studio | Genre): number {
+    return listItem.id;
   }
 
   /** @inheritdoc */
