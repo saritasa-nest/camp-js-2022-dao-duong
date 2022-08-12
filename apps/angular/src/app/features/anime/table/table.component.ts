@@ -59,7 +59,14 @@ export class TableComponent implements OnInit, OnDestroy {
   public length = INITIAL_LENGTH;
 
   /** Anime type value. */
-  public readonly animeTypeList = Object.values(AnimeType);
+  public readonly animeTypeList: readonly AnimeType[] = [
+    AnimeType.TV,
+    AnimeType.Movie,
+    AnimeType.Music,
+    AnimeType.ONA,
+    AnimeType.OVA,
+    AnimeType.Special,
+  ];
 
   /** Anime search from control. */
   public readonly searchControl = new FormControl(INITIAL_SEARCH);
