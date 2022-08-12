@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Params } from '@angular/router';
+import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { Anime } from '@js-camp/core/models/anime/anime';
 import { AnimeType } from '@js-camp/core/utils/types/animeType';
 
@@ -52,6 +53,9 @@ export class TableComponent implements OnInit, OnDestroy {
   /** Anime list observer. */
   public readonly animeList$: Observable<readonly Anime[]>;
 
+  /** Anime list observer. */
+  public readonly params$: Observable<PaginationConfig>;
+
   /** Initial page size value. */
   public readonly pageSize = INITIAL_LIMIT;
 
@@ -86,9 +90,6 @@ export class TableComponent implements OnInit, OnDestroy {
   /** Sort observer. */
   public readonly sort$ = this._sort$.asObservable();
 
-  /** Loading state observer. */
-  public isLoading$ = new BehaviorSubject<boolean>(false);
-
   /** Anime table column. */
   public displayedColumns = [
     'image',
@@ -104,7 +105,7 @@ export class TableComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly navigateService: NavigateService,
   ) {
-    const params$ = this.currentPage$.pipe(
+    this.params$ = this.currentPage$.pipe(
       combineLatestWith(
         this.searchControl.valueChanges.pipe(
           startWith(this.searchControl.value),
@@ -115,9 +116,7 @@ export class TableComponent implements OnInit, OnDestroy {
         this._sort$,
       ),
       debounceTime(DEBOUNCE_TIME),
-    );
-    this.animeList$ = params$.pipe(
-      switchMap(([currentPage, _search, _filter, sort]) => {
+      map(([currentPage, _search, _filter, sort]) => {
         const params = {
           limit: this.pageSize,
           page: currentPage,
@@ -127,9 +126,11 @@ export class TableComponent implements OnInit, OnDestroy {
             this.filterTypeControl.value.toString() :
             [],
         };
-        navigateService.navigateWithSpecifyParams(params);
-        return this.animeService.fetchAnime(params);
+        return params;
       }),
+    );
+    this.animeList$ = this.params$.pipe(
+      switchMap(params => this.animeService.fetchAnime(params)),
       map(animeResponse => {
         this.length = animeResponse.count;
         return animeResponse.results;
@@ -156,11 +157,16 @@ export class TableComponent implements OnInit, OnDestroy {
       tap(() => this.goToTopOfPage()),
     );
 
+    const navigateSideEffect$ = this.params$.pipe(
+      tap(params => this.navigateService.navigateToHomeWithSpecifyParams(params)),
+    );
+
     // Merge all side effects and subscribe.
     merge(
       resetPaginationSideEffect$,
       goToTopOfPageSideEffect$,
       setDataFromParamsSideEffect$,
+      navigateSideEffect$,
     )
       .pipe(takeUntil(this.subscriptionDestroy$))
       .subscribe();
@@ -170,7 +176,7 @@ export class TableComponent implements OnInit, OnDestroy {
    * Handle changes in paginator.
    * @param event Paginator event emission.
    */
-  public handlePaginatorChange(event: PageEvent): void {
+  public onPaginatorChange(event: PageEvent): void {
     this._currentPage$.next(event.pageIndex);
   }
 
@@ -178,7 +184,7 @@ export class TableComponent implements OnInit, OnDestroy {
    * Handle changes in sort.
    * @param event Sort event emission.
    */
-  public handleSortChange(event: Sort): void {
+  public onSortChange(event: Sort): void {
     this._sort$.next({
       active: event.direction === '' ? '' : event.active,
       direction: event.direction,
