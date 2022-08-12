@@ -23,10 +23,16 @@ export class DetailComponent implements OnDestroy {
   public readonly anime$: Observable<AnimeDetail>;
 
   /** Media image behavior subject. */
-  public readonly mediaImageUrl$ = new BehaviorSubject<SafeResourceUrl>('');
+  private readonly _mediaImageUrl$ = new BehaviorSubject<SafeResourceUrl>('');
 
-  /** Media image behavior subject. */
-  public readonly mediaTrailerUrl$ = new BehaviorSubject<SafeResourceUrl>('');
+  /** Media image observer. */
+  public readonly mediaImageUrl$ = this._mediaImageUrl$.asObservable();
+
+  /** Media trailer behavior subject. */
+  private readonly _mediaTrailerUrl$ = new BehaviorSubject<SafeResourceUrl>('');
+
+  /** Media trailer observer. */
+  public readonly mediaTrailerUrl$ = this._mediaTrailerUrl$.asObservable();
 
   public constructor(
     private readonly route: ActivatedRoute,
@@ -44,7 +50,7 @@ export class DetailComponent implements OnDestroy {
    */
   public openTrailer(trailerId: string): void {
     const trailer = `https://www.youtube-nocookie.com/embed/${trailerId}`;
-    this.mediaTrailerUrl$.next(this.sanitizer.bypassSecurityTrustResourceUrl(trailer));
+    this._mediaTrailerUrl$.next(this.sanitizer.bypassSecurityTrustResourceUrl(trailer));
   }
 
   /**
@@ -52,15 +58,15 @@ export class DetailComponent implements OnDestroy {
    * @param imageUrl The url of the image.
    */
   public openFullSizeImage(imageUrl: string): void {
-    this.mediaImageUrl$.next(
+    this._mediaImageUrl$.next(
       this.sanitizer.bypassSecurityTrustResourceUrl(imageUrl),
     );
   }
 
   /** Close modal. */
   public closeModal(): void {
-    this.mediaTrailerUrl$.next('');
-    this.mediaImageUrl$.next('');
+    this._mediaTrailerUrl$.next('');
+    this._mediaImageUrl$.next('');
   }
 
   /** @inheritdoc */

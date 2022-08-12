@@ -8,8 +8,10 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent {
+  /** Close event emitter. */
   @Output() public closeModal = new EventEmitter();
 
+  /** Close modal action.  */
   public onModalClose(): void {
     this.closeModal.emit();
   }
