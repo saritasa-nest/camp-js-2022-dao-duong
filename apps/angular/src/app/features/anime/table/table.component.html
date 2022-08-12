@@ -24,7 +24,7 @@
     [dataSource]="animeList"
     mat-table
     matSort
-    (matSortChange)="handleSortChange($event)"
+    (matSortChange)="onSortChange($event)"
     [matSortActive]="(sort$ | async)!.active"
     [matSortDirection]="(sort$ | async)!.direction"
     [trackBy]="trackAnimeById"
@@ -83,7 +83,7 @@
     [length]="length"
     [pageSize]="pageSize"
     [pageIndex]="(currentPage$ | async)!"
-    (page)="handlePaginatorChange($event)"
+    (page)="onPaginatorChange($event)"
     aria-label="Select pages"
     class="table__paginator"
   >
