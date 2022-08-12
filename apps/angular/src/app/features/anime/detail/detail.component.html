@@ -14,7 +14,7 @@
           [src]="anime.image"
           [alt]="(anime.englishTitle || anime.japaneseTitle) + ' image'"
           class="anime-detail__image"
-          (click)="openFullSizeImage(anime.image)"
+          (click)="onImageClick(anime.image)"
         />
         <button
           *ngIf="anime.youtubeTrailerId"
@@ -22,7 +22,7 @@
           mat-raised-button
           color="primary"
           class="trailer__button"
-          (click)="openTrailer(anime.youtubeTrailerId)"
+          (click)="onTrailerButtonClick(anime.youtubeTrailerId)"
         >
           Trailer
         </button>

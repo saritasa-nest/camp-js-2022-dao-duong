@@ -51,7 +51,7 @@ export class DetailComponent implements OnDestroy {
    * Open trailer video.
    * @param trailerId The id of the trailer to open.
    */
-  public openTrailer(trailerId: string): void {
+  public onTrailerButtonClick(trailerId: string): void {
     const trailer = `https://www.youtube-nocookie.com/embed/${trailerId}`;
     this._mediaTrailerUrl$.next(this.sanitizer.bypassSecurityTrustResourceUrl(trailer));
   }
@@ -60,7 +60,7 @@ export class DetailComponent implements OnDestroy {
    * Open trailer video.
    * @param imageUrl The url of the image.
    */
-  public openFullSizeImage(imageUrl: string): void {
+  public onImageClick(imageUrl: string): void {
     this._mediaImageUrl$.next(
       this.sanitizer.bypassSecurityTrustResourceUrl(imageUrl),
     );
