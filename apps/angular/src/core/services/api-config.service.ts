@@ -8,8 +8,8 @@ import { environment } from '../../environments/environment';
 })
 export class ApiConfigService {
   /** Api url. */
-  public readonly apiUrl = environment.apiUrl;
+  public readonly apiUrl = environment.campJsApiUrl;
 
   /** Api key. */
-  public readonly apiKey = environment.apiKey;
+  public readonly apiKey = environment.campJsApiKey;
 }
