@@ -33,7 +33,6 @@ export class AnimeService {
    * @param config Configuration for request.
    */
   public fetchAnime(config: PaginationConfig): Observable<Pagination<Anime>> {
-    this.navigateService.navigateWithSpecifyParams(config);
     const path = 'anime/anime/';
     const params = new HttpParams({
       fromObject: {

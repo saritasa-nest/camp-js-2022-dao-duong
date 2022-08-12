@@ -59,7 +59,14 @@ export class TableComponent implements OnInit, OnDestroy {
   public length = INITIAL_LENGTH;
 
   /** Anime type value. */
-  public readonly animeTypeList = Object.values(AnimeType);
+  public readonly animeTypeList: readonly AnimeType[] = [
+    AnimeType.TV,
+    AnimeType.Movie,
+    AnimeType.Music,
+    AnimeType.ONA,
+    AnimeType.OVA,
+    AnimeType.Special,
+  ];
 
   /** Anime search from control. */
   public readonly searchControl = new FormControl(INITIAL_SEARCH);
@@ -110,8 +117,8 @@ export class TableComponent implements OnInit, OnDestroy {
       debounceTime(DEBOUNCE_TIME),
     );
     this.animeList$ = params$.pipe(
-      switchMap(([currentPage, _search, _filter, sort]) =>
-        this.animeService.fetchAnime({
+      switchMap(([currentPage, _search, _filter, sort]) => {
+        const params = {
           limit: this.pageSize,
           page: currentPage,
           ordering: (sort.direction === 'desc' ? '-' : '') + sort.active,
@@ -119,7 +126,10 @@ export class TableComponent implements OnInit, OnDestroy {
           type: this.filterTypeControl.value ?
             this.filterTypeControl.value.toString() :
             [],
-        })),
+        };
+        navigateService.navigateWithSpecifyParams(params);
+        return this.animeService.fetchAnime(params);
+      }),
       map(animeResponse => {
         this.length = animeResponse.count;
         return animeResponse.results;
