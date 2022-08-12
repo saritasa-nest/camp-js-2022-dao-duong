@@ -67,11 +67,17 @@ export class TableComponent implements OnInit, OnDestroy {
   /** Type filter form control. */
   public readonly filterTypeControl = new FormControl();
 
+  /** Current page subject. */
+  private readonly _currentPage$ = new BehaviorSubject<number>(INITIAL_PAGE);
+
   /** Current page observer. */
-  public readonly currentPage$ = new BehaviorSubject<number>(INITIAL_PAGE);
+  public readonly currentPage$ = this._currentPage$.asObservable();
+
+  /** Sort subject. */
+  private readonly _sort$ = new BehaviorSubject<Sort>(INITIAL_SORT);
 
   /** Sort observer. */
-  public readonly sortObservers$ = new BehaviorSubject<Sort>(INITIAL_SORT);
+  public readonly sort$ = this._sort$.asObservable();
 
   /** Loading state observer. */
   public isLoading$ = new BehaviorSubject<boolean>(false);
@@ -98,7 +104,7 @@ export class TableComponent implements OnInit, OnDestroy {
         this.filterTypeControl.valueChanges.pipe(
           startWith(this.filterTypeControl.value),
         ),
-        this.sortObservers$,
+        this._sort$,
       ),
       debounceTime(DEBOUNCE_TIME),
     );
@@ -133,9 +139,9 @@ export class TableComponent implements OnInit, OnDestroy {
     const resetPaginationSideEffect$ = merge(
       this.searchControl.valueChanges,
       this.filterTypeControl.valueChanges,
-    ).pipe(tap(() => this.currentPage$.next(INITIAL_PAGE)));
+    ).pipe(tap(() => this._currentPage$.next(INITIAL_PAGE)));
 
-    const goToTopOfPageSideEffect$ = this.currentPage$.pipe(
+    const goToTopOfPageSideEffect$ = this._currentPage$.pipe(
       tap(() => this.goToTopOfPage()),
     );
 
@@ -154,7 +160,7 @@ export class TableComponent implements OnInit, OnDestroy {
    * @param event Paginator event emission.
    */
   public handlePaginatorChange(event: PageEvent): void {
-    this.currentPage$.next(event.pageIndex);
+    this._currentPage$.next(event.pageIndex);
   }
 
   /**
@@ -162,7 +168,7 @@ export class TableComponent implements OnInit, OnDestroy {
    * @param event Sort event emission.
    */
   public handleSortChange(event: Sort): void {
-    this.sortObservers$.next({
+    this._sort$.next({
       active: event.direction === '' ? '' : event.active,
       direction: event.direction,
     });
@@ -183,7 +189,7 @@ export class TableComponent implements OnInit, OnDestroy {
    */
   private setDataFromParamsToComponent(params: Params): void {
     if (params['ordering']) {
-      this.sortObservers$.next({
+      this._sort$.next({
         active: params['ordering'].replace('-', ''),
         direction: params['ordering'].includes('-') ? 'desc' : 'asc',
       });
@@ -191,7 +197,7 @@ export class TableComponent implements OnInit, OnDestroy {
     if (params['type']) {
       this.filterTypeControl.setValue(params['type'].split(','));
     }
-    this.currentPage$.next(params['page'] || INITIAL_PAGE);
+    this._currentPage$.next(params['page'] || INITIAL_PAGE);
     this.searchControl.setValue(params['search'] || '');
   }
 
@@ -203,7 +209,7 @@ export class TableComponent implements OnInit, OnDestroy {
     });
   }
 
-  /** Destroy subscriptions. */
+  /** @inheritdoc */
   public ngOnDestroy(): void {
     this.subscriptionDestroy$.next(true);
     this.subscriptionDestroy$.complete();
