@@ -37,4 +37,28 @@ export class ApiService {
   ): Observable<T> {
     return this.http.post<T>(`${this.apiConfig.apiUrl}${path}`, JSON.stringify(body));
   }
+
+  /**
+   * Put service.
+   * @param path Url path.
+   * @param body Body data for the request.
+   */
+  public put<T>(
+    path: string,
+    body?: Object,
+  ): Observable<T> {
+    return this.http.put<T>(`${this.apiConfig.apiUrl}${path}`, JSON.stringify(body));
+  }
+
+  /**
+   * Delete service.
+   * @param path Url path.
+   * @param id Body data for the request.
+   */
+  public delete<T>(
+    path: string,
+    id: number,
+  ): Observable<T> {
+    return this.http.delete<T>(`${this.apiConfig.apiUrl}${path}${id}/`);
+  }
 }

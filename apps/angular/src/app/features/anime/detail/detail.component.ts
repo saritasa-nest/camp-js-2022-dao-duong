@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
 
-import { switchMap, Observable, Subject, BehaviorSubject } from 'rxjs';
+import { switchMap, Observable, Subject, BehaviorSubject, tap, takeUntil } from 'rxjs';
 
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -11,7 +11,7 @@ import { Studio } from '@js-camp/core/models/anime/studio';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { AnimeService } from '../../../../core/services';
+import { AnimeService, NavigateService } from '../../../../core/services';
 
 /** Anime detail component. */
 @Component({
@@ -31,7 +31,9 @@ export class DetailComponent implements OnDestroy {
   protected readonly mediaImageUrl$ = new BehaviorSubject<SafeResourceUrl>('');
 
   /** Media trailer behavior subject. */
-  protected readonly mediaTrailerUrl$ = new BehaviorSubject<SafeResourceUrl>('');
+  protected readonly mediaTrailerUrl$ = new BehaviorSubject<SafeResourceUrl>(
+    '',
+  );
 
   /** Check whether user is trying to delete. */
   protected readonly isDelete$ = new BehaviorSubject<boolean>(false);
@@ -42,6 +44,7 @@ export class DetailComponent implements OnDestroy {
     private readonly sanitizer: DomSanitizer,
     private readonly router: Router,
     public readonly dialog: MatDialog,
+    private navigateService: NavigateService,
   ) {
     this.anime$ = this.route.params.pipe(
       switchMap(params => this.animeService.fetchAnimeById(params['id'])),
@@ -54,7 +57,9 @@ export class DetailComponent implements OnDestroy {
    */
   public onTrailerButtonClick(trailerId: string): void {
     const trailer = `https://www.youtube-nocookie.com/embed/${trailerId}`;
-    this.mediaTrailerUrl$.next(this.sanitizer.bypassSecurityTrustResourceUrl(trailer));
+    this.mediaTrailerUrl$.next(
+      this.sanitizer.bypassSecurityTrustResourceUrl(trailer),
+    );
   }
 
   /**
@@ -98,7 +103,11 @@ export class DetailComponent implements OnDestroy {
 
   /** Handle delete button click event.*/
   public onConfirmButtonClick(): void {
-     console.log('1');
+    this.anime$.pipe(
+      switchMap(anime => this.animeService.deleteAnime(anime.id)),
+      tap(() => this.router.navigate([''])),
+      takeUntil(this.subscriptionDestroy$),
+    ).subscribe();
   }
 
   /** @inheritdoc */

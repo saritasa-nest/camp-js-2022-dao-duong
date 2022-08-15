@@ -15,7 +15,6 @@ import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
 import { AnimeDetailDto } from '@js-camp/core/dtos/anime/animeDetail.dto';
 import { AnimeDetailMapper } from '@js-camp/core/mappers/anime/animeDetail.mapper';
 
-import { NavigateService } from './navigate.service';
 import { ApiService } from './api.service';
 
 /** Anime service. */
@@ -25,7 +24,6 @@ import { ApiService } from './api.service';
 export class AnimeService {
   public constructor(
     private readonly apiService: ApiService,
-    private readonly navigateService: NavigateService,
   ) {}
 
   /**
@@ -39,11 +37,10 @@ export class AnimeService {
         ...PaginationMapper.toDto(config),
       },
     });
-    const animeResponse$ = this.apiService.get<PaginationDto<AnimeDto>>(
+    return this.apiService.get<PaginationDto<AnimeDto>>(
       path,
       params,
-    );
-    return animeResponse$.pipe(
+    ).pipe(
       map(animes =>
         PaginationMapper.fromDto(animes, animeDto =>
           AnimeMapper.fromDto(animeDto))),
@@ -56,7 +53,15 @@ export class AnimeService {
    */
   public fetchAnimeById(animeId: number): Observable<AnimeDetail> {
     const path = `anime/anime/${animeId}/`;
-    const animeResponse$ = this.apiService.get<AnimeDetailDto>(path);
-    return animeResponse$.pipe(map(anime => AnimeDetailMapper.fromDto(anime)));
+    return this.apiService.get<AnimeDetailDto>(path).pipe(map(anime => AnimeDetailMapper.fromDto(anime)));
+  }
+
+  /**
+   * Delete anime from server.
+   * @param animeId Id of the anime.
+   */
+  public deleteAnime(animeId: number): Observable<void> {
+    const path = `anime/anime/`;
+    return this.apiService.delete(path, animeId).pipe(map(() => void 0));
   }
 }
