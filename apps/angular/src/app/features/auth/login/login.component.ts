@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, ChangeDetectorRef } from
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Login } from '@js-camp/core/models/auth/login';
 
-import { catchError, of, Subject, takeUntil } from 'rxjs';
+import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -41,12 +41,11 @@ export class LoginComponent implements OnDestroy {
     this.authService
       .login(this.loginForm.value as Login)
       .pipe(
+        tap(() => this.navigateService.navigateToHome()),
         catchError((error: unknown) => of(this.handleError(error))),
         takeUntil(this.subscriptionDestroyed$),
       )
-      .subscribe({
-        next: () => this.navigateService.navigateToHome(),
-      });
+      .subscribe();
   }
 
   /**
