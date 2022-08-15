@@ -17,11 +17,11 @@
 </mat-form-field>
 
 <div
-  *ngIf="animeList$ | async as animeList"
+  *ngIf="animeList$ | async as animeList; else Loading"
   class="anime-table__container"
 >
   <table
-    *ngIf="(isLoading$ | async) === false"
+    *ngIf="(isLoading$ | async) === false; else Loading"
     [dataSource]="animeList"
     mat-table
     matSort
@@ -90,4 +90,6 @@
   >
   </mat-paginator>
 </div>
-<camp-spinner *ngIf="isLoading$ | async"></camp-spinner>
+<ng-template #Loading>
+  <camp-spinner></camp-spinner>
+</ng-template>

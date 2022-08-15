@@ -1,5 +1,5 @@
 <div class="anime-detail">
-  <mat-card *ngIf="anime$ | async as anime">
+  <mat-card *ngIf="(anime$ | async) as anime; else Loading">
     <mat-card-header>
       <mat-card-title class="anime-detail__title">{{
         anime.englishTitle || anime.japaneseTitle
@@ -97,4 +97,6 @@
     class="modal__content"
   />
 </camp-modal>
-<camp-spinner *ngIf="anime$ | async"></camp-spinner>
+<ng-template #Loading>
+  <camp-spinner></camp-spinner>
+</ng-template>

@@ -6,9 +6,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ModalComponent } from './components/modal/modal.component';
-import { SpinnerComponent } from './components/spinner/spinner.component';
 
 /** Shared module. */
 @NgModule({
@@ -18,6 +18,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
     RouterModule,
     MatProgressSpinnerModule,
   ],
