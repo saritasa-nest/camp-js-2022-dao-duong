@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { SharedModule } from '../../../../src/shared/shared.module';
+
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeComponent } from './anime.component';
 import { TableComponent } from './table/table.component';
@@ -14,6 +16,7 @@ import { TableComponent } from './table/table.component';
   imports: [
     CommonModule,
     AnimeRoutingModule,
+    SharedModule,
     MatTableModule,
     MatProgressSpinnerModule,
   ],
