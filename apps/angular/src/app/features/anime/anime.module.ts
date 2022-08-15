@@ -18,6 +18,8 @@ import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeComponent } from './anime.component';
 import { TableComponent } from './table/table.component';
 import { DetailComponent } from './detail/detail.component';
+import { CreateComponent } from './manage/create/create.component';
+import { EditComponent } from './manage/edit/edit.component';
 
 /** Anime module. */
 @NgModule({
@@ -25,6 +27,8 @@ import { DetailComponent } from './detail/detail.component';
     AnimeComponent,
     TableComponent,
     DetailComponent,
+    CreateComponent,
+    EditComponent,
   ],
   imports: [
     CommonModule,
