@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
 
+import { SharedModule } from '../../../../src/shared/shared.module';
+
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeComponent } from './anime.component';
 import { TableComponent } from './table/table.component';
@@ -22,6 +24,7 @@ import { TableComponent } from './table/table.component';
   imports: [
     CommonModule,
     AnimeRoutingModule,
+    SharedModule,
     MatTableModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
