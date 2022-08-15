@@ -39,15 +39,13 @@ export class AnimeService {
         ...PaginationMapper.toDto(config),
       },
     });
-    const animeResponse$ = this.apiService.get<PaginationDto<AnimeDto>>(
-      path,
-      params,
-    );
-    return animeResponse$.pipe(
-      map(animes =>
-        PaginationMapper.fromDto(animes, animeDto =>
-          AnimeMapper.fromDto(animeDto))),
-    );
+    return this.apiService
+      .get<PaginationDto<AnimeDto>>(path, params)
+      .pipe(
+        map(animes =>
+          PaginationMapper.fromDto(animes, animeDto =>
+            AnimeMapper.fromDto(animeDto))),
+      );
   }
 
   /**

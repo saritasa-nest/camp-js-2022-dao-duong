@@ -77,11 +77,15 @@
       <td mat-cell *matCellDef="let anime">{{ anime.status }}</td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let anime; columns: displayedColumns" (click)="openDetailPage(anime)"></tr>
+    <tr
+      mat-row
+      *matRowDef="let anime; columns: displayedColumns"
+      (click)="openDetailPage(anime)"
+    ></tr>
   </table>
   <mat-paginator
     showFirstLastButtons
-    [length]="length"
+    [length]="length$ | async"
     [pageSize]="pageSize"
     [pageIndex]="(currentPage$ | async)!"
     (page)="onPaginatorChange($event)"

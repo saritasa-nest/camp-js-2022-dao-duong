@@ -25,6 +25,7 @@ import {
   takeUntil,
   tap,
   take,
+  shareReplay,
 } from 'rxjs';
 
 import { AnimeService, NavigateService } from '../../../../core/services';
@@ -60,8 +61,11 @@ export class TableComponent implements OnInit, OnDestroy {
   /** Initial page size value. */
   public readonly pageSize = INITIAL_LIMIT;
 
-  /** Anime length. */
-  public length = INITIAL_LENGTH;
+  /** Anime length subject. */
+  private readonly _length$ = new BehaviorSubject(INITIAL_LENGTH);
+
+  /** Anime length observer. */
+  public readonly length$ = this._length$.asObservable();
 
   /** Anime type value. */
   public readonly animeTypeList: readonly AnimeType[] = [
@@ -136,15 +140,15 @@ export class TableComponent implements OnInit, OnDestroy {
         return params;
       }),
     );
-    this.animeList$ = this.params$.pipe(
+    const animePage$ = this.params$.pipe(
       tap(() => this._isLoading$.next(true)),
       switchMap(params => this.animeService.fetchAnime(params)),
-      map(animeResponse => {
-        this.length = animeResponse.count;
-        return animeResponse.results;
-      }),
       tap(() => this._isLoading$.next(false)),
+      shareReplay({ refCount: true, bufferSize: 1 }),
     );
+
+    this.animeList$ = animePage$.pipe(map(({ results }) => results));
+    this.length$ = animePage$.pipe(map(({ count }) => count));
   }
 
   /** @inheritdoc */
