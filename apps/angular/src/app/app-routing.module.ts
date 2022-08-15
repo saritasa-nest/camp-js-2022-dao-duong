@@ -2,6 +2,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { PageNotFoundComponent } from '../shared/components/page-not-found/page-not-found.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -13,6 +15,11 @@ const routes: Routes = [
     title: 'Anime',
     loadChildren: () =>
       import('./features/anime/anime.module').then(m => m.AnimeModule),
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    component: PageNotFoundComponent,
   },
 ];
 
