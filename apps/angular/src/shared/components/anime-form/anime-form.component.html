@@ -1,1 +1,4 @@
-<p>anime form works with {{type}}!</p>
+<p *ngIf="animeData$ | async as anime; else Loading">{{ anime | json }}</p>
+<ng-template #Loading>
+  <camp-spinner></camp-spinner>
+</ng-template>

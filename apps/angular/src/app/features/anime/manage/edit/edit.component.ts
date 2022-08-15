@@ -1,13 +1,28 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
 
+import { Observable, switchMap } from 'rxjs';
+
+import { AnimeService } from '../../../../../core/services';
+
+/** Edit component. */
 @Component({
   selector: 'camp-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditComponent implements OnInit {
-  constructor() {}
+export class EditComponent {
+  /** Anime observer. */
+  public readonly anime$: Observable<AnimeDetail>;
 
-  ngOnInit(): void {}
+  public constructor(
+    route: ActivatedRoute,
+    private readonly animeService: AnimeService,
+  ) {
+    this.anime$ = route.params.pipe(
+      switchMap(params => this.animeService.fetchAnimeById(params['id'])),
+    );
+  }
 }

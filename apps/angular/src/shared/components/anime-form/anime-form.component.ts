@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
+import { Observable } from 'rxjs';
 
 /** Login component. */
 @Component({
@@ -11,4 +13,8 @@ export class AnimeFormComponent {
   /** Anime form type. */
   @Input()
   public type = '';
+
+  /** Anime data. */
+  @Input()
+  public animeData$: Observable<AnimeDetail> = new Observable();
 }
