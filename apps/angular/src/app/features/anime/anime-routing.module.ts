@@ -17,7 +17,7 @@ const routes: Routes = [
         component: TableComponent,
       },
       {
-        path: ':id',
+        path: 'detail/:id',
         component: DetailComponent,
         title: 'Anime Detail',
         canActivate: [AuthGuard],
