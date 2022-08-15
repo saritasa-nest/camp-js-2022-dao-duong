@@ -33,6 +33,7 @@ const INITIAL_LENGTH = 0;
 const INITIAL_PAGE = 0;
 const INITIAL_LIMIT = 25;
 const INITIAL_SEARCH = '';
+const INITIAL_LOADING = false;
 const INITIAL_SORT: Sort = {
   active: '',
   direction: '',
@@ -90,6 +91,12 @@ export class TableComponent implements OnInit, OnDestroy {
   /** Sort observer. */
   public readonly sort$ = this._sort$.asObservable();
 
+  /** Loading subject. */
+  private readonly _isLoading$ = new BehaviorSubject<boolean>(INITIAL_LOADING);
+
+  /** Loading observer. */
+  public readonly isLoading$ = this._isLoading$.asObservable();
+
   /** Anime table column. */
   public displayedColumns = [
     'image',
@@ -130,11 +137,13 @@ export class TableComponent implements OnInit, OnDestroy {
       }),
     );
     this.animeList$ = this.params$.pipe(
+      tap(() => this._isLoading$.next(true)),
       switchMap(params => this.animeService.fetchAnime(params)),
       map(animeResponse => {
         this.length = animeResponse.count;
         return animeResponse.results;
       }),
+      tap(() => this._isLoading$.next(false)),
     );
   }
 
