@@ -45,3 +45,31 @@
 .anime-trailer {
   width: 60%;
 }
+
+.anime-manage {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.anime-manage__button {
+  margin: 10px;
+}
+
+.delete-modal {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  position: absolute;
+  top: 50%;
+  z-index: 1000;
+}
+
+.delete-modal__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-modal__button {
+  margin: 0 10px;
+}

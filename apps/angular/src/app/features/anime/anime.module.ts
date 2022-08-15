@@ -11,6 +11,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { SharedModule } from '../../../../src/shared/shared.module';
 
@@ -46,6 +47,7 @@ import { EditComponent } from './manage/edit/edit.component';
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
+    MatDialogModule,
   ],
 })
 export class AnimeModule {}

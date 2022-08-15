@@ -1,5 +1,5 @@
 <div class="anime-detail">
-  <mat-card *ngIf="(anime$ | async) as anime; else Loading">
+  <mat-card *ngIf="anime$ | async as anime; else Loading">
     <mat-card-header>
       <mat-card-title class="anime-detail__title">{{
         anime.englishTitle || anime.japaneseTitle
@@ -57,9 +57,10 @@
             aria-label="List of genre"
             class="anime-detail__genres"
           >
-            <mat-chip *ngFor="let genre of anime.genreList; trackBy: trackById">{{
-              genre.name
-            }}</mat-chip>
+            <mat-chip
+              *ngFor="let genre of anime.genreList; trackBy: trackById"
+              >{{ genre.name }}</mat-chip
+            >
           </mat-chip-list>
         </div>
         <div class="anime-detail__field">
@@ -68,17 +69,38 @@
             aria-label="List of studio"
             class="anime-detail__studios"
           >
-            <mat-chip *ngFor="let studio of anime.studioList; trackBy: trackById"
+            <mat-chip
+              *ngFor="let studio of anime.studioList; trackBy: trackById"
               >{{ studio.name }}
             </mat-chip>
           </mat-chip-list>
         </div>
       </mat-card-content>
     </div>
+    <div class="anime-manage">
+      <button
+        type="button"
+        class="anime-manage__button"
+        mat-raised-button
+        color="primary"
+        (click)="onEditButtonClick(anime.id)"
+      >
+        Edit <mat-icon fontIcon="edit"></mat-icon>
+      </button>
+      <button
+        type="button"
+        class="anime-manage__button"
+        mat-raised-button
+        color="warn"
+        (click)="onDeleteButtonClick()"
+      >
+        Delete <mat-icon fontIcon="delete"></mat-icon>
+      </button>
+    </div>
   </mat-card>
 </div>
 <camp-modal
-  *ngIf="(mediaTrailerUrl$ | async) || (mediaImageUrl$ | async)"
+  *ngIf="(mediaTrailerUrl$ | async) || (mediaImageUrl$ | async) || (isDelete$ | async)"
   (closeModal)="closeModal()"
 >
   <iframe
@@ -96,7 +118,16 @@
     alt="Anime Image"
     class="modal__content"
   />
+  <div *ngIf="(isDelete$ | async)" class="delete-modal">
+    <h1>Delete anime</h1>
+    <p>Would you like to delete this anime?</p>
+    <div class="delete-modal__buttons">
+      <button type="button" mat-raised-button color="primary" class="delete-modal__button" (click)="closeModal()">No</button>
+      <button type="button" mat-raised-button color="warn" class="delete-modal__button" (click)="onConfirmButtonClick()">Yes</button>
+    </div>
+  </div>
 </camp-modal>
 <ng-template #Loading>
   <camp-spinner></camp-spinner>
 </ng-template>
+

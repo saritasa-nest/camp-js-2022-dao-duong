@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
 
 import { switchMap, Observable, Subject, BehaviorSubject } from 'rxjs';
@@ -8,6 +8,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { Genre } from '@js-camp/core/models/anime/genre';
 import { Studio } from '@js-camp/core/models/anime/studio';
+
+import { MatDialog } from '@angular/material/dialog';
 
 import { AnimeService } from '../../../../core/services';
 
@@ -26,21 +28,20 @@ export class DetailComponent implements OnDestroy {
   public readonly anime$: Observable<AnimeDetail>;
 
   /** Media image behavior subject. */
-  private readonly _mediaImageUrl$ = new BehaviorSubject<SafeResourceUrl>('');
-
-  /** Media image observer. */
-  public readonly mediaImageUrl$ = this._mediaImageUrl$.asObservable();
+  protected readonly mediaImageUrl$ = new BehaviorSubject<SafeResourceUrl>('');
 
   /** Media trailer behavior subject. */
-  private readonly _mediaTrailerUrl$ = new BehaviorSubject<SafeResourceUrl>('');
+  protected readonly mediaTrailerUrl$ = new BehaviorSubject<SafeResourceUrl>('');
 
-  /** Media trailer observer. */
-  public readonly mediaTrailerUrl$ = this._mediaTrailerUrl$.asObservable();
+  /** Check whether user is trying to delete. */
+  protected readonly isDelete$ = new BehaviorSubject<boolean>(false);
 
   public constructor(
     private readonly route: ActivatedRoute,
     private readonly animeService: AnimeService,
     private readonly sanitizer: DomSanitizer,
+    private readonly router: Router,
+    public readonly dialog: MatDialog,
   ) {
     this.anime$ = this.route.params.pipe(
       switchMap(params => this.animeService.fetchAnimeById(params['id'])),
@@ -53,7 +54,7 @@ export class DetailComponent implements OnDestroy {
    */
   public onTrailerButtonClick(trailerId: string): void {
     const trailer = `https://www.youtube-nocookie.com/embed/${trailerId}`;
-    this._mediaTrailerUrl$.next(this.sanitizer.bypassSecurityTrustResourceUrl(trailer));
+    this.mediaTrailerUrl$.next(this.sanitizer.bypassSecurityTrustResourceUrl(trailer));
   }
 
   /**
@@ -61,15 +62,16 @@ export class DetailComponent implements OnDestroy {
    * @param imageUrl The url of the image.
    */
   public onImageClick(imageUrl: string): void {
-    this._mediaImageUrl$.next(
+    this.mediaImageUrl$.next(
       this.sanitizer.bypassSecurityTrustResourceUrl(imageUrl),
     );
   }
 
   /** Close modal. */
   public closeModal(): void {
-    this._mediaTrailerUrl$.next('');
-    this._mediaImageUrl$.next('');
+    this.mediaTrailerUrl$.next('');
+    this.mediaImageUrl$.next('');
+    this.isDelete$.next(false);
   }
 
   /**
@@ -79,6 +81,24 @@ export class DetailComponent implements OnDestroy {
    */
   public trackById(_index: number, listItem: Studio | Genre): number {
     return listItem.id;
+  }
+
+  /**
+   * Handle edit button click event.
+   * @param animeId Id of the anime.
+   */
+  public onEditButtonClick(animeId: number): void {
+    this.router.navigate(['anime/edit/', animeId]);
+  }
+
+  /** Handle delete button click event.*/
+  public onDeleteButtonClick(): void {
+    this.isDelete$.next(true);
+  }
+
+  /** Handle delete button click event.*/
+  public onConfirmButtonClick(): void {
+     console.log('1');
   }
 
   /** @inheritdoc */
