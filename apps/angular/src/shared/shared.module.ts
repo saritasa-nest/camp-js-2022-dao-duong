@@ -9,10 +9,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 /** Shared module. */
 @NgModule({
-  declarations: [NavbarComponent, ModalComponent, SpinnerComponent],
+  declarations: [NavbarComponent, ModalComponent, SpinnerComponent, PageNotFoundComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -22,6 +23,6 @@ import { ModalComponent } from './components/modal/modal.component';
     RouterModule,
     MatProgressSpinnerModule,
   ],
-  exports: [NavbarComponent, ModalComponent, SpinnerComponent],
+  exports: [NavbarComponent, ModalComponent, SpinnerComponent, PageNotFoundComponent],
 })
 export class SharedModule {}
