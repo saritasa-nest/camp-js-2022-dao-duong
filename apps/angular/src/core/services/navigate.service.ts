@@ -38,6 +38,6 @@ export class NavigateService {
    * @param animeId Id of the anime.
    */
   public navigateToDetailPage(animeId: number): void {
-    this.router.navigate(['/anime', animeId]);
+    this.router.navigate(['/anime/detail/', animeId]);
   }
 }

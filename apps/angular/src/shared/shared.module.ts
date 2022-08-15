@@ -10,10 +10,11 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { AnimeFormComponent } from './components/anime-form/anime-form.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 /** Shared module. */
 @NgModule({
-  declarations: [NavbarComponent, ModalComponent, SpinnerComponent, AnimeFormComponent],
+  declarations: [NavbarComponent, ModalComponent, SpinnerComponent, AnimeFormComponent, PageNotFoundComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -23,6 +24,6 @@ import { AnimeFormComponent } from './components/anime-form/anime-form.component
     RouterModule,
     MatProgressSpinnerModule,
   ],
-  exports: [NavbarComponent, ModalComponent, SpinnerComponent, AnimeFormComponent],
+  exports: [NavbarComponent, ModalComponent, SpinnerComponent, AnimeFormComponent, PageNotFoundComponent],
 })
 export class SharedModule {}
