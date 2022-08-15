@@ -80,7 +80,7 @@
   </table>
   <mat-paginator
     showFirstLastButtons
-    [length]="length"
+    [length]="length$ | async"
     [pageSize]="pageSize"
     [pageIndex]="(currentPage$ | async)!"
     (page)="onPaginatorChange($event)"
