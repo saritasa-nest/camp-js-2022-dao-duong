@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -23,6 +24,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     MatProgressSpinnerModule,
     RouterModule,
     MatProgressSpinnerModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [NavbarComponent, ModalComponent, SpinnerComponent, AnimeFormComponent, PageNotFoundComponent],
 })

@@ -1,4 +1,7 @@
-<p *ngIf="animeData$ | async as anime; else Loading">{{ anime | json }}</p>
+<form [formGroup]="animeForm">
+  <input type="text" formControlName="image">
+  {{animeForm.value | json}}
+</form>
 <ng-template #Loading>
   <camp-spinner></camp-spinner>
 </ng-template>

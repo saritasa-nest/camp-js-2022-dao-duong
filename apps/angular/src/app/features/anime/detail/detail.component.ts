@@ -11,7 +11,7 @@ import { Studio } from '@js-camp/core/models/anime/studio';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { AnimeService, NavigateService } from '../../../../core/services';
+import { AnimeService } from '../../../../core/services';
 
 /** Anime detail component. */
 @Component({
@@ -44,7 +44,6 @@ export class DetailComponent implements OnDestroy {
     private readonly sanitizer: DomSanitizer,
     private readonly router: Router,
     public readonly dialog: MatDialog,
-    private navigateService: NavigateService,
   ) {
     this.anime$ = this.route.params.pipe(
       switchMap(params => this.animeService.fetchAnimeById(params['id'])),
