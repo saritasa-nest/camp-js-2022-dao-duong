@@ -1,16 +1,19 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
   OnInit,
+  Inject,
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { Sort } from '@angular/material/sort';
+import { Sort, SortDirection } from '@angular/material/sort';
 import { ActivatedRoute, Params } from '@angular/router';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { Anime } from '@js-camp/core/models/anime/anime';
 import { AnimeType } from '@js-camp/core/utils/types/animeType';
+
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import {
   BehaviorSubject,
@@ -20,36 +23,37 @@ import {
   merge,
   Observable,
   startWith,
-  Subject,
   switchMap,
-  takeUntil,
   tap,
   take,
   shareReplay,
 } from 'rxjs';
 
+import { SortMapper } from '../../../..//core/mapper/sort.mapper';
+
 import { AnimeService, NavigateService } from '../../../../core/services';
 
-const INITIAL_LENGTH = 0;
-const INITIAL_PAGE = 0;
-const INITIAL_LIMIT = 25;
-const INITIAL_SEARCH = '';
-const INITIAL_SORT: Sort = {
-  active: '',
-  direction: '',
+const PARAMS_CHANGE_DEBOUNCE_TIME = 700;
+const defaultParams = {
+  length: 0,
+  page: 0,
+  limit: 25,
+  search: '',
+  sort: {
+    active: '',
+    direction: '' as SortDirection,
+  },
 };
-const DEBOUNCE_TIME = 700;
 
 /** Anime table component. */
+@UntilDestroy()
 @Component({
   selector: 'camp-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent implements OnInit, OnDestroy {
-  /** Subscription manager. */
-  private readonly subscriptionDestroy$: Subject<boolean> = new Subject();
+export class TableComponent implements OnInit {
 
   /** Anime list observer. */
   public readonly animeList$: Observable<readonly Anime[]>;
@@ -58,13 +62,10 @@ export class TableComponent implements OnInit, OnDestroy {
   public readonly params$: Observable<PaginationConfig>;
 
   /** Initial page size value. */
-  public readonly pageSize = INITIAL_LIMIT;
+  public readonly pageSize = defaultParams.limit;
 
-  /** Anime length subject. */
-  private readonly _length$ = new BehaviorSubject(INITIAL_LENGTH);
-
-  /** Anime length observer. */
-  public readonly length$ = this._length$.asObservable();
+  /** Total length of anime list. */
+  public readonly length$: Observable<number>;
 
   /** Anime type value. */
   public readonly animeTypeList: readonly AnimeType[] = [
@@ -77,22 +78,16 @@ export class TableComponent implements OnInit, OnDestroy {
   ];
 
   /** Anime search from control. */
-  public readonly searchControl = new FormControl(INITIAL_SEARCH);
+  public readonly searchControl = new FormControl(defaultParams.search);
 
   /** Type filter form control. */
   public readonly filterTypeControl = new FormControl();
 
   /** Current page subject. */
-  private readonly _currentPage$ = new BehaviorSubject<number>(INITIAL_PAGE);
-
-  /** Current page observer. */
-  public readonly currentPage$ = this._currentPage$.asObservable();
+  protected readonly currentPage$ = new BehaviorSubject<number>(defaultParams.page);
 
   /** Sort subject. */
-  private readonly _sort$ = new BehaviorSubject<Sort>(INITIAL_SORT);
-
-  /** Sort observer. */
-  public readonly sort$ = this._sort$.asObservable();
+  protected readonly sort$ = new BehaviorSubject<Sort>(defaultParams.sort);
 
   /** Anime table column. */
   public displayedColumns = [
@@ -104,11 +99,15 @@ export class TableComponent implements OnInit, OnDestroy {
     'status',
   ] as const;
 
+  private window: Window | null;
+
   public constructor(
     private readonly animeService: AnimeService,
     private readonly route: ActivatedRoute,
     private readonly navigateService: NavigateService,
+    @Inject(DOCUMENT) private document: Document,
   ) {
+    this.window = this.document.defaultView;
     this.params$ = this.currentPage$.pipe(
       combineLatestWith(
         this.searchControl.valueChanges.pipe(
@@ -117,14 +116,14 @@ export class TableComponent implements OnInit, OnDestroy {
         this.filterTypeControl.valueChanges.pipe(
           startWith(this.filterTypeControl.value),
         ),
-        this._sort$,
+        this.sort$,
       ),
-      debounceTime(DEBOUNCE_TIME),
+      debounceTime(PARAMS_CHANGE_DEBOUNCE_TIME),
       map(([currentPage, _search, _filter, sort]) => {
         const params = {
-          limit: this.pageSize,
+          limit: defaultParams.limit,
           page: currentPage,
-          ordering: (sort.direction === 'desc' ? '-' : '') + sort.active,
+          ordering: SortMapper.toParamsString(sort),
           search: this.searchControl.value,
           type: this.filterTypeControl.value ?
             this.filterTypeControl.value.toString() :
@@ -144,9 +143,8 @@ export class TableComponent implements OnInit, OnDestroy {
 
   /** @inheritdoc */
   public ngOnInit(): void {
-    // Declare side effects
     const setDataFromParamsSideEffect$ = this.route.queryParams.pipe(
-      map(params => {
+      tap(params => {
         this.setDataFromParamsToComponent(params);
       }),
       take(1),
@@ -155,9 +153,9 @@ export class TableComponent implements OnInit, OnDestroy {
     const resetPaginationSideEffect$ = merge(
       this.searchControl.valueChanges,
       this.filterTypeControl.valueChanges,
-    ).pipe(tap(() => this._currentPage$.next(INITIAL_PAGE)));
+    ).pipe(tap(() => this.currentPage$.next(defaultParams.page)));
 
-    const goToTopOfPageSideEffect$ = this._currentPage$.pipe(
+    const goToTopOfPageSideEffect$ = this.currentPage$.pipe(
       tap(() => this.goToTopOfPage()),
     );
 
@@ -172,7 +170,7 @@ export class TableComponent implements OnInit, OnDestroy {
       setDataFromParamsSideEffect$,
       navigateSideEffect$,
     )
-      .pipe(takeUntil(this.subscriptionDestroy$))
+      .pipe(untilDestroyed(this))
       .subscribe();
   }
 
@@ -181,7 +179,7 @@ export class TableComponent implements OnInit, OnDestroy {
    * @param event Paginator event emission.
    */
   public onPaginatorChange(event: PageEvent): void {
-    this._currentPage$.next(event.pageIndex);
+    this.currentPage$.next(event.pageIndex);
   }
 
   /**
@@ -189,7 +187,7 @@ export class TableComponent implements OnInit, OnDestroy {
    * @param event Sort event emission.
    */
   public onSortChange(event: Sort): void {
-    this._sort$.next({
+    this.sort$.next({
       active: event.direction === '' ? '' : event.active,
       direction: event.direction,
     });
@@ -210,7 +208,7 @@ export class TableComponent implements OnInit, OnDestroy {
    */
   private setDataFromParamsToComponent(params: Params): void {
     if (params['ordering']) {
-      this._sort$.next({
+      this.sort$.next({
         active: params['ordering'].replace('-', ''),
         direction: params['ordering'].includes('-') ? 'desc' : 'asc',
       });
@@ -218,21 +216,17 @@ export class TableComponent implements OnInit, OnDestroy {
     if (params['type']) {
       this.filterTypeControl.setValue(params['type'].split(','));
     }
-    this._currentPage$.next(params['page'] || INITIAL_PAGE);
-    this.searchControl.setValue(params['search'] || '');
+    this.currentPage$.next(params['page'] || defaultParams.page);
+    this.searchControl.setValue(params['search'] || defaultParams.search);
   }
 
   /** Scroll to top of page. */
   private goToTopOfPage(): void {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  }
-
-  /** @inheritdoc */
-  public ngOnDestroy(): void {
-    this.subscriptionDestroy$.next(true);
-    this.subscriptionDestroy$.complete();
+    if (this.window) {
+      this.window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
   }
 }

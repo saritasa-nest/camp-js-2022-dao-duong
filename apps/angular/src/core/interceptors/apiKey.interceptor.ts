@@ -23,7 +23,13 @@ export class HttpApiKeyInterceptor implements HttpInterceptor {
     req: HttpRequest<T>,
     next: HttpHandler,
   ): Observable<HttpEvent<T>> {
-    req.headers.set('Api-Key', this.apiConfig.apiKey);
-    return next.handle(req);
+    const headersConfig = {
+      'Api-Key': this.apiConfig.apiKey,
+      'content-type': 'application/json',
+    };
+    const request = req.clone({
+      setHeaders: headersConfig,
+    });
+    return next.handle(request);
   }
 }
