@@ -1,8 +1,5 @@
 .anime-table {
   width: 100%;
-}
-
-.anime-table__container {
   position: relative;
 }
 
@@ -18,8 +15,8 @@
   height: 150px;
 }
 
-.search__form-field,
-.type__form-field {
+.search,
+.type {
   display: block;
   max-width: 40%;
   padding-left: 20px;
