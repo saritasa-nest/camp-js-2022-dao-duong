@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { Anime } from '@js-camp/core/models/anime/anime';
@@ -15,7 +15,7 @@ import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
 import { AnimeDetailDto } from '@js-camp/core/dtos/anime/animeDetail.dto';
 import { AnimeDetailMapper } from '@js-camp/core/mappers/anime/animeDetail.mapper';
 
-import { ApiService } from './api.service';
+import { ApiConfigService } from './api-config.service';
 
 /** Anime service. */
 @Injectable({
@@ -23,7 +23,8 @@ import { ApiService } from './api.service';
 })
 export class AnimeService {
   public constructor(
-    private readonly apiService: ApiService,
+    private readonly http: HttpClient,
+    private readonly apiConfig: ApiConfigService,
   ) {}
 
   /**
@@ -37,14 +38,15 @@ export class AnimeService {
         ...PaginationMapper.toDto(config),
       },
     });
-    return this.apiService.get<PaginationDto<AnimeDto>>(
-      path,
+    return this.http
+      .get<PaginationDto<AnimeDto>>(`${this.apiConfig.apiUrl}${path}`, {
       params,
-    ).pipe(
-      map(animes =>
-        PaginationMapper.fromDto(animes, animeDto =>
-          AnimeMapper.fromDto(animeDto))),
-    );
+    })
+      .pipe(
+        map(animes =>
+          PaginationMapper.fromDto(animes, animeDto =>
+            AnimeMapper.fromDto(animeDto))),
+      );
   }
 
   /**
@@ -53,7 +55,9 @@ export class AnimeService {
    */
   public fetchAnimeById(animeId: number): Observable<AnimeDetail> {
     const path = `anime/anime/${animeId}/`;
-    return this.apiService.get<AnimeDetailDto>(path).pipe(map(anime => AnimeDetailMapper.fromDto(anime)));
+    return this.http
+      .get<AnimeDetailDto>(`${this.apiConfig.apiUrl}${path}`)
+      .pipe(map(anime => AnimeDetailMapper.fromDto(anime)));
   }
 
   /**
@@ -61,7 +65,7 @@ export class AnimeService {
    * @param animeId Id of the anime.
    */
   public deleteAnime(animeId: number): Observable<void> {
-    const path = `anime/anime/`;
-    return this.apiService.delete(path, animeId).pipe(map(() => void 0));
+    const path = `anime/anime/${animeId}/`;
+    return this.http.delete(`${this.apiConfig.apiUrl}${path}`).pipe(map(() => void 0));
   }
 }

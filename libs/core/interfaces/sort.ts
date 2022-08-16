@@ -10,3 +10,13 @@ export enum SortDirection {
   Ascending = '',
   Descending = '-',
 }
+
+/** Sort interface. */
+export interface Sort {
+
+  /** Sort field value. */
+  field: SortField;
+
+  /** Sort direction value. */
+  direction: SortDirection;
+}
