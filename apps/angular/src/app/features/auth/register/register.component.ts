@@ -1,11 +1,20 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Register } from '@js-camp/core/models/auth/register';
 
 import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 
-import { AuthService, NavigateService, ErrorService } from '../../../../core/services/';
+import {
+  AuthService,
+  NavigateService,
+  ErrorService,
+} from '../../../../core/services/';
 
 /** Register component. */
 @Component({
@@ -39,7 +48,12 @@ export class RegisterComponent implements OnDestroy {
 
   /** Handle form submission. */
   public onFormSubmit(): void {
-    if (this.validateConfirmPassword(this.registerForm.controls['password'].value, this.registerForm.controls['confirmPassword'].value)) {
+    if (
+      this.validateConfirmPassword(
+        this.registerForm.controls['password'].value,
+        this.registerForm.controls['confirmPassword'].value,
+      )
+    ) {
       this.authService
         .register(this.registerForm.value as Register)
         .pipe(
@@ -49,7 +63,9 @@ export class RegisterComponent implements OnDestroy {
         )
         .subscribe();
     } else {
-      this.registerForm.controls['confirmPassword'].setErrors({ passwordMismatch: true });
+      this.registerForm.controls['confirmPassword'].setErrors({
+        passwordMismatch: true,
+      });
       this.changeDetectorRef.detectChanges();
     }
   }

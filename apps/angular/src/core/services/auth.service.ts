@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TokenDto } from '@js-camp/core/dtos/auth/token.dto';
 import { TokenMapper } from '@js-camp/core/mappers/auth/token.mapper';
@@ -5,11 +6,12 @@ import { Login } from '@js-camp/core/models/auth/login';
 import { Register } from '@js-camp/core/models/auth/register';
 import { map, Observable, switchMap } from 'rxjs';
 
-import { ApiService } from './api.service';
+import { ApiConfigService } from './api-config.service';
+
 import { JwtService } from './jwt.service';
 
 /** Authentication api endpoint. */
-export enum AuthEndpoint {
+enum AuthEndpoint {
   loginPath = 'auth/login/',
   registerPath = 'auth/register/',
 }
@@ -21,8 +23,9 @@ export enum AuthEndpoint {
 export class AuthService {
 
   public constructor(
-    private readonly apiService: ApiService,
+    private readonly http: HttpClient,
     private readonly jwtService: JwtService,
+    private readonly apiConfig: ApiConfigService,
   ) {}
 
   /**
@@ -30,8 +33,8 @@ export class AuthService {
    * @param credentials Login credentials.
    */
   public login(credentials: Login): Observable<void> {
-    return this.apiService
-      .post<TokenDto>(AuthEndpoint.loginPath, credentials)
+    return this.http
+      .post<TokenDto>(`${this.apiConfig.apiUrl}${AuthEndpoint.loginPath}`, credentials)
       .pipe(
         map(response => TokenMapper.fromDto(response)),
         switchMap(tokens => this.jwtService.saveToken(tokens)),
@@ -43,8 +46,8 @@ export class AuthService {
    * @param credentials Register credentials.
    */
   public register(credentials: Register): Observable<void> {
-    return this.apiService
-      .post<TokenDto>(AuthEndpoint.registerPath, credentials)
+    return this.http
+      .post<TokenDto>(`${this.apiConfig.apiUrl}${AuthEndpoint.registerPath}`, credentials)
       .pipe(
         map(response => TokenMapper.fromDto(response)),
         switchMap(tokens => this.jwtService.saveToken(tokens)),

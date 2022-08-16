@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Login } from '@js-camp/core/models/auth/login';
 
@@ -6,7 +11,11 @@ import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ErrorService, AuthService, NavigateService } from '../../../../core/services/';
+import {
+  ErrorService,
+  AuthService,
+  NavigateService,
+} from '../../../../core/services/';
 
 /** Login component. */
 @Component({
@@ -33,7 +42,6 @@ export class LoginComponent implements OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
-
   }
 
   /** Handle form submission. */

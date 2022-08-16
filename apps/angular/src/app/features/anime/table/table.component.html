@@ -1,4 +1,4 @@
-<mat-form-field appearance="outline" class="search__form-field" color="accent">
+<mat-form-field appearance="outline" class="search" color="accent">
   <mat-label>Search here</mat-label>
   <input
     matInput
@@ -7,7 +7,7 @@
     [formControl]="searchControl"
   />
 </mat-form-field>
-<mat-form-field appearance="fill" class="type__form-field" color="accent">
+<mat-form-field appearance="fill" class="type" color="accent">
   <mat-label>Type</mat-label>
   <mat-select [formControl]="filterTypeControl" multiple>
     <mat-option *ngFor="let type of animeTypeList" [value]="type">{{
@@ -17,72 +17,69 @@
 </mat-form-field>
 
 <div
-  *ngIf="animeList$ | async as animeList; else Loading"
-  class="anime-table__container"
+  *ngIf="(animeList$ | async) as animeList; else Loading"
+  class="anime-table"
 >
-  <table
-    *ngIf="(isLoading$ | async) === false; else Loading"
-    [dataSource]="animeList"
-    mat-table
-    matSort
-    (matSortChange)="onSortChange($event)"
-    [matSortActive]="(sort$ | async)!.active"
-    [matSortDirection]="(sort$ | async)!.direction"
-    [trackBy]="trackAnimeById"
-    class="mat-elevation-z8 anime-table"
-    aria-label="anime"
-    aria-describedby="anime-table"
-    fixedLayout
-  >
-    <!-- Image Column -->
-    <ng-container matColumnDef="image">
-      <th mat-header-cell *matHeaderCellDef>Image</th>
-      <td mat-cell *matCellDef="let anime">
-        <img
-          [src]="anime.image"
-          alt="{{ anime.englishTitle }} Image"
-          class="anime-image"
-        />
-      </td>
-    </ng-container>
-    <!-- English Title Column -->
-    <ng-container matColumnDef="titleEng">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="title_eng">
-        English Title
-      </th>
-      <td mat-cell *matCellDef="let anime">{{ anime.englishTitle }}</td>
-    </ng-container>
-    <!-- Japanese Title Column -->
-    <ng-container matColumnDef="titleJpn">
-      <th mat-header-cell *matHeaderCellDef>Japanese Title</th>
-      <td mat-cell *matCellDef="let anime">{{ anime.japaneseTitle }}</td>
-    </ng-container>
-    <!-- Aired Start Column -->
-    <ng-container matColumnDef="airedStart">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="aired__startswith">
-        Aired Start
-      </th>
-      <td mat-cell *matCellDef="let anime">
-        {{ anime.aired.start | date: "dd/MM/yyyy" }}
-      </td>
-    </ng-container>
-    <!-- Type Column -->
-    <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef>Type</th>
-      <td mat-cell *matCellDef="let anime">{{ anime.type }}</td>
-    </ng-container>
-    <!-- Status Column -->
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="status">Status</th>
-      <td mat-cell *matCellDef="let anime">{{ anime.status }}</td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
-      mat-row
-      *matRowDef="let anime; columns: displayedColumns"
-      (click)="openDetailPage(anime)"
-    ></tr>
-  </table>
+  <ng-container *ngIf="sort$ | async as sort; else Loading">
+    <table
+      [dataSource]="animeList"
+      mat-table
+      matSort
+      (matSortChange)="onSortChange($event)"
+      [matSortActive]="sort.active"
+      [matSortDirection]="sort.direction"
+      [trackBy]="trackAnimeById"
+      class="mat-elevation-z8 anime-table"
+      aria-label="anime"
+      aria-describedby="anime-table"
+      fixedLayout
+    >
+      <!-- Image Column -->
+      <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef>Image</th>
+        <td mat-cell *matCellDef="let anime">
+          <img
+            [src]="anime.image"
+            alt="{{ anime.englishTitle }} Image"
+            class="anime-image"
+          />
+        </td>
+      </ng-container>
+      <!-- English Title Column -->
+      <ng-container matColumnDef="titleEng">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          English Title
+        </th>
+        <td mat-cell *matCellDef="let anime">{{ anime.englishTitle }}</td>
+      </ng-container>
+      <!-- Japanese Title Column -->
+      <ng-container matColumnDef="titleJpn">
+        <th mat-header-cell *matHeaderCellDef>Japanese Title</th>
+        <td mat-cell *matCellDef="let anime">{{ anime.japaneseTitle }}</td>
+      </ng-container>
+      <!-- Aired Start Column -->
+      <ng-container matColumnDef="airedStart">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Aired Start
+        </th>
+        <td mat-cell *matCellDef="let anime">
+          {{ anime.aired.start | date: "dd/MM/yyyy" }}
+        </td>
+      </ng-container>
+      <!-- Type Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let anime">{{ anime.type }}</td>
+      </ng-container>
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let anime">{{ anime.status }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let anime; columns: displayedColumns" (click)="openDetailPage(anime)"></tr>
+    </table>
+  </ng-container>
   <mat-paginator
     showFirstLastButtons
     [length]="length$ | async"
@@ -90,7 +87,7 @@
     [pageIndex]="(currentPage$ | async)!"
     (page)="onPaginatorChange($event)"
     aria-label="Select pages"
-    class="table__paginator"
+    class="anime-table__paginator"
   >
   </mat-paginator>
 </div>
