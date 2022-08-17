@@ -10,12 +10,16 @@
     </mat-card-header>
     <div class="anime-detail__content">
       <div class="anime-detail__media">
-        <img
-          [src]="anime.image"
-          [alt]="(anime.englishTitle || anime.japaneseTitle) + ' image'"
-          class="anime-detail__image"
-          (click)="onImageClick(anime.image)"
-        />
+        <button
+        type="button" class="anime-detail__image_zoom-button"
+        (click)="onImageClick(anime.image)"
+        >
+          <img
+            [src]="anime.image"
+            [alt]="(anime.englishTitle || anime.japaneseTitle) + ' image'"
+            class="anime-detail__image"
+          />
+        </button>
         <button
           *ngIf="anime.youtubeTrailerId"
           type="button"
@@ -29,30 +33,30 @@
       </div>
       <mat-card-content>
         <div class="anime-detail__field">
-          <p class="anime-detail__field-title">Type:</p>
-          <span>{{ anime.type }}</span>
+          <h1 class="anime-detail__field-title">Type:</h1>
+          <p>{{ anime.type }}</p>
         </div>
         <div class="anime-detail__field">
-          <p class="anime-detail__field-title">Status:</p>
-          <span>{{ anime.status }}</span>
+          <h1 class="anime-detail__field-title">Status:</h1>
+          <p>{{ anime.status }}</p>
         </div>
         <div class="anime-detail__field">
-          <p class="anime-detail__field-title">Airing:</p>
-          <span>{{ anime.airing ? "Yes" : "No" }}</span>
+          <h1 class="anime-detail__field-title">Airing:</h1>
+          <p>{{ anime.airing ? "Yes" : "No" }}</p>
         </div>
         <div class="anime-detail__field">
-          <p class="anime-detail__field-title">Aired time:</p>
-          <span
+          <h1 class="anime-detail__field-title">Aired time:</h1>
+          <p
             >{{ (anime.aired.start | date: "dd/MM/yyyy") ?? "" }} -
-            {{ (anime.aired.end | date: "dd/MM/yyyy") ?? "" }}</span
+            {{ (anime.aired.end | date: "dd/MM/yyyy") ?? "" }}</p
           >
         </div>
         <div class="anime-detail__field">
-          <p class="anime-detail__field-title">Synopsis:</p>
+          <h1 class="anime-detail__field-title">Synopsis:</h1>
           <p>{{ anime.synopsis }}</p>
         </div>
         <div class="anime-detail__field">
-          <p class="anime-detail__field-title">Genres:</p>
+          <h1 class="anime-detail__field-title">Genres:</h1>
           <mat-chip-list
             aria-label="List of genre"
             class="anime-detail__genres"
@@ -64,7 +68,7 @@
           </mat-chip-list>
         </div>
         <div class="anime-detail__field">
-          <p class="anime-detail__field-title">Studios:</p>
+          <h1 class="anime-detail__field-title">Studios:</h1>
           <mat-chip-list
             aria-label="List of studio"
             class="anime-detail__studios"

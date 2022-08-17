@@ -20,6 +20,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  /* Set the view to 16/9 ratio. */
   padding-top: 56.25%;
 }
 

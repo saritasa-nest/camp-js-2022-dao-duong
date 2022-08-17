@@ -17,7 +17,6 @@
 
 .anime-detail__image {
   max-width: 300px;
-  cursor: zoom-in;
 }
 
 .anime-detail__trailer-button {
@@ -26,9 +25,9 @@
 
 .anime-detail__field-title {
   display: inline-block;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: bold;
-  padding-right: 10px;
+  padding: 10px;
 }
 
 .anime-detail__genres,
@@ -72,4 +71,10 @@
 
 .delete-modal__button {
   margin: 0 10px;
+}
+
+.anime-detail__image_zoom-button {
+  padding: 0;
+  border: none;
+  cursor: zoom-in;
 }
