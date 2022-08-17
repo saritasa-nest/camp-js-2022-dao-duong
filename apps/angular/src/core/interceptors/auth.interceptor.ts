@@ -16,18 +16,21 @@ export class AuthInterceptor implements HttpInterceptor {
 
   /**
    * Interceptor.
-   * @param req HttpRequest object.
-   * @param next HttpHandler function.
-   **/
+   * @param request Request object.
+   * @param next Handler function.
+   */
   public intercept<T>(
-    req: HttpRequest<T>,
+    request: HttpRequest<T>,
     next: HttpHandler,
   ): Observable<HttpEvent<T>> {
-    return this.jwtService
-      .getTokens()
-      .pipe(map(token => token === null ? req : req.clone({
-        setHeaders: { Authorization: `Bearer ${token.access}` },
-      })),
-      switchMap(newRequest => next.handle(newRequest)));
+    return this.jwtService.getTokens().pipe(
+      map(token =>
+        token === null ?
+          request :
+          request.clone({
+              setHeaders: { Authorization: `Bearer ${token.access}` },
+          })),
+      switchMap(newRequest => next.handle(newRequest)),
+    );
   }
 }

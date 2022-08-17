@@ -9,7 +9,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
 })
 export class ModalComponent {
   /** Close event emitter. */
-  @Output() public closeModal = new EventEmitter();
+  @Output()
+  public closeModal = new EventEmitter();
 
   /** Close modal action.  */
   public onModalClose(): void {
