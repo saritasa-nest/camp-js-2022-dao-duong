@@ -2,14 +2,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   Input,
   OnInit,
-  ViewChild,
 } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
-  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -29,18 +25,15 @@ import {
   map,
   Observable,
   tap,
-  startWith,
-  filter,
-  BehaviorSubject,
   shareReplay,
   combineLatestWith,
 } from 'rxjs';
 
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
+
+import { Studio } from '@js-camp/core/models/anime/studio';
 
 import { AnimeService } from '../../../core/services/';
-import { Studio } from '@js-camp/core/models/anime/studio';
 
 /** Login component. */
 @Component({
@@ -66,10 +59,10 @@ export class AnimeFormComponent implements OnInit {
 
   public selectedGenres$: Observable<readonly Genre[]>;
 
-    /** Genre observer. */
-    public readonly studios$: Observable<readonly Studio[]>;
+  /** Genre observer. */
+  public readonly studios$: Observable<readonly Studio[]>;
 
-    public selectedStudios$: Observable<readonly Studio[]>;
+  public selectedStudios$: Observable<readonly Studio[]>;
 
   // @ViewChild('genreInput')
   // public genreInput: ElementRef<HTMLInputElement>;
@@ -241,6 +234,7 @@ export class AnimeFormComponent implements OnInit {
       synopsis: ['', [Validators.required]],
       studioIdList: [[], [Validators.required]],
       genreIdList: [[], [Validators.required]],
+
       // genreIdList: this.formBuilder.array([]),
     });
   }
