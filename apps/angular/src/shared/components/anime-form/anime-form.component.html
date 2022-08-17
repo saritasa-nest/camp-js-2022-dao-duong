@@ -41,7 +41,11 @@
           formControlName="japaneseTitle"
         />
       </mat-form-field>
-      <mat-form-field appearance="fill" class="anime-form__field" color="accent">
+      <mat-form-field
+        appearance="fill"
+        class="anime-form__field"
+        color="accent"
+      >
         <mat-label>Type</mat-label>
         <mat-select formControlName="type">
           <mat-option *ngFor="let type of animeTypeList" [value]="type">{{
@@ -65,9 +69,7 @@
           }}</mat-option>
         </mat-select>
       </mat-form-field>
-        <mat-slide-toggle formControlName="airing">
-          Is Airing
-        </mat-slide-toggle>
+      <mat-slide-toggle formControlName="airing"> Is Airing </mat-slide-toggle>
       <mat-form-field class="anime-form__field">
         <mat-label>Aired Time</mat-label>
         <mat-date-range-input [rangePicker]="picker" formGroupName="aired">
@@ -107,23 +109,66 @@
           formControlName="synopsis"
         ></textarea>
       </mat-form-field>
-      <mat-form-field class="anime-form__field">
+
+      <mat-form-field class="anime-form__field" appearance="fill">
         <mat-label>Studio</mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="1"
-          formControlName="studioIdList"
-        />
+        <mat-chip-list #studioChipList aria-label="Studio selection">
+          <mat-chip
+            *ngFor="let studio of selectedStudios$ | async"
+            (removed)="onStudioRemove(studio.id)"
+          >
+            {{ studio.name }}
+            <button type="button" matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            placeholder="Add studio..."
+            #studioInput
+            [matAutocomplete]="studioAuto"
+            [matChipInputFor]="studioChipList"
+          />
+        </mat-chip-list>
+        <mat-autocomplete
+          #studioAuto="matAutocomplete"
+          (optionSelected)="onStudioSelected($event)"
+        >
+          <mat-option
+            *ngFor="let studio of studios$ | async"
+            [value]="studio.id"
+          >
+            {{ studio.name }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
-      <mat-form-field class="anime-form__field">
+
+      <mat-form-field class="anime-form__field" appearance="fill">
         <mat-label>Genres</mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="Naruto"
-          formControlName="genreIdList"
-        />
+        <mat-chip-list #genreChipList aria-label="Genre selection">
+          <mat-chip
+            *ngFor="let genre of selectedGenres$ | async"
+            (removed)="onGenreRemove(genre.id)"
+          >
+            {{ genre.name }}
+            <button type="button" matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            placeholder="Add genre..."
+            #genreInput
+            [matAutocomplete]="genreAuto"
+            [matChipInputFor]="genreChipList"
+          />
+        </mat-chip-list>
+        <mat-autocomplete
+          #genreAuto="matAutocomplete"
+          (optionSelected)="onGenreSelected($event)"
+        >
+          <mat-option *ngFor="let genre of genres$ | async" [value]="genre.id">
+            {{ genre.name }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
       <div class="submit">
         <button

@@ -12,6 +12,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -38,6 +40,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     MatNativeDateModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
   exports: [NavbarComponent, ModalComponent, SpinnerComponent, AnimeFormComponent, PageNotFoundComponent],
 })

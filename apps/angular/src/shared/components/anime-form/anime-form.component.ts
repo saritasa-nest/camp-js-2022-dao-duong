@@ -1,10 +1,46 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+/* eslint-disable jsdoc/require-jsdoc */
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Status } from '@js-camp/core/dtos/anime/anime.dto';
-import { Rating, Season, Source } from '@js-camp/core/dtos/anime/animeDetail.dto';
+import {
+  Rating,
+  Season,
+  Source,
+} from '@js-camp/core/dtos/anime/animeDetail.dto';
 import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
+import { Genre } from '@js-camp/core/models/anime/genre';
 import { AnimeType } from '@js-camp/core/utils/types/animeType';
-import { Observable, tap } from 'rxjs';
+
+import {
+  map,
+  Observable,
+  tap,
+  startWith,
+  filter,
+  BehaviorSubject,
+  shareReplay,
+  combineLatestWith,
+} from 'rxjs';
+
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+
+import { AnimeService } from '../../../core/services/';
+import { Studio } from '@js-camp/core/models/anime/studio';
 
 /** Login component. */
 @Component({
@@ -24,6 +60,19 @@ export class AnimeFormComponent implements OnInit {
 
   /** Anime form group. */
   public readonly animeForm: FormGroup;
+
+  /** Genre observer. */
+  public readonly genres$: Observable<readonly Genre[]>;
+
+  public selectedGenres$: Observable<readonly Genre[]>;
+
+    /** Genre observer. */
+    public readonly studios$: Observable<readonly Studio[]>;
+
+    public selectedStudios$: Observable<readonly Studio[]>;
+
+  // @ViewChild('genreInput')
+  // public genreInput: ElementRef<HTMLInputElement>;
 
   /** Anime type value. */
   public readonly animeTypeList: readonly AnimeType[] = [
@@ -85,20 +134,87 @@ export class AnimeFormComponent implements OnInit {
 
   public constructor(
     private readonly formBuilder: FormBuilder,
+    private readonly animeService: AnimeService,
   ) {
     this.animeForm = this.initAnimeForm();
+    this.genres$ = this.animeService.getGenre().pipe(
+      map(genres => genres.results),
+      shareReplay({ refCount: false, bufferSize: 1 }),
+    );
+    this.studios$ = this.animeService.getStudio().pipe(
+      map(studios => studios.results),
+      shareReplay({ refCount: false, bufferSize: 1 }),
+    );
+    this.selectedGenres$ = this.animeForm.controls[
+      'genreIdList'
+    ].valueChanges.pipe(
+      combineLatestWith(this.genres$),
+      map(([idList, genres]) => {
+        const tempSelectedGenres: Genre[] = [];
+        genres.map(genre => {
+          if (idList.includes(genre.id)) {
+            tempSelectedGenres.push(genre);
+          }
+        });
+        return tempSelectedGenres;
+      }),
+    );
+    this.selectedStudios$ = this.animeForm.controls['studioIdList'].valueChanges.pipe(
+      combineLatestWith(this.studios$),
+      map(([idList, studios]) => {
+        const tempSelectedStudios: Studio[] = [];
+        studios.map(studio => {
+          if (idList.includes(studio.id)) {
+            tempSelectedStudios.push(studio);
+          }
+        });
+        return tempSelectedStudios;
+      }),
+    );
+  }
+
+  public onGenreSelected(event: MatAutocompleteSelectedEvent): void {
+
+    if (this.genreIdListFormControl.value.includes(event.option.value)) {
+      return;
+    }
+    const newGenreArray = [...this.genreIdListFormControl.value, event.option.value];
+    this.genreIdListFormControl.patchValue(newGenreArray);
+  }
+
+  public onGenreRemove(genreId: Genre['id']): void {
+    const newGenreArray = this.genreIdListFormControl.value.filter((id: Genre['id']) => id !== genreId);
+    this.genreIdListFormControl.patchValue(newGenreArray);
+  }
+
+  public onStudioSelected(event: MatAutocompleteSelectedEvent): void {
+
+    if (this.studioIdListFormControl.value.includes(event.option.value)) {
+      return;
+    }
+    const newStudioArray = [...this.studioIdListFormControl.value, event.option.value];
+    this.studioIdListFormControl.patchValue(newStudioArray);
+  }
+
+  public onStudioRemove(studioId: Studio['id']): void {
+    const newStudioArray = this.studioIdListFormControl.value.filter((id: Studio['id']) => id !== studioId);
+    this.studioIdListFormControl.patchValue(newStudioArray);
   }
 
   /** @inheritdoc */
   public ngOnInit(): void {
-    this.animeData$.pipe(
-      tap(data => {
-        if (data) {
-          console.log(data);
-          this.animeForm.patchValue(data);
-        }
-      }),
-    ).subscribe();
+    this.animeData$
+      .pipe(
+        tap(data => {
+          if (data) {
+            // console.log(data);
+            this.animeForm.patchValue(data);
+            console.log(data);
+            console.log(this.animeForm.controls);
+          }
+        }),
+      )
+      .subscribe();
   }
 
   /** Handle form submission. */
@@ -125,6 +241,15 @@ export class AnimeFormComponent implements OnInit {
       synopsis: ['', [Validators.required]],
       studioIdList: [[], [Validators.required]],
       genreIdList: [[], [Validators.required]],
+      // genreIdList: this.formBuilder.array([]),
     });
+  }
+
+  private get genreIdListFormControl(): FormControl {
+    return this.animeForm.get('genreIdList') as FormControl;
+  }
+
+  private get studioIdListFormControl(): FormControl {
+    return this.animeForm.get('studioIdList') as FormControl;
   }
 }

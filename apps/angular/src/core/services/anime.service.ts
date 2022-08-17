@@ -15,6 +15,13 @@ import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
 import { AnimeDetailDto } from '@js-camp/core/dtos/anime/animeDetail.dto';
 import { AnimeDetailMapper } from '@js-camp/core/mappers/anime/animeDetail.mapper';
 
+import { Genre } from '@js-camp/core/models/anime/genre';
+import { GenreDto } from '@js-camp/core/dtos/anime/genre.dto';
+import { GenreMapper } from '@js-camp/core/mappers/anime/genre.mapper';
+import { Studio } from '@js-camp/core/models/anime/studio';
+import { StudioDto } from '@js-camp/core/dtos/anime/studio.dto';
+import { StudioMapper } from '@js-camp/core/mappers/anime/studio.mapper';
+
 import { ApiConfigService } from './api-config.service';
 
 /** Anime service. */
@@ -65,5 +72,21 @@ export class AnimeService {
   public deleteAnime(animeId: number): Observable<void> {
     const path = `anime/anime/${animeId}/`;
     return this.http.delete(`${this.apiConfig.apiUrl}${path}`).pipe(map(() => void 0));
+  }
+
+  /** Get genres from server.  */
+  public getGenre(): Observable<Pagination<Genre>> {
+    const path = `anime/genres/`;
+    return this.http.get<PaginationDto<GenreDto>>(`${this.apiConfig.apiUrl}${path}`).pipe(
+      map(genres => PaginationMapper.fromDto(genres, genresDto => GenreMapper.fromDto(genresDto))),
+    );
+  }
+
+  /** Get genres from server.  */
+  public getStudio(): Observable<Pagination<Studio>> {
+    const path = `anime/studios/`;
+    return this.http.get<PaginationDto<StudioDto>>(`${this.apiConfig.apiUrl}${path}`).pipe(
+      map(studios => PaginationMapper.fromDto(studios, studiosDto => StudioMapper.fromDto(studiosDto))),
+    );
   }
 }
