@@ -22,9 +22,14 @@ export namespace AnimeDetailMapper {
       status: dto.status,
       synopsis: dto.synopsis,
       airing: dto.airing,
+      studioIdList: dto.studios,
       studioList: dto.studios_data.map(studio => StudioMapper.fromDto(studio)),
+      genreIdList: dto.genres,
       genreList: dto.genres_data.map(genre => StudioMapper.fromDto(genre)),
       youtubeTrailerId: dto.trailer_youtube_id,
+      source: dto.source,
+      season: dto.season,
+      rating: dto.rating,
     });
   }
 }

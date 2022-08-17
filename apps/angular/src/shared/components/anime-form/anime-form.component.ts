@@ -1,74 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Status } from '@js-camp/core/dtos/anime/anime.dto';
-import { Source, Season, Rating } from '@js-camp/core/dtos/anime/animeDetail.dto';
+import { Rating, Season, Source } from '@js-camp/core/dtos/anime/animeDetail.dto';
 import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
-import { DateRange } from '@js-camp/core/models/dateRange';
 import { AnimeType } from '@js-camp/core/utils/types/animeType';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-
-/** Date range control interface for form. */
-interface DateRangeControls {
-
-  /** Start date. */
-  readonly start: FormControl<Date | null>;
-
-  /** End date. */
-  readonly end: FormControl<Date | null>;
-
-}
-
-/** Anime form interface. */
-interface AnimeForm {
-
-  /** Anime poster control. */
-  readonly image: FormControl<string | null>;
-
-  /** Trailer youtube id control. */
-  readonly youtubeTrailerId: FormControl<string | null>;
-
-  /** Title of English control. */
-  readonly englishTitle: FormControl<string>;
-
-  /** Title of Japanese control. */
-  readonly japaneseTitle: FormControl<string>;
-
-  /** Synopsis control. */
-  readonly synopsis: FormControl<string>;
-
-  // /** Type control. */
-  // readonly type: FormControl<AnimeType | null>;
-
-  // /** Status control. */
-  // readonly status: FormControl<Status | null>;
-
-  // /** Source control. */
-  // readonly source: FormControl<Source | null>;
-
-  // /** Season control. */
-  // readonly season: FormControl<Season | null>;
-
-  // /** Rating control. */
-  // readonly rating: FormControl<Rating | null>;
-
-  // /** Is airing. */
-  // readonly isAiring: FormControl<boolean>;
-
-  // /** Aired date range. */
-  // readonly aired: FormGroup<DateRangeControls>;
-
-  // /** Genres control. */
-  // readonly genres: FormControl<readonly number[]>;
-
-  // /** Genres search control. */
-  // readonly genresSearch: FormControl<string>;
-
-  // /** Studios control. */
-  // readonly studios: FormControl<readonly number[]>;
-
-  // /** Genres search control. */
-  // readonly studiosSearch: FormControl<string>;
-}
+import { Observable, tap } from 'rxjs';
 
 /** Login component. */
 @Component({
@@ -87,7 +23,65 @@ export class AnimeFormComponent implements OnInit {
   public animeData$: Observable<AnimeDetail> = new Observable();
 
   /** Anime form group. */
-  public readonly animeForm: FormGroup<AnimeForm>;
+  public readonly animeForm: FormGroup;
+
+  /** Anime type value. */
+  public readonly animeTypeList: readonly AnimeType[] = [
+    AnimeType.TV,
+    AnimeType.Movie,
+    AnimeType.Music,
+    AnimeType.ONA,
+    AnimeType.OVA,
+    AnimeType.Special,
+  ];
+
+  /** Anime type value. */
+  public readonly animeStatusList: readonly Status[] = [
+    Status.Airing,
+    Status.Finished,
+    Status.NotYetAired,
+  ];
+
+  /** Anime type value. */
+  public readonly animeSourceList: readonly Source[] = [
+    Source.Book,
+    Source.CardGame,
+    Source.FourKomaManga,
+    Source.Game,
+    Source.LightNovel,
+    Source.Manga,
+    Source.MixedMedia,
+    Source.Music,
+    Source.Novel,
+    Source.Original,
+    Source.Other,
+    Source.PictureBook,
+    Source.Radio,
+    Source.Unknown,
+    Source.VisualNovel,
+    Source.WebManga,
+    Source.WebNovel,
+  ];
+
+  /** Anime type value. */
+  public readonly animeSeasonList: readonly Season[] = [
+    Season.Spring,
+    Season.Summer,
+    Season.Fall,
+    Season.Winter,
+    Season.NonSeasonal,
+  ];
+
+  /** Anime type value. */
+  public readonly animeRatingList: readonly Rating[] = [
+    Rating.G,
+    Rating.PG,
+    Rating.PG13,
+    Rating.R17,
+    Rating.RPlus,
+    Rating.RX,
+    Rating.Unknown,
+  ];
 
   public constructor(
     private readonly formBuilder: FormBuilder,
@@ -100,25 +94,37 @@ export class AnimeFormComponent implements OnInit {
     this.animeData$.pipe(
       tap(data => {
         if (data) {
+          console.log(data);
           this.animeForm.patchValue(data);
         }
       }),
     ).subscribe();
   }
 
-  private initAnimeForm(): FormGroup<AnimeForm> {
+  /** Handle form submission. */
+  public onFormSubmit(): void {
+    console.log(this.animeForm.value);
+  }
+
+  private initAnimeForm(): FormGroup {
     return this.formBuilder.group({
       image: ['', [Validators.required]],
       youtubeTrailerId: [''],
-      englishTitle: this.formBuilder.nonNullable.control('', {
-        validators: [Validators.required],
+      englishTitle: ['', [Validators.required]],
+      japaneseTitle: ['', [Validators.required]],
+      type: [null, [Validators.required]],
+      status: [null, [Validators.required]],
+      source: [null, [Validators.required]],
+      airing: [false, [Validators.required]],
+      aired: this.formBuilder.group({
+        start: [null],
+        end: [null],
       }),
-      japaneseTitle: this.formBuilder.nonNullable.control('', {
-        validators: [Validators.required],
-      }),
-      synopsis: this.formBuilder.nonNullable.control('', {
-        validators: [Validators.required],
-      }),
+      rating: ['', [Validators.required]],
+      season: [null, [Validators.required]],
+      synopsis: ['', [Validators.required]],
+      studioIdList: [[], [Validators.required]],
+      genreIdList: [[], [Validators.required]],
     });
   }
 }

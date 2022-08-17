@@ -10,7 +10,6 @@ import { AnimeService } from '../../../../../core/services';
 @Component({
   selector: 'camp-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditComponent {

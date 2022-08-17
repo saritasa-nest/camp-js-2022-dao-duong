@@ -1,7 +1,153 @@
 <form [formGroup]="animeForm">
-  <input type="text" formControlName="image">
-  {{animeForm.value | json}}
+  {{ animeForm.value | json }}
 </form>
+<mat-card>
+  <mat-card-title>{{ type === "edit" ? "Edit" : "Add" }}</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="animeForm" (ngSubmit)="onFormSubmit()">
+      <mat-form-field class="anime-form__field">
+        <mat-label>Image</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Link"
+          formControlName="image"
+        />
+      </mat-form-field>
+      <mat-form-field class="anime-form__field">
+        <mat-label>Trailer ID</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="3ks8as"
+          formControlName="youtubeTrailerId"
+        />
+      </mat-form-field>
+      <mat-form-field class="anime-form__field">
+        <mat-label>English Title</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Naruto"
+          formControlName="englishTitle"
+        />
+      </mat-form-field>
+      <mat-form-field class="anime-form__field">
+        <mat-label>Japanese Title</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="劇場版 空の境界"
+          formControlName="japaneseTitle"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="anime-form__field" color="accent">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let type of animeTypeList" [value]="type">{{
+            type
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="anime-form__field" appearance="fill">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of animeStatusList" [value]="status">{{
+            status
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="anime-form__field" appearance="fill">
+        <mat-label>Source</mat-label>
+        <mat-select formControlName="source">
+          <mat-option *ngFor="let source of animeSourceList" [value]="source">{{
+            source
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+        <mat-slide-toggle formControlName="airing">
+          Is Airing
+        </mat-slide-toggle>
+      <mat-form-field class="anime-form__field">
+        <mat-label>Aired Time</mat-label>
+        <mat-date-range-input [rangePicker]="picker" formGroupName="aired">
+          <input
+            matStartDate
+            placeholder="Start date"
+            formControlName="start"
+          />
+          <input matEndDate placeholder="End date" formControlName="end" />
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+      <mat-form-field class="anime-form__field" appearance="fill">
+        <mat-label>Rating</mat-label>
+        <mat-select formControlName="rating">
+          <mat-option *ngFor="let rating of animeRatingList" [value]="rating">{{
+            rating
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="anime-form__field" appearance="fill">
+        <mat-label>Season</mat-label>
+        <mat-select formControlName="season">
+          <mat-option *ngFor="let season of animeSeasonList" [value]="season">{{
+            season
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="anime-form__field">
+        <mat-label>Synopsis</mat-label>
+        <textarea
+          matInput
+          placeholder="Naruto"
+          formControlName="synopsis"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field class="anime-form__field">
+        <mat-label>Studio</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="1"
+          formControlName="studioIdList"
+        />
+      </mat-form-field>
+      <mat-form-field class="anime-form__field">
+        <mat-label>Genres</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Naruto"
+          formControlName="genreIdList"
+        />
+      </mat-form-field>
+      <div class="submit">
+        <button
+          *ngIf="type === 'edit'"
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="animeForm.invalid"
+        >
+          Save
+        </button>
+        <button
+          *ngIf="type === 'create'"
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="animeForm.invalid"
+        >
+          Create
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
 <ng-template #Loading>
   <camp-spinner></camp-spinner>
 </ng-template>
