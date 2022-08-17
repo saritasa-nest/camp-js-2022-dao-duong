@@ -51,7 +51,7 @@ export class AnimeService {
    * Fetch anime data by id from server.
    * @param animeId Id of the anime.
    */
-  public fetchAnimeById(animeId: number): Observable<AnimeDetail> {
+  public fetchAnimeById(animeId: AnimeDetail['id']): Observable<AnimeDetail> {
     const path = `anime/anime/${animeId}/`;
     return this.http.get<AnimeDetailDto>(`${this.apiConfig.apiUrl}${path}`).pipe(map(anime => AnimeDetailMapper.fromDto(anime)));
   }
