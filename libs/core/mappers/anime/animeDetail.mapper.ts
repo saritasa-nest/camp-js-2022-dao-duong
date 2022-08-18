@@ -32,4 +32,30 @@ export namespace AnimeDetailMapper {
       rating: dto.rating,
     });
   }
+
+  /**
+   * Maps AnimeDetailDto to AnimeDetail model.
+   * @param animeData Anime data.
+   */
+  export function toDto(animeData: AnimeDetail): AnimeDetailDto {
+    return {
+      image: animeData.image,
+      title_eng: animeData.englishTitle,
+      title_jpn: animeData.japaneseTitle,
+      aired: {
+        start: animeData.aired.start,
+        end: animeData.aired.end,
+      },
+      type: animeData.type,
+      status: animeData.status,
+      synopsis: animeData.synopsis,
+      airing: animeData.airing,
+      studios: animeData.studioIdList,
+      genres: animeData.genreIdList,
+      trailer_youtube_id: animeData.youtubeTrailerId,
+      source: animeData.source,
+      season: animeData.season,
+      rating: animeData.rating,
+    } as AnimeDetailDto;
+  }
 }

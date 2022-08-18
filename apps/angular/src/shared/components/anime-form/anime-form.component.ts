@@ -13,15 +13,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Status } from '@js-camp/core/dtos/anime/anime.dto';
-import {
-  Rating,
-  Season,
-  Source,
-} from '@js-camp/core/dtos/anime/animeDetail.dto';
 import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
 import { Genre } from '@js-camp/core/models/anime/genre';
-import { AnimeType } from '@js-camp/core/utils/types/animeType';
 
 import {
   map,
@@ -30,13 +23,15 @@ import {
   shareReplay,
   combineLatestWith,
   startWith,
+  switchMap,
+  BehaviorSubject,
 } from 'rxjs';
 
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { Studio } from '@js-camp/core/models/anime/studio';
 
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { AnimeService } from '../../../core/services/';
 
@@ -56,6 +51,8 @@ export class AnimeFormComponent implements OnInit {
   /** Anime data. */
   @Input()
   public animeData$: Observable<AnimeDetail> = new Observable();
+
+  public isLoading$ = new BehaviorSubject<boolean>(false);
 
   public separatorKeysCodes: number[] = [ENTER, COMMA];
 
@@ -77,66 +74,20 @@ export class AnimeFormComponent implements OnInit {
 
   public selectedStudios$: Observable<readonly Studio[]>;
 
-  // @ViewChild('genreInput')
-  // public genreInput: ElementRef<HTMLInputElement>;
+  /** Anime type list. */
+  public readonly animeTypeList = this.animeService.getTypeList();
 
-  /** Anime type value. */
-  public readonly animeTypeList: readonly AnimeType[] = [
-    AnimeType.TV,
-    AnimeType.Movie,
-    AnimeType.Music,
-    AnimeType.ONA,
-    AnimeType.OVA,
-    AnimeType.Special,
-  ];
+  /** Anime status list. */
+  public readonly animeStatusList = this.animeService.getStatusList();
 
-  /** Anime type value. */
-  public readonly animeStatusList: readonly Status[] = [
-    Status.Airing,
-    Status.Finished,
-    Status.NotYetAired,
-  ];
+  /** Anime source list. */
+  public readonly animeSourceList = this.animeService.getSourceList();
 
-  /** Anime type value. */
-  public readonly animeSourceList: readonly Source[] = [
-    Source.Book,
-    Source.CardGame,
-    Source.FourKomaManga,
-    Source.Game,
-    Source.LightNovel,
-    Source.Manga,
-    Source.MixedMedia,
-    Source.Music,
-    Source.Novel,
-    Source.Original,
-    Source.Other,
-    Source.PictureBook,
-    Source.Radio,
-    Source.Unknown,
-    Source.VisualNovel,
-    Source.WebManga,
-    Source.WebNovel,
-  ];
+  /** Anime season list. */
+  public readonly animeSeasonList = this.animeService.getSeasonList();
 
-  /** Anime type value. */
-  public readonly animeSeasonList: readonly Season[] = [
-    Season.Spring,
-    Season.Summer,
-    Season.Fall,
-    Season.Winter,
-    Season.NonSeasonal,
-  ];
-
-  /** Anime type value. */
-  public readonly animeRatingList: readonly Rating[] = [
-    Rating.G,
-    Rating.PG,
-    Rating.PG13,
-    Rating.R17,
-    Rating.RPlus,
-    Rating.RX,
-    Rating.Unknown,
-  ];
+  /** Anime rating list. */
+  public readonly animeRatingList = this.animeService.getRatingList();
 
   public constructor(
     private readonly formBuilder: FormBuilder,
@@ -188,13 +139,12 @@ export class AnimeFormComponent implements OnInit {
   }
 
   public onGenreSelected(event: MatAutocompleteSelectedEvent): void {
-
+    this.genresControl.setValue(null);
     if (this.genreIdListFormControl.value.includes(event.option.value.id)) {
       return;
     }
     const newGenreArray = [...this.genreIdListFormControl.value, event.option.value.id];
     this.genreIdListFormControl.patchValue(newGenreArray);
-    this.genresControl.setValue(null);
   }
 
   public onGenreRemove(genreId: Genre['id']): void {
@@ -222,10 +172,7 @@ export class AnimeFormComponent implements OnInit {
       .pipe(
         tap(data => {
           if (data) {
-            // console.log(data);
             this.animeForm.patchValue(data);
-            console.log(data);
-            console.log(this.animeForm.controls);
           }
         }),
       )
@@ -234,7 +181,27 @@ export class AnimeFormComponent implements OnInit {
 
   /** Handle form submission. */
   public onFormSubmit(): void {
-    console.log(this.animeForm.value);
+    switch (this.type) {
+      case 'create':
+        this.animeData$.pipe(
+          tap(() => this.isLoading$.next(true)),
+          switchMap(() => this.animeService.createAnime(this.animeForm.value)),
+          tap(() => this.isLoading$.next(false)),
+          untilDestroyed(this),
+        ).subscribe();
+        break;
+      case 'edit':
+        this.animeData$.pipe(
+          tap(() => this.isLoading$.next(true)),
+          switchMap(data => this.animeService.updateAnime(data.id, this.animeForm.value)),
+          tap(() => this.isLoading$.next(false)),
+          untilDestroyed(this),
+        ).subscribe();
+        break;
+      default:
+        break;
+    }
+
   }
 
   private initAnimeForm(): FormGroup {
