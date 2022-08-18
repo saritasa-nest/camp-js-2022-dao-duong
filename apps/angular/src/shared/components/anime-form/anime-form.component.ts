@@ -5,6 +5,8 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+
 import {
   FormBuilder,
   FormControl,
@@ -27,15 +29,19 @@ import {
   tap,
   shareReplay,
   combineLatestWith,
+  startWith,
 } from 'rxjs';
 
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { Studio } from '@js-camp/core/models/anime/studio';
 
+import { UntilDestroy } from '@ngneat/until-destroy';
+
 import { AnimeService } from '../../../core/services/';
 
 /** Login component. */
+@UntilDestroy()
 @Component({
   selector: 'camp-anime-form',
   templateUrl: './anime-form.component.html',
@@ -51,13 +57,20 @@ export class AnimeFormComponent implements OnInit {
   @Input()
   public animeData$: Observable<AnimeDetail> = new Observable();
 
+  public separatorKeysCodes: number[] = [ENTER, COMMA];
+
   /** Anime form group. */
   public readonly animeForm: FormGroup;
 
   /** Genre observer. */
-  public readonly genres$: Observable<readonly Genre[]>;
+  public readonly allGenres$: Observable<readonly Genre[]>;
+
+  /** Genre observer. */
+  public readonly filteredGenres$: Observable<readonly Genre[]>;
 
   public selectedGenres$: Observable<readonly Genre[]>;
+
+  public genresControl = new FormControl('');
 
   /** Genre observer. */
   public readonly studios$: Observable<readonly Studio[]>;
@@ -130,18 +143,21 @@ export class AnimeFormComponent implements OnInit {
     private readonly animeService: AnimeService,
   ) {
     this.animeForm = this.initAnimeForm();
-    this.genres$ = this.animeService.getGenre().pipe(
+    this.allGenres$ = this.animeService.getGenre().pipe(
       map(genres => genres.results),
       shareReplay({ refCount: false, bufferSize: 1 }),
     );
-    this.studios$ = this.animeService.getStudio().pipe(
-      map(studios => studios.results),
-      shareReplay({ refCount: false, bufferSize: 1 }),
+
+    this.filteredGenres$ = this.genresControl.valueChanges.pipe(
+      startWith(null),
+      combineLatestWith(this.allGenres$),
+      map(([genreName, allGenres]) =>
+       genreName ? allGenres.filter(genre => genre.name.toLowerCase().includes(genreName)) : allGenres),
     );
     this.selectedGenres$ = this.animeForm.controls[
       'genreIdList'
     ].valueChanges.pipe(
-      combineLatestWith(this.genres$),
+      combineLatestWith(this.allGenres$),
       map(([idList, genres]) => {
         const tempSelectedGenres: Genre[] = [];
         genres.map(genre => {
@@ -152,6 +168,11 @@ export class AnimeFormComponent implements OnInit {
         return tempSelectedGenres;
       }),
     );
+    this.studios$ = this.animeService.getStudio().pipe(
+      map(studios => studios.results),
+      shareReplay({ refCount: false, bufferSize: 1 }),
+    );
+
     this.selectedStudios$ = this.animeForm.controls['studioIdList'].valueChanges.pipe(
       combineLatestWith(this.studios$),
       map(([idList, studios]) => {
@@ -168,11 +189,12 @@ export class AnimeFormComponent implements OnInit {
 
   public onGenreSelected(event: MatAutocompleteSelectedEvent): void {
 
-    if (this.genreIdListFormControl.value.includes(event.option.value)) {
+    if (this.genreIdListFormControl.value.includes(event.option.value.id)) {
       return;
     }
-    const newGenreArray = [...this.genreIdListFormControl.value, event.option.value];
+    const newGenreArray = [...this.genreIdListFormControl.value, event.option.value.id];
     this.genreIdListFormControl.patchValue(newGenreArray);
+    this.genresControl.setValue(null);
   }
 
   public onGenreRemove(genreId: Genre['id']): void {

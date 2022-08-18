@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap, switchMap } from 'rxjs';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { Anime } from '@js-camp/core/models/anime/anime';
 import { AnimeDto } from '@js-camp/core/dtos/anime/anime.dto';
@@ -78,6 +78,10 @@ export class AnimeService {
   public getGenre(): Observable<Pagination<Genre>> {
     const path = `anime/genres/`;
     return this.http.get<PaginationDto<GenreDto>>(`${this.apiConfig.apiUrl}${path}`).pipe(
+      switchMap(genres => {
+        const params = new HttpParams().set('limit', genres.count);
+        return this.http.get<PaginationDto<GenreDto>>(`${this.apiConfig.apiUrl}${path}`, { params });
+      }),
       map(genres => PaginationMapper.fromDto(genres, genresDto => GenreMapper.fromDto(genresDto))),
     );
   }
@@ -86,6 +90,10 @@ export class AnimeService {
   public getStudio(): Observable<Pagination<Studio>> {
     const path = `anime/studios/`;
     return this.http.get<PaginationDto<StudioDto>>(`${this.apiConfig.apiUrl}${path}`).pipe(
+      switchMap(genres => {
+        const params = new HttpParams().set('limit', genres.count);
+        return this.http.get<PaginationDto<StudioDto>>(`${this.apiConfig.apiUrl}${path}`, { params });
+      }),
       map(studios => PaginationMapper.fromDto(studios, studiosDto => StudioMapper.fromDto(studiosDto))),
     );
   }
