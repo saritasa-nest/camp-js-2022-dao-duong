@@ -134,6 +134,12 @@
           #studioAuto="matAutocomplete"
           (optionSelected)="onStudioSelected($event)"
         >
+        <ng-container *ngIf="filteredStudios$|async as filteredStudios">
+          {{filteredStudios.length}}
+          <mat-option *ngIf="filteredStudios.length === 0" mat-stroked-button type="button">
+            Create {{ studiosControl.value }}
+          </mat-option>
+        </ng-container>
           <mat-option
             *ngFor="let studio of filteredStudios$ | async"
             [value]="studio.id"
@@ -164,11 +170,13 @@
             />
           </mat-chip-list>
           <mat-autocomplete
-            #genreAuto="matAutocomplete"
-            (optionSelected)="onGenreSelected($event)"
-
+          #genreAuto="matAutocomplete"
+          (optionSelected)="onGenreSelected($event)"
           >
-            <mat-option *ngFor="let genre of filteredGenres$ | async" [value]="genre">
+          <ng-container *ngIf="newGenre$ | async as newGenre">
+            <mat-option>Create {{newGenre}}</mat-option>
+          </ng-container>
+            <mat-option *ngFor="let genre of filteredGenres$ | async" [value]="genre.name">
               {{ genre.name }}
             </mat-option>
           </mat-autocomplete>

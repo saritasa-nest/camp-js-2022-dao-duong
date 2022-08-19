@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable, switchMap } from 'rxjs';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { Anime } from '@js-camp/core/models/anime/anime';
-import { AnimeDto, Status } from '@js-camp/core/dtos/anime/anime.dto';
+import { AnimeDto } from '@js-camp/core/dtos/anime/anime.dto';
 import { Pagination } from '@js-camp/core/models/pagination';
 
 import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
@@ -12,7 +12,7 @@ import { AnimeMapper } from '@js-camp/core/mappers/anime/anime.mapper';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
 import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
-import { AnimeDetailDto, Rating, Season, Source } from '@js-camp/core/dtos/anime/animeDetail.dto';
+import { AnimeDetailDto } from '@js-camp/core/dtos/anime/animeDetail.dto';
 import { AnimeDetailMapper } from '@js-camp/core/mappers/anime/animeDetail.mapper';
 
 import { Genre } from '@js-camp/core/models/anime/genre';
@@ -21,8 +21,6 @@ import { GenreMapper } from '@js-camp/core/mappers/anime/genre.mapper';
 import { Studio } from '@js-camp/core/models/anime/studio';
 import { StudioDto } from '@js-camp/core/dtos/anime/studio.dto';
 import { StudioMapper } from '@js-camp/core/mappers/anime/studio.mapper';
-
-import { AnimeType } from '@js-camp/core/utils/types/animeType';
 
 import { ApiConfigService } from './api-config.service';
 
@@ -123,71 +121,11 @@ export class AnimeService {
     );
   }
 
-  /** Get type list.  */
-  public getTypeList(): readonly AnimeType[] {
-    return [
-      AnimeType.TV,
-      AnimeType.Movie,
-      AnimeType.Music,
-      AnimeType.ONA,
-      AnimeType.OVA,
-      AnimeType.Special,
-    ];
-  }
-
-  /** Get status list.  */
-  public getStatusList(): readonly Status[] {
-    return [
-      Status.Airing,
-      Status.Finished,
-      Status.NotYetAired,
-    ];
-  }
-
-  /** Get source list.  */
-  public getSourceList(): readonly Source[] {
-    return [
-      Source.Book,
-      Source.CardGame,
-      Source.FourKomaManga,
-      Source.Game,
-      Source.LightNovel,
-      Source.Manga,
-      Source.MixedMedia,
-      Source.Music,
-      Source.Novel,
-      Source.Original,
-      Source.Other,
-      Source.PictureBook,
-      Source.Radio,
-      Source.Unknown,
-      Source.VisualNovel,
-      Source.WebManga,
-      Source.WebNovel,
-    ];
-  }
-
-  /** Get season list.  */
-  public getSeasonList(): readonly Season[] {
-    return [
-      Season.Spring,
-      Season.Summer,
-      Season.Fall,
-      Season.Winter,
-      Season.NonSeasonal,
-    ];
-  }
-
-  /** Get rating list .  */
-  public getRatingList(): readonly Rating[] {
-    return [
-      Rating.G,
-      Rating.PG,
-      Rating.PG13,
-      Rating.R17,
-      Rating.RPlus,
-      Rating.RX,
-      Rating.Unknown,
-    ];
+  /**
+   * Change enum to array.
+   * @param data Enum data.
+   */
+  public toArray<T>(data: T): readonly T[] {
+    return Object.values(data);
   }
 }

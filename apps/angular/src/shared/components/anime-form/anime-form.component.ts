@@ -35,6 +35,10 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { Router } from '@angular/router';
 
+import { AnimeType } from '@js-camp/core/utils/types/animeType';
+import { Rating, Season, Source } from '@js-camp/core/dtos/anime/animeDetail.dto';
+import { Status } from '@js-camp/core/dtos/anime/anime.dto';
+
 import { AnimeService } from '../../../core/services/';
 
 /** Login component. */
@@ -71,6 +75,8 @@ export class AnimeFormComponent implements OnInit {
 
   public genresControl = new FormControl('');
 
+  public newGenre$ = new BehaviorSubject<string | null>(null);
+
   /** Genre observer. */
   public readonly allStudios$: Observable<readonly Studio[]>;
 
@@ -82,19 +88,19 @@ export class AnimeFormComponent implements OnInit {
   public studiosControl = new FormControl('');
 
   /** Anime type list. */
-  public readonly animeTypeList = this.animeService.getTypeList();
+  public readonly animeTypeList = this.animeService.toArray(AnimeType);
 
   /** Anime status list. */
-  public readonly animeStatusList = this.animeService.getStatusList();
+  public readonly animeStatusList = this.animeService.toArray(Status);
 
   /** Anime source list. */
-  public readonly animeSourceList = this.animeService.getSourceList();
+  public readonly animeSourceList = this.animeService.toArray(Source);
 
   /** Anime season list. */
-  public readonly animeSeasonList = this.animeService.getSeasonList();
+  public readonly animeSeasonList = this.animeService.toArray(Season);
 
   /** Anime rating list. */
-  public readonly animeRatingList = this.animeService.getRatingList();
+  public readonly animeRatingList = this.animeService.toArray(Rating);
 
   public constructor(
     private readonly formBuilder: FormBuilder,
@@ -110,8 +116,17 @@ export class AnimeFormComponent implements OnInit {
     this.filteredGenres$ = this.genresControl.valueChanges.pipe(
       startWith(null),
       combineLatestWith(this.allGenres$),
-      map(([genreName, allGenres]) =>
-       genreName ? allGenres.filter(genre => genre.name.toLowerCase().includes(genreName)) : allGenres),
+      map(([genreName, allGenres]) => {
+        if (genreName) {
+          const matchGenresLength = allGenres.filter(genre => genre.name.toLowerCase() === genreName.toLowerCase()).length;
+          if (matchGenresLength === 0) {
+            this.newGenre$.next(genreName);
+          } else {
+            this.newGenre$.next(null);
+          }
+        }
+        return genreName ? allGenres.filter(genre => genre.name.toLowerCase().includes(genreName)) : allGenres;
+      }),
     );
     this.selectedGenres$ = this.animeForm.controls[
       'genreIdList'
@@ -152,7 +167,6 @@ export class AnimeFormComponent implements OnInit {
   }
 
   public onGenreSelected(event: MatAutocompleteSelectedEvent): void {
-
     this.genresControl.setValue(null);
     if (this.genreIdListFormControl.value.includes(event.option.value.id)) {
       return;
