@@ -125,6 +125,7 @@
           <input
             placeholder="Add studio..."
             #studioInput
+            [formControl] = "studiosControl"
             [matAutocomplete]="studioAuto"
             [matChipInputFor]="studioChipList"
           />
@@ -134,7 +135,7 @@
           (optionSelected)="onStudioSelected($event)"
         >
           <mat-option
-            *ngFor="let studio of studios$ | async"
+            *ngFor="let studio of filteredStudios$ | async"
             [value]="studio.id"
           >
             {{ studio.name }}
@@ -165,6 +166,7 @@
           <mat-autocomplete
             #genreAuto="matAutocomplete"
             (optionSelected)="onGenreSelected($event)"
+
           >
             <mat-option *ngFor="let genre of filteredGenres$ | async" [value]="genre">
               {{ genre.name }}

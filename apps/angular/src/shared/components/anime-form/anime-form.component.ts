@@ -70,9 +70,14 @@ export class AnimeFormComponent implements OnInit {
   public genresControl = new FormControl('');
 
   /** Genre observer. */
-  public readonly studios$: Observable<readonly Studio[]>;
+  public readonly allStudios$: Observable<readonly Studio[]>;
+
+  /** Filtered studio observer. */
+  public readonly filteredStudios$: Observable<readonly Studio[]>;
 
   public selectedStudios$: Observable<readonly Studio[]>;
+
+  public studiosControl = new FormControl('');
 
   /** Anime type list. */
   public readonly animeTypeList = this.animeService.getTypeList();
@@ -93,12 +98,12 @@ export class AnimeFormComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private readonly animeService: AnimeService,
   ) {
+
     this.animeForm = this.initAnimeForm();
     this.allGenres$ = this.animeService.getGenre().pipe(
       map(genres => genres.results),
       shareReplay({ refCount: false, bufferSize: 1 }),
     );
-
     this.filteredGenres$ = this.genresControl.valueChanges.pipe(
       startWith(null),
       combineLatestWith(this.allGenres$),
@@ -119,13 +124,18 @@ export class AnimeFormComponent implements OnInit {
         return tempSelectedGenres;
       }),
     );
-    this.studios$ = this.animeService.getStudio().pipe(
+    this.allStudios$ = this.animeService.getStudio().pipe(
       map(studios => studios.results),
       shareReplay({ refCount: false, bufferSize: 1 }),
     );
-
+    this.filteredStudios$ = this.studiosControl.valueChanges.pipe(
+      startWith(null),
+      combineLatestWith(this.allStudios$),
+      map(([studioName, allStudios]) =>
+       studioName ? allStudios.filter(genre => genre.name.toLowerCase().includes(studioName)) : allStudios),
+    );
     this.selectedStudios$ = this.animeForm.controls['studioIdList'].valueChanges.pipe(
-      combineLatestWith(this.studios$),
+      combineLatestWith(this.allStudios$),
       map(([idList, studios]) => {
         const tempSelectedStudios: Studio[] = [];
         studios.map(studio => {
@@ -139,6 +149,7 @@ export class AnimeFormComponent implements OnInit {
   }
 
   public onGenreSelected(event: MatAutocompleteSelectedEvent): void {
+
     this.genresControl.setValue(null);
     if (this.genreIdListFormControl.value.includes(event.option.value.id)) {
       return;
@@ -153,7 +164,7 @@ export class AnimeFormComponent implements OnInit {
   }
 
   public onStudioSelected(event: MatAutocompleteSelectedEvent): void {
-
+    this.genresControl.setValue(null);
     if (this.studioIdListFormControl.value.includes(event.option.value)) {
       return;
     }
