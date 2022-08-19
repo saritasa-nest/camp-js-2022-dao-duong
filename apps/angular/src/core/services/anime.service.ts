@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable, tap, switchMap } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { Anime } from '@js-camp/core/models/anime/anime';
 import { AnimeDto, Status } from '@js-camp/core/dtos/anime/anime.dto';
@@ -81,18 +81,22 @@ export class AnimeService {
    * @param animeId Id of the anime.
    * @param animeData Anime data to be updated.
    */
-  public updateAnime(animeId: number, animeData: AnimeDetail): Observable<void> {
+  public updateAnime(animeId: number, animeData: AnimeDetail): Observable<AnimeDetail> {
     const path = `anime/anime/${animeId}/`;
-    return this.http.put(`${this.apiConfig.apiUrl}${path}`, AnimeDetailMapper.toDto(animeData)).pipe(map(() => void 0));
+    return this.http.put<AnimeDetailDto>(`${this.apiConfig.apiUrl}${path}`, AnimeDetailMapper.toDto(animeData)).pipe(
+      map(animeDetailResponse => AnimeDetailMapper.fromDto(animeDetailResponse)),
+    );
   }
 
   /**
    * Delete anime from server.
    * @param animeData Anime data to be updated.
    */
-  public createAnime(animeData: AnimeDetail): Observable<void> {
+  public createAnime(animeData: AnimeDetail): Observable<AnimeDetail> {
     const path = `anime/anime/`;
-    return this.http.post(`${this.apiConfig.apiUrl}${path}`, AnimeDetailMapper.toDto(animeData)).pipe(map(() => void 0));
+    return this.http.post<AnimeDetailDto>(`${this.apiConfig.apiUrl}${path}`, AnimeDetailMapper.toDto(animeData)).pipe(
+      map(animeDetailResponse => AnimeDetailMapper.fromDto(animeDetailResponse)),
+    );
   }
 
   /** Get genres from server.  */

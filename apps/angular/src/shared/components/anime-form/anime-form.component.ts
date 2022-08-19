@@ -33,6 +33,8 @@ import { Studio } from '@js-camp/core/models/anime/studio';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+import { Router } from '@angular/router';
+
 import { AnimeService } from '../../../core/services/';
 
 /** Login component. */
@@ -97,6 +99,7 @@ export class AnimeFormComponent implements OnInit {
   public constructor(
     private readonly formBuilder: FormBuilder,
     private readonly animeService: AnimeService,
+    private readonly router: Router,
   ) {
 
     this.animeForm = this.initAnimeForm();
@@ -197,7 +200,7 @@ export class AnimeFormComponent implements OnInit {
         this.animeData$.pipe(
           tap(() => this.isLoading$.next(true)),
           switchMap(() => this.animeService.createAnime(this.animeForm.value)),
-          tap(() => this.isLoading$.next(false)),
+          tap(animeData => this.router.navigate(['anime/detail/', animeData.id])),
           untilDestroyed(this),
         ).subscribe();
         break;
@@ -205,7 +208,7 @@ export class AnimeFormComponent implements OnInit {
         this.animeData$.pipe(
           tap(() => this.isLoading$.next(true)),
           switchMap(data => this.animeService.updateAnime(data.id, this.animeForm.value)),
-          tap(() => this.isLoading$.next(false)),
+          tap(animeData => this.router.navigate(['anime/detail/', animeData.id])),
           untilDestroyed(this),
         ).subscribe();
         break;
