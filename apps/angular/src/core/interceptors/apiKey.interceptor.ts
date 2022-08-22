@@ -25,7 +25,6 @@ export class HttpApiKeyInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<T>> {
     const headersConfig = {
       'Api-Key': this.apiConfig.apiKey,
-      'content-type': 'application/json',
     };
     const request = req.clone({
       setHeaders: headersConfig,

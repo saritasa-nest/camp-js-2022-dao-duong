@@ -5,17 +5,16 @@
   <mat-card-title>{{ type === "edit" ? "Edit" : "Add" }}</mat-card-title>
   <mat-card-content>
     <form [formGroup]="animeForm" (ngSubmit)="onFormSubmit()">
-      <img [src]="animeForm.controls['image'].value" alt="" class="image">
-      <input type="file" (change)="test($event)" [formControl]="animeImageFormControl">
-      <!-- <mat-form-field class="anime-form__field">
+      <img [src]="animeForm.controls['image'].value" alt="" class="image" />
+
+      <mat-form-field class="anime-form__field">
         <mat-label>Image</mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="Link"
+        <ngx-mat-file-input
           formControlName="image"
-        />
-      </mat-form-field> -->
+          [accept]="'image/png, image/jpeg'"
+          color="primary"
+        ></ngx-mat-file-input>
+      </mat-form-field>
       <mat-form-field class="anime-form__field">
         <mat-label>Trailer ID</mat-label>
         <input
@@ -127,7 +126,7 @@
           <input
             placeholder="Add studio..."
             #studioInput
-            [formControl] = "studiosControl"
+            [formControl]="studiosControl"
             [matAutocomplete]="studioAuto"
             [matChipInputFor]="studioChipList"
           />
@@ -136,12 +135,16 @@
           #studioAuto="matAutocomplete"
           (optionSelected)="onStudioSelected($event)"
         >
-        <ng-container *ngIf="filteredStudios$|async as filteredStudios">
-          {{filteredStudios.length}}
-          <mat-option *ngIf="filteredStudios.length === 0" mat-stroked-button type="button">
-            Create {{ studiosControl.value }}
-          </mat-option>
-        </ng-container>
+          <ng-container *ngIf="filteredStudios$ | async as filteredStudios">
+            {{ filteredStudios.length }}
+            <mat-option
+              *ngIf="filteredStudios.length === 0"
+              mat-stroked-button
+              type="button"
+            >
+              Create {{ studiosControl.value }}
+            </mat-option>
+          </ng-container>
           <mat-option
             *ngFor="let studio of filteredStudios$ | async"
             [value]="studio.id"
@@ -150,39 +153,42 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-        <mat-form-field class="anime-form__field genres" appearance="fill">
-          <mat-label>Genres</mat-label>
-          <mat-chip-list #genreChipList aria-label="Genre selection">
-            <mat-chip
-              *ngFor="let genre of selectedGenres$ | async"
-              (removed)="onGenreRemove(genre.id)"
-            >
-              {{ genre.name }}
-              <button type="button" matChipRemove>
-                <mat-icon>cancel</mat-icon>
-              </button>
-            </mat-chip>
-            <input
-              placeholder="Add genre..."
-              #genreInput
-              [formControl]="genresControl"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              [matAutocomplete]="genreAuto"
-              [matChipInputFor]="genreChipList"
-            />
-          </mat-chip-list>
-          <mat-autocomplete
+      <mat-form-field class="anime-form__field genres" appearance="fill">
+        <mat-label>Genres</mat-label>
+        <mat-chip-list #genreChipList aria-label="Genre selection">
+          <mat-chip
+            *ngFor="let genre of selectedGenres$ | async"
+            (removed)="onGenreRemove(genre.id)"
+          >
+            {{ genre.name }}
+            <button type="button" matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            placeholder="Add genre..."
+            #genreInput
+            [formControl]="genresControl"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matAutocomplete]="genreAuto"
+            [matChipInputFor]="genreChipList"
+          />
+        </mat-chip-list>
+        <mat-autocomplete
           #genreAuto="matAutocomplete"
           (optionSelected)="onGenreSelected($event)"
-          >
+        >
           <ng-container *ngIf="newGenre$ | async as newGenre">
-            <mat-option>Create {{newGenre}}</mat-option>
+            <mat-option>Create {{ newGenre }}</mat-option>
           </ng-container>
-            <mat-option *ngFor="let genre of filteredGenres$ | async" [value]="genre.name">
-              {{ genre.name }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+          <mat-option
+            *ngFor="let genre of filteredGenres$ | async"
+            [value]="genre.name"
+          >
+            {{ genre.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
 
       <div class="submit">
         <button

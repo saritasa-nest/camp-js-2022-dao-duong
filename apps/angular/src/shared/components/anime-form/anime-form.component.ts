@@ -211,33 +211,20 @@ export class AnimeFormComponent implements OnInit {
 
   /** Handle form submission. */
   public onFormSubmit(): void {
-    switch (this.type) {
-      case 'create':
-        this.animeData$.pipe(
-          tap(() => this.isLoading$.next(true)),
-          switchMap(() => this.animeService.createAnime(this.animeForm.value)),
-          tap(animeData => this.router.navigate(['anime/detail/', animeData.id])),
-          untilDestroyed(this),
-        ).subscribe();
-        break;
-      case 'edit':
-        this.animeData$.pipe(
-          tap(() => this.isLoading$.next(true)),
-          switchMap(data => this.animeService.updateAnime(data.id, this.animeForm.value)),
-          tap(animeData => this.router.navigate(['anime/detail/', animeData.id])),
-          untilDestroyed(this),
-        ).subscribe();
-        break;
-      default:
-        break;
-    }
+    const { image } = this.animeForm.getRawValue();
 
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public test(event: any): void {
-    this.animeService.saveAnimeImage(event.target.files[0]).subscribe(data => console.log(data));
-
+    this.animeData$.pipe(
+      combineLatestWith(this.animeService.saveAnimeImage(image._files[0])),
+      tap(() => this.isLoading$.next(true)),
+      switchMap(([anime, imageUrl]) => {
+        if (this.type === 'create') {
+          return this.animeService.createAnime({ ...this.animeForm.value, image: imageUrl });
+        }
+        return this.animeService.updateAnime(anime.id, { ...this.animeForm.value, image: imageUrl });
+      }),
+      tap(animeData => this.router.navigate(['anime/detail/', animeData.id])),
+      untilDestroyed(this),
+    ).subscribe();
   }
 
   private initAnimeForm(): FormGroup {
@@ -259,8 +246,6 @@ export class AnimeFormComponent implements OnInit {
       synopsis: ['', [Validators.required]],
       studioIdList: [[], [Validators.required]],
       genreIdList: [[], [Validators.required]],
-
-      // genreIdList: this.formBuilder.array([]),
     });
   }
 

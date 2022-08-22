@@ -131,10 +131,12 @@ export class AnimeService {
     return Object.values(data);
   }
 
+  /**
+   * Save anime image to s3 storage.
+   * @param imageFile Anime file object.
+   */
   public saveAnimeImage(imageFile: File | null): Observable<string | null> {
     if (imageFile) {
-      console.log(imageFile);
-
       return this.s3Service.saveAnimeImage(imageFile, imageFile.name);
     }
     return of(null);

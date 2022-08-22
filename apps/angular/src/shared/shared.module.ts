@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -42,6 +43,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     MatSlideToggleModule,
     MatChipsModule,
     MatAutocompleteModule,
+    MaterialFileInputModule,
   ],
   exports: [NavbarComponent, ModalComponent, SpinnerComponent, AnimeFormComponent, PageNotFoundComponent],
 })
