@@ -29,7 +29,7 @@ import {
   shareReplay,
 } from 'rxjs';
 
-import { SortMapper } from '../../../..//core/mapper/sort.mapper';
+import { SortMapper } from '../../../../core/mapper/sort.mapper';
 
 import { AnimeService, NavigateService } from '../../../../core/services';
 
