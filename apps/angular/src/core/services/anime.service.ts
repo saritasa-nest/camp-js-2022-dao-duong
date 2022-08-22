@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable, switchMap } from 'rxjs';
+import { map, Observable, of, switchMap } from 'rxjs';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { Anime } from '@js-camp/core/models/anime/anime';
 import { AnimeDto } from '@js-camp/core/dtos/anime/anime.dto';
@@ -23,6 +23,7 @@ import { StudioDto } from '@js-camp/core/dtos/anime/studio.dto';
 import { StudioMapper } from '@js-camp/core/mappers/anime/studio.mapper';
 
 import { ApiConfigService } from './api-config.service';
+import { S3Service } from './s3.service';
 
 /** Anime service. */
 @Injectable({
@@ -32,6 +33,7 @@ export class AnimeService {
   public constructor(
     private readonly http: HttpClient,
     private readonly apiConfig: ApiConfigService,
+    private readonly s3Service: S3Service,
   ) {}
 
   /**
@@ -127,5 +129,14 @@ export class AnimeService {
    */
   public toArray<T>(data: T): readonly T[] {
     return Object.values(data);
+  }
+
+  public saveAnimeImage(imageFile: File | null): Observable<string | null> {
+    if (imageFile) {
+      console.log(imageFile);
+
+      return this.s3Service.saveAnimeImage(imageFile, imageFile.name);
+    }
+    return of(null);
   }
 }

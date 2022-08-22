@@ -65,6 +65,8 @@ export class AnimeFormComponent implements OnInit {
   /** Anime form group. */
   public readonly animeForm: FormGroup;
 
+  public animeImageFormControl: FormControl<File | null> = new FormControl(null);
+
   /** Genre observer. */
   public readonly allGenres$: Observable<readonly Genre[]>;
 
@@ -232,9 +234,15 @@ export class AnimeFormComponent implements OnInit {
 
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public test(event: any): void {
+    this.animeService.saveAnimeImage(event.target.files[0]).subscribe(data => console.log(data));
+
+  }
+
   private initAnimeForm(): FormGroup {
     return this.formBuilder.group({
-      image: ['', [Validators.required]],
+      image: [null, [Validators.required]],
       youtubeTrailerId: [''],
       englishTitle: ['', [Validators.required]],
       japaneseTitle: ['', [Validators.required]],

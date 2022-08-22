@@ -5,7 +5,9 @@
   <mat-card-title>{{ type === "edit" ? "Edit" : "Add" }}</mat-card-title>
   <mat-card-content>
     <form [formGroup]="animeForm" (ngSubmit)="onFormSubmit()">
-      <mat-form-field class="anime-form__field">
+      <img [src]="animeForm.controls['image'].value" alt="" class="image">
+      <input type="file" (change)="test($event)" [formControl]="animeImageFormControl">
+      <!-- <mat-form-field class="anime-form__field">
         <mat-label>Image</mat-label>
         <input
           type="text"
@@ -13,7 +15,7 @@
           placeholder="Link"
           formControlName="image"
         />
-      </mat-form-field>
+      </mat-form-field> -->
       <mat-form-field class="anime-form__field">
         <mat-label>Trailer ID</mat-label>
         <input
