@@ -1,5 +1,5 @@
 /** Sort options. */
-export interface Option {
+export interface SortOption {
 
   /** Sort option text. */
   readonly text: string;

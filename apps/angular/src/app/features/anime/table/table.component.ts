@@ -8,7 +8,7 @@ import { DOCUMENT } from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort, SortDirection } from '@angular/material/sort';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { Anime } from '@js-camp/core/models/anime/anime';
 import { AnimeType } from '@js-camp/core/utils/types/animeType';
@@ -31,7 +31,7 @@ import {
 
 import { SortMapper } from '../../../../core/mapper/sort.mapper';
 
-import { AnimeService, NavigateService } from '../../../../core/services';
+import { AnimeService } from '../../../../core/services';
 
 const PARAMS_CHANGE_DEBOUNCE_TIME = 700;
 const defaultParams = {
@@ -104,7 +104,7 @@ export class TableComponent implements OnInit {
   public constructor(
     private readonly animeService: AnimeService,
     private readonly route: ActivatedRoute,
-    private readonly navigateService: NavigateService,
+    private readonly router: Router,
     @Inject(DOCUMENT) private document: Document,
   ) {
     this.window = this.document.defaultView;
@@ -160,7 +160,10 @@ export class TableComponent implements OnInit {
     );
 
     const navigateSideEffect$ = this.params$.pipe(
-      tap(params => this.navigateService.navigateToHomeWithSpecifyParams(params)),
+      tap(params => this.router.navigate([], {
+        queryParams: params,
+        queryParamsHandling: 'merge',
+      })),
     );
 
     // Merge all side effects and subscribe.
