@@ -7,10 +7,14 @@ import {
 import { DOCUMENT } from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { Sort, SortDirection } from '@angular/material/sort';
+import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
-import { Anime } from '@js-camp/core/models/anime/anime';
+import {
+  Anime,
+  AnimeSort,
+  AnimeSortDirection,
+  AnimeSortField,
+} from '@js-camp/core/models/anime/anime';
 import { AnimeType } from '@js-camp/core/utils/types/animeType';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -29,7 +33,7 @@ import {
   shareReplay,
 } from 'rxjs';
 
-import { SortMapper } from '../../../../core/mapper/sort.mapper';
+import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
 
 import { AnimeService } from '../../../../core/services';
 
@@ -40,8 +44,8 @@ const defaultParams = {
   limit: 25,
   search: '',
   sort: {
-    active: '',
-    direction: '' as SortDirection,
+    field: AnimeSortField.None,
+    direction: AnimeSortDirection.Ascending,
   },
 };
 
@@ -54,12 +58,11 @@ const defaultParams = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements OnInit {
-
   /** Anime list observer. */
   public readonly animeList$: Observable<readonly Anime[]>;
 
   /** Anime list observer. */
-  public readonly params$: Observable<PaginationConfig>;
+  public readonly params$: Observable<AnimeListQueryParams>;
 
   /** Initial page size value. */
   public readonly pageSize = defaultParams.limit;
@@ -84,10 +87,12 @@ export class TableComponent implements OnInit {
   public readonly filterTypeControl = new FormControl();
 
   /** Current page subject. */
-  protected readonly currentPage$ = new BehaviorSubject<number>(defaultParams.page);
+  protected readonly currentPage$ = new BehaviorSubject<number>(
+    defaultParams.page,
+  );
 
   /** Sort subject. */
-  protected readonly sort$ = new BehaviorSubject<Sort>(defaultParams.sort);
+  protected readonly sort$ = new BehaviorSubject<AnimeSort>(defaultParams.sort);
 
   /** Anime table column. */
   public displayedColumns = [
@@ -123,7 +128,7 @@ export class TableComponent implements OnInit {
         const params = {
           limit: defaultParams.limit,
           page: currentPage,
-          ordering: SortMapper.toParamsString(sort),
+          sort,
           search: this.searchControl.value,
           type: this.filterTypeControl.value ?
             this.filterTypeControl.value.toString() :
@@ -160,10 +165,20 @@ export class TableComponent implements OnInit {
     );
 
     const navigateSideEffect$ = this.params$.pipe(
-      tap(params => this.router.navigate([], {
-        queryParams: params,
-        queryParamsHandling: 'merge',
-      })),
+      tap(({ limit, page, sort, search, type }) => {
+        const queryParamsForUrl = {
+          limit,
+          page,
+          field: sort.field,
+          direction: sort.direction,
+          search,
+          type,
+        };
+        this.router.navigate([], {
+          queryParams: queryParamsForUrl,
+          queryParamsHandling: 'merge',
+        });
+      }),
     );
 
     // Merge all side effects and subscribe.
@@ -190,10 +205,13 @@ export class TableComponent implements OnInit {
    * @param event Sort event emission.
    */
   public onSortChange(event: Sort): void {
-    this.sort$.next({
-      active: event.direction === '' ? '' : event.active,
-      direction: event.direction,
-    });
+    const newSortValue = {
+      direction: event.direction as AnimeSortDirection,
+      field: event.direction ?
+        (event.active as AnimeSortField) :
+        AnimeSortField.None,
+    };
+    this.sort$.next(newSortValue);
   }
 
   /**
@@ -210,17 +228,17 @@ export class TableComponent implements OnInit {
    * @param params Params value from URL.
    */
   private setDataFromParamsToComponent(params: Params): void {
-    if (params['ordering']) {
-      this.sort$.next({
-        active: params['ordering'].replace('-', ''),
-        direction: params['ordering'].includes('-') ? 'desc' : 'asc',
-      });
-    }
     if (params['type']) {
       this.filterTypeControl.setValue(params['type'].split(','));
     }
+    if (params['search']) {
+      this.searchControl.setValue(params['search']);
+    }
+    this.sort$.next({
+      field: params['field'] ?? defaultParams.sort.field,
+      direction: params['direction'] ?? defaultParams.sort.direction,
+    });
     this.currentPage$.next(params['page'] || defaultParams.page);
-    this.searchControl.setValue(params['search'] || defaultParams.search);
   }
 
   /** Scroll to top of page. */

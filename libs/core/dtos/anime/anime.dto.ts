@@ -24,10 +24,11 @@ export enum SortDirectionDto {
 }
 
 /** Possible value for sorting. */
-export enum SortFieldDto {
+export enum AnimeSortFieldDto {
   EnglishTitle = 'title_eng',
   Status = 'status',
   AiredStart = 'aired__startswith',
+  None = '',
 }
 
 /** Anime DTO. */

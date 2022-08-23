@@ -9,7 +9,8 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { AnimeMapper } from '@js-camp/core/mappers/anime/anime.mapper';
 
-import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
+import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
+import { AnimeQueryParamsMapper } from '@js-camp/core/mappers/anime-queyry-params.mapper';
 
 import { ApiConfigService } from './api-config.service';
 
@@ -25,13 +26,13 @@ export class AnimeService {
 
   /**
    * Fetch anime data from server.
-   * @param config Configuration for request.
+   * @param queryParams Query params for the request.
    */
-  public fetchAnime(config: PaginationConfig): Observable<Pagination<Anime>> {
+  public fetchAnime(queryParams: AnimeListQueryParams): Observable<Pagination<Anime>> {
     const path = 'anime/anime/';
     const params = new HttpParams({
       fromObject: {
-        ...PaginationMapper.toDto(config),
+        ...AnimeQueryParamsMapper.toDto(queryParams),
       },
     });
     return this.http
