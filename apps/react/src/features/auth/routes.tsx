@@ -3,12 +3,12 @@ import { RouteObject } from 'react-router-dom';
 
 const LoginPage = lazy(() =>
   import('./pages/').then(module => ({
-    default: module.Login,
+    default: module.LoginPage,
   })));
 
 const RegisterPage = lazy(() =>
   import('./pages/').then(module => ({
-    default: module.Register,
+    default: module.RegisterPage,
   })));
 export const authRoutes: RouteObject[] = [
   {

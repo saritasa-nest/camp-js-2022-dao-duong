@@ -4,6 +4,10 @@ import { Button, LinearProgress, Container, Link, Grid } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-mui';
 import * as Yup from 'yup';
+import { useAppDispatch } from '@js-camp/react/store';
+import { Login } from '@js-camp/core/models/auth/login';
+
+import { login } from '@js-camp/react/store/auth/dispatchers';
 
 import styles from './Login.module.css';
 
@@ -13,23 +17,18 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required('Password required'),
 });
 
-interface LoginValues {
-
-  /** Email. */
-  email: string;
-
-  /** Password. */
-  password: string;
-}
-
 const LoginPageComponent: FC = () => {
-  const defaultValue: LoginValues = {
+  const dispatch = useAppDispatch();
+
+  const defaultValue: Login = {
     email: '',
     password: '',
   };
 
-  const onFormSubmission = (values: LoginValues) => {
-    alert(JSON.stringify(values, null, 2));
+  const onFormSubmission = (values: Login) => {
+    dispatch(login(values));
+    // eslint-disable-next-line no-console
+    console.log(values);
   };
 
   return (
@@ -84,4 +83,4 @@ const LoginPageComponent: FC = () => {
     </Container>);
 };
 
-export const Login = memo(LoginPageComponent);
+export const LoginPage = memo(LoginPageComponent);

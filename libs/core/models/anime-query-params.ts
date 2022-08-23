@@ -1,0 +1,22 @@
+import { AnimeType } from '../utils/types/animeType';
+
+import { AnimeSort, AnimeSortDirection, AnimeSortField } from './anime/anime';
+
+/** Options for query params. */
+export interface AnimeListQueryParams {
+
+  /** Number of items per request. */
+  readonly limit: number;
+
+  /**  Current page base on total items and limit. */
+  readonly page: number;
+
+  /** Sort params for request query string. */
+  readonly sort: AnimeSort<AnimeSortDirection, AnimeSortField>;
+
+  /** Query string. */
+  readonly search: string | null;
+
+  /** Filtering type. */
+  readonly type: AnimeType[];
+}

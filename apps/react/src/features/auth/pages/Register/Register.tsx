@@ -126,4 +126,4 @@ const RegisterPageComponent: FC = () => {
   );
 };
 
-export const Register = memo(RegisterPageComponent);
+export const RegisterPage = memo(RegisterPageComponent);
