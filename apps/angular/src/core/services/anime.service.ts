@@ -10,7 +10,7 @@ import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { AnimeMapper } from '@js-camp/core/mappers/anime/anime.mapper';
 
 import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
-import { AnimeQueryParamsMapper } from '@js-camp/core/mappers/anime-queyry-params.mapper';
+import { AnimeQueryParamsMapper } from '@js-camp/core/mappers/anime-query-params.mapper';
 
 import { ApiConfigService } from './api-config.service';
 
