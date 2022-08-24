@@ -1,9 +1,8 @@
 /* eslint-disable max-lines-per-function */
 import * as Yup from 'yup';
-import { FC, memo, forwardRef, useState, useEffect } from 'react';
+import { FC, memo, useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, LinearProgress, Container, Link, Grid, Snackbar } from '@mui/material';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { Button, LinearProgress, Container, Link, Grid } from '@mui/material';
 import { Form, Field, useFormik, FormikProvider } from 'formik';
 import { TextField } from 'formik-mui';
 import { selectIsAuthLoading, selectAuthError } from '@js-camp/react/store/auth/selectors';
@@ -12,13 +11,13 @@ import { register } from '@js-camp/react/store/auth/dispatchers';
 
 import { HttpError } from '@js-camp/core/models/httpError';
 
+import { Severity } from '../../../../shared/components/MySnackbar/MySnackbar';
+
+import { MySnackbar } from '../../../../shared/components/';
+
 import { transformError } from '../../utils/error';
 
 import styles from './Register.module.css';
-
-const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
-  <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-));
 
 const RegisterSchema = Yup.object().shape({
   email: Yup.string()
@@ -151,25 +150,18 @@ const RegisterPageComponent: FC = () => {
               disabled={formik.isSubmitting}
               onClick={formik.submitForm}
             >
-                Submit
+              Register
             </Button>
           </Grid>
         </Form>
       </FormikProvider>
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      <MySnackbar
         open={isSnackbarOpen}
-        autoHideDuration={2000}
+        duration={5000}
         onClose={onSnackbarClose}
-      >
-        <Alert
-          severity="error"
-          sx={{ width: '100%' }}
-          onClose={onSnackbarClose}
-        >
-          {httpError?.detail}
-        </Alert>
-      </Snackbar>
+        severity= {Severity.error}
+        message={httpError?.detail ?? 'Error'}
+      />
     </Container>
   );
 };

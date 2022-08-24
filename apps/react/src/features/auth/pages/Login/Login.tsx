@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { FC, memo, forwardRef, useState, useEffect } from 'react';
+import { FC, memo, useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Button,
@@ -7,9 +7,7 @@ import {
   Container,
   Link,
   Grid,
-  Snackbar,
 } from '@mui/material';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-mui';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
@@ -24,11 +22,10 @@ import {
 
 import { HttpError } from '@js-camp/core/models/httpError';
 
-import styles from './Login.module.css';
+import { MySnackbar } from '../../../../shared/components/';
+import { Severity } from '../../../../shared/components/MySnackbar/MySnackbar';
 
-const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
-  <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-));
+import styles from './Login.module.css';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email')
@@ -111,26 +108,19 @@ const LoginPageComponent: FC = () => {
                 disabled={isLoading}
                 onClick={submitForm}
               >
-                Submit
+                Login
               </Button>
             </Grid>
           </Form>
         )}
       </Formik>
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      <MySnackbar
         open={isSnackbarOpen}
-        autoHideDuration={2000}
+        duration={5000}
         onClose={onSnackbarClose}
-      >
-        <Alert
-          severity="error"
-          sx={{ width: '100%' }}
-          onClose={onSnackbarClose}
-        >
-          {httpError?.detail}
-        </Alert>
-      </Snackbar>
+        severity= {Severity.error}
+        message={httpError?.detail ?? 'Error'}
+      />
     </Container>
   );
 };
