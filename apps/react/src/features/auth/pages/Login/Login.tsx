@@ -1,4 +1,3 @@
-import * as Yup from 'yup';
 import { FC, memo, useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Button, LinearProgress, Container, Link, Grid } from '@mui/material';
@@ -20,13 +19,7 @@ import { MySnackbar } from '../../../../shared/components/';
 import { Severity } from '../../../../shared/components/MySnackbar/MySnackbar';
 
 import styles from './Login.module.css';
-
-const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email')
-    .required('Email required'),
-  password: Yup.string().required('Password required'),
-});
-
+import { defaultLoginValues, LoginSchema } from './formConfig';
 const LoginPageComponent: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -44,10 +37,6 @@ const LoginPageComponent: FC = () => {
       navigate('/');
     }
   }, [token]);
-  const defaultLoginValue: Login = {
-    email: '',
-    password: '',
-  };
 
   const onFormSubmission = (values: Login) => {
     formik.setSubmitting(false);
@@ -55,7 +44,7 @@ const LoginPageComponent: FC = () => {
   };
 
   const formik = useFormik({
-    initialValues: defaultLoginValue,
+    initialValues: defaultLoginValues,
     validationSchema: LoginSchema,
     onSubmit: onFormSubmission,
   });

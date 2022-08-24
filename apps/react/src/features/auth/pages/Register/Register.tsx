@@ -1,5 +1,3 @@
-/* eslint-disable max-lines-per-function */
-import * as Yup from 'yup';
 import { FC, memo, useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Button, LinearProgress, Container, Link, Grid } from '@mui/material';
@@ -22,39 +20,11 @@ import { MySnackbar } from '../../../../shared/components/';
 import { transformError } from '../../utils/error';
 
 import styles from './Register.module.css';
-
-const RegisterSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Invalid email')
-    .required('Email required')
-    .max(254, 'Too long!'),
-  firstName: Yup.string().max(30, 'Too long!'),
-  lastName: Yup.string().max(30, 'Too long!'),
-  password: Yup.string().required('Password required'),
-
-  // .max(128, 'Too long!'),
-  confirmPassword: Yup.string()
-    .required('Confirm password required')
-    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-});
-
-interface RegisterValues {
-
-  /** Email. */
-  email: string;
-
-  /** First name. */
-  firstName: string;
-
-  /** Last name. */
-  lastName: string;
-
-  /** Password. */
-  password: string;
-
-  /** Confirm password. */
-  confirmPassword: string;
-}
+import {
+  defaultRegisterValues,
+  RegisterSchema,
+  RegisterValues,
+} from './formConfig';
 
 const RegisterPageComponent: FC = () => {
   const navigate = useNavigate();
@@ -74,13 +44,6 @@ const RegisterPageComponent: FC = () => {
       navigate('/');
     }
   }, [token]);
-  const defaultRegisterValue: RegisterValues = {
-    email: '',
-    firstName: '',
-    lastName: '',
-    password: '',
-    confirmPassword: '',
-  };
 
   const onFormSubmission = (values: RegisterValues) => {
     formik.setSubmitting(false);
@@ -88,7 +51,7 @@ const RegisterPageComponent: FC = () => {
   };
 
   const formik = useFormik({
-    initialValues: defaultRegisterValue,
+    initialValues: defaultRegisterValues,
     validationSchema: RegisterSchema,
     onSubmit: onFormSubmission,
   });

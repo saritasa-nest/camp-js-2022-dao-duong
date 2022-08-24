@@ -15,7 +15,7 @@ interface MySnackbarProps {
   /** Open state for snackbar. */
   readonly open: boolean;
 
-  /** Duration to display snackbar. */
+  /** Duration in milliseconds for snackbar to display. */
   readonly duration?: number;
 
   /** OnClose callback for snackbar. */
