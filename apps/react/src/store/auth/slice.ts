@@ -32,8 +32,9 @@ export const authSlice = createSlice({
       state.isLoading = false;
     })
     .addCase(register.rejected, (state, action) => {
-      if (action.error.message) {
-        // state.error = action.error.message;
+      const error = action.payload;
+      if (error instanceof AxiosError) {
+        state.error = HttpErrorMapper.fromDto(error.response?.data);
       }
       state.isLoading = false;
     }),

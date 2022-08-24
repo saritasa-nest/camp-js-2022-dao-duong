@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import { FC, memo, forwardRef, useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
@@ -11,7 +12,6 @@ import {
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-mui';
-import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
 import { Login } from '@js-camp/core/models/auth/login';
 

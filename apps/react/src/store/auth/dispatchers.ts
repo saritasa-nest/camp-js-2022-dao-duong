@@ -17,5 +17,11 @@ export const login = createAsyncThunk(
 
 export const register = createAsyncThunk(
   'auth/register',
-  (registerData: Register) => AuthService.login(registerData),
+  async(registerData: Register, { rejectWithValue }) => {
+    try {
+      return await AuthService.register(registerData);
+    } catch (err: unknown) {
+      return rejectWithValue(err);
+    }
+  },
 );
