@@ -1,11 +1,15 @@
 /* eslint-disable max-lines-per-function */
 import * as Yup from 'yup';
 import { FC, memo, useState, useEffect } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Button, LinearProgress, Container, Link, Grid } from '@mui/material';
 import { Form, Field, useFormik, FormikProvider } from 'formik';
 import { TextField } from 'formik-mui';
-import { selectIsAuthLoading, selectAuthError } from '@js-camp/react/store/auth/selectors';
+import {
+  selectIsAuthLoading,
+  selectAuthError,
+  selectAuthToken,
+} from '@js-camp/react/store/auth/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { register } from '@js-camp/react/store/auth/dispatchers';
 
@@ -53,9 +57,11 @@ interface RegisterValues {
 }
 
 const RegisterPageComponent: FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsAuthLoading);
   const httpError = useAppSelector(selectAuthError);
+  const token = useAppSelector(selectAuthToken);
   const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
   useEffect(() => {
     if (httpError instanceof HttpError) {
@@ -63,6 +69,11 @@ const RegisterPageComponent: FC = () => {
       formik.setErrors(transformError(httpError).fieldsError);
     }
   }, [httpError]);
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, [token]);
   const defaultRegisterValue: RegisterValues = {
     email: '',
     firstName: '',
@@ -74,7 +85,6 @@ const RegisterPageComponent: FC = () => {
   const onFormSubmission = (values: RegisterValues) => {
     formik.setSubmitting(false);
     dispatch(register(values));
-    console.log(JSON.stringify(values, null, 2));
   };
 
   const formik = useFormik({
@@ -95,9 +105,7 @@ const RegisterPageComponent: FC = () => {
   return (
     <Container maxWidth="xs">
       <h1 className={styles['title']}>Register</h1>
-      <FormikProvider
-        value={formik}
-      >
+      <FormikProvider value={formik}>
         <Form>
           <Field
             className={styles['input']}
@@ -142,7 +150,7 @@ const RegisterPageComponent: FC = () => {
             alignItems="center"
           >
             <Link component={RouterLink} to="/auth/login">
-                Have an account?
+              Have an account?
             </Link>
             <Button
               variant="contained"
@@ -159,7 +167,7 @@ const RegisterPageComponent: FC = () => {
         open={isSnackbarOpen}
         duration={5000}
         onClose={onSnackbarClose}
-        severity= {Severity.error}
+        severity={Severity.error}
         message={httpError?.detail ?? 'Error'}
       />
     </Container>

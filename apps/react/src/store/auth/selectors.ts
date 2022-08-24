@@ -12,3 +12,8 @@ export const selectAuthError = createSelector(
   (state: RootState) => state.auth.error,
   error => error,
 );
+
+export const selectAuthToken = createSelector(
+  (state: RootState) => state.auth.token,
+  token => token,
+);
