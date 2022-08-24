@@ -1,4 +1,6 @@
+import { HttpErrorMapper } from '@js-camp/core/mappers/httpError.mapper';
 import { createSlice } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
 
 import { login, register } from './dispatchers';
 import { initialState } from './state';
@@ -16,8 +18,9 @@ export const authSlice = createSlice({
       state.isLoading = false;
     })
     .addCase(login.rejected, (state, action) => {
-      if (action.error.message) {
-        state.error = action.error.message;
+      const error = action.payload;
+      if (error instanceof AxiosError) {
+        state.error = HttpErrorMapper.fromDto(error.response?.data);
       }
       state.isLoading = false;
     })
@@ -30,7 +33,7 @@ export const authSlice = createSlice({
     })
     .addCase(register.rejected, (state, action) => {
       if (action.error.message) {
-        state.error = action.error.message;
+        // state.error = action.error.message;
       }
       state.isLoading = false;
     }),

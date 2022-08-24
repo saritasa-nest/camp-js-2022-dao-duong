@@ -1,15 +1,34 @@
-import { FC, memo } from 'react';
+import { FC, memo, forwardRef, useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, LinearProgress, Container, Link, Grid } from '@mui/material';
+import {
+  Button,
+  LinearProgress,
+  Container,
+  Link,
+  Grid,
+  Snackbar,
+} from '@mui/material';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-mui';
 import * as Yup from 'yup';
-import { useAppDispatch } from '@js-camp/react/store';
+import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
 import { Login } from '@js-camp/core/models/auth/login';
 
 import { login } from '@js-camp/react/store/auth/dispatchers';
 
+import {
+  selectAuthError,
+  selectIsAuthLoading,
+} from '@js-camp/react/store/auth/selectors';
+
+import { HttpError } from '@js-camp/core/models/httpError';
+
 import styles from './Login.module.css';
+
+const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
+  <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+));
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email')
@@ -19,7 +38,15 @@ const LoginSchema = Yup.object().shape({
 
 const LoginPageComponent: FC = () => {
   const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectIsAuthLoading);
+  const httpError = useAppSelector(selectAuthError);
 
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
+  useEffect(() => {
+    if (httpError instanceof HttpError) {
+      setIsSnackbarOpen(true);
+    }
+  }, [httpError]);
   const defaultValue: Login = {
     email: '',
     password: '',
@@ -27,8 +54,16 @@ const LoginPageComponent: FC = () => {
 
   const onFormSubmission = (values: Login) => {
     dispatch(login(values));
-    // eslint-disable-next-line no-console
-    console.log(values);
+  };
+
+  const onSnackbarClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setIsSnackbarOpen(false);
   };
 
   return (
@@ -42,8 +77,8 @@ const LoginPageComponent: FC = () => {
           onFormSubmission(values);
         }}
       >
-        {({ submitForm, isSubmitting }) => (
-          <Form >
+        {({ submitForm }) => (
+          <Form>
             <Field
               className={styles['input']}
               component={TextField}
@@ -59,7 +94,7 @@ const LoginPageComponent: FC = () => {
               label="Password"
               name="password"
             />
-            {isSubmitting && <LinearProgress />}
+            {isLoading && <LinearProgress />}
             <br />
             <Grid
               container
@@ -67,11 +102,13 @@ const LoginPageComponent: FC = () => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <Link component={RouterLink} to="/auth/register">Don't have an account?</Link>
+              <Link component={RouterLink} to="/auth/register">
+                Don't have an account?
+              </Link>
               <Button
                 variant="contained"
                 color="primary"
-                disabled={isSubmitting}
+                disabled={isLoading}
                 onClick={submitForm}
               >
                 Submit
@@ -80,7 +117,22 @@ const LoginPageComponent: FC = () => {
           </Form>
         )}
       </Formik>
-    </Container>);
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isSnackbarOpen}
+        autoHideDuration={2000}
+        onClose={onSnackbarClose}
+      >
+        <Alert
+          severity="error"
+          sx={{ width: '100%' }}
+          onClose={onSnackbarClose}
+        >
+          {httpError?.detail}
+        </Alert>
+      </Snackbar>
+    </Container>
+  );
 };
 
 export const LoginPage = memo(LoginPageComponent);

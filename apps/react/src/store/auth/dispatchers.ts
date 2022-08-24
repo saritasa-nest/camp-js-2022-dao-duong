@@ -6,7 +6,13 @@ import { AuthService } from '../../api/services/authService';
 
 export const login = createAsyncThunk(
   'auth/login',
-  (loginData: Login) => AuthService.login(loginData),
+  async(loginData: Login, { rejectWithValue }) => {
+    try {
+      return await AuthService.login(loginData);
+    } catch (err: unknown) {
+      return rejectWithValue(err);
+    }
+  },
 );
 
 export const register = createAsyncThunk(
