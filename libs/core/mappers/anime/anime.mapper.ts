@@ -18,6 +18,7 @@ export const ANIME_TYPE_FROM_DTO_MAP: Readonly<Record<AnimeTypeDto, AnimeType>> 
   [AnimeTypeDto.Special]: AnimeType.Special,
   [AnimeTypeDto.Tv]: AnimeType.Tv,
 };
+
 export namespace AnimeMapper {
 
   /**
