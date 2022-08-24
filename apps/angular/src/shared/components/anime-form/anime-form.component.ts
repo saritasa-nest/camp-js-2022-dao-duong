@@ -37,7 +37,7 @@ import { Router } from '@angular/router';
 
 import { AnimeType } from '@js-camp/core/utils/types/animeType';
 import { Rating, Season, Source } from '@js-camp/core/dtos/anime/animeDetail.dto';
-import { Status } from '@js-camp/core/dtos/anime/anime.dto';
+import { AnimeStatus } from '@js-camp/core/models/anime/anime';
 
 import { AnimeService } from '../../../core/services/';
 
@@ -93,7 +93,7 @@ export class AnimeFormComponent implements OnInit {
   public readonly animeTypeList = this.animeService.toArray(AnimeType);
 
   /** Anime status list. */
-  public readonly animeStatusList = this.animeService.toArray(Status);
+  public readonly animeStatusList = this.animeService.toArray(AnimeStatus);
 
   /** Anime source list. */
   public readonly animeSourceList = this.animeService.toArray(Source);

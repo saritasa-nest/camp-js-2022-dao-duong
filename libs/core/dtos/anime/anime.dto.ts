@@ -18,16 +18,18 @@ export enum AnimeStatusDto {
 }
 
 /** Fields by which you can sort. */
+/** Value for sort direction. */
 export enum SortDirectionDto {
   Ascending = '',
   Descending = '-',
 }
 
-/** Fields by which you can sort. */
-export enum SortFieldDto {
+/** Possible value for sorting. */
+export enum AnimeSortFieldDto {
   EnglishTitle = 'title_eng',
   Status = 'status',
   AiredStart = 'aired__startswith',
+  None = '',
 }
 
 /** Anime DTO. */

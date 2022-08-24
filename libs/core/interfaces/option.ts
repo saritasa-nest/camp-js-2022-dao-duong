@@ -1,4 +1,4 @@
-/** Option interface. */
+/** Interface for text - value option. */
 export interface Option {
 
   /** Option text. */

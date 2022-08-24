@@ -1,13 +1,13 @@
 import { PaginationOptionsDto } from '../dtos/pagination.dto';
 import { AnimeListQueryParams } from '../models/anime-query-params';
-import { SortDirectionDto, SortFieldDto } from '../dtos/anime/anime.dto';
+import { SortDirectionDto, AnimeSortFieldDto } from '../dtos/anime/anime.dto';
 import { AnimeSortField } from '../models/anime/anime';
 
-export const SORT_FIELD_TO_DTO_MAP: Readonly<Record<AnimeSortField, SortFieldDto>> = {
-  [AnimeSortField.EnglishTitle]: SortFieldDto.EnglishTitle,
-  [AnimeSortField.EnglishTitle]: SortFieldDto.EnglishTitle,
-  [AnimeSortField.Aired]: SortFieldDto.AiredStart,
-  [AnimeSortField.Status]: SortFieldDto.Status,
+export const SORT_FIELD_TO_DTO_MAP: Readonly<Record<AnimeSortField, AnimeSortFieldDto>> = {
+  [AnimeSortField.EnglishTitle]: AnimeSortFieldDto.EnglishTitle,
+  [AnimeSortField.Aired]: AnimeSortFieldDto.AiredStart,
+  [AnimeSortField.Status]: AnimeSortFieldDto.Status,
+  [AnimeSortField.None]: AnimeSortFieldDto.None,
 };
 
 export namespace AnimeQueryParamsMapper {
@@ -21,7 +21,7 @@ export namespace AnimeQueryParamsMapper {
     const sortDirection = params.sort.direction === 'desc' ? SortDirectionDto.Descending : SortDirectionDto.Ascending;
     const sortField = SORT_FIELD_TO_DTO_MAP[params.sort.field] !== undefined ?
       SORT_FIELD_TO_DTO_MAP[params.sort.field] :
-      AnimeSortField.EnglishTitle;
+      AnimeSortFieldDto.None;
     return {
       limit: params.limit.toString(),
       offset,

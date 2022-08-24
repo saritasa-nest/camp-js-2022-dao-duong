@@ -1,10 +1,30 @@
+import { AnimeTypeDto, AnimeStatusDto } from '../../dtos/anime/anime.dto';
+import { AnimeType, AnimeStatus } from '../../models/anime/anime';
+
 import { AnimeDetailDto } from '../../dtos/anime/animeDetail.dto';
 
 import { AnimeDetail } from '../../models/anime/animeDetail';
 
 import { DateRangeMapper } from '../dateRange.mapper';
 
+import { ANIME_TYPE_FROM_DTO_MAP, ANIME_STATUS_FROM_DTO_MAP } from './anime.mapper';
+
 import { StudioMapper } from './studio.mapper';
+
+export const ANIME_TYPE_TO_DTO_MAP: Readonly<Record<AnimeType, AnimeTypeDto>> = {
+  [AnimeType.Movie]: AnimeTypeDto.Movie,
+  [AnimeType.Music]: AnimeTypeDto.Music,
+  [AnimeType.Ona]: AnimeTypeDto.Ona,
+  [AnimeType.Ova]: AnimeTypeDto.Ova,
+  [AnimeType.Special]: AnimeTypeDto.Special,
+  [AnimeType.Tv]: AnimeTypeDto.Tv,
+};
+
+export const ANIME_STATUS_TO_DTO_MAP: Readonly<Record<AnimeStatus, AnimeStatusDto>> = {
+  [AnimeStatus.Airing]: AnimeStatusDto.Airing,
+  [AnimeStatus.Finished]: AnimeStatusDto.Finished,
+  [AnimeStatus.NotYetAired]: AnimeStatusDto.NotYetAired,
+};
 export namespace AnimeDetailMapper {
 
   /**
@@ -18,8 +38,8 @@ export namespace AnimeDetailMapper {
       englishTitle: dto.title_eng,
       japaneseTitle: dto.title_jpn,
       aired: DateRangeMapper.fromDto(dto.aired),
-      type: dto.type,
-      status: dto.status,
+      type: ANIME_TYPE_FROM_DTO_MAP[dto.type],
+      status: ANIME_STATUS_FROM_DTO_MAP[dto.status],
       synopsis: dto.synopsis,
       airing: dto.airing,
       studioIdList: dto.studios,
@@ -46,8 +66,8 @@ export namespace AnimeDetailMapper {
         start: animeData.aired.start,
         end: animeData.aired.end,
       },
-      type: animeData.type,
-      status: animeData.status,
+      type: ANIME_TYPE_TO_DTO_MAP[animeData.type],
+      status: ANIME_STATUS_TO_DTO_MAP[animeData.status],
       synopsis: animeData.synopsis,
       airing: animeData.airing,
       studios: animeData.studioIdList,
