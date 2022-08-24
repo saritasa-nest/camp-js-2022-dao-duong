@@ -6,13 +6,13 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Register } from '@js-camp/core/models/auth/register';
 
 import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 
 import {
   AuthService,
-  NavigateService,
   ErrorService,
 } from '../../../../core/services/';
 
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnDestroy {
   public constructor(
     private readonly authService: AuthService,
     private readonly formBuilder: FormBuilder,
-    private readonly navigateService: NavigateService,
+    private readonly router: Router,
     private readonly errorService: ErrorService,
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly snackBar: MatSnackBar,
@@ -57,7 +57,7 @@ export class RegisterComponent implements OnDestroy {
       this.authService
         .register(this.registerForm.value as Register)
         .pipe(
-          tap(() => this.navigateService.navigateToHome()),
+          tap(() => this.router.navigate([''])),
           catchError((error: unknown) => of(this.handleError(error))),
           takeUntil(this.subscriptionDestroyed$),
         )
