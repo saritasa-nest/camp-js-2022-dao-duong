@@ -1,4 +1,4 @@
-/** Sort options. */
+/** Interface for text - value option. */
 export interface Option {
 
   /** Sort option text. */
