@@ -1,7 +1,46 @@
-import { Type, Status } from '../../dtos/anime/anime.dto';
-
 import { OmitImmerable, Immerable } from '../immerable';
 import { DateRange } from '../dateRange';
+
+/** Possible options anime type. */
+export enum AnimeType {
+  Tv = 'TV',
+  Ova = 'OVA',
+  Movie = 'Movie',
+  Special = 'Special',
+  Ona = 'ONA',
+  Music = 'Music',
+}
+
+/** Possible options anime status. */
+export enum AnimeStatus {
+  Airing = 'Airing',
+  Finished = 'Finished',
+  NotYetAired = 'Not yet aired',
+}
+
+/** Sort settings. */
+export interface AnimeSort {
+
+  /** Ordering direction. */
+  readonly direction: AnimeSortDirection;
+
+  /** Sort field. */
+  readonly field: AnimeSortField;
+}
+
+/** Sort direction value. */
+export enum AnimeSortDirection {
+  Ascending = 'asc',
+  Descending = 'desc',
+}
+
+/** Fields by which you can sort. */
+export enum AnimeSortField {
+  EnglishTitle = 'titleEng',
+  Aired = 'airedStart',
+  Status = 'status',
+  None = '',
+}
 
 /** Anime. */
 export class Anime extends Immerable {
@@ -21,10 +60,10 @@ export class Anime extends Immerable {
   public readonly aired: DateRange;
 
   /** Anime type. */
-  public readonly type: Type;
+  public readonly type: AnimeType;
 
   /** Anime status. */
-  public readonly status: Status;
+  public readonly status: AnimeStatus;
 
   public constructor(data: InitArgsAnime) {
     super();

@@ -26,7 +26,7 @@
       mat-table
       matSort
       (matSortChange)="onSortChange($event)"
-      [matSortActive]="sort.active"
+      [matSortActive]="sort.field"
       [matSortDirection]="sort.direction"
       [trackBy]="trackAnimeById"
       class="mat-elevation-z8 anime-table"
