@@ -2,7 +2,7 @@ import { HttpErrorMapper } from '@js-camp/core/mappers/httpError.mapper';
 import { createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
-import { getToken, login, register } from './dispatchers';
+import { login, register } from './dispatchers';
 import { initialState } from './state';
 
 export const authSlice = createSlice({
@@ -41,8 +41,5 @@ export const authSlice = createSlice({
       }
       state.isLoading = false;
       state.isLoggedIn = false;
-    })
-    .addCase(getToken.fulfilled, (state, action) => {
-      state.token = action.payload;
     }),
 });
