@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
 import { fetchUser } from '@js-camp/react/store/user/dispatchers';
 import { selectIsUserLoading, selectUser } from '@js-camp/react/store/user/selector';
+import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 import { FC, memo, useEffect } from 'react';
 
 const ProfileComponent: FC = () => {
@@ -10,15 +11,24 @@ const ProfileComponent: FC = () => {
   useEffect(() => {
     dispatch(fetchUser());
   }, [dispatch]);
-  if (isLoading) {
+  if (isLoading || !user) {
     return (
       <div>Loading...</div>
     );
   }
   return (
-    <div>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-    </div>
+    <Card sx={{ maxWidth: 345, mx: 'auto' }}>
+      <CardMedia
+        component="img"
+        image={ user.avatar ?? '' }
+        alt={`${user.firstName} avatar`}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {user.firstName} {user.lastName}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 
