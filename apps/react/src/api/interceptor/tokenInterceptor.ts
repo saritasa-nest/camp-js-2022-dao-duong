@@ -7,11 +7,11 @@ import { CONFIG } from '../config';
  * Interceptor add bearer authorization.
  * @param config Axios Request Config.
  */
-export async function tokenInterceptor(config: AxiosRequestConfig): Promise<AxiosRequestConfig> {
+export function tokenInterceptor(config: AxiosRequestConfig): AxiosRequestConfig {
   if (!shouldInterceptWithToken(config)) {
     return config;
   }
-  const token = await TokenService.getTokens();
+  const token = TokenService.getTokens();
   if (token === null) {
     return config;
   }
