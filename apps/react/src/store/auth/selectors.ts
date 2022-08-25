@@ -17,3 +17,8 @@ export const selectAuthToken = createSelector(
   (state: RootState) => state.auth.token,
   token => token,
 );
+
+export const selectIsAuthUser = createSelector(
+  (state: RootState) => state.auth.isLoggedIn,
+  isLoggedIn => isLoggedIn,
+);

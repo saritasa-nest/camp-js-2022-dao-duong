@@ -16,6 +16,7 @@ export const authSlice = createSlice({
     .addCase(login.fulfilled, (state, action) => {
       state.token = action.payload;
       state.isLoading = false;
+      state.isLoggedIn = true;
     })
     .addCase(login.rejected, (state, action) => {
       const error = action.payload;
@@ -23,6 +24,7 @@ export const authSlice = createSlice({
         state.error = HttpErrorMapper.fromDto(error.response?.data);
       }
       state.isLoading = false;
+      state.isLoggedIn = false;
     })
     .addCase(register.pending, state => {
       state.isLoading = true;
@@ -30,6 +32,7 @@ export const authSlice = createSlice({
     .addCase(register.fulfilled, (state, action) => {
       state.token = action.payload;
       state.isLoading = false;
+      state.isLoggedIn = true;
     })
     .addCase(register.rejected, (state, action) => {
       const error = action.payload;
@@ -37,6 +40,7 @@ export const authSlice = createSlice({
         state.error = HttpErrorMapper.fromDto(error.response?.data);
       }
       state.isLoading = false;
+      state.isLoggedIn = false;
     })
     .addCase(getToken.fulfilled, (state, action) => {
       state.token = action.payload;

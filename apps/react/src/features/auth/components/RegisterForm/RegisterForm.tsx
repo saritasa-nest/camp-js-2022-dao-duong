@@ -89,6 +89,7 @@ const RegisterFormComponent: FC<RegisterFormProps> = ({ errors }) => {
               Have an account?
           </Link>
           <Button
+            type="submit"
             variant="contained"
             color="primary"
             disabled={formik.isSubmitting}

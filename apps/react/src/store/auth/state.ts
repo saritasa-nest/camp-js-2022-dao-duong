@@ -12,9 +12,13 @@ export interface AuthState {
 
   /** Whether the genres are loading or not. */
   readonly isLoading: boolean;
+
+  /** Whether the genres are loading or not. */
+  readonly isLoggedIn: boolean;
 }
 
 export const initialState: AuthState = {
   isLoading: false,
   token: null,
+  isLoggedIn: false,
 };

@@ -1,7 +1,6 @@
 import { FC, memo, useState, useEffect } from 'react';
 import { Container, Typography } from '@mui/material';
 import { useAppSelector } from '@js-camp/react/store';
-import { Link } from 'react-router-dom';
 import {
   selectAuthError,
 } from '@js-camp/react/store/auth/selectors';
@@ -34,7 +33,6 @@ const LoginPageComponent: FC = () => {
 
   return (
     <Container maxWidth="xs">
-      <Link to="/">Home</Link>
       <Typography variant="h3" align="center" p={2}>Login</Typography>
       <LoginForm />
       <MySnackbar

@@ -1,20 +1,18 @@
-import { selectAuthToken } from '@js-camp/react/store/auth/selectors';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Navigate, Outlet, To } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
-import { getToken } from '@js-camp/react/store/auth/dispatchers';
+import { useAppSelector } from '@js-camp/react/store';
+import { selectIsAuthUser } from '@js-camp/react/store/auth/selectors';
+
+import { TokenService } from '../../api/services/tokenService';
 
 export const NoAuthGuard: FC = () => {
-  const dispatch = useAppDispatch();
-  const token = useAppSelector(selectAuthToken);
-  useEffect(() => {
-    dispatch(getToken());
-  }, []);
-  if (token) {
+  const token = TokenService.getTokens();
+  const isAuth = useAppSelector(selectIsAuthUser);
+  if (isAuth || token) {
     const redirect: To = {
       pathname: '/',
     };
-    return <Navigate to={redirect} />;
+    return <Navigate to={redirect} replace/>;
   }
   return <Outlet />;
 };

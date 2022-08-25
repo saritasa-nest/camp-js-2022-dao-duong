@@ -56,6 +56,7 @@ const LoginFormComponent: FC = () => {
           Don't have an account?
           </Link>
           <Button
+            type="submit"
             variant="contained"
             color="primary"
             disabled={formik.isSubmitting}
