@@ -13,7 +13,7 @@ export enum Severity {
 interface MySnackbarProps {
 
   /** Open state for snackbar. */
-  readonly open: boolean;
+  readonly isOpen: boolean;
 
   /** Duration in milliseconds for snackbar to display. */
   readonly duration?: number;
@@ -32,10 +32,10 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
   <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 ));
 
-const MySnackbarComponent: FC<MySnackbarProps> = ({ open, duration, onClose, message, severity }) => (
+const MySnackbarComponent: FC<MySnackbarProps> = ({ isOpen, duration, onClose, message, severity }) => (
   <Snackbar
     anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-    open={open}
+    open={isOpen}
     autoHideDuration={duration}
     onClose={onClose}
   >

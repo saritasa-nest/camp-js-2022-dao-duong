@@ -36,7 +36,7 @@ const LoginPageComponent: FC = () => {
       <Typography variant="h3" align="center" p={2}>Login</Typography>
       <LoginForm />
       <MySnackbar
-        open={isSnackbarOpen}
+        isOpen={isSnackbarOpen}
         duration={5000}
         onClose={onSnackbarClose}
         severity={Severity.error}

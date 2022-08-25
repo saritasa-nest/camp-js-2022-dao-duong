@@ -37,7 +37,7 @@ const RegisterPageComponent: FC = () => {
       <Typography variant="h3" align="center" p={2}>Register</Typography>
       <RegisterForm errors={httpError}/>
       <MySnackbar
-        open={isSnackbarOpen}
+        isOpen={isSnackbarOpen}
         duration={5000}
         onClose={onSnackbarClose}
         severity={Severity.error}
