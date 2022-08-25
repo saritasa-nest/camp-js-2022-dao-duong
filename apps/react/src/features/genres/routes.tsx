@@ -1,15 +1,18 @@
 import { lazy } from 'react';
-import { Navigate, RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
+
+import { AuthGuard } from '../../routes/guards/';
 
 const GenresPage = lazy(() => import('./pages/GenresPage').then(module => ({ default: module.GenresPage })));
 
 export const genresRoutes: RouteObject[] = [
   {
-    path: 'genres',
-    element: <GenresPage />,
-  },
-  {
-    path: '*',
-    element: <Navigate to="GenresPage" />,
+    element: <AuthGuard />,
+    children: [
+      {
+        path: 'genres',
+        element: <GenresPage />,
+      },
+    ],
   },
 ];

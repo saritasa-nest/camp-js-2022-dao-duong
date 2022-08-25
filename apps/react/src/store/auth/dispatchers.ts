@@ -3,6 +3,7 @@ import { Register } from '@js-camp/core/models/auth/register';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { AuthService } from '../../api/services/authService';
+import { TokenService } from '../../api/services/tokenService';
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -24,4 +25,9 @@ export const register = createAsyncThunk(
       return rejectWithValue(err);
     }
   },
+);
+
+export const getToken = createAsyncThunk(
+  'auth/getToken',
+  () => TokenService.getTokens(),
 );

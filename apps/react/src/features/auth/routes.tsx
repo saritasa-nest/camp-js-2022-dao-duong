@@ -1,6 +1,8 @@
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 
+import { NoAuthGuard } from '../../routes/guards';
+
 const LoginPage = lazy(() =>
   import('./pages/').then(module => ({
     default: module.LoginPage,
@@ -12,6 +14,7 @@ const RegisterPage = lazy(() =>
   })));
 export const authRoutes: RouteObject[] = [
   {
+    element: <NoAuthGuard />,
     path: 'auth',
     children: [
       {
