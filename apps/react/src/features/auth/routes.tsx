@@ -12,6 +12,7 @@ const RegisterPage = lazy(() =>
   import('./pages/').then(module => ({
     default: module.RegisterPage,
   })));
+
 export const authRoutes: RouteObject[] = [
   {
     element: <NoAuthGuard />,

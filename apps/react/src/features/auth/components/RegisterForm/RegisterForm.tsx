@@ -10,9 +10,11 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { transformError } from '../../utils/error';
 
-import { RegisterValues, defaultRegisterValues, RegisterSchema } from './formConfig';
-
-import styles from './RegisterForm.module.css';
+import {
+  RegisterValues,
+  defaultRegisterValues,
+  RegisterSchema,
+} from './formConfig';
 
 interface RegisterFormProps {
 
@@ -30,9 +32,9 @@ const RegisterFormComponent: FC<RegisterFormProps> = ({ errors }) => {
   };
 
   useEffect(() => {
-      if (errors) {
-        formik.setErrors(transformError(errors).fieldsError);
-      }
+    if (errors) {
+      formik.setErrors(transformError(errors).fieldsError);
+    }
   }, [errors]);
 
   const formik = useFormik({
@@ -44,35 +46,40 @@ const RegisterFormComponent: FC<RegisterFormProps> = ({ errors }) => {
     <FormikProvider value={formik}>
       <Form>
         <Field
-          className={styles['input']}
+          margin="normal"
+          fullWidth
           component={TextField}
           name="email"
           type="email"
           label="Email"
         />
         <Field
-          className={styles['input']}
+          margin="normal"
+          fullWidth
           component={TextField}
           name="firstName"
           type="text"
           label="First Name"
         />
         <Field
-          className={styles['input']}
+          margin="normal"
+          fullWidth
           component={TextField}
           name="lastName"
           type="text"
           label="Last Name"
         />
         <Field
-          className={styles['input']}
+          margin="normal"
+          fullWidth
           component={TextField}
           name="password"
           type="password"
           label="Password"
         />
         <Field
-          className={styles['input']}
+          margin="normal"
+          fullWidth
           component={TextField}
           name="confirmPassword"
           type="password"
@@ -86,16 +93,15 @@ const RegisterFormComponent: FC<RegisterFormProps> = ({ errors }) => {
           alignItems="center"
         >
           <Link component={RouterLink} to="/auth/login">
-              Have an account?
+            Have an account?
           </Link>
           <Button
             type="submit"
             variant="contained"
             color="primary"
             disabled={formik.isSubmitting}
-            onClick={formik.submitForm}
           >
-              Register
+            Register
           </Button>
         </Grid>
       </Form>

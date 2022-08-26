@@ -1,4 +1,4 @@
-import { FC, memo, useState, useEffect } from 'react';
+import { FC, memo, useState, useEffect, SyntheticEvent } from 'react';
 import { Container, Typography } from '@mui/material';
 import { useAppSelector } from '@js-camp/react/store';
 import {
@@ -22,7 +22,7 @@ const LoginPageComponent: FC = () => {
   }, [httpError]);
 
   const onSnackbarClose = (
-    event?: React.SyntheticEvent | Event,
+    event?: SyntheticEvent | Event,
     reason?: string,
   ) => {
     if (reason === 'clickaway') {

@@ -10,8 +10,6 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { defaultLoginValues, LoginSchema } from '../../components/LoginForm/formConfig';
 
-import styles from './LoginForm.module.css';
-
 const LoginFormComponent: FC = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsAuthLoading);
@@ -27,46 +25,50 @@ const LoginFormComponent: FC = () => {
     onSubmit: onFormSubmission,
   });
   return (
-    <FormikProvider value={formik}>
-      <Form>
-        <Field
-          className={styles['input']}
-          component={TextField}
-          name="email"
-          type="email"
-          label="Email"
-        />
-        <br />
-        <Field
-          className={styles['input']}
-          component={TextField}
-          type="password"
-          label="Password"
-          name="password"
-        />
-        {isLoading && <LinearProgress />}
-        <br />
-        <Grid
-          container
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Link component={RouterLink} to="/auth/register">
-          Don't have an account?
-          </Link>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            disabled={formik.isSubmitting}
-            onClick={formik.submitForm}
+    <>
+      <FormikProvider value={formik}>
+        <Form>
+          <Field
+            component={TextField}
+            name="email"
+            type="email"
+            label="Email"
+            margin="normal"
+            fullWidth
+          />
+          <br />
+          <Field
+            component={TextField}
+            type="password"
+            label="Password"
+            name="password"
+            margin="normal"
+            fullWidth
+          />
+          {isLoading && <LinearProgress />}
+          <br />
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
           >
+            <Link component={RouterLink} to="/auth/register">
+          Don't have an account?
+            </Link>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={formik.isSubmitting}
+            >
           Login
-          </Button>
-        </Grid>
-      </Form>
-    </FormikProvider>
+            </Button>
+          </Grid>
+        </Form>
+      </FormikProvider>
+    </>
+
   );
 };
 
