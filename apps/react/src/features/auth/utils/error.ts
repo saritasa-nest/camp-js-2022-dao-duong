@@ -22,3 +22,12 @@ export function transformError(error: HttpError): TransformedError {
   }
   return { fieldsError };
 }
+
+export const ERROR_MESSAGES = {
+  requiredEmail: 'Email is required!',
+  requiredPassword: 'Password is required!',
+  requiredConfirmPassword: 'Confirm Password is required!',
+  invalidEmail: 'Invalid email!',
+  maxCharacters: 'Too long!',
+  unmatchPassword: 'Passwords must match',
+};

@@ -36,12 +36,12 @@ const MyNavbarComponent: FC = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="secondary">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/" className={styles['home-link']}>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Link to="/" className={styles['home-link']}>
+            <Typography variant="h6" component="div">
               Anime
-            </Link>
-          </Typography>
+            </Typography>
+          </Link>
           {user ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
@@ -66,7 +66,7 @@ const MyNavbarComponent: FC = () => {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Link to="/user/profile" className={styles['link']}>
+                  <Link to="/user/profile" className={styles['menu-item']}>
                     <Typography textAlign="center">Profile</Typography>
                   </Link>
                 </MenuItem>
@@ -76,7 +76,7 @@ const MyNavbarComponent: FC = () => {
               </Menu>
             </Box>
           ) : (
-            <Link to="auth/login" className={styles['link']}>
+            <Link to="auth/login" className={styles['menu-item']}>
               <Typography variant="body2">Login</Typography>
             </Link>
           )}
