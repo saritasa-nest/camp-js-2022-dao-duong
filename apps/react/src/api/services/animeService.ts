@@ -8,8 +8,6 @@ import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { AnimeQueryParamsMapper } from '@js-camp/core/mappers/anime-query-params.mapper';
 import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
 
-import { Pagination } from '@js-camp/core/models/pagination';
-
 import { http } from '..';
 
 const url = 'anime/anime/';
@@ -23,7 +21,7 @@ export namespace AnimeService {
     sort,
     search,
     type,
-  }: AnimeListQueryParams): Promise<Pagination<Anime>> {
+  }: AnimeListQueryParams): Promise<readonly Anime[]> {
     const params = AnimeQueryParamsMapper.toDto({
       limit,
       page,
@@ -35,7 +33,8 @@ export namespace AnimeService {
     const animeResponse = await http.get<PaginationDto<AnimeDto>>(url, {
       params,
     });
-    return PaginationMapper.fromDto(animeResponse.data, animeDto =>
+    const animePage = PaginationMapper.fromDto(animeResponse.data, animeDto =>
       AnimeMapper.fromDto(animeDto));
+    return animePage.results;
   }
 }

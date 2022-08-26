@@ -1,17 +1,17 @@
 import { FC } from 'react';
 import { Navigate, RouteObject, useRoutes } from 'react-router-dom';
 
-import { genresRoutes } from '../features/genres/routes';
 import { authRoutes } from '../features/auth/routes';
 import { userRoutes } from '../features/user/routes';
+import { animeRoutes } from '../features/anime/routes';
 
 const routes: RouteObject[] = [
-  ...genresRoutes,
+  ...animeRoutes,
   ...authRoutes,
   ...userRoutes,
   {
     path: '*',
-    element: <Navigate to="/genres" />,
+    element: <Navigate to="/anime" />,
   },
 ];
 
