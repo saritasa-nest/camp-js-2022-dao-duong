@@ -1,33 +1,45 @@
-import { ListItem, ListItemAvatar, Avatar, ListItemText, Typography, Divider } from '@mui/material';
-import React from 'react';
 import { FC, memo } from 'react';
 
-const AnimeListItemComponent: FC = () => {
+import { Anime } from '@js-camp/core/models/anime/anime';
+import {
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  Typography,
+  Divider,
+} from '@mui/material';
+
+import styles from './AnimeListItem.module.css';
+import { Titles } from './components/Titles/Title';
+interface AnimeListItemProps {
+
+  /** Anime data. */
+  readonly anime: Anime;
+}
+
+const AnimeListItemComponent: FC<AnimeListItemProps> = ({ anime }) => {
   const test = 1;
   return (
     <>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+      <ListItem className={styles['item']}>
+        <ListItemAvatar className={styles['item-image']}>
+          <Avatar
+            alt={`${anime.englishTitle || anime.japaneseTitle} image`}
+            src={anime.image}
+            className={styles['image']}
+          />
         </ListItemAvatar>
         <ListItemText
-          primary="Brunch this weekend?"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                Ali Connors
-              </Typography>
-              {' — I\'ll be in your neighborhood doing errands this…'}
-            </React.Fragment>
+          primary={
+            <Titles
+              englishTitle={anime.englishTitle}
+              japaneseTitle={anime.japaneseTitle}
+            ></Titles>
           }
         />
       </ListItem>
-      <Divider variant="inset" component="li" />
+      <Divider component="li" />
     </>
   );
 };

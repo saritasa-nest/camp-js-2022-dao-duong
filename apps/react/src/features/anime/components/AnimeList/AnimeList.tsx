@@ -9,7 +9,7 @@ import { FC, memo, useEffect } from 'react';
 const DEFAULT_PARAMS: AnimeListQueryParams = {
   page: 0,
   limit: 25,
-  sort: { direction: AnimeSortDirection.Ascending, field: AnimeSortField.None },
+  sort: { direction: AnimeSortDirection.Descending, field: AnimeSortField.EnglishTitle },
   type: [],
   search: '',
 };
@@ -31,12 +31,9 @@ const AnimeListComponent: FC = () => {
   }
   return (
     <>
-      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        <AnimeListItem />
-        <AnimeListItem />
-        <AnimeListItem />
+      <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+        {animeList.map(anime => <AnimeListItem anime={anime} key={anime.id}/>)}
       </List>
-      <pre>{JSON.stringify(animeList, null, 2)}</pre>
     </>
   );
 };
