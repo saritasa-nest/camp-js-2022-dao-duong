@@ -19,7 +19,10 @@ interface MySnackbarProps {
   readonly duration?: number;
 
   /** OnClose callback for snackbar. */
-  readonly onClose: (event?: React.SyntheticEvent | Event, reason?: string,) => void;
+  readonly onClose: (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => void;
 
   /** Snackbar message. */
   readonly message: string;
@@ -32,18 +35,20 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
   <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 ));
 
-const MySnackbarComponent: FC<MySnackbarProps> = ({ isOpen, duration, onClose, message, severity }) => (
+const MySnackbarComponent: FC<MySnackbarProps> = ({
+  isOpen,
+  duration,
+  onClose,
+  message,
+  severity,
+}) => (
   <Snackbar
     anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
     open={isOpen}
     autoHideDuration={duration}
     onClose={onClose}
   >
-    <Alert
-      severity={severity}
-      sx={{ width: '100%' }}
-      onClose={onClose}
-    >
+    <Alert severity={severity} sx={{ width: '100%' }} onClose={onClose}>
       {message}
     </Alert>
   </Snackbar>

@@ -3,13 +3,13 @@ import { User } from '@js-camp/core/models/user/user';
 /** Genres state. */
 export interface UserState {
 
-  /** Genres list. */
+  /** User data. */
   readonly user: User | null;
 
   /** Error. */
   readonly error?: string;
 
-  /** Whether the genres are loading or not. */
+  /** Whether the user are loading or not. */
   readonly isLoading: boolean;
 }
 

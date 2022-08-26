@@ -8,16 +8,13 @@ export const selectIsAuthLoading = createSelector(
   isLoading => isLoading,
 );
 
+/** Select auth error value. */
 export const selectAuthError = createSelector(
   (state: RootState) => state.auth.error,
   error => error,
 );
 
-export const selectAuthToken = createSelector(
-  (state: RootState) => state.auth.token,
-  token => token,
-);
-
+/** Select if user is logged in or not. */
 export const selectIsAuthUser = createSelector(
   (state: RootState) => state.auth.token,
   token => token !== null,
