@@ -8,7 +8,7 @@ export interface AuthState {
   readonly token: Token | null;
 
   /** Error. */
-  readonly error?: HttpError;
+  readonly error?: HttpError | unknown;
 
   /** Whether the auth states are loading or not. */
   readonly isLoading: boolean;

@@ -1,7 +1,4 @@
-import { HttpErrorMapper } from '@js-camp/core/mappers/httpError.mapper';
-import { HttpError } from '@js-camp/core/models/httpError';
 import { createSlice } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
 
 import { login, register } from './dispatchers';
 import { initialState } from './state';
