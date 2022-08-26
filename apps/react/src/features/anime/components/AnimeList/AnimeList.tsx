@@ -9,7 +9,7 @@ import { FC, memo, useEffect } from 'react';
 const DEFAULT_PARAMS: AnimeListQueryParams = {
   page: 0,
   limit: 25,
-  sort: { direction: AnimeSortDirection.Descending, field: AnimeSortField.EnglishTitle },
+  sort: { direction: AnimeSortDirection.Descending, field: AnimeSortField.None },
   type: [],
   search: '',
 };
