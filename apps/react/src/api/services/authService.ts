@@ -37,6 +37,6 @@ export namespace AuthService {
 
   /** Logout service.*/
   export async function logout(): Promise<void> {
-    await TokenService.destroyToken();
+    TokenService.destroyToken();
   }
 }
