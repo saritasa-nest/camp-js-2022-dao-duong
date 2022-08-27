@@ -51,5 +51,7 @@ export namespace AuthService {
     if (error instanceof AxiosError) {
       return HttpErrorMapper.fromDto(error.response?.data);
     }
+
+    return { detail: 'Unknown error' } as HttpError;
   }
 }

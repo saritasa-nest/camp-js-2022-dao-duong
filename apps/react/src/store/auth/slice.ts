@@ -1,3 +1,4 @@
+import { HttpError } from '@js-camp/core/models/httpError';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { login, register } from './dispatchers';
@@ -17,7 +18,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(login.rejected, (state, action) => {
-        state.error = action.payload;
+        state.error = action.payload as HttpError;
         state.isLoading = false;
       })
       .addCase(register.pending, state => {
@@ -28,7 +29,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(register.rejected, (state, action) => {
-        state.error = action.payload;
+        state.error = action.payload as HttpError;
         state.isLoading = false;
       }),
 });

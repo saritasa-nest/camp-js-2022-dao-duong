@@ -11,7 +11,7 @@ export function tokenInterceptor(config: AxiosRequestConfig): AxiosRequestConfig
   if (!shouldInterceptWithToken(config)) {
     return config;
   }
-  const token = TokenService.getTokens();
+  const token = TokenService.getToken();
   if (token === null) {
     return config;
   }
