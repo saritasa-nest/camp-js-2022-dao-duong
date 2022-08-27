@@ -17,7 +17,8 @@ const ProfileComponent: FC = () => {
   useEffect(() => {
     dispatch(fetchUser());
   }, [dispatch]);
-  if (isLoading || !user) {
+
+  if (isLoading || user === null) {
     return <div>Loading...</div>;
   }
   return (

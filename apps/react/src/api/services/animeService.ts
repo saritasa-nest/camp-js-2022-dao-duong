@@ -14,24 +14,14 @@ const url = 'anime/anime/';
 
 export namespace AnimeService {
 
-  /** Fetches a list of genres. */
-  export async function fetchAnime({
-    limit,
-    page,
-    sort,
-    search,
-    type,
-  }: AnimeListQueryParams): Promise<readonly Anime[]> {
-    const params = AnimeQueryParamsMapper.toDto({
-      limit,
-      page,
-      sort,
-      search,
-      type,
-    });
+  /**
+   * Fetches a list of genres.
+   * @param queryParams Anime query parameters for the request.
+   */
+  export async function fetchAnime(queryParams: AnimeListQueryParams): Promise<readonly Anime[]> {
 
     const animeResponse = await http.get<PaginationDto<AnimeDto>>(url, {
-      params,
+      params: AnimeQueryParamsMapper.toDto(queryParams),
     });
     const animePage = PaginationMapper.fromDto(animeResponse.data, animeDto =>
       AnimeMapper.fromDto(animeDto));

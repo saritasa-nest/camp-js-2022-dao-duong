@@ -20,8 +20,7 @@ import styles from './MyNavbar.module.css';
 const MyNavbarComponent: FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-  const [anchorElementUser, setAnchorElementUser] =
-    useState<null | HTMLElement>(null);
+  const [anchorElementUser, setAnchorElementUser] = useState<null | HTMLElement>(null);
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElementUser(event.currentTarget);
   };

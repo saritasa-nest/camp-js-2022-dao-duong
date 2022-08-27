@@ -1,7 +1,7 @@
 .login-link,
 .home-link {
   text-decoration: none;
-  color: #fff;
+  color: var(--primary-text-color);
 }
 
 .home-link {
@@ -10,5 +10,5 @@
 
 .menu-item {
   text-decoration: none;
-  color: #333;
+  color: var(--primary-dark-text-color);
 }

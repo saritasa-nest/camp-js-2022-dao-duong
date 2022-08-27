@@ -10,7 +10,7 @@ export const login = createAsyncThunk(
     try {
       return await AuthService.login(loginData);
     } catch (err: unknown) {
-      return rejectWithValue(err);
+      return rejectWithValue(AuthService.mappingError(err));
     }
   },
 );
@@ -21,7 +21,7 @@ export const register = createAsyncThunk(
     try {
       return await AuthService.register(registerData);
     } catch (err: unknown) {
-      return rejectWithValue(err);
+      return rejectWithValue(AuthService.mappingError(err));
     }
   },
 );

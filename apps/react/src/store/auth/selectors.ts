@@ -15,7 +15,7 @@ export const selectAuthError = createSelector(
 );
 
 /** Select if user is logged in or not. */
-export const selectIsAuthUser = createSelector(
+export const selectHasAuthToken = createSelector(
   (state: RootState) => state.auth.token,
   token => token !== null,
 );

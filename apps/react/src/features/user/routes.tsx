@@ -7,6 +7,7 @@ export const ProfilePage = lazy(() =>
   import('./pages/Profile/Profile').then(module => ({
     default: module.Profile,
   })));
+
 export const userRoutes: RouteObject[] = [
   {
     element: <AuthGuard />,
