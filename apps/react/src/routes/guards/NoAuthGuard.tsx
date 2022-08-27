@@ -4,12 +4,15 @@ import { useAppSelector } from '@js-camp/react/store';
 
 import { selectIsUser } from '@js-camp/react/store/user/selector';
 
+import { selectHasAuthToken } from '@js-camp/react/store/auth/selectors';
+
 import { TokenService } from '../../api/services/tokenService';
 
 export const NoAuthGuard: FC = () => {
-  const hasToken = TokenService.hasToken();
+  const hasTokenFromLocalStorage = TokenService.hasToken();
+  const hasTokenFromAppStore = useAppSelector(selectHasAuthToken);
   const isUser = useAppSelector(selectIsUser);
-  if (isUser || hasToken) {
+  if (isUser || hasTokenFromLocalStorage || hasTokenFromAppStore) {
     const redirect: To = {
       pathname: '/',
     };
