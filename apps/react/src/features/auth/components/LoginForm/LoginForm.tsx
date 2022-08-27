@@ -75,7 +75,7 @@ const LoginFormComponent: FC = () => {
             alignItems="center"
           >
             <Link component={RouterLink} to="/auth/register">
-          Don't have an account?
+              Don't have an account?
             </Link>
             <Button
               type="submit"
@@ -83,7 +83,7 @@ const LoginFormComponent: FC = () => {
               color="primary"
               disabled={formik.isSubmitting}
             >
-          Login
+              Login
             </Button>
           </Grid>
         </Form>
