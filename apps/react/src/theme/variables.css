@@ -13,4 +13,5 @@
 
   /* 64px is the height of the navbar */
   --anime-list-height: calc(100vh - 64px);
+  --anime-list-min-width: 25%;
 }
