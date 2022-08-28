@@ -10,21 +10,43 @@ import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
 
 import { http } from '..';
 
-const url = 'anime/anime/';
-
 export namespace AnimeService {
+  const URL = 'anime/anime/';
+  let nextUrl: string | null = null;
 
   /**
-   * Fetches a list of genres.
+   * Fetches a list of anime.
    * @param queryParams Anime query parameters for the request.
    */
   export async function fetchAnime(queryParams: AnimeListQueryParams): Promise<readonly Anime[]> {
 
-    const animeResponse = await http.get<PaginationDto<AnimeDto>>(url, {
+    const animeResponse = await http.get<PaginationDto<AnimeDto>>(URL, {
       params: AnimeQueryParamsMapper.toDto(queryParams),
     });
     const animePage = PaginationMapper.fromDto(animeResponse.data, animeDto =>
       AnimeMapper.fromDto(animeDto));
+    setNextUrl(animePage.next);
     return animePage.results;
+  }
+
+  /** Fetch next page of anime list. */
+  export async function fetchNextAnime(): Promise<readonly Anime[]> {
+    if (!nextUrl) {
+      throw new Error('No next page available');
+    }
+
+    const animeResponse = await http.get<PaginationDto<AnimeDto>>(nextUrl);
+    const animePage = PaginationMapper.fromDto(animeResponse.data, animeDto =>
+      AnimeMapper.fromDto(animeDto));
+    setNextUrl(animePage.next);
+    return animePage.results;
+  }
+
+  /**
+   * Set the next url for the next page.
+   * @param url The next url.
+   */
+  function setNextUrl(url: string | null) {
+    nextUrl = url;
   }
 }
