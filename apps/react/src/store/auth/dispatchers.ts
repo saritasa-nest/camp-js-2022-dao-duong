@@ -25,3 +25,8 @@ export const register = createAsyncThunk(
     }
   },
 );
+
+export const logout = createAsyncThunk(
+  'auth/logout',
+  () => AuthService.logout(),
+);

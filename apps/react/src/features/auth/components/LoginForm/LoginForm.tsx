@@ -58,6 +58,7 @@ const LoginFormComponent: FC = () => {
             label="Email"
             margin="normal"
             fullWidth
+            required
           />
           <Field
             component={TextField}
@@ -66,6 +67,7 @@ const LoginFormComponent: FC = () => {
             name="password"
             margin="normal"
             fullWidth
+            required
           />
           {isLoading && <LinearProgress />}
           <Grid

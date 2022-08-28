@@ -13,8 +13,3 @@ export const selectIsUserLoading = createSelector(
   (state: RootState) => state.user.isLoading,
   isLoading => isLoading,
 );
-
-export const selectIsUser = createSelector(
-  (state: RootState) => state.user.user,
-  user => user !== null,
-);

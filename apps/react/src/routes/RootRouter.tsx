@@ -6,13 +6,13 @@ import { authRoutes } from '../features/auth/routes';
 import { userRoutes } from '../features/user/routes';
 
 const routes: RouteObject[] = [
-  ...genresRoutes,
-  ...authRoutes,
-  ...userRoutes,
   {
     path: '*',
     element: <Navigate to="/genres" />,
   },
+  ...genresRoutes,
+  ...authRoutes,
+  ...userRoutes,
 ];
 
 /** Root router component. */
