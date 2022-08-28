@@ -4,7 +4,7 @@ import { TokenService } from '../services/tokenService';
 import { CONFIG } from '../config';
 
 /**
- * Interceptor add bearer authorization.
+ * Intercept and add bearer authorization.
  * @param config Axios Request Config.
  */
 export function tokenInterceptor(config: AxiosRequestConfig): AxiosRequestConfig {

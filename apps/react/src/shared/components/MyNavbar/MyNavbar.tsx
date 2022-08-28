@@ -1,6 +1,6 @@
-import { logoutUser } from '@js-camp/react/store/user/dispatchers';
+import { logout } from '@js-camp/react/store/auth/dispatchers';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { selectUser } from '@js-camp/react/store/user/selector';
+import { selectUser } from '@js-camp/react/store/user/selectors';
 import {
   Box,
   AppBar,
@@ -20,7 +20,8 @@ import styles from './MyNavbar.module.css';
 const MyNavbarComponent: FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-  const [anchorElementUser, setAnchorElementUser] = useState<null | HTMLElement>(null);
+  const [anchorElementUser, setAnchorElementUser] =
+    useState<null | HTMLElement>(null);
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElementUser(event.currentTarget);
   };
@@ -30,7 +31,7 @@ const MyNavbarComponent: FC = () => {
   };
 
   const handleLogoutButtonClick = () => {
-    dispatch(logoutUser());
+    dispatch(logout());
   };
 
   return (
@@ -42,7 +43,7 @@ const MyNavbarComponent: FC = () => {
               Anime
             </Typography>
           </Link>
-          {user ? (
+          {user !== null ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

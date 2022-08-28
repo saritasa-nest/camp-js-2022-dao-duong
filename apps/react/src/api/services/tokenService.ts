@@ -25,6 +25,6 @@ export namespace TokenService {
 
   /** Check whether the storage have token or not. */
   export function hasToken(): boolean {
-    return !!getToken();
+    return getToken() !== null;
   }
 }

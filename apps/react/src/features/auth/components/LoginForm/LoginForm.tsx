@@ -58,6 +58,7 @@ const LoginFormComponent: FC = () => {
             label="Email"
             margin="normal"
             fullWidth
+            required
           />
           <Field
             component={TextField}
@@ -66,6 +67,7 @@ const LoginFormComponent: FC = () => {
             name="password"
             margin="normal"
             fullWidth
+            required
           />
           {isLoading && <LinearProgress />}
           <Grid
@@ -75,7 +77,7 @@ const LoginFormComponent: FC = () => {
             alignItems="center"
           >
             <Link component={RouterLink} to="/auth/register">
-          Don't have an account?
+              Don't have an account?
             </Link>
             <Button
               type="submit"
@@ -83,7 +85,7 @@ const LoginFormComponent: FC = () => {
               color="primary"
               disabled={formik.isSubmitting}
             >
-          Login
+              Login
             </Button>
           </Grid>
         </Form>

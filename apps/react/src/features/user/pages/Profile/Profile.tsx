@@ -3,7 +3,7 @@ import { fetchUser } from '@js-camp/react/store/user/dispatchers';
 import {
   selectIsUserLoading,
   selectUser,
-} from '@js-camp/react/store/user/selector';
+} from '@js-camp/react/store/user/selectors';
 import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 
 import { FC, memo, useEffect } from 'react';
@@ -19,7 +19,7 @@ const ProfileComponent: FC = () => {
   }, [dispatch]);
 
   if (isLoading || user === null) {
-    return <div>Loading...</div>;
+    return <div>Fetching user...</div>;
   }
   return (
     <>
