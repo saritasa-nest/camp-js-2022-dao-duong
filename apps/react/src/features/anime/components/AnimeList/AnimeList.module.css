@@ -1,0 +1,6 @@
+.anime-list {
+  border-right: 1px #333 solid;
+  overflow-y: scroll;
+  max-height: var(--anime-list-height);
+  min-width: 25%;
+}

@@ -3,8 +3,12 @@ import { AnimeSortDirection, AnimeSortField } from '@js-camp/core/models/anime/a
 import { fetchAnime } from '@js-camp/react/store/anime/dispatchers';
 import { selectAnimeList, selectIsAnimeLoading } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { List } from '@mui/material';
+import { Box, List } from '@mui/material';
 import { FC, memo, useEffect } from 'react';
+
+import { AnimeListItem } from '../AnimeListItem/AnimeListItem';
+
+import styles from './AnimeList.module.css';
 
 const DEFAULT_PARAMS: AnimeListQueryParams = {
   page: 0,
@@ -14,7 +18,6 @@ const DEFAULT_PARAMS: AnimeListQueryParams = {
   search: '',
 };
 
-import { AnimeListItem } from '../AnimeListItem/AnimeListItem';
 const AnimeListComponent: FC = () => {
   const dispatch = useAppDispatch();
   const animeList = useAppSelector(selectAnimeList);
@@ -30,11 +33,11 @@ const AnimeListComponent: FC = () => {
     );
   }
   return (
-    <>
+    <Box className={styles['anime-list']}>
       <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {animeList.map(anime => <AnimeListItem anime={anime} key={anime.id}/>)}
       </List>
-    </>
+    </Box>
   );
 };
 

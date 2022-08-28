@@ -10,4 +10,7 @@
   --background-color: white;
   --background-contrast-color: black;
   --error-color: red;
+
+  /* 64px is the height of the navbar */
+  --anime-list-height: calc(100vh - 64px);
 }
