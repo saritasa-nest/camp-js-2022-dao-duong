@@ -7,7 +7,7 @@ import { Box, List } from '@mui/material';
 
 import { FC, memo, useEffect } from 'react';
 
-import useElementOnScreen from '../../../../shared/hooks/useOnScreen';
+import useLastItemOnScreen from '../../../../shared/hooks/useLastItemOnScreen';
 
 import { AnimeListItem } from '../AnimeListItem/AnimeListItem';
 
@@ -16,7 +16,7 @@ import styles from './AnimeList.module.css';
 const DEFAULT_PARAMS: AnimeListQueryParams = {
   page: 0,
   limit: 25,
-  sort: { direction: AnimeSortDirection.Descending, field: AnimeSortField.None },
+  sort: { direction: AnimeSortDirection.Descending, field: AnimeSortField.EnglishTitle },
   type: [],
   search: '',
 };
@@ -25,10 +25,10 @@ const AnimeListComponent: FC = () => {
   const dispatch = useAppDispatch();
   const animeList = useAppSelector(selectAnimeList);
   const isLoading = useAppSelector(selectIsAnimeLoading);
-  const [containerRef, isVisible] = useElementOnScreen({
+  const { itemRef, isItemVisible } = useLastItemOnScreen({
     root: null,
     rootMargin: '0px',
-    threshold: 1.0,
+    threshold: 0.5,
   });
 
   useEffect(() => {
@@ -36,27 +36,27 @@ const AnimeListComponent: FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (isVisible) {
+    if (isItemVisible) {
       dispatch(fetchNextAnime());
     }
-  }, [containerRef, isVisible, dispatch]);
+  }, [itemRef, isItemVisible]);
 
-  if (isLoading) {
+  if (animeList.length === 0) {
     return (
 
       // Should have a skeleton loader here!
-      <div>Loading...</div>
+      <div>Fetching anime...</div>
     );
   }
   return (
     <Box className={styles['anime-list']}>
       <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {animeList.map(anime =>
-          <div ref={containerRef}>
-            <AnimeListItem anime={anime} key={anime.id} />
+          <div ref={itemRef} key={anime.id}>
+            <AnimeListItem anime={anime} />
           </div>)}
       </List>
-      <div className={styles['isVisible']}>{isVisible ? 'IN VIEWPORT' : 'NOT IN VIEWPORT'}</div>
+      {isLoading && <div>Loading...</div>}
     </Box>
   );
 };

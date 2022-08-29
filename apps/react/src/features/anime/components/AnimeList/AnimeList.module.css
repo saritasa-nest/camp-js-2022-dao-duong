@@ -1,12 +1,7 @@
 .anime-list {
   overflow-y: scroll;
   max-height: var(--anime-list-height);
-  min-width: var(--anime-list-min-width);
-}
-
-.isVisible {
-	position: absolute;
-	top: 0;
+  width: var(--anime-list-width);
 }
 
 /* Custom scrollbar */
