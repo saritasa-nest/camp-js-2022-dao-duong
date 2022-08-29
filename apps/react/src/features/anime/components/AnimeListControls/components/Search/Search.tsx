@@ -1,5 +1,5 @@
 import { FC, memo, ChangeEvent } from 'react';
-import { debounce, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
 interface SearchProps {
 
@@ -18,7 +18,7 @@ const SearchComponent: FC<SearchProps> = ({ setSearchValue }) => {
         fullWidth
         label="Search"
         variant="outlined"
-        onChange={debounce(handleSearchChange, 500)}
+        onChange={handleSearchChange}
       />
     </>
   );

@@ -1,6 +1,4 @@
-import { AnimeType } from '../utils/types/animeType';
-
-import { AnimeSort } from './anime/anime';
+import { AnimeSort, AnimeType } from './anime/anime';
 
 /** Options for query params. */
 export interface AnimeListQueryParams {
@@ -18,5 +16,5 @@ export interface AnimeListQueryParams {
   readonly search: string | null;
 
   /** Filtering type. */
-  readonly type: AnimeType[];
+  readonly type: readonly AnimeType[];
 }

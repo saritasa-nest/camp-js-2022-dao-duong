@@ -5,7 +5,7 @@ import { selectAnimeList, selectIsAnimeLoading } from '@js-camp/react/store/anim
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { Box, List } from '@mui/material';
 
-import { FC, memo, useEffect } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 
 import useLastItemOnScreen from '../../../../shared/hooks/useLastItemOnScreen';
 import { AnimeListControl } from '../AnimeListControls/AnimeListControl';
@@ -26,6 +26,7 @@ const AnimeListComponent: FC = () => {
   const dispatch = useAppDispatch();
   const animeList = useAppSelector(selectAnimeList);
   const isLoading = useAppSelector(selectIsAnimeLoading);
+  const [params, setParams] = useState(DEFAULT_PARAMS);
   const { itemRef, isItemVisible } = useLastItemOnScreen({
     root: null,
     rootMargin: '0px',
@@ -33,26 +34,18 @@ const AnimeListComponent: FC = () => {
   });
 
   useEffect(() => {
-    dispatch(fetchAnime(DEFAULT_PARAMS));
-  }, [dispatch]);
+    dispatch(fetchAnime(params));
+  }, [dispatch, params]);
 
   useEffect(() => {
     if (isItemVisible) {
       dispatch(fetchNextAnime());
     }
   }, [itemRef, isItemVisible]);
-
-  if (animeList.length === 0) {
-    return (
-
-      // Should have a skeleton loader here!
-      <div>Fetching anime...</div>
-    );
-  }
   return (
     <Box className={styles['anime-list']}>
-      <AnimeListControl />
-      <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+      <AnimeListControl params={params} setParams={setParams}/>
+      <List sx={{ width: '100%' }}>
         {animeList.map(anime =>
           <div ref={itemRef} key={anime.id}>
             <AnimeListItem anime={anime} />
