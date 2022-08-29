@@ -2,6 +2,7 @@
   overflow-y: scroll;
   max-height: var(--anime-list-height);
   width: var(--anime-list-width);
+	position: relative;
 }
 
 /* Custom scrollbar */

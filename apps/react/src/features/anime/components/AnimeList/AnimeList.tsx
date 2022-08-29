@@ -8,6 +8,7 @@ import { Box, List } from '@mui/material';
 import { FC, memo, useEffect } from 'react';
 
 import useLastItemOnScreen from '../../../../shared/hooks/useLastItemOnScreen';
+import { AnimeListControl } from '../AnimeListControls/AnimeListControl';
 
 import { AnimeListItem } from '../AnimeListItem/AnimeListItem';
 
@@ -50,6 +51,7 @@ const AnimeListComponent: FC = () => {
   }
   return (
     <Box className={styles['anime-list']}>
+      <AnimeListControl />
       <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {animeList.map(anime =>
           <div ref={itemRef} key={anime.id}>
