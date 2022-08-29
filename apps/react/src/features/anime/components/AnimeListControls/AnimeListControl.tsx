@@ -1,14 +1,22 @@
 import { AnimeSort, AnimeSortDirection, AnimeSortField, AnimeType } from '@js-camp/core/models/anime/anime';
 import { Box, Tabs, Tab } from '@mui/material';
-import { FC, memo, SyntheticEvent, useState } from 'react';
+import { FC, memo, SyntheticEvent, useState, useEffect } from 'react';
 
-import styles from './AnimeListControl.module.css';
+import { Search } from './components/Search/Search';
 import { Sort } from './components/Sort/Sort';
+import { Type } from './components/Type/Type';
+import styles from './AnimeListControl.module.css';
 
 interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
+
+  /** Tab children. */
+  readonly children?: React.ReactNode;
+
+  /** Tab index. */
+  readonly index: number;
+
+  /** Tab value. */
+  readonly value: number;
 }
 
 const TabPanel = (props: TabPanelProps) => {
@@ -22,7 +30,7 @@ const TabPanel = (props: TabPanelProps) => {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ p: 2, display: 'flex' }}>
           {children}
         </Box>
       )}
@@ -36,11 +44,15 @@ const AnimeListControlComponent: FC = () => {
     direction: AnimeSortDirection.Descending,
     field: AnimeSortField.EnglishTitle,
   });
-  const [filterValue, setFilterValue] = useState<AnimeType | []>([]);
+  const [typeFilterValue, setTypeFilterValue] = useState<readonly AnimeType[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
   const handleTabChange = (event: SyntheticEvent, newTabValue: number) => {
-    setTabValue(tabValue);
+    setTabValue(newTabValue);
   };
+
+  useEffect(() => {
+    console.log({ sortValue, typeFilterValue, searchValue });
+  }, [sortValue, typeFilterValue, searchValue]);
 
   return (
     <Box className={styles['anime-list-control']}>
@@ -55,10 +67,10 @@ const AnimeListControlComponent: FC = () => {
         <Sort sortValue={sortValue} setSortValue={setSortValue}/>
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        Item Two
+        <Type typeValue={typeFilterValue} setTypeValue={setTypeFilterValue}/>
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        Item Three
+        <Search setSearchValue={setSearchValue}/>
       </TabPanel>
     </Box>
   );

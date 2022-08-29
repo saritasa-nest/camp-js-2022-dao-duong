@@ -27,7 +27,7 @@ const SortComponent: FC<SortProps> = ({ sortValue, setSortValue }) => {
 
   return (
     <>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
+      <FormControl sx={{ m: 1, minWidth: 120, flex: '1' }}>
         <InputLabel id="field-label">Field</InputLabel>
         <Select labelId="field-label" label="Field" value={sortValue.field} onChange={handleSortChange}>
           {Object.entries(AnimeSortField).map(([field, value]) => (
@@ -38,7 +38,7 @@ const SortComponent: FC<SortProps> = ({ sortValue, setSortValue }) => {
         ;
         </Select>
       </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
+      <FormControl sx={{ m: 1, minWidth: 120, flex: '1' }}>
         <InputLabel id="direction-label">Direction</InputLabel>
         <Select
           labelId="direction-label"
