@@ -3,24 +3,26 @@ import { TextField } from '@mui/material';
 
 interface SearchProps {
 
+  /** Search value. */
+  readonly searchValue: string;
+
   /** Set search value callback. */
   readonly setSearchValue: (searchValue: string) => void;
 }
 
-const SearchComponent: FC<SearchProps> = ({ setSearchValue }) => {
+const SearchComponent: FC<SearchProps> = ({ searchValue, setSearchValue }) => {
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
 
   return (
-    <>
-      <TextField
-        fullWidth
-        label="Search"
-        variant="outlined"
-        onChange={handleSearchChange}
-      />
-    </>
+    <TextField
+      fullWidth
+      label="Search"
+      variant="outlined"
+      onChange={handleSearchChange}
+      value={searchValue}
+    />
   );
 };
 

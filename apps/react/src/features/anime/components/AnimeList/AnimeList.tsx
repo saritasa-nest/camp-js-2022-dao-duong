@@ -3,7 +3,7 @@ import { AnimeSortDirection, AnimeSortField } from '@js-camp/core/models/anime/a
 import { fetchAnime, fetchNextAnime } from '@js-camp/react/store/anime/dispatchers';
 import { selectAnimeList, selectIsAnimeLoading } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Box, List } from '@mui/material';
+import { Box, debounce, List } from '@mui/material';
 
 import { FC, memo, useEffect, useState } from 'react';
 
@@ -27,7 +27,7 @@ const AnimeListComponent: FC = () => {
   const animeList = useAppSelector(selectAnimeList);
   const isLoading = useAppSelector(selectIsAnimeLoading);
   const [params, setParams] = useState(DEFAULT_PARAMS);
-  const { itemRef, isItemVisible } = useLastItemOnScreen({
+  const { itemRef, isLastItemVisible } = useLastItemOnScreen({
     root: null,
     rootMargin: '0px',
     threshold: 0.5,
@@ -38,13 +38,13 @@ const AnimeListComponent: FC = () => {
   }, [dispatch, params]);
 
   useEffect(() => {
-    if (isItemVisible) {
+    if (isLastItemVisible) {
       dispatch(fetchNextAnime());
     }
-  }, [itemRef, isItemVisible]);
+  }, [itemRef, isLastItemVisible]);
   return (
     <Box className={styles['anime-list']}>
-      <AnimeListControl params={params} setParams={setParams}/>
+      <AnimeListControl params={params} setParams={debounce(setParams, 500)}/>
       <List sx={{ width: '100%' }}>
         {animeList.map(anime =>
           <div ref={itemRef} key={anime.id}>

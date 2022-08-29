@@ -96,7 +96,7 @@ const AnimeListControlComponent: FC<AnimeListControlProps> = ({
         <Type typeValue={typeFilterValue} setTypeValue={setTypeFilterValue} />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        <Search setSearchValue={setSearchValue} />
+        <Search searchValue={searchValue} setSearchValue={setSearchValue} />
       </TabPanel>
     </Box>
   );

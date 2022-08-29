@@ -2,11 +2,11 @@ import { useRef, useState, useEffect } from 'react';
 
 const useLastItemOnScreen = (options: Object) => {
   const itemRef = useRef(null);
-  const [isItemVisible, setIsItemVisible] = useState(false);
+  const [isLastItemVisible, setIsLastItemVisible] = useState(false);
 
   const callbackFunction = (entries: IntersectionObserverEntry[]) => {
     const [entry] = entries;
-    setIsItemVisible(entry.isIntersecting);
+    setIsLastItemVisible(entry.isIntersecting);
   };
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const useLastItemOnScreen = (options: Object) => {
     };
   }, [itemRef, options]);
 
-  return { itemRef, isItemVisible };
+  return { itemRef, isLastItemVisible };
 };
 
 export default useLastItemOnScreen;
