@@ -18,7 +18,7 @@ export namespace AnimeService {
    * Fetches a list of anime.
    * @param queryParams Anime query parameters for the request.
    */
-  export async function fetchAnime(queryParams: AnimeListQueryParams): Promise<readonly Anime[]> {
+  export async function fetchAnimeList(queryParams: AnimeListQueryParams): Promise<readonly Anime[]> {
 
     const animeResponse = await http.get<PaginationDto<AnimeDto>>(URL, {
       params: AnimeQueryParamsMapper.toDto(queryParams),
@@ -30,7 +30,7 @@ export namespace AnimeService {
   }
 
   /** Fetch next page of anime list. */
-  export async function fetchNextAnime(): Promise<readonly Anime[]> {
+  export async function fetchNextAnimeList(): Promise<readonly Anime[]> {
     if (nextUrl === null) {
       return [];
     }
