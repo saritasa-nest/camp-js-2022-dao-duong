@@ -35,7 +35,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
   <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 ));
 
-const MySnackbarComponent: FC<MySnackbarProps> = ({
+const AppSnackbarComponent: FC<MySnackbarProps> = ({
   isOpen,
   duration,
   onClose,
@@ -54,4 +54,4 @@ const MySnackbarComponent: FC<MySnackbarProps> = ({
   </Snackbar>
 );
 
-export const MySnackbar = memo(MySnackbarComponent);
+export const AppSnackbar = memo(AppSnackbarComponent);

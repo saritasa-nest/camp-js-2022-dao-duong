@@ -36,9 +36,6 @@ export const authSlice = createSlice({
         state.isAuthorized = false;
         state.isLoading = false;
       })
-      .addCase(logout.pending, state => {
-        state.isLoading = true;
-      })
       .addCase(logout.fulfilled, state => {
         state.token = null;
         state.isAuthorized = false;

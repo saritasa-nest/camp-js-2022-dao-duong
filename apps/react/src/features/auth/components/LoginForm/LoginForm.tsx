@@ -10,8 +10,8 @@ import { TextField } from 'formik-mui';
 import { FC, memo, SyntheticEvent, useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { Severity } from '../../../../shared/components/MySnackbar/MySnackbar';
-import { MySnackbar } from '../../../../shared/components/';
+import { Severity } from '../../../../shared/components/AppSnackbar/AppSnackbar';
+import { AppSnackbar } from '../../../../shared/components/';
 
 import { defaultLoginValues, LoginSchema } from '../../components/LoginForm/formConfig';
 
@@ -24,7 +24,6 @@ const LoginFormComponent: FC = () => {
     formik.setSubmitting(false);
     dispatch(login(values));
   };
-
   const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
   useEffect(() => {
     if (httpError instanceof HttpError) {
@@ -90,7 +89,7 @@ const LoginFormComponent: FC = () => {
           </Grid>
         </Form>
       </FormikProvider>
-      <MySnackbar
+      <AppSnackbar
         isOpen={isSnackbarOpen}
         duration={5000}
         onClose={onSnackbarClose}
