@@ -25,13 +25,8 @@ export const animeSlice = createSlice({
       state.isLoading = true;
     })
     .addCase(fetchNextAnime.fulfilled, (state, action) => {
-      if (action.payload === null) {
-        animeAdapter.addMany(state as State, []);
-        state.isLoading = false;
-      } else {
-        animeAdapter.addMany(state as State, action.payload);
-        state.isLoading = false;
-      }
+      animeAdapter.addMany(state as State, action.payload);
+      state.isLoading = false;
     })
     .addCase(fetchNextAnime.rejected, (state, action) => {
       if (action.error.message) {

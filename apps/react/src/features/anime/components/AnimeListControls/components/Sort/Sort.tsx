@@ -44,12 +44,12 @@ const SortComponent: FC<SortProps> = ({ sortValue, setSortValue }) => {
           value={sortValue.field}
           onChange={handleSortChange}
         >
-          {Object.entries(AnimeSortField).map(([field, value]) => (
-            <MenuItem value={value} key={value}>
-              {field}
-            </MenuItem>
-          ))}
-          ;
+          <MenuItem value={AnimeSortField.EnglishTitle}>
+            English Title
+          </MenuItem>
+          <MenuItem value={AnimeSortField.Status}>
+            Status
+          </MenuItem>
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: 120, flex: '1' }}>

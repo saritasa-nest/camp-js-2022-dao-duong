@@ -30,9 +30,9 @@ export namespace AnimeService {
   }
 
   /** Fetch next page of anime list. */
-  export async function fetchNextAnime(): Promise<readonly Anime[] | null> {
+  export async function fetchNextAnime(): Promise<readonly Anime[]> {
     if (nextUrl === null) {
-      return null;
+      return [];
     }
 
     const animeResponse = await http.get<PaginationDto<AnimeDto>>(nextUrl);
