@@ -15,7 +15,7 @@ import {
 import { FC, memo, useState, MouseEvent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import styles from './MyNavbar.module.css';
+import styles from './AppNavbar.module.css';
 
 const AppNavbarComponent: FC = () => {
   const dispatch = useAppDispatch();
