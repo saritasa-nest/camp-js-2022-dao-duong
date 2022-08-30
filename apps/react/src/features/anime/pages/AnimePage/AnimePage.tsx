@@ -12,7 +12,7 @@ const AnimePageComponent: FC = () => (
     </Grid>
     <Grid item xs={9}>
       <Typography variant="h2" align="center">
-            Detail will be display here
+        Detail will be display here
       </Typography>
     </Grid>
   </Grid>
