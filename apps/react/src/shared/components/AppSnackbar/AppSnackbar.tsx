@@ -1,5 +1,5 @@
 import { Snackbar } from '@mui/material';
-import { FC, forwardRef, memo, SyntheticEvent } from 'react';
+import { FC, forwardRef, memo, SyntheticEvent, useState } from 'react';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 /** Severity level for alert color. */
@@ -10,25 +10,16 @@ export enum Severity {
   warning = 'warning',
 }
 
+const SNACKBAR_DURATION = 3000;
+
 interface MySnackbarProps {
-
-  /** Open state for snackbar. */
-  readonly isOpen: boolean;
-
-  /** Duration in milliseconds for snackbar to display. */
-  readonly duration?: number;
-
-  /** OnClose callback for snackbar. */
-  readonly onClose: (
-    event?: SyntheticEvent | Event,
-    reason?: string
-  ) => void;
 
   /** Snackbar message. */
   readonly message: string;
 
   /** Severity level for snackbar. */
   readonly severity?: Severity;
+
 }
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
@@ -36,22 +27,30 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
 ));
 
 const AppSnackbarComponent: FC<MySnackbarProps> = ({
-  isOpen,
-  duration,
-  onClose,
   message,
   severity,
-}) => (
-  <Snackbar
-    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-    open={isOpen}
-    autoHideDuration={duration}
-    onClose={onClose}
-  >
-    <Alert severity={severity} sx={{ width: '100%' }} onClose={onClose}>
-      {message}
-    </Alert>
-  </Snackbar>
-);
+}) => {
+
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(true);
+
+  const onSnackbarClose = (event?: SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setIsSnackbarOpen(false);
+  };
+  return (
+    <Snackbar
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isSnackbarOpen}
+      autoHideDuration={SNACKBAR_DURATION}
+      onClose={onSnackbarClose}
+    >
+      <Alert severity={severity} sx={{ width: '100%' }} onClose={onSnackbarClose}>
+        {message}
+      </Alert>
+    </Snackbar>
+  );
+};
 
 export const AppSnackbar = memo(AppSnackbarComponent);

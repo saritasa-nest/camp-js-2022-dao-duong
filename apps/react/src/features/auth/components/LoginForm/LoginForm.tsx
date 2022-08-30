@@ -1,5 +1,4 @@
 import { Login } from '@js-camp/core/models/auth/login';
-import { HttpError } from '@js-camp/core/models/httpError';
 import { login } from '@js-camp/react/store/auth/dispatchers';
 import { selectAuthError, selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
@@ -7,7 +6,7 @@ import { LinearProgress, Grid, Button, Link } from '@mui/material';
 
 import { useFormik, FormikProvider, Form, Field } from 'formik';
 import { TextField } from 'formik-mui';
-import { FC, memo, SyntheticEvent, useEffect, useState } from 'react';
+import { FC, memo } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { Severity } from '../../../../shared/components/AppSnackbar/AppSnackbar';
@@ -23,22 +22,6 @@ const LoginFormComponent: FC = () => {
   const onFormSubmission = (values: Login) => {
     formik.setSubmitting(false);
     dispatch(login(values));
-  };
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
-  useEffect(() => {
-    if (httpError instanceof HttpError) {
-      setIsSnackbarOpen(true);
-    }
-  }, [httpError]);
-
-  const onSnackbarClose = (
-    event?: SyntheticEvent | Event,
-    reason?: string,
-  ) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setIsSnackbarOpen(false);
   };
 
   const formik = useFormik({
@@ -89,13 +72,12 @@ const LoginFormComponent: FC = () => {
           </Grid>
         </Form>
       </FormikProvider>
-      <AppSnackbar
-        isOpen={isSnackbarOpen}
-        duration={5000}
-        onClose={onSnackbarClose}
-        severity={Severity.error}
-        message={httpError?.detail ?? 'Error'}
-      />
+      {httpError &&
+        <AppSnackbar
+          severity={Severity.error}
+          message={httpError?.detail ?? 'Error'}
+        />
+      }
     </>
 
   );
