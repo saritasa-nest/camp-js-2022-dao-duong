@@ -1,6 +1,8 @@
-import { ErrorData } from '../dtos/httpError.dto';
-
 import { Immerable, OmitImmerable } from './immerable';
+
+interface ErrorData {
+  readonly [key: string]: string[];
+}
 
 /** HttpError. */
 export class HttpError extends Immerable {

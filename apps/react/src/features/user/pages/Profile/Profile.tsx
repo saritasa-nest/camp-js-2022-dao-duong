@@ -8,8 +8,6 @@ import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 
 import { FC, memo, useEffect } from 'react';
 
-import { MyNavbar } from '../../../../shared/components/';
-
 const ProfileComponent: FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
@@ -22,21 +20,18 @@ const ProfileComponent: FC = () => {
     return <div>Fetching user...</div>;
   }
   return (
-    <>
-      <MyNavbar />
-      <Card sx={{ maxWidth: 345, mx: 'auto' }}>
-        <CardMedia
-          component="img"
-          image={user.avatar ?? ''}
-          alt={`${user.firstName} avatar`}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {user.firstName} {user.lastName}
-          </Typography>
-        </CardContent>
-      </Card>
-    </>
+    <Card sx={{ maxWidth: 345, mx: 'auto' }}>
+      <CardMedia
+        component="img"
+        image={user.avatar ?? ''}
+        alt={`${user.firstName} avatar`}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {user.firstName} {user.lastName}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 

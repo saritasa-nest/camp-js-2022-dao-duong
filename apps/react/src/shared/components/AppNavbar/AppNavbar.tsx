@@ -13,15 +13,15 @@ import {
   Tooltip,
 } from '@mui/material';
 import { FC, memo, useState, MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-import styles from './MyNavbar.module.css';
+import styles from './AppNavbar.module.css';
 
-const MyNavbarComponent: FC = () => {
+const AppNavbarComponent: FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-  const [anchorElementUser, setAnchorElementUser] =
-    useState<null | HTMLElement>(null);
+  const [anchorElementUser, setAnchorElementUser] = useState<null | HTMLElement>(null);
+  const location = useLocation();
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElementUser(event.currentTarget);
   };
@@ -33,6 +33,10 @@ const MyNavbarComponent: FC = () => {
   const handleLogoutButtonClick = () => {
     dispatch(logout());
   };
+
+  if (location.pathname.startsWith('/auth')) {
+    return null;
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -86,4 +90,4 @@ const MyNavbarComponent: FC = () => {
   );
 };
 
-export const MyNavbar = memo(MyNavbarComponent);
+export const AppNavbar = memo(AppNavbarComponent);

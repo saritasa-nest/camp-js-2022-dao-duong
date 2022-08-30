@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 
 import { RootRouter } from './routes/RootRouter';
+import { AppNavbar } from './shared/components';
 import { store } from './store';
 
 export const App: FC = () => (
@@ -10,6 +11,7 @@ export const App: FC = () => (
     <HashRouter>
       <div>
         <Suspense fallback={<div>Brrr... here should be your loader component</div>}>
+          <AppNavbar />
           <RootRouter />
         </Suspense>
       </div>
