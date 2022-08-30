@@ -17,7 +17,7 @@ const url = 'anime/anime/';
 export namespace AnimeService {
 
   /**
-   * Fetches a list of genres.
+   * Fetches a list of anime.
    * @param queryParams Anime query parameters for the request.
    */
   export async function fetchAnime(queryParams: AnimeListQueryParams): Promise<Pagination<Anime>> {

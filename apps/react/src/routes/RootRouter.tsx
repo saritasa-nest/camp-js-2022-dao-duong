@@ -5,14 +5,21 @@ import { genresRoutes } from '../features/genres/routes';
 import { authRoutes } from '../features/auth/routes';
 import { userRoutes } from '../features/user/routes';
 
+import { AuthGuard, NoAuthGuard } from './guards';
+
 const routes: RouteObject[] = [
   {
     path: '*',
     element: <Navigate to="/genres" />,
   },
-  ...genresRoutes,
-  ...authRoutes,
-  ...userRoutes,
+  {
+    element: <AuthGuard />,
+    children: [...genresRoutes, ...userRoutes],
+  },
+  {
+    element: <NoAuthGuard />,
+    children: [...authRoutes],
+  },
 ];
 
 /** Root router component. */

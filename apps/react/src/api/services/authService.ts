@@ -28,7 +28,7 @@ export namespace AuthService {
   }
 
   /**
-   * Login service.
+   * Register service.
    * @param registerData Register data from register form.
    */
   export async function register(registerData: Register): Promise<Token> {

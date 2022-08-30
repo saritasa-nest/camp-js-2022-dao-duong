@@ -13,11 +13,15 @@ import {
   Tooltip,
 } from '@mui/material';
 import { FC, memo, useState, MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import styles from './MyNavbar.module.css';
 
 const MyNavbarComponent: FC = () => {
+  const location = useLocation();
+  if (location.pathname.startsWith('/auth')) {
+    return null;
+  }
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const [anchorElementUser, setAnchorElementUser] =
