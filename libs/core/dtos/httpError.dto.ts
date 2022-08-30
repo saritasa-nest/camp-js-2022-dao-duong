@@ -1,5 +1,5 @@
 /** Error data received from server. */
-export interface ErrorData {
+interface ErrorDto {
   readonly [key: string]: string[];
 }
 
@@ -10,7 +10,7 @@ export interface HttpErrorDto {
   readonly detail: string;
 
   /** Object containing messages related to incorrect fields. */
-  readonly data?: ErrorData;
+  readonly data?: ErrorDto;
 
   /** HTTP status code for the error. */
   readonly code?: string;
