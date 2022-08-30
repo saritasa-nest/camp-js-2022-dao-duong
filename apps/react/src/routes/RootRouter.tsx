@@ -10,7 +10,7 @@ import { AuthGuard, NoAuthGuard } from './guards';
 const routes: RouteObject[] = [
   {
     path: '*',
-    element: <Navigate to="/genres" />,
+    element: <Navigate to="/anime" />,
   },
   {
     element: <AuthGuard />,
