@@ -7,10 +7,10 @@ import { selectIsAuthorized } from '@js-camp/react/store/auth/selectors';
 import { TokenService } from '../../api/services/tokenService';
 
 export const NoAuthGuard: FC = () => {
-  const hasTokenFromLocalStorage = TokenService.hasToken();
+  const hasToken = TokenService.hasToken();
   const isAuthorized = useAppSelector(selectIsAuthorized);
 
-  if (isAuthorized || hasTokenFromLocalStorage) {
+  if (isAuthorized || hasToken) {
     const redirect: To = {
       pathname: '/',
     };

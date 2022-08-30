@@ -10,4 +10,5 @@ export function errorInterceptor(error: AxiosError): void {
   if (error.response?.status === 401) {
     TokenService.destroyToken();
   }
+  throw error;
 }

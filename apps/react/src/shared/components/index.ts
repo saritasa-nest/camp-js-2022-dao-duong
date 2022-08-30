@@ -1,2 +1,2 @@
-export { MySnackbar } from './MySnackbar/MySnackbar';
-export { MyNavbar } from './MyNavbar/MyNavbar';
+export { AppSnackbar } from './AppSnackbar/AppSnackbar';
+export { AppNavbar } from './AppNavbar/AppNavbar';
