@@ -1,5 +1,5 @@
 import { Snackbar } from '@mui/material';
-import { FC, forwardRef, memo } from 'react';
+import { FC, forwardRef, memo, SyntheticEvent } from 'react';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 /** Severity level for alert color. */
@@ -20,7 +20,7 @@ interface MySnackbarProps {
 
   /** OnClose callback for snackbar. */
   readonly onClose: (
-    event?: React.SyntheticEvent | Event,
+    event?: SyntheticEvent | Event,
     reason?: string
   ) => void;
 
