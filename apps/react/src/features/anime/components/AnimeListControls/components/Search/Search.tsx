@@ -20,6 +20,7 @@ const SearchComponent: FC<SearchProps> = ({ searchValue, setSearchValue }) => {
       fullWidth
       label="Search"
       variant="outlined"
+      color="secondary"
       onChange={handleSearchChange}
       value={searchValue}
     />

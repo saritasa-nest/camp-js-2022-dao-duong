@@ -13,7 +13,7 @@ export interface AnimeListQueryParams {
   readonly sort: AnimeSort;
 
   /** Query string. */
-  readonly search: string | null;
+  readonly search: string;
 
   /** Filtering type. */
   readonly type: readonly AnimeType[];

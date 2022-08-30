@@ -1,7 +1,5 @@
 import {
   AnimeSort,
-  AnimeSortDirection,
-  AnimeSortField,
   AnimeType,
 } from '@js-camp/core/models/anime/anime';
 import { Box, Tabs, Tab } from '@mui/material';
@@ -16,10 +14,10 @@ import styles from './AnimeListControl.module.css';
 interface AnimeListControlProps {
 
   /** Params value. */
-  readonly params: AnimeListQueryParams;
+  readonly queryParams: AnimeListQueryParams;
 
   /** Set params callback. */
-  readonly setParams: (params: AnimeListQueryParams) => void;
+  readonly setQueryParams: (params: AnimeListQueryParams) => void;
 }
 
 interface TabPanelProps {
@@ -50,25 +48,20 @@ const TabPanel = (props: TabPanelProps) => {
 };
 
 const AnimeListControlComponent: FC<AnimeListControlProps> = ({
-  params,
-  setParams,
+  queryParams,
+  setQueryParams,
 }) => {
   const [tabValue, setTabValue] = useState(0);
-  const [sortValue, setSortValue] = useState<AnimeSort>({
-    direction: AnimeSortDirection.Descending,
-    field: AnimeSortField.EnglishTitle,
-  });
-  const [typeFilterValue, setTypeFilterValue] = useState<readonly AnimeType[]>(
-    [],
-  );
-  const [searchValue, setSearchValue] = useState<string>('');
+  const [sortValue, setSortValue] = useState<AnimeSort>(queryParams.sort);
+  const [typeFilterValue, setTypeFilterValue] = useState<readonly AnimeType[]>(queryParams.type);
+  const [searchValue, setSearchValue] = useState<string>(queryParams.search);
   const handleTabChange = (event: SyntheticEvent, newTabValue: number) => {
     setTabValue(newTabValue);
   };
 
   useEffect(() => {
-    setParams({
-      ...params,
+    setQueryParams({
+      ...queryParams,
       sort: sortValue,
       type: typeFilterValue,
       search: searchValue,
