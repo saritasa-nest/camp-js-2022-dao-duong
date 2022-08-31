@@ -35,12 +35,6 @@ const DEFAULT_PARAMS: AnimeListQueryParams = {
   search: '',
 };
 
-const OBSERVER_OPTIONS = {
-  root: null,
-  rootMargin: '0px',
-  threshold: 0.5,
-};
-
 const getAnimeListParamsFromUrl = (params: URLSearchParams) => {
   const page = params.get('page') ? Number(params.get('page')) : DEFAULT_PARAMS.page;
   const limit = params.get('limit') ? Number(params.get('limit')) : DEFAULT_PARAMS.limit;
@@ -61,7 +55,11 @@ const AnimeListComponent: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [queryParams, setQueryParams] =
     useState<AnimeListQueryParams>(getAnimeListParamsFromUrl(searchParams));
-  const { itemRef, isLastItemVisible } = useLastItemOnScreen(OBSERVER_OPTIONS);
+  const { itemRef, isLastItemVisible } = useLastItemOnScreen({
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5,
+  });
 
   const setQueryParamsToUrl = ({
     sort,
