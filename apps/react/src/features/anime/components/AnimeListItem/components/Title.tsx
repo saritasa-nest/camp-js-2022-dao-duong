@@ -12,8 +12,8 @@ interface TitlesProps {
 
 const TitlesComponent: FC<TitlesProps> = ({ englishTitle, japaneseTitle }) => (
   <>
-    <Typography variant="subtitle1">{englishTitle ?? japaneseTitle}</Typography>
-    <Typography variant="subtitle2">{japaneseTitle ?? ''}</Typography>
+    <Typography variant="subtitle1">{englishTitle || '--'}</Typography>
+    <Typography variant="subtitle2">{japaneseTitle || '--'}</Typography>
   </>
 );
 
