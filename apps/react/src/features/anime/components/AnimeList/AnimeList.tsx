@@ -7,8 +7,8 @@ import {
   AnimeType,
 } from '@js-camp/core/models/anime/anime';
 import {
-  fetchAnime,
-  fetchNextAnime,
+  fetchAnimeList,
+  fetchNextAnimeList,
 } from '@js-camp/react/store/anime/dispatchers';
 import {
   selectAnimeList,
@@ -28,11 +28,17 @@ const DEFAULT_PARAMS: AnimeListQueryParams = {
   page: 0,
   limit: 25,
   sort: {
-    direction: AnimeSortDirection.Descending,
+    direction: AnimeSortDirection.Ascending,
     field: AnimeSortField.EnglishTitle,
   },
   type: [],
   search: '',
+};
+
+const OBSERVER_OPTIONS = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 0.5,
 };
 
 const getAnimeListParamsFromUrl = (params: URLSearchParams) => {
@@ -55,11 +61,7 @@ const AnimeListComponent: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [queryParams, setQueryParams] =
     useState<AnimeListQueryParams>(getAnimeListParamsFromUrl(searchParams));
-  const { itemRef, isLastItemVisible } = useLastItemOnScreen({
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.5,
-  });
+  const { itemRef, isLastItemVisible } = useLastItemOnScreen(OBSERVER_OPTIONS);
 
   const setQueryParamsToUrl = ({
     sort,
@@ -77,13 +79,13 @@ const AnimeListComponent: FC = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchAnime(queryParams));
+    dispatch(fetchAnimeList(queryParams));
     setQueryParamsToUrl(queryParams);
   }, [queryParams]);
 
   useEffect(() => {
     if (isLastItemVisible) {
-      dispatch(fetchNextAnime());
+      dispatch(fetchNextAnimeList());
     }
   }, [itemRef, isLastItemVisible]);
   return (
