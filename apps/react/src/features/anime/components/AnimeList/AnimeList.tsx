@@ -27,11 +27,13 @@ const AnimeListComponent: FC = () => {
 
   if (isLoading) {
     return (
-      <div>Loading...</div>
+      <Box className="loading-spinner">
+        <CircularProgress color="secondary"/>
+      </Box>
     );
   }
   return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+    <List className="anime-list">
       {animeList.map(anime =>
         <Box key={anime.id}>
           <AnimeListItem anime={anime}/>
