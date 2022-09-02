@@ -7,9 +7,9 @@ import {
   ListItemText,
 } from '@mui/material';
 
-import styles from './AnimeListItem.module.css';
 import { Titles } from './components/Title';
 import { Info } from './components/Info';
+import './AnimeListItem.css';
 
 interface Props {
 
@@ -18,12 +18,12 @@ interface Props {
 }
 
 const AnimeListItemComponent: FC<Props> = ({ anime }) => (
-  <ListItem className={styles['item']}>
-    <ListItemAvatar className={styles['item-image']}>
+  <ListItem className="item">
+    <ListItemAvatar className="item-image">
       <Avatar
         alt={`${anime.englishTitle || anime.japaneseTitle} image`}
         src={anime.image}
-        className={styles['image']}
+        className="image"
       />
     </ListItemAvatar>
     <ListItemText

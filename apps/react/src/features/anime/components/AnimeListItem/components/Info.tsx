@@ -13,14 +13,12 @@ interface Props {
 const AnimeInfoComponent: FC<Props> = ({ status, type }) => (
   <>
     <Typography
-      component="span"
       variant="body2"
       color="text.primary"
     >
       Type: {type}
     </Typography>
     <Typography
-      component="span"
       variant="body2"
       color="text.primary"
     >

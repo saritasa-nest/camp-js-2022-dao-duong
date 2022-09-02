@@ -4,9 +4,10 @@ import { AnimeSortDirection, AnimeSortField } from '@js-camp/core/models/anime/a
 import { fetchAnime } from '@js-camp/react/store/anime/dispatchers';
 import { selectAnimeList, selectIsAnimeLoading } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { List, Divider, Box } from '@mui/material';
+import { List, Divider, Box, CircularProgress } from '@mui/material';
 
 import { AnimeListItem } from '../AnimeListItem/AnimeListItem';
+import './AnimeList.css';
 
 const DEFAULT_PARAMS: AnimeListQueryParams = {
   page: 0,
