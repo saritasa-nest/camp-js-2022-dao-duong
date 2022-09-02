@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { FC, memo } from 'react';
 
-interface TitlesProps {
+interface Props {
 
   /** Title in english. */
   readonly englishTitle: string;
@@ -10,7 +10,7 @@ interface TitlesProps {
   readonly japaneseTitle: string;
 }
 
-const TitlesComponent: FC<TitlesProps> = ({ englishTitle, japaneseTitle }) => (
+const TitlesComponent: FC<Props> = ({ englishTitle, japaneseTitle }) => (
   <>
     <Typography variant="subtitle1">{englishTitle || '--'}</Typography>
     <Typography variant="subtitle2">{japaneseTitle || '--'}</Typography>

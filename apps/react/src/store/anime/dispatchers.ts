@@ -5,5 +5,5 @@ import { AnimeService } from '../../api/services/animeService';
 
 export const fetchAnime = createAsyncThunk(
   'anime/fetch',
-  (params: AnimeListQueryParams) => AnimeService.fetchAnime(params),
+  (params: AnimeListQueryParams) => AnimeService.fetchAnimePage(params),
 );

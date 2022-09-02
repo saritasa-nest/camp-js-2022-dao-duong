@@ -12,7 +12,7 @@ export const animeSlice = createSlice({
       state.isLoading = true;
     })
     .addCase(fetchAnime.fulfilled, (state, action) => {
-      animeAdapter.setAll(state as State, action.payload);
+      animeAdapter.setAll(state as State, action.payload.results);
       state.isLoading = false;
     })
     .addCase(fetchAnime.rejected, (state, action) => {

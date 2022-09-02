@@ -6,10 +6,8 @@ export const AnimePage = lazy(() =>
     default: module.AnimePage,
   })));
 export const animeRoutes: RouteObject[] = [
-
   {
     path: 'anime',
     element: <AnimePage />,
   },
-
 ];
