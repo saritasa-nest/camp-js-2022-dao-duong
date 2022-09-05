@@ -7,7 +7,8 @@ import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { List, Divider, Box, CircularProgress } from '@mui/material';
 
 import { AnimeListItem } from '../AnimeListItem/AnimeListItem';
-import './AnimeList.css';
+
+import styles from './AnimeList.module.css';
 
 const DEFAULT_PARAMS: AnimeListQueryParams = {
   page: 0,
@@ -28,13 +29,13 @@ const AnimeListComponent: FC = () => {
 
   if (isLoading) {
     return (
-      <Box className="loading-spinner">
+      <Box className={styles['loading-spinner']}>
         <CircularProgress color="secondary"/>
       </Box>
     );
   }
   return (
-    <List className="anime-list">
+    <List className={styles['anime-list']}>
       {animeList.map(anime =>
         <Box key={anime.id}>
           <AnimeListItem anime={anime}/>

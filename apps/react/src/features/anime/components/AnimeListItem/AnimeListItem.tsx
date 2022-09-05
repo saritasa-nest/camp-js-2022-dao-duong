@@ -9,7 +9,7 @@ import {
 
 import { Titles } from './components/Title';
 import { Info } from './components/Info';
-import './AnimeListItem.css';
+import styles from './AnimeListItem.module.css';
 
 interface Props {
 
@@ -18,12 +18,12 @@ interface Props {
 }
 
 const AnimeListItemComponent: FC<Props> = ({ anime }) => (
-  <ListItem className="item">
-    <ListItemAvatar className="item-image">
+  <ListItem className={styles['item']}>
+    <ListItemAvatar className={styles['item-image']}>
       <Avatar
         alt={`${anime.englishTitle || anime.japaneseTitle} image`}
         src={anime.image}
-        className="image"
+        className={styles['image']}
       />
     </ListItemAvatar>
     <ListItemText

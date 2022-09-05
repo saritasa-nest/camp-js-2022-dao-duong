@@ -3,11 +3,11 @@ import { FC, memo } from 'react';
 
 import { AnimeList } from '../../components/AnimeList/AnimeList';
 
-import './AnimePage.css';
+import styles from './AnimePage.module.css';
 
 const AnimePageComponent: FC = () => (
   <Grid container>
-    <Grid item xs={3} className="list-grid">
+    <Grid item xs={3} className={styles['list-grid']}>
       <AnimeList />
     </Grid>
     <Grid item xs={9}>
