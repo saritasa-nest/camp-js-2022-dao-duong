@@ -1,9 +1,11 @@
 import { fetchAnimeDetail } from '@js-camp/react/store/animeDetail/dispatchers';
 import { selectAnimeDetail, selectIsAnimeDetailLoading } from '@js-camp/react/store/animeDetail/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { FC, memo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
+import { AppLoadingSpinner } from '../../../../shared/components';
 
 import styles from './AnimeDetail.module.css';
 
@@ -21,16 +23,22 @@ const AnimeDetailComponent: FC = () => {
 
   if (isAnimeDetailLoading) {
     return (
-      <div>Loading...</div>
+      <AppLoadingSpinner />
+    );
+  }
+
+  if (animeDetail === undefined) {
+    return (
+      <Box className={styles['anime-detail']}>
+        <Typography variant="h4">Select anime on the left for more details!</Typography>
+      </Box>
     );
   }
 
   return (
-
     <Box className={styles['anime-detail']}>
       <div>{JSON.stringify(animeDetail)}</div>
     </Box>
-
   );
 };
 

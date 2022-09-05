@@ -13,6 +13,6 @@ export const selectAnimeDetail = createSelector(
 
 /** Selects anime loading state. */
 export const selectIsAnimeDetailLoading = createSelector(
-  (state: RootState) => state.anime.isLoading,
+  (state: RootState) => state.animeDetail.isLoading,
   isLoading => isLoading,
 );

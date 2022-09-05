@@ -1,4 +1,11 @@
 .anime-detail {
   text-align: center;
   flex: 1;
+  position: relative;
+  width: var(--anime-detail-width);
+}
+
+.spinner-container {
+  width: var(--anime-detail-width);
+  height: var(--anime-list-height);
 }

@@ -15,8 +15,9 @@ import {
   selectIsAnimeLoading,
 } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Box, debounce, List, Divider, CircularProgress } from '@mui/material';
+import { Box, debounce, List, Divider } from '@mui/material';
 
+import { AppLoadingSpinner } from '../../../../shared/components/';
 import useLastItemOnScreen from '../../../../shared/hooks/useLastItemOnScreen';
 import { AnimeListControl } from '../AnimeListControls/AnimeListControl';
 
@@ -115,9 +116,7 @@ const AnimeListComponent: FC = () => {
         ))}
       </List>
       {isLoading && (
-        <Box className={styles['loading-spinner']}>
-          <CircularProgress color="secondary" />
-        </Box>
+        <AppLoadingSpinner />
       )}
     </Box>
   );
