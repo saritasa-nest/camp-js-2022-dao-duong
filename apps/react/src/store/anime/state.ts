@@ -1,9 +1,7 @@
 import { Anime } from '@js-camp/core/models/anime/anime';
 import { createEntityAdapter } from '@reduxjs/toolkit';
 
-export const animeAdapter = createEntityAdapter<Anime>({
-  selectId: anime => anime.id,
-});
+export const animeAdapter = createEntityAdapter<Anime>();
 
 /** Anime state. */
 export interface AnimeState {

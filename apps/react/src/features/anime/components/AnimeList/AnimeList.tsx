@@ -7,15 +7,15 @@ import {
   AnimeType,
 } from '@js-camp/core/models/anime/anime';
 import {
-  fetchAnimeList,
-  fetchNextAnimeList,
+  fetchAnimePage,
+  fetchNextAnimePage,
 } from '@js-camp/react/store/anime/dispatchers';
 import {
   selectAnimeList,
   selectIsAnimeLoading,
 } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Box, debounce, List } from '@mui/material';
+import { Box, debounce, List, Divider, CircularProgress } from '@mui/material';
 
 import useLastItemOnScreen from '../../../../shared/hooks/useLastItemOnScreen';
 import { AnimeListControl } from '../AnimeListControls/AnimeListControl';
@@ -77,29 +77,40 @@ const AnimeListComponent: FC = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchAnimeList(queryParams));
+    dispatch(fetchAnimePage(queryParams));
     setQueryParamsToUrl(queryParams);
   }, [queryParams]);
 
   useEffect(() => {
     if (isLastItemVisible) {
-      dispatch(fetchNextAnimeList());
+      dispatch(fetchNextAnimePage());
     }
   }, [itemRef, isLastItemVisible]);
+
+  // if (isLoading) {
+  //   return (
+  //     <Box className={styles['loading-spinner']}>
+  //       <CircularProgress color="secondary"/>
+  //     </Box>
+  //   );
+  // }
   return (
     <Box className={styles['anime-list']}>
       <AnimeListControl
         queryParams={queryParams}
         setQueryParams={debounce(setQueryParams, 500)}
       />
-      <List sx={{ width: '100%' }}>
+      <List className={styles['anime-list']}>
         {animeList.map(anime => (
-          <div ref={itemRef} key={anime.id}>
-            <AnimeListItem anime={anime} />
-          </div>
+          <Box key={anime.id} ref={itemRef}>
+            <AnimeListItem anime={anime}/>
+            <Divider />
+          </Box>
         ))}
       </List>
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <Box className={styles['loading-spinner']}>
+        <CircularProgress color="secondary"/>
+      </Box>}
     </Box>
   );
 };

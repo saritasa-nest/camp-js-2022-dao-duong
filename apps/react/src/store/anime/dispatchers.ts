@@ -3,12 +3,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { AnimeService } from '../../api/services/animeService';
 
-export const fetchAnimeList = createAsyncThunk(
-  'anime_list/fetch',
-  (params: AnimeListQueryParams) => AnimeService.fetchAnimeList(params),
+export const fetchAnimePage = createAsyncThunk(
+  'anime_page/fetch',
+  (params: AnimeListQueryParams) => AnimeService.fetchAnimePage(params),
 );
 
-export const fetchNextAnimeList = createAsyncThunk(
-  'anime_list/fetchNext',
-  () => AnimeService.fetchNextAnimeList(),
+export const fetchNextAnimePage = createAsyncThunk(
+  'anime_page/fetchNext',
+  () => AnimeService.fetchNextAnimePage(),
 );

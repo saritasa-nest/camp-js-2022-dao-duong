@@ -8,6 +8,8 @@ import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { AnimeQueryParamsMapper } from '@js-camp/core/mappers/anime-query-params.mapper';
 import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
 
+import { Pagination } from '@js-camp/core/models/pagination';
+
 import { http } from '..';
 
 export namespace AnimeService {
@@ -18,28 +20,27 @@ export namespace AnimeService {
    * Fetches a list of anime.
    * @param queryParams Anime query parameters for the request.
    */
-  export async function fetchAnimeList(queryParams: AnimeListQueryParams): Promise<readonly Anime[]> {
+  export async function fetchAnimePage(queryParams: AnimeListQueryParams): Promise<Pagination<Anime>> {
 
     const animeResponse = await http.get<PaginationDto<AnimeDto>>(URL, {
       params: AnimeQueryParamsMapper.toDto(queryParams),
     });
     const animePage = PaginationMapper.fromDto(animeResponse.data, animeDto =>
       AnimeMapper.fromDto(animeDto));
-    setNextUrl(animePage.next);
-    return animePage.results;
+    return animePage;
   }
 
   /** Fetch next page of anime list. */
-  export async function fetchNextAnimeList(): Promise<readonly Anime[]> {
+  export async function fetchNextAnimePage(): Promise<Pagination<Anime> | null> {
     if (nextUrl === null) {
-      return [];
+      return null;
     }
 
     const animeResponse = await http.get<PaginationDto<AnimeDto>>(nextUrl);
     const animePage = PaginationMapper.fromDto(animeResponse.data, animeDto =>
       AnimeMapper.fromDto(animeDto));
     setNextUrl(animePage.next);
-    return animePage.results;
+    return animePage;
   }
 
   /**
