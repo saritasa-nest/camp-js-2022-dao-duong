@@ -12,6 +12,8 @@ import {
 } from '@mui/material';
 import { FC, memo } from 'react';
 
+import styles from './Sort.module.css';
+
 interface SortProps {
 
   /** Title in english. */
@@ -35,7 +37,7 @@ const SortComponent: FC<SortProps> = ({ sortValue, setSortValue }) => {
 
   return (
     <>
-      <FormControl sx={{ m: 1, minWidth: 120, flex: '1' }}>
+      <FormControl className={styles['sort-item']}>
         <InputLabel id="field-label">Field</InputLabel>
         <Select
           labelId="field-label"
@@ -52,7 +54,7 @@ const SortComponent: FC<SortProps> = ({ sortValue, setSortValue }) => {
           </MenuItem>
         </Select>
       </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 120, flex: '1' }}>
+      <FormControl className={styles['sort-item']}>
         <InputLabel id="direction-label">Direction</InputLabel>
         <Select
           labelId="direction-label"
