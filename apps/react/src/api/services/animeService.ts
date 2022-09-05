@@ -17,7 +17,7 @@ export namespace AnimeService {
   let nextUrl: string | null = null;
 
   /**
-   * Fetches a list of anime.
+   * Fetches a page of anime with specify params.
    * @param queryParams Anime query parameters for the request.
    */
   export async function fetchAnimePage(queryParams: AnimeListQueryParams): Promise<Pagination<Anime>> {
