@@ -4,7 +4,7 @@ import { fetchAnimeDetail } from './dispatchers';
 import { initialState, animeDetailAdapter, State } from './state';
 
 export const animeDetailSlice = createSlice({
-  name: 'anime',
+  name: 'animeDetail',
   initialState,
   reducers: {},
   extraReducers: builder => builder

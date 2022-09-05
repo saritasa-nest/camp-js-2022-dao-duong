@@ -16,7 +16,7 @@ const AnimeDetailComponent: FC = () => {
   const animeDetail = useAppSelector(state => selectAnimeDetail(state, animeId));
   const isAnimeDetailLoading = useAppSelector(selectIsAnimeDetailLoading);
   useEffect(() => {
-    if (searchParams.get('id')) {
+    if (animeId) {
       dispatch(fetchAnimeDetail(animeId));
     }
   }, [searchParams, dispatch]);
