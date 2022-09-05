@@ -10,6 +10,10 @@ import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
 
 import { Pagination } from '@js-camp/core/models/pagination';
 
+import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
+import { AnimeDetailDto } from '@js-camp/core/dtos/anime/animeDetail.dto';
+import { AnimeDetailMapper } from '@js-camp/core/mappers/anime/animeDetail.mapper';
+
 import { http } from '..';
 
 export namespace AnimeService {
@@ -50,5 +54,14 @@ export namespace AnimeService {
    */
   function setNextUrl(url: string | null) {
     nextUrl = url;
+  }
+
+  /**
+   * Fetch anime by id.
+   * @param id Anime id.
+   */
+  export async function fetchAnimeById(id: AnimeDetail['id']): Promise<AnimeDetail> {
+    const animeDetailResponse = await http.get<AnimeDetailDto>(`${URL}${id}/`);
+    return AnimeDetailMapper.fromDto(animeDetailResponse.data);
   }
 }
