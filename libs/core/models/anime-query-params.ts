@@ -1,4 +1,5 @@
 import { AnimeSort, AnimeType } from './anime/anime';
+import { AnimeDetail } from './anime/animeDetail';
 
 /** Options for query params. */
 export interface AnimeListQueryParams {
@@ -17,4 +18,11 @@ export interface AnimeListQueryParams {
 
   /** Filtering type. */
   readonly type: readonly AnimeType[];
+}
+
+/** Options for query params with id of the anime. */
+export interface AnimeListQueryParamsWithId extends AnimeListQueryParams {
+
+  /** Anime id. */
+  id: AnimeDetail['id'] | null;
 }

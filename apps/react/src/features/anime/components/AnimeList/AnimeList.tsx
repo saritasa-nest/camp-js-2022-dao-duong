@@ -1,6 +1,6 @@
 import { FC, memo, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
+import { AnimeListQueryParamsWithId } from '@js-camp/core/models/anime-query-params';
 import {
   AnimeSortDirection,
   AnimeSortField,
@@ -24,7 +24,7 @@ import { AnimeListItem } from '../AnimeListItem/AnimeListItem';
 
 import styles from './AnimeList.module.css';
 
-const DEFAULT_PARAMS: AnimeListQueryParams = {
+const DEFAULT_PARAMS: AnimeListQueryParamsWithId = {
   page: 0,
   limit: 25,
   sort: {
@@ -33,6 +33,7 @@ const DEFAULT_PARAMS: AnimeListQueryParams = {
   },
   type: [],
   search: '',
+  id: null,
 };
 
 const getAnimeListParamsFromUrl = (params: URLSearchParams) => {
@@ -53,7 +54,8 @@ const getAnimeListParamsFromUrl = (params: URLSearchParams) => {
     (typeFromUrl.split(',') as AnimeType[]) :
     DEFAULT_PARAMS.type;
   const search = params.get('search') ?? DEFAULT_PARAMS.search;
-  return { page, limit, sort, type, search };
+  const id = params.get('id') ? Number(params.get('id')) : DEFAULT_PARAMS.id;
+  return { page, limit, sort, type, search, id };
 };
 
 const AnimeListComponent: FC = () => {
@@ -61,7 +63,7 @@ const AnimeListComponent: FC = () => {
   const animeList = useAppSelector(selectAnimeList);
   const isLoading = useAppSelector(selectIsAnimeLoading);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [queryParams, setQueryParams] = useState<AnimeListQueryParams>(
+  const [queryParams, setQueryParams] = useState<AnimeListQueryParamsWithId>(
     getAnimeListParamsFromUrl(searchParams),
   );
   const { itemRef, isLastItemVisible } = useLastItemOnScreen({
@@ -74,12 +76,14 @@ const AnimeListComponent: FC = () => {
     sort,
     type,
     search,
-  }: AnimeListQueryParams) => {
+    id,
+  }: AnimeListQueryParamsWithId) => {
     const paramsForUrl = {
       field: sort.field,
       direction: sort.direction,
       type: type.toString(),
       search,
+      id: id ? id.toString() : '',
     };
     const params = new URLSearchParams(paramsForUrl);
     setSearchParams(params, { replace: true });
