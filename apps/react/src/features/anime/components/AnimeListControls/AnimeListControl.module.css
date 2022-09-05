@@ -2,9 +2,11 @@
   width: 100%;
   position: sticky;
   top: 0;
-  z-index: 1;
   background-color: white;
   box-shadow: 0 0 6px rgba(0,0,0,.5);
+
+  /* Z-index = 1 to set controls above the list */
+  z-index: 1;
 }
 
 .tabs-container {
