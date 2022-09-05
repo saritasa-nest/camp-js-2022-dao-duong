@@ -46,6 +46,9 @@ const SortComponent: FC<SortProps> = ({ sortValue, setSortValue }) => {
           value={sortValue.field}
           onChange={handleSortChange}
         >
+          <MenuItem value={AnimeSortField.None}>
+            None
+          </MenuItem>
           <MenuItem value={AnimeSortField.EnglishTitle}>
             English Title
           </MenuItem>
