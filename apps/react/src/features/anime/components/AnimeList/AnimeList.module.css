@@ -5,6 +5,12 @@
 	position: relative;
 }
 
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Custom scrollbar */
 .anime-list::-webkit-scrollbar-track
 {

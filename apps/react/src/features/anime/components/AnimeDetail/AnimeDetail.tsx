@@ -6,7 +6,7 @@ import styles from './AnimeDetail.module.css';
 const AnimeDetailComponent: FC = () => (
   <Box className={styles['anime-detail']}>
     <Typography variant="h2" align="center">
-            Detail will be display here
+      Detail will be display here
     </Typography>
   </Box>
 );

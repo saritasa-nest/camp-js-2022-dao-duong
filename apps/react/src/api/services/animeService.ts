@@ -27,6 +27,7 @@ export namespace AnimeService {
     });
     const animePage = PaginationMapper.fromDto(animeResponse.data, animeDto =>
       AnimeMapper.fromDto(animeDto));
+    setNextUrl(animePage.next);
     return animePage;
   }
 

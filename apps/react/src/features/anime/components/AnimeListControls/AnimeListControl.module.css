@@ -1,4 +1,4 @@
-.anime-list-control {
+.anime-list-controls {
   width: 100%;
   position: sticky;
   top: 0;
@@ -7,6 +7,10 @@
   box-shadow: 0 0 6px rgba(0,0,0,.5);
 }
 
-.tab-container {
+.tabs-container {
   width: 100%;
+}
+
+.tab-item {
+  flex: 1;
 }

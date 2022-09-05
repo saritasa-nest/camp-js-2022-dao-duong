@@ -1,7 +1,4 @@
-import {
-  AnimeSort,
-  AnimeType,
-} from '@js-camp/core/models/anime/anime';
+import { AnimeSort, AnimeType } from '@js-camp/core/models/anime/anime';
 import { Box, Tabs, Tab } from '@mui/material';
 import { FC, memo, SyntheticEvent, useState, useEffect } from 'react';
 import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
@@ -53,7 +50,9 @@ const AnimeListControlComponent: FC<AnimeListControlProps> = ({
 }) => {
   const [tabValue, setTabValue] = useState(0);
   const [sortValue, setSortValue] = useState<AnimeSort>(queryParams.sort);
-  const [typeFilterValue, setTypeFilterValue] = useState<readonly AnimeType[]>(queryParams.type);
+  const [typeFilterValue, setTypeFilterValue] = useState<readonly AnimeType[]>(
+    queryParams.type,
+  );
   const [searchValue, setSearchValue] = useState<string>(queryParams.search);
   const handleTabChange = (event: SyntheticEvent, newTabValue: number) => {
     setTabValue(newTabValue);
@@ -69,17 +68,17 @@ const AnimeListControlComponent: FC<AnimeListControlProps> = ({
   }, [sortValue, typeFilterValue, searchValue]);
 
   return (
-    <Box className={styles['anime-list-control']}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+    <Box className={styles['anime-list-controls']}>
+      <Box>
         <Tabs
           value={tabValue}
           onChange={handleTabChange}
           aria-label="anime control tabs"
-          sx={{ width: '100%' }}
+          className={styles['tabs-container']}
         >
-          <Tab label="Sort" sx={{ flex: '1' }} />
-          <Tab label="Type" sx={{ flex: '1' }} />
-          <Tab label="Search" sx={{ flex: '1' }} />
+          <Tab label="Sort" className={styles['tab-item']} />
+          <Tab label="Type" className={styles['tab-item']} />
+          <Tab label="Search" className={styles['tab-item']} />
         </Tabs>
       </Box>
       <TabPanel value={tabValue} index={0}>

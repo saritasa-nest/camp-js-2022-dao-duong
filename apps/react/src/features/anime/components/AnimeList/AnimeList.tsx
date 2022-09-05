@@ -36,14 +36,22 @@ const DEFAULT_PARAMS: AnimeListQueryParams = {
 };
 
 const getAnimeListParamsFromUrl = (params: URLSearchParams) => {
-  const page = params.get('page') ? Number(params.get('page')) : DEFAULT_PARAMS.page;
-  const limit = params.get('limit') ? Number(params.get('limit')) : DEFAULT_PARAMS.limit;
+  const page = params.get('page') ?
+    Number(params.get('page')) :
+    DEFAULT_PARAMS.page;
+  const limit = params.get('limit') ?
+    Number(params.get('limit')) :
+    DEFAULT_PARAMS.limit;
   const sort = {
-    field: params.get('field') as AnimeSortField ?? DEFAULT_PARAMS.sort.field,
-    direction: params.get('direction') as AnimeSortDirection ?? DEFAULT_PARAMS.sort.direction,
+    field: (params.get('field') as AnimeSortField) ?? DEFAULT_PARAMS.sort.field,
+    direction:
+      (params.get('direction') as AnimeSortDirection) ??
+      DEFAULT_PARAMS.sort.direction,
   };
   const typeFromUrl = params.get('type');
-  const type = typeFromUrl ? typeFromUrl.split(',') as AnimeType[] : DEFAULT_PARAMS.type;
+  const type = typeFromUrl ?
+    (typeFromUrl.split(',') as AnimeType[]) :
+    DEFAULT_PARAMS.type;
   const search = params.get('search') ?? DEFAULT_PARAMS.search;
   return { page, limit, sort, type, search };
 };
@@ -53,8 +61,9 @@ const AnimeListComponent: FC = () => {
   const animeList = useAppSelector(selectAnimeList);
   const isLoading = useAppSelector(selectIsAnimeLoading);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [queryParams, setQueryParams] =
-    useState<AnimeListQueryParams>(getAnimeListParamsFromUrl(searchParams));
+  const [queryParams, setQueryParams] = useState<AnimeListQueryParams>(
+    getAnimeListParamsFromUrl(searchParams),
+  );
   const { itemRef, isLastItemVisible } = useLastItemOnScreen({
     root: null,
     rootMargin: '0px',
@@ -87,30 +96,25 @@ const AnimeListComponent: FC = () => {
     }
   }, [itemRef, isLastItemVisible]);
 
-  // if (isLoading) {
-  //   return (
-  //     <Box className={styles['loading-spinner']}>
-  //       <CircularProgress color="secondary"/>
-  //     </Box>
-  //   );
-  // }
   return (
     <Box className={styles['anime-list']}>
       <AnimeListControl
         queryParams={queryParams}
         setQueryParams={debounce(setQueryParams, 500)}
       />
-      <List className={styles['anime-list']}>
+      <List>
         {animeList.map(anime => (
-          <Box key={anime.id} ref={itemRef}>
-            <AnimeListItem anime={anime}/>
+          <div key={anime.id} ref={itemRef}>
+            <AnimeListItem anime={anime} />
             <Divider />
-          </Box>
+          </div>
         ))}
       </List>
-      {isLoading && <Box className={styles['loading-spinner']}>
-        <CircularProgress color="secondary"/>
-      </Box>}
+      {isLoading && (
+        <Box className={styles['loading-spinner']}>
+          <CircularProgress color="secondary" />
+        </Box>
+      )}
     </Box>
   );
 };

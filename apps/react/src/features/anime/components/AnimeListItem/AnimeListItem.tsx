@@ -1,11 +1,6 @@
 import { FC, memo } from 'react';
 import { Anime } from '@js-camp/core/models/anime/anime';
-import {
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-} from '@mui/material';
+import { ListItem, ListItemAvatar, Avatar, ListItemText } from '@mui/material';
 
 import { Titles } from './components/Title';
 import { Info } from './components/Info';
@@ -33,14 +28,8 @@ const AnimeListItemComponent: FC<Props> = ({ anime }) => (
           japaneseTitle={anime.japaneseTitle}
         ></Titles>
       }
-      secondary={
-        <Info
-          status={anime.status}
-          type={anime.type}
-        ></Info>
-      }
+      secondary={<Info status={anime.status} type={anime.type}></Info>}
     />
-
   </ListItem>
 );
 
