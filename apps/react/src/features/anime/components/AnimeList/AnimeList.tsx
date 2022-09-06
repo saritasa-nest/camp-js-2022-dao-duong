@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { AnimeListQueryParamsWithId } from '@js-camp/core/models/anime-query-params';
 import {
@@ -16,6 +16,8 @@ import {
 } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { Box, debounce, List, Divider } from '@mui/material';
+
+import { AnimeDetail } from '@js-camp/core/models/anime';
 
 import { AppLoadingSpinner } from '../../../../shared/components/';
 import useLastItemOnScreen from '../../../../shared/hooks/useLastItemOnScreen';
@@ -101,6 +103,12 @@ const AnimeListComponent: FC = () => {
     }
   }, [itemRef, isLastItemVisible]);
 
+  // Optimize onlick. Maybe debounce is used to prevent multiple clicks
+  // Maybe not set query param, try to figure other ways
+  const onAnimeItemClick = useCallback((id: AnimeDetail['id']) => {
+    setQueryParams({ ...queryParams, id });
+  }, [queryParams]);
+
   return (
     <Box className={styles['anime-list']}>
       <AnimeListControl
@@ -110,7 +118,7 @@ const AnimeListComponent: FC = () => {
       <List>
         {animeList.map(anime => (
           <div key={anime.id} ref={itemRef}>
-            <AnimeListItem anime={anime} />
+            <AnimeListItem anime={anime} onClick={ () => onAnimeItemClick(anime.id) }/>
             <Divider />
           </div>
         ))}
