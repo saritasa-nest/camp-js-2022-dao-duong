@@ -13,14 +13,20 @@ interface Props {
 
   /** On item click event. */
   readonly onClick: () => void;
+
+  /** Selected state. */
+  readonly isSelected: boolean;
 }
 
-const AnimeListItemComponent: FC<Props> = ({ anime, onClick }) => {
+const AnimeListItemComponent: FC<Props> = ({ anime, onClick, isSelected }) => {
   const onItemClick = () => {
     onClick();
   };
   return (
-    <ListItem className={styles['item']} onClick={onItemClick}>
+    <ListItem
+      className={`${styles['item']} ${isSelected ? styles['selected'] : ''}`}
+      onClick={onItemClick}
+    >
       <ListItemAvatar className={styles['item-image']}>
         <Avatar
           alt={`${anime.englishTitle || anime.japaneseTitle} image`}

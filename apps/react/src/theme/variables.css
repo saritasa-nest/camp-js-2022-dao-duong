@@ -9,6 +9,7 @@
   --primary-dark-text-color: black;
   --background-color: white;
   --background-contrast-color: black;
+  --background-light-contrast-color: rgba(0, 0, 0, 0.2);
   --error-color: red;
 
   /* 64px is the height of the navbar */

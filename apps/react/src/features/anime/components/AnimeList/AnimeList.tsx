@@ -15,7 +15,14 @@ import {
   selectIsAnimeLoading,
 } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Box, debounce, List, Divider, CircularProgress, Typography } from '@mui/material';
+import {
+  Box,
+  debounce,
+  List,
+  Divider,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
 import { AnimeDetail } from '@js-camp/core/models/anime';
 import { clearAnimeList } from '@js-camp/react/store/anime/slice';
 
@@ -68,7 +75,9 @@ const AnimeListComponent: FC = () => {
   const [queryParams, setQueryParams] = useState<AnimeListQueryParamsWithId>(
     getAnimeListParamsFromUrl(searchParams),
   );
-  const [currentAnimeId, setCurrentAnimeId] = useState<AnimeDetail['id'] | null>(queryParams.id);
+  const [currentAnimeId, setCurrentAnimeId] = useState<
+    AnimeDetail['id'] | null
+  >(queryParams.id);
   const { itemRef, isLastItemVisible } = useLastItemOnScreen({
     root: null,
     rootMargin: '0px',
@@ -122,6 +131,7 @@ const AnimeListComponent: FC = () => {
         {animeList.map(anime => (
           <div key={anime.id} ref={itemRef}>
             <AnimeListItem
+              isSelected={anime.id === currentAnimeId}
               anime={anime}
               onClick={() => onAnimeItemClick(anime.id)}
             />
@@ -131,11 +141,13 @@ const AnimeListComponent: FC = () => {
       </List>
       {isLoading && (
         <Box className={styles['anime-list__loader']}>
-          <CircularProgress color="secondary"/>
+          <CircularProgress color="secondary" />
         </Box>
       )}
       {animeList.length === 0 && !isLoading && (
-        <Typography variant="h5" align="center">There are no anime matching your criteria</Typography>
+        <Typography variant="h5" align="center">
+          There are no anime matching your criteria
+        </Typography>
       )}
     </Box>
   );
