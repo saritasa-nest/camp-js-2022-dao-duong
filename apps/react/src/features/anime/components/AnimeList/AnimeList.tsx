@@ -68,6 +68,7 @@ const AnimeListComponent: FC = () => {
   const [queryParams, setQueryParams] = useState<AnimeListQueryParamsWithId>(
     getAnimeListParamsFromUrl(searchParams),
   );
+  const [currentAnimeId, setCurrentAnimeId] = useState<AnimeDetail['id'] | null>(queryParams.id);
   const { itemRef, isLastItemVisible } = useLastItemOnScreen({
     root: null,
     rootMargin: '0px',
@@ -92,7 +93,7 @@ const AnimeListComponent: FC = () => {
   };
 
   useEffect(() => {
-    setQueryParamsToUrl(queryParams);
+    setQueryParamsToUrl({ ...queryParams, id: currentAnimeId });
     dispatch(clearAnimeList());
     dispatch(fetchAnimePage(queryParams));
   }, [queryParams]);
@@ -106,6 +107,7 @@ const AnimeListComponent: FC = () => {
   const onAnimeItemClick = useCallback(
     (id: AnimeDetail['id']) => {
       setQueryParamsToUrl({ ...queryParams, id });
+      setCurrentAnimeId(id);
     },
     [queryParams],
   );

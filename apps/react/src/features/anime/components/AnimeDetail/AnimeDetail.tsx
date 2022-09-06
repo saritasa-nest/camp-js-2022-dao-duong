@@ -37,7 +37,7 @@ const AnimeDetailComponent: FC = () => {
 
   return (
     <Box className={styles['anime-detail']}>
-      <div>{JSON.stringify(animeDetail)}</div>
+      {JSON.stringify(animeDetail, null, 2)}
     </Box>
   );
 };
