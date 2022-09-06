@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { Anime } from '@js-camp/core/models/anime/anime';
-import { ListItem, ListItemAvatar, Avatar, ListItemText, debounce } from '@mui/material';
+import { ListItem, ListItemAvatar, Avatar, ListItemText } from '@mui/material';
 
 import { Titles } from './components/Title';
 import { Info } from './components/Info';
@@ -20,7 +20,7 @@ const AnimeListItemComponent: FC<Props> = ({ anime, onClick }) => {
     onClick();
   };
   return (
-    <ListItem className={styles['item']} onClick={ debounce(onItemClick, 500) }>
+    <ListItem className={styles['item']} onClick={onItemClick}>
       <ListItemAvatar className={styles['item-image']}>
         <Avatar
           alt={`${anime.englishTitle || anime.japaneseTitle} image`}

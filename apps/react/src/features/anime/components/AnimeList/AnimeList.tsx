@@ -19,6 +19,8 @@ import { Box, debounce, List, Divider } from '@mui/material';
 
 import { AnimeDetail } from '@js-camp/core/models/anime';
 
+import { clearAnimeList } from '@js-camp/react/store/anime/slice';
+
 import { AppLoadingSpinner } from '../../../../shared/components/';
 import useLastItemOnScreen from '../../../../shared/hooks/useLastItemOnScreen';
 import { AnimeListControl } from '../AnimeListControls/AnimeListControl';
@@ -93,9 +95,17 @@ const AnimeListComponent: FC = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchAnimePage(queryParams));
-    setQueryParamsToUrl(queryParams);
+    if (animeList.length > 0) {
+      setQueryParamsToUrl(queryParams);
+      dispatch(clearAnimeList());
+    }
   }, [queryParams]);
+
+  useEffect(() => {
+    if (animeList.length === 0) {
+      dispatch(fetchAnimePage(queryParams));
+    }
+  }, [animeList]);
 
   useEffect(() => {
     if (isLastItemVisible) {
@@ -103,10 +113,8 @@ const AnimeListComponent: FC = () => {
     }
   }, [itemRef, isLastItemVisible]);
 
-  // Optimize onlick. Maybe debounce is used to prevent multiple clicks
-  // Maybe not set query param, try to figure other ways
   const onAnimeItemClick = useCallback((id: AnimeDetail['id']) => {
-    setQueryParams({ ...queryParams, id });
+    setQueryParamsToUrl({ ...queryParams, id });
   }, [queryParams]);
 
   return (

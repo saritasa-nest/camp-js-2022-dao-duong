@@ -19,7 +19,7 @@ const AnimeDetailComponent: FC = () => {
     if (animeId) {
       dispatch(fetchAnimeDetail(animeId));
     }
-  }, [searchParams, dispatch]);
+  }, [searchParams.get('id'), dispatch]);
 
   if (isAnimeDetailLoading) {
     return (

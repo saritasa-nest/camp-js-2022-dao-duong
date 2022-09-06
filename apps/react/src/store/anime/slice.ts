@@ -6,7 +6,11 @@ import { initialState, animeAdapter, State } from './state';
 export const animeSlice = createSlice({
   name: 'anime',
   initialState,
-  reducers: {},
+  reducers: {
+    clearAnimeList(state) {
+      animeAdapter.removeAll(state as State);
+    },
+  },
   extraReducers: builder => builder
     .addCase(fetchAnimePage.pending, state => {
       state.isLoading = true;
@@ -37,3 +41,5 @@ export const animeSlice = createSlice({
       state.isLoading = false;
     }),
 });
+
+export const { clearAnimeList } = animeSlice.actions;
