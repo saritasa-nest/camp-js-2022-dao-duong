@@ -9,15 +9,15 @@ import {
   Theme,
   useTheme,
 } from '@mui/material';
-import { AnimeType } from '@js-camp/core/models/anime/anime';
+import { AnimeType } from '@js-camp/core/models/anime';
 
 interface TypeProps {
 
   /** Filter type value. */
-  readonly typeValue: readonly AnimeType[];
+  readonly type: readonly AnimeType[];
 
   /** Set filter type value callback. */
-  readonly setTypeValue: (typeValue: readonly AnimeType[]) => void;
+  readonly setType: (type: readonly AnimeType[]) => void;
 }
 
 /**
@@ -38,14 +38,14 @@ function getStyles(
   };
 }
 
-const TypeComponent: FC<TypeProps> = ({ typeValue, setTypeValue }) => {
+const TypeComponent: FC<TypeProps> = ({ type, setType }) => {
   const theme = useTheme();
-  const handleTypeChange = (event: SelectChangeEvent<typeof typeValue>) => {
+  const handleTypeChange = (event: SelectChangeEvent<typeof type>) => {
     const {
       target: { value },
     } = event;
     if (typeof value !== 'string') {
-      setTypeValue(value);
+      setType(value);
     }
   };
 
@@ -56,17 +56,17 @@ const TypeComponent: FC<TypeProps> = ({ typeValue, setTypeValue }) => {
         <Select
           labelId="type-label"
           multiple
-          value={typeValue}
+          value={type}
           onChange={handleTypeChange}
           input={<OutlinedInput color="secondary" label="Type" />}
         >
-          {Object.entries(AnimeType).map(([type, value]) => (
+          {Object.entries(AnimeType).map(([displayType, value]) => (
             <MenuItem
               value={value}
               key={value}
-              style={getStyles(value, typeValue, theme)}
+              style={getStyles(value, type, theme)}
             >
-              {type}
+              {displayType}
             </MenuItem>
           ))}
           ;

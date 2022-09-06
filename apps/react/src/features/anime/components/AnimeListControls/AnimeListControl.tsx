@@ -30,14 +30,14 @@ interface TabPanelProps {
 }
 
 const TabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, ...otherTabProps } = props;
 
   return (
     <div
+      {...otherTabProps}
       role="tabpanel"
       hidden={value !== index}
       aria-labelledby={`tab-${index}`}
-      {...other}
     >
       {value === index && <Box sx={{ p: 2, display: 'flex' }}>{children}</Box>}
     </div>
@@ -48,30 +48,30 @@ const AnimeListControlComponent: FC<AnimeListControlProps> = ({
   queryParams,
   setQueryParams,
 }) => {
-  const [tabValue, setTabValue] = useState(0);
-  const [sortValue, setSortValue] = useState<AnimeSort>(queryParams.sort);
-  const [typeFilterValue, setTypeFilterValue] = useState<readonly AnimeType[]>(
+  const [tab, setTab] = useState(0);
+  const [sort, setSort] = useState<AnimeSort>(queryParams.sort);
+  const [typeFilter, setTypeFilter] = useState<readonly AnimeType[]>(
     queryParams.type,
   );
-  const [searchValue, setSearchValue] = useState<string>(queryParams.search);
-  const handleTabChange = (event: SyntheticEvent, newTabValue: number) => {
-    setTabValue(newTabValue);
+  const [search, setSearch] = useState<string>(queryParams.search);
+  const handleTabChange = (event: SyntheticEvent, newTab: number) => {
+    setTab(newTab);
   };
 
   useEffect(() => {
     setQueryParams({
       ...queryParams,
-      sort: sortValue,
-      type: typeFilterValue,
-      search: searchValue,
+      sort,
+      type: typeFilter,
+      search,
     });
-  }, [sortValue, typeFilterValue, searchValue]);
+  }, [sort, typeFilter, search]);
 
   return (
     <Box className={styles['anime-list-controls']}>
       <Box>
         <Tabs
-          value={tabValue}
+          value={tab}
           onChange={handleTabChange}
           aria-label="anime control tabs"
           className={styles['tabs-container']}
@@ -81,14 +81,14 @@ const AnimeListControlComponent: FC<AnimeListControlProps> = ({
           <Tab label="Search" className={styles['tab-item']} />
         </Tabs>
       </Box>
-      <TabPanel value={tabValue} index={0}>
-        <Sort sortValue={sortValue} setSortValue={setSortValue} />
+      <TabPanel value={tab} index={0}>
+        <Sort sort={sort} setSort={setSort} />
       </TabPanel>
-      <TabPanel value={tabValue} index={1}>
-        <Type typeValue={typeFilterValue} setTypeValue={setTypeFilterValue} />
+      <TabPanel value={tab} index={1}>
+        <Type type={typeFilter} setType={setTypeFilter} />
       </TabPanel>
-      <TabPanel value={tabValue} index={2}>
-        <Search searchValue={searchValue} setSearchValue={setSearchValue} />
+      <TabPanel value={tab} index={2}>
+        <Search search={search} setSearch={setSearch} />
       </TabPanel>
     </Box>
   );
