@@ -17,20 +17,20 @@ import styles from './Sort.module.css';
 interface SortProps {
 
   /** Title in english. */
-  readonly sortValue: AnimeSort;
+  readonly sort: AnimeSort;
 
   /** Title in japanese. */
-  readonly setSortValue: (sortValue: AnimeSort) => void;
+  readonly setSort: (sort: AnimeSort) => void;
 }
 
-const SortComponent: FC<SortProps> = ({ sortValue, setSortValue }) => {
+const SortComponent: FC<SortProps> = ({ sort, setSort }) => {
   const handleSortChange = (event: SelectChangeEvent) => {
-    setSortValue({ ...sortValue, field: event.target.value as AnimeSortField });
+    setSort({ ...sort, field: event.target.value as AnimeSortField });
   };
 
   const handleDirectionChange = (event: SelectChangeEvent) => {
-    setSortValue({
-      ...sortValue,
+    setSort({
+      ...sort,
       direction: event.target.value as AnimeSortDirection,
     });
   };
@@ -43,7 +43,7 @@ const SortComponent: FC<SortProps> = ({ sortValue, setSortValue }) => {
           labelId="field-label"
           label="Field"
           color="secondary"
-          value={sortValue.field}
+          value={sort.field}
           onChange={handleSortChange}
         >
           <MenuItem value={AnimeSortField.None}>
@@ -63,9 +63,9 @@ const SortComponent: FC<SortProps> = ({ sortValue, setSortValue }) => {
           labelId="direction-label"
           label="Direction"
           color="secondary"
-          value={sortValue.direction}
+          value={sort.direction}
           onChange={handleDirectionChange}
-          {...(sortValue.field === AnimeSortField.None ?
+          {...(sort.field === AnimeSortField.None ?
             { disabled: true } :
             {})}
         >
