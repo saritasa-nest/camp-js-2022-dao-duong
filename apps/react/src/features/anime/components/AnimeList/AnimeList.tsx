@@ -15,13 +15,10 @@ import {
   selectIsAnimeLoading,
 } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Box, debounce, List, Divider } from '@mui/material';
-
+import { Box, debounce, List, Divider, CircularProgress, Typography } from '@mui/material';
 import { AnimeDetail } from '@js-camp/core/models/anime';
-
 import { clearAnimeList } from '@js-camp/react/store/anime/slice';
 
-import { AppLoadingSpinner } from '../../../../shared/components/';
 import useLastItemOnScreen from '../../../../shared/hooks/useLastItemOnScreen';
 import { AnimeListControl } from '../AnimeListControls/AnimeListControl';
 
@@ -95,17 +92,10 @@ const AnimeListComponent: FC = () => {
   };
 
   useEffect(() => {
-    if (animeList.length > 0) {
-      setQueryParamsToUrl(queryParams);
-      dispatch(clearAnimeList());
-    }
+    setQueryParamsToUrl(queryParams);
+    dispatch(clearAnimeList());
+    dispatch(fetchAnimePage(queryParams));
   }, [queryParams]);
-
-  useEffect(() => {
-    if (animeList.length === 0) {
-      dispatch(fetchAnimePage(queryParams));
-    }
-  }, [animeList]);
 
   useEffect(() => {
     if (isLastItemVisible) {
@@ -113,9 +103,12 @@ const AnimeListComponent: FC = () => {
     }
   }, [itemRef, isLastItemVisible]);
 
-  const onAnimeItemClick = useCallback((id: AnimeDetail['id']) => {
-    setQueryParamsToUrl({ ...queryParams, id });
-  }, [queryParams]);
+  const onAnimeItemClick = useCallback(
+    (id: AnimeDetail['id']) => {
+      setQueryParamsToUrl({ ...queryParams, id });
+    },
+    [queryParams],
+  );
 
   return (
     <Box className={styles['anime-list']}>
@@ -126,13 +119,21 @@ const AnimeListComponent: FC = () => {
       <List>
         {animeList.map(anime => (
           <div key={anime.id} ref={itemRef}>
-            <AnimeListItem anime={anime} onClick={ () => onAnimeItemClick(anime.id) }/>
+            <AnimeListItem
+              anime={anime}
+              onClick={() => onAnimeItemClick(anime.id)}
+            />
             <Divider />
           </div>
         ))}
       </List>
       {isLoading && (
-        <AppLoadingSpinner />
+        <Box className={styles['anime-list__loader']}>
+          <CircularProgress color="secondary"/>
+        </Box>
+      )}
+      {animeList.length === 0 && !isLoading && (
+        <Typography variant="h5" align="center">There are no anime matching your criteria</Typography>
       )}
     </Box>
   );

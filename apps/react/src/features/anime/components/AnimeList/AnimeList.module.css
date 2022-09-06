@@ -1,8 +1,14 @@
 .anime-list {
   overflow-y: scroll;
-  max-height: var(--anime-list-height);
+  height: var(--anime-list-height);
   width: var(--anime-list-width);
   position: relative;
+}
+
+.anime-list__loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Custom scrollbar */

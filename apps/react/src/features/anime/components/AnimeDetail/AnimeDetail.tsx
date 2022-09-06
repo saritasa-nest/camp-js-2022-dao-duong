@@ -1,11 +1,9 @@
 import { fetchAnimeDetail } from '@js-camp/react/store/animeDetail/dispatchers';
 import { selectAnimeDetail, selectIsAnimeDetailLoading } from '@js-camp/react/store/animeDetail/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { FC, memo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-
-import { AppLoadingSpinner } from '../../../../shared/components';
 
 import styles from './AnimeDetail.module.css';
 
@@ -23,7 +21,9 @@ const AnimeDetailComponent: FC = () => {
 
   if (isAnimeDetailLoading) {
     return (
-      <AppLoadingSpinner />
+      <Box className={styles['loader']}>
+        <CircularProgress color="secondary"/>
+      </Box>
     );
   }
 
