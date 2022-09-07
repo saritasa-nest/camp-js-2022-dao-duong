@@ -3,7 +3,6 @@
   position: sticky;
   top: 0;
   background-color: var(--background-color);
-  box-shadow: 0 0 6px var(--box-shadow);
 
   /* Z-index = 1 to set controls above the list */
   z-index: 1;

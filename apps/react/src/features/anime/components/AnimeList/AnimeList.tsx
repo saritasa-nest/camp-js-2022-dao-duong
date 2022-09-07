@@ -22,6 +22,7 @@ import {
   Divider,
   CircularProgress,
   Typography,
+  Button,
 } from '@mui/material';
 import { AnimeDetail } from '@js-camp/core/models/anime';
 import { clearAnimeList } from '@js-camp/react/store/anime/slice';
@@ -119,12 +120,25 @@ const AnimeListComponent: FC = () => {
     [searchParams],
   );
 
+  const onAddButtonClick = () => {
+    navigate({ pathname: `/anime/add`, search: searchParams.toString() });
+  };
+
   return (
     <Box className={styles['anime-list']}>
       <AnimeListControl
         queryParams={queryParams}
         setQueryParams={debounce(setQueryParams, 500)}
       />
+      <Button
+        className={styles['add-button']}
+        type="button"
+        variant="outlined"
+        color="info"
+        onClick={onAddButtonClick}
+      >
+        Add
+      </Button>
       <List>
         {animeList.map(anime => (
           <div key={anime.id} ref={itemRef}>
