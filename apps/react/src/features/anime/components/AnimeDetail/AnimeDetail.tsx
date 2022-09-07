@@ -24,6 +24,7 @@ import { AnimeDetailContent } from './components/AnimeDetailContent/AnimeDetailC
 
 const AnimeDetailComponent: FC = () => {
   const params = useParams();
+
   const animeId = Number(params['id']);
   const dispatch = useAppDispatch();
   const animeDetail = useAppSelector(state =>
@@ -55,7 +56,7 @@ const AnimeDetailComponent: FC = () => {
     return (
       <Box className={styles['anime-detail']}>
         <Typography variant="h4">
-          Select anime on the left for more details!
+          No anime match your criteria!
         </Typography>
       </Box>
     );
