@@ -24,7 +24,17 @@
   align-items: center;
 }
 
-.image,
-.trailer-button {
-  width: 250px;
+.image {
+  width: var(--image-width-base);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.popup-image {
+  width: var(--image-width-medium);
 }

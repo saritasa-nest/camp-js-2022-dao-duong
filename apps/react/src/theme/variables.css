@@ -17,4 +17,6 @@
   --anime-list-height: calc(100vh - 64px);
   --anime-list-width: 360px;
   --anime-detail-width: calc(100vw - var(--anime-list-width));
+  --image-width-base: 250px;
+  --image-width-medium: 400px;
 }
