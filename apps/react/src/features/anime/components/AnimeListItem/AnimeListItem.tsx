@@ -24,7 +24,7 @@ const AnimeListItemComponent: FC<Props> = ({ anime, onClick, isSelected }) => {
   };
   return (
     <ListItem
-      className={`${styles['item']} ${isSelected ? styles['selected'] : ''}`}
+      className={`${styles['item']} ${isSelected ? styles['selected'] : isSelected}`}
       onClick={onItemClick}
     >
       <ListItemAvatar className={styles['item-image']}>
