@@ -6,7 +6,6 @@ import {
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -19,6 +18,8 @@ import {
 import { Stack } from '@mui/system';
 import { FC, memo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import ReactPlayer from 'react-player/youtube';
+import { convertDate } from '@js-camp/core/utils/convertDate';
 
 import styles from './AnimeDetail.module.css';
 
@@ -53,17 +54,21 @@ const AnimeDetailComponent: FC = () => {
     );
   }
 
-  const convertDate = (date: Date | null): string => {
-    if (date !== null) {
-      return date.toLocaleDateString('en-GB');
-    }
-    return 'Unknown date';
-  };
-
   return (
     <Container className={styles['anime-detail']}>
-      {JSON.stringify(animeDetail, null, 2)}
       <Card className={styles['anime-detail__card']}>
+        <CardHeader
+          title={
+            <Typography variant="h4">
+              {animeDetail.englishTitle || '--'}
+            </Typography>
+          }
+          subheader={
+            <Typography variant="h5">
+              {animeDetail.japaneseTitle || '--'}
+            </Typography>
+          }
+        />
         <Box className={styles['card-media']}>
           <CardMedia
             component="img"
@@ -73,27 +78,8 @@ const AnimeDetailComponent: FC = () => {
               animeDetail.englishTitle || animeDetail.japaneseTitle
             } image`}
           />
-          <Button
-            variant="outlined"
-            color="secondary"
-            className={styles['trailer-button']}
-          >
-            Watch Trailer
-          </Button>
         </Box>
-        <Box>
-          <CardHeader
-            title={
-              <Typography variant="h4">
-                {animeDetail.englishTitle || '--'}
-              </Typography>
-            }
-            subheader={
-              <Typography variant="h5">
-                {animeDetail.japaneseTitle || '--'}
-              </Typography>
-            }
-          />
+        <Box className={styles['card-content']}>
           <CardContent>
             <Box>
               <Typography variant="h6" align="left">
@@ -110,7 +96,10 @@ const AnimeDetailComponent: FC = () => {
               Status: {animeDetail.status}
             </Typography>
             <Typography variant="h6" align="left">
-              Aired: {`From ${convertDate(animeDetail.aired.start)} to ${convertDate(animeDetail.aired.end)}`}
+              Aired:{' '}
+              {`From ${convertDate(animeDetail.aired.start)} to ${convertDate(
+                animeDetail.aired.end,
+              )}`}
             </Typography>
             <Typography variant="h6" align="left">
               Airing: {animeDetail.airing ? 'Yes' : 'No'}
@@ -120,7 +109,9 @@ const AnimeDetailComponent: FC = () => {
                 Genres
               </Typography>
               <Stack direction="row" spacing={1}>
-                {animeDetail.genreList.map(genre => <Chip label={genre.name} />)}
+                {animeDetail.genreList.map(genre => (
+                  <Chip label={genre.name} key={genre.id} />
+                ))}
               </Stack>
             </Box>
             <Box>
@@ -128,9 +119,22 @@ const AnimeDetailComponent: FC = () => {
                 Studios
               </Typography>
               <Stack direction="row" spacing={1}>
-                {animeDetail.studioList.map(studio => <Chip label={studio.name} />)}
+                {animeDetail.studioList.map(studio => (
+                  <Chip label={studio.name} key={studio.id} />
+                ))}
               </Stack>
             </Box>
+            {animeDetail.youtubeTrailerId && (
+              <Box>
+                <Typography variant="h6" align="left">
+                  Trailer
+                </Typography>
+                <ReactPlayer
+                  url={`https://www.youtube-nocookie.com/embed/${animeDetail.youtubeTrailerId}`}
+                  controls={true}
+                />
+              </Box>
+            )}
           </CardContent>
         </Box>
       </Card>
