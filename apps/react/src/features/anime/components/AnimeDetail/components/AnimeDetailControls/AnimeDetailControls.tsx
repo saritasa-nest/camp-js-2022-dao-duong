@@ -39,9 +39,9 @@ const AnimeDetailControlsComponent: FC<Props> = ({ animeId }) => {
 
   const onYesButtonClick = useCallback((id: AnimeDetail['id']) => {
     dispatch(deleteAnime(id));
-    if (isDeleting) {
+    if (!isDeleting) {
       setIsDeleteModalOpen(false);
-      navigate({ pathname: '/', search: searchParams.toString() });
+      navigate({ pathname: '/anime', search: searchParams.toString() });
     }
   }, [isDeleting, searchParams]);
   return (
