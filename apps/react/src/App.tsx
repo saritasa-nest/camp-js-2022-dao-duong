@@ -10,8 +10,8 @@ export const App: FC = () => (
   <Provider store={store}>
     <HashRouter>
       <div>
+        <AppNavbar />
         <Suspense fallback={<div>Brrr... here should be your loader component</div>}>
-          <AppNavbar />
           <RootRouter />
         </Suspense>
       </div>

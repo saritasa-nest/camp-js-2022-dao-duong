@@ -17,7 +17,7 @@ export const AuthGuard: FC = () => {
 
   if (hasToken && user === null) {
     dispatch(fetchUser());
-    return <div>Fetch User...</div>;
+    return <div>Fetching User...</div>;
   }
   if (!isAuthorized && !hasToken) {
     const redirect: To = {
