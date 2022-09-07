@@ -13,3 +13,9 @@ export const selectIsAnimeLoading = createSelector(
   (state: RootState) => state.anime.isLoading,
   isLoading => isLoading,
 );
+
+/** Selects anime deleting state. */
+export const selectIsAnimeDeleting = createSelector(
+  (state: RootState) => state.anime.isDeleting,
+  isDeleting => isDeleting,
+);

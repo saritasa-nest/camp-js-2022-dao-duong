@@ -113,7 +113,7 @@ const AnimeListComponent: FC = () => {
 
   const onAnimeItemClick = useCallback(
     (id: AnimeDetail['id']) => {
-      navigate({ pathname: `../anime/${id}`, search: searchParams.toString() });
+      navigate({ pathname: `/anime/${id}`, search: searchParams.toString() });
       setCurrentAnimeId(id);
     },
     [searchParams],

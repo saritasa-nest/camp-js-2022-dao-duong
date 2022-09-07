@@ -1,2 +1,4 @@
 export { AnimePage } from './AnimePage/AnimePage';
-export { AnimeDetailPage } from './AnimeDetailPage/AnimeDetailPage';
+export { DetailPage } from './DetailPage/DetailPage';
+export { AddPage } from './AddPage/AddPage';
+export { EditPage } from './EditPage/EditPage';

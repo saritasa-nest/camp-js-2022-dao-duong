@@ -16,15 +16,16 @@ import {
   Modal,
   Typography,
 } from '@mui/material';
+
 import { FC, memo, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import styles from './AnimeDetail.module.css';
 import { AnimeDetailContent } from './components/AnimeDetailContent/AnimeDetailContent';
+import { AnimeDetailControls } from './components/AnimeDetailControls/AnimeDetailControls';
 
 const AnimeDetailComponent: FC = () => {
   const params = useParams();
-
   const animeId = Number(params['id']);
   const dispatch = useAppDispatch();
   const animeDetail = useAppSelector(state =>
@@ -105,6 +106,9 @@ const AnimeDetailComponent: FC = () => {
           </CardContent>
         </Box>
       </Card>
+      <Box className={styles['anime-detail__controls']}>
+        <AnimeDetailControls animeId={animeDetail.id}/>
+      </Box>
     </Container>
   );
 };
