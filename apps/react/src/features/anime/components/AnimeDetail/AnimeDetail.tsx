@@ -17,14 +17,14 @@ import {
   Typography,
 } from '@mui/material';
 import { FC, memo, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import styles from './AnimeDetail.module.css';
 import { AnimeDetailContent } from './components/AnimeDetailContent/AnimeDetailContent';
 
 const AnimeDetailComponent: FC = () => {
-  const [searchParams] = useSearchParams();
-  const animeId = Number(searchParams.get('id'));
+  const params = useParams();
+  const animeId = Number(params['id']);
   const dispatch = useAppDispatch();
   const animeDetail = useAppSelector(state =>
     selectAnimeDetail(state, animeId));

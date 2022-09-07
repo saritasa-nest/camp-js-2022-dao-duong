@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { AnimeListQueryParamsWithId } from '@js-camp/core/models/anime-query-params';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
 import {
   AnimeSortDirection,
   AnimeSortField,
@@ -33,7 +33,7 @@ import { AnimeListItem } from '../AnimeListItem/AnimeListItem';
 
 import styles from './AnimeList.module.css';
 
-const DEFAULT_PARAMS: AnimeListQueryParamsWithId = {
+const DEFAULT_PARAMS: AnimeListQueryParams = {
   page: 0,
   limit: 25,
   sort: {
@@ -42,7 +42,6 @@ const DEFAULT_PARAMS: AnimeListQueryParamsWithId = {
   },
   type: [],
   search: '',
-  id: null,
 };
 
 const getAnimeListParamsFromUrl = (params: URLSearchParams) => {
@@ -63,21 +62,22 @@ const getAnimeListParamsFromUrl = (params: URLSearchParams) => {
     (typeFromUrl.split(',') as AnimeType[]) :
     DEFAULT_PARAMS.type;
   const search = params.get('search') ?? DEFAULT_PARAMS.search;
-  const id = params.get('id') ? Number(params.get('id')) : DEFAULT_PARAMS.id;
-  return { page, limit, sort, type, search, id };
+  return { page, limit, sort, type, search };
 };
 
 const AnimeListComponent: FC = () => {
   const dispatch = useAppDispatch();
   const animeList = useAppSelector(selectAnimeList);
   const isLoading = useAppSelector(selectIsAnimeLoading);
+  const params = useParams();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [queryParams, setQueryParams] = useState<AnimeListQueryParamsWithId>(
+  const [queryParams, setQueryParams] = useState<AnimeListQueryParams>(
     getAnimeListParamsFromUrl(searchParams),
   );
   const [currentAnimeId, setCurrentAnimeId] = useState<
     AnimeDetail['id'] | null
-  >(queryParams.id);
+  >(Number(params['id']));
   const { itemRef, isLastItemVisible } = useLastItemOnScreen({
     root: null,
     rootMargin: '0px',
@@ -88,21 +88,19 @@ const AnimeListComponent: FC = () => {
     sort,
     type,
     search,
-    id,
-  }: AnimeListQueryParamsWithId) => {
+  }: AnimeListQueryParams) => {
     const paramsForUrl = {
       field: sort.field,
       direction: sort.direction,
       type: type.toString(),
       search,
-      id: id ? id.toString() : '',
     };
-    const params = new URLSearchParams(paramsForUrl);
-    setSearchParams(params, { replace: true });
+    const urlSearchParams = new URLSearchParams(paramsForUrl);
+    setSearchParams(urlSearchParams, { replace: true });
   };
 
   useEffect(() => {
-    setQueryParamsToUrl({ ...queryParams, id: currentAnimeId });
+    setQueryParamsToUrl(queryParams);
     dispatch(clearAnimeList());
     dispatch(fetchAnimePage(queryParams));
   }, [queryParams]);
@@ -115,10 +113,10 @@ const AnimeListComponent: FC = () => {
 
   const onAnimeItemClick = useCallback(
     (id: AnimeDetail['id']) => {
-      setQueryParamsToUrl({ ...queryParams, id });
+      navigate({ pathname: `../anime/${id}`, search: searchParams.toString() });
       setCurrentAnimeId(id);
     },
-    [queryParams],
+    [searchParams],
   );
 
   return (

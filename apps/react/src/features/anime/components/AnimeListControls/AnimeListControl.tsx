@@ -1,7 +1,7 @@
 import { AnimeSort, AnimeType } from '@js-camp/core/models/anime/anime';
 import { Box, Tabs, Tab } from '@mui/material';
 import { FC, memo, SyntheticEvent, useState, useEffect } from 'react';
-import { AnimeListQueryParamsWithId } from '@js-camp/core/models/anime-query-params';
+import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
 
 import { Search } from './components/Search/Search';
 import { Sort } from './components/Sort/Sort';
@@ -11,10 +11,10 @@ import styles from './AnimeListControl.module.css';
 interface AnimeListControlProps {
 
   /** Params value. */
-  readonly queryParams: AnimeListQueryParamsWithId;
+  readonly queryParams: AnimeListQueryParams;
 
   /** Set params callback. */
-  readonly setQueryParams: (params: AnimeListQueryParamsWithId) => void;
+  readonly setQueryParams: (params: AnimeListQueryParams) => void;
 }
 
 interface TabPanelProps {

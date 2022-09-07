@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { FC, memo } from 'react';
+import { Outlet } from 'react-router-dom';
 
-import { AnimeDetail } from '../../components/AnimeDetail/AnimeDetail';
 import { AnimeList } from '../../components/AnimeList/AnimeList';
 
 import styles from './AnimePage.module.css';
@@ -9,7 +9,7 @@ import styles from './AnimePage.module.css';
 const AnimePageComponent: FC = () => (
   <Box className={styles['container']}>
     <AnimeList />
-    <AnimeDetail />
+    <Outlet />
   </Box>
 );
 
