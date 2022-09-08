@@ -3,7 +3,9 @@
 }
 
 .detail-container {
+  max-width: var(--anime-detail-width);
   max-height: var(--anime-page-height);
   flex-grow: 1;
   overflow-y: scroll;
+
 }
