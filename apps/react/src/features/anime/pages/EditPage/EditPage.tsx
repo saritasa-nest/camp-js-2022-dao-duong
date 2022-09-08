@@ -1,4 +1,5 @@
-import { fetchAnimeDetail } from '@js-camp/react/store/animeDetail/dispatchers';
+import { AnimeDetailPost } from '@js-camp/core/models/anime';
+import { fetchAnimeDetail, updateAnime } from '@js-camp/react/store/animeDetail/dispatchers';
 import { selectAnimeDetail, selectIsAnimeDetailLoading } from '@js-camp/react/store/animeDetail/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { CircularProgress } from '@mui/material';
@@ -19,6 +20,11 @@ const EditPageComponent: FC = () => {
     }
   }, []);
 
+  const onFormSubmit = (data: AnimeDetailPost) => {
+    dispatch(updateAnime({ id: animeId, animeData: data }));
+    console.log(data);
+  };
+
   if (isAnimeDetailLoading) {
     return (
       <CircularProgress />
@@ -27,7 +33,7 @@ const EditPageComponent: FC = () => {
 
   return (
     <div>
-      <AnimeForm animeDetail={animeDetail}/>
+      <AnimeForm animeDetail={animeDetail} onSubmit={onFormSubmit} />
     </div>
   )
 }

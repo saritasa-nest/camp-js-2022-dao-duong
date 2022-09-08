@@ -10,7 +10,7 @@ import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
 
 import { Pagination } from '@js-camp/core/models/pagination';
 
-import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
+import { AnimeDetail, AnimeDetailPost } from '@js-camp/core/models/anime/animeDetail';
 import { AnimeDetailDto } from '@js-camp/core/dtos/anime/animeDetail.dto';
 import { AnimeDetailMapper } from '@js-camp/core/mappers/anime/animeDetail.mapper';
 
@@ -108,5 +108,17 @@ export namespace AnimeService {
     });
     return totalStudios.data.results.map(studiosDto =>
       StudioMapper.fromDto(studiosDto));
+  }
+
+  /**
+   * Update anime.
+   * @param animeId Id of the anime.
+   * @param animeData Anime data.
+   */
+  export async function updateAnime(animeId: Anime['id'], animeData: AnimeDetailPost): Promise<AnimeDetail> {
+    const updatePath = `anime/anime/${animeId}/`;
+
+    const animeUpdateResponse = await http.put<AnimeDetailDto>(updatePath, AnimeDetailMapper.toDto(animeData));
+    return AnimeDetailMapper.fromDto(animeUpdateResponse.data);
   }
 }

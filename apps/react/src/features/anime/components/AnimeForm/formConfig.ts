@@ -58,7 +58,7 @@ export const defaultAnimeFormValues: AnimeDetailPost = {
   studioList: [],
   genreIdList: [],
   genreList: [],
-  youtubeTrailerId: null,
+  youtubeTrailerId: '',
   source: Source.Unknown,
   season: Season.NonSeasonal,
   rating: Rating.Unknown,

@@ -1,5 +1,4 @@
 import {
-  AnimeDetail,
   AnimeDetailPost,
   AnimeStatus,
   AnimeType,
@@ -7,6 +6,7 @@ import {
   Rating,
   Season,
   Genre,
+  Studio,
 } from '@js-camp/core/models/anime';
 import { Box, Button, FormControlLabel } from '@mui/material';
 import { FC, memo, useEffect } from 'react';
@@ -26,15 +26,18 @@ import { FormAutocomplete } from './components/FormAutocomplete/FormAutocomplete
 interface Props {
 
   /** Anime data. */
-  readonly animeDetail?: AnimeDetail;
+  readonly animeDetail?: AnimeDetailPost;
+
+  /** On submit handler. */
+  readonly onSubmit: (data: AnimeDetailPost) => void;
 }
 
-const AnimeFormComponent: FC<Props> = ({ animeDetail }) => {
+const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
   const dispatch = useAppDispatch();
   const genresList = useAppSelector(selectGenres);
   const studiosList = useAppSelector(selectStudios);
   const onFormSubmission = (values: AnimeDetailPost) => {
-    console.log(values);
+    onSubmit(values);
     formik.setSubmitting(false);
   };
 
@@ -101,7 +104,15 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail }) => {
               name="genreList"
               label="Genres"
               options={genresList}
-              getOptionLabel={(option: Genre) => option.name}
+              getOptionLabel={(genre: Genre) => genre.name}
+            />
+          </Box>
+          <Box>
+            <FormAutocomplete
+              name="studioList"
+              label="Studios"
+              options={studiosList}
+              getOptionLabel={(studio: Studio) => studio.name}
             />
           </Box>
           <Box>

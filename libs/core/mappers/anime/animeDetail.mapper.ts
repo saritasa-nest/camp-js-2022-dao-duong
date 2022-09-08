@@ -3,7 +3,7 @@ import { AnimeType, AnimeStatus } from '../../models/anime/anime';
 
 import { AnimeDetailDto, RatingDto, SeasonDto, SourceDto } from '../../dtos/anime/animeDetail.dto';
 
-import { AnimeDetail, Rating, Season, Source } from '../../models/anime/animeDetail';
+import { AnimeDetail, AnimeDetailPost, Rating, Season, Source } from '../../models/anime/animeDetail';
 
 import { DateRangeMapper } from '../dateRange.mapper';
 
@@ -134,7 +134,7 @@ export namespace AnimeDetailMapper {
    * Maps AnimeDetailDto to AnimeDetail model.
    * @param animeData Anime data.
    */
-  export function toDto(animeData: AnimeDetail): AnimeDetailDto {
+  export function toDto(animeData: AnimeDetail | AnimeDetailPost): AnimeDetailDto {
     return {
       image: animeData.image,
       title_eng: animeData.englishTitle,

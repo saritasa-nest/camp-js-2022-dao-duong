@@ -35,8 +35,8 @@ export const FormAutocomplete = <T extends object>({
       <TextField
         {...params}
         variant="standard"
-        label="Multiple genres values"
-        placeholder="Genres"
+        label={label}
+        placeholder={`Search for ${label}`}
       />
     )}
   />
