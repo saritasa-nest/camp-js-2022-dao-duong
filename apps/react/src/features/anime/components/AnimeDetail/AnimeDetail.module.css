@@ -1,12 +1,9 @@
 .anime-detail {
   text-align: center;
   position: relative;
-  padding: 0;
-  overflow-y: scroll;
 }
 
 .loader {
-  width: var(--anime-detail-width);
   display: flex;
   justify-content: center;
   align-items: center;

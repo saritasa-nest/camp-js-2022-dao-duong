@@ -64,7 +64,7 @@ const AnimeDetailComponent: FC = () => {
   }
 
   return (
-    <Container className={styles['anime-detail']}>
+    <Container className={styles['anime-detail']} disableGutters maxWidth={false}>
       <Card className={styles['anime-detail__card']}>
         <CardHeader
           title={
