@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { AnimeDetailPost, AnimeStatus, AnimeType, Genre, Studio } from '@js-camp/core/models/anime';
-import { Rating, Season, Source } from '@js-camp/core/dtos/anime/animeDetail.dto';
+import { Rating, Season, Source } from '@js-camp/core/models/anime/';
 import { DateRange } from '@js-camp/core/models/dateRange';
 
 export const ERROR_MESSAGES = {

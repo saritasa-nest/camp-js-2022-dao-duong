@@ -4,6 +4,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AnimeService } from '../../api/services/animeService';
 
 export const fetchAnimeDetail = createAsyncThunk(
-  'anime_detail/fetch',
+  'animeDetail/fetch',
   (id: AnimeDetail['id']) => AnimeService.fetchAnimeById(id),
 );

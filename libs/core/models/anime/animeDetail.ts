@@ -1,10 +1,49 @@
-import { Rating, Season, Source } from '../../../core/dtos/anime/animeDetail.dto';
-
 import { OmitImmerable } from '../immerable';
 
 import { Genre } from './genre';
 import { Studio } from './studio';
 import { Anime } from './anime';
+
+/** Possible source for anime. */
+export enum Source {
+  FourKomaManga = 'Four Koma Manga',
+  Book = 'Book',
+  CardGame = 'Card Game',
+  Game = 'Game',
+  LightNovel = 'Light Novel',
+  Manga = 'Manga',
+  MixedMedia = 'Mixed Media',
+  Music = 'Music',
+  Novel = 'NOVNovelEL',
+  Original = 'Original',
+  PictureBook = 'Picture Book',
+  Radio = 'Radio',
+  VisualNovel = 'VisualNovel',
+  WebManga = 'Web Manga',
+  WebNovel = 'Web Novel',
+  Other = 'Other',
+  Unknown = 'Unknown',
+}
+
+/** Possible rating for anime. */
+export enum Rating {
+  G = 'G',
+  PG = 'PG',
+  PG13 = 'PG_13',
+  R17 = 'R_17',
+  RPlus = 'R_PLUS',
+  RX = 'R_X',
+  Unknown = 'Unknown',
+}
+
+/** Possible season for anime. */
+export enum Season {
+  Summer = 'Summer',
+  Winter = 'Winter',
+  Spring = 'Spring',
+  Fall = 'Fall',
+  NonSeasonal = 'NonSeasonal',
+}
 
 /** Anime Detail. */
 export class AnimeDetail extends Anime {

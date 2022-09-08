@@ -9,7 +9,9 @@ import styles from './AnimePage.module.css';
 const AnimePageComponent: FC = () => (
   <Box className={styles['container']}>
     <AnimeList />
-    <Outlet />
+    <Box className={styles['detail-container']}>
+      <Outlet />
+    </Box>
   </Box>
 );
 

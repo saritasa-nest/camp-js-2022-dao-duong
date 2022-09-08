@@ -1,14 +1,27 @@
-import { AnimeDetail, AnimeDetailPost } from '@js-camp/core/models/anime';
-import { selectAnimeDetail } from '@js-camp/react/store/animeDetail/selectors';
-import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Box } from '@mui/material';
+import {
+  AnimeDetail,
+  AnimeDetailPost,
+  AnimeStatus,
+  AnimeType,
+  Source,
+  Rating,
+  Season,
+  Genre,
+} from '@js-camp/core/models/anime';
+import { Box, Button, FormControlLabel } from '@mui/material';
 import { FC, memo, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchAnimeDetail } from '@js-camp/react/store/animeDetail/dispatchers';
-import { useFormik } from 'formik';
+import { Field, Form, FormikProvider, useFormik } from 'formik';
+import { Switch, TextField } from 'formik-mui';
 
-import styles from './AnimeForm.module.css';
+import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
+import { selectGenres } from '@js-camp/react/store/genres/selectors';
+import { selectStudios } from '@js-camp/react/store/studios/selectors';
+import { fetchGenres } from '@js-camp/react/store/genres/dispatchers';
+import { fetchStudios } from '@js-camp/react/store/studios/dispatchers';
+
+import { FormSelect } from './components/FormSelect/FormSelect';
 import { AnimeFormSchema, defaultAnimeFormValues } from './formConfig';
+import { FormAutocomplete } from './components/FormAutocomplete/FormAutocomplete';
 
 interface Props {
 
@@ -16,30 +29,96 @@ interface Props {
   readonly animeDetail?: AnimeDetail;
 }
 
-const AnimeFormComponent: FC<Props> = () => {
-  const params = useParams();
+const AnimeFormComponent: FC<Props> = ({ animeDetail }) => {
   const dispatch = useAppDispatch();
-  const animeId = Number(params['id']);
-  const animeDetail = useAppSelector(state => selectAnimeDetail(state, animeId));
+  const genresList = useAppSelector(selectGenres);
+  const studiosList = useAppSelector(selectStudios);
   const onFormSubmission = (values: AnimeDetailPost) => {
-    formik.setSubmitting(false);
     console.log(values);
+    formik.setSubmitting(false);
   };
+
+  useEffect(() => {
+    dispatch(fetchGenres());
+    dispatch(fetchStudios());
+  }, []);
 
   const formik = useFormik({
     initialValues: animeDetail ?? defaultAnimeFormValues,
     validationSchema: AnimeFormSchema,
     onSubmit: onFormSubmission,
   });
-  useEffect(() => {
-    if (params['id'] !== undefined && animeDetail === undefined) {
-      dispatch(fetchAnimeDetail(animeId));
-    }
-  }, [dispatch]);
+
   return (
     <>
-
-      <Box><pre>{JSON.stringify(animeDetail, null, 2)}</pre></Box>
+      <FormikProvider value={formik}>
+        <Form>
+          <Field
+            component={TextField}
+            name="image"
+            type="text"
+            label="Image"
+            margin="normal"
+            fullWidth
+          />
+          <Field
+            component={TextField}
+            type="text"
+            label="English Title"
+            name="englishTitle"
+            margin="normal"
+            fullWidth
+          />
+          <Field
+            component={TextField}
+            type="text"
+            label="Synopsis"
+            name="synopsis"
+            margin="normal"
+            fullWidth
+          />
+          <Field
+            component={TextField}
+            type="text"
+            label="Trailer Id"
+            name="youtubeTrailerId"
+            margin="normal"
+            fullWidth
+          />
+          <Box>
+            <FormSelect name="type" label="Type" dataSource={AnimeType} />
+            <FormSelect name="status" label="Status" dataSource={AnimeStatus} />
+          </Box>
+          <FormSelect name="source" label="Source" dataSource={Source} />
+          <FormSelect name="rating" label="Rating" dataSource={Rating} />
+          <FormSelect name="season" label="Season" dataSource={Season} />
+          <FormControlLabel
+            label="Airing"
+            control={<Field component={Switch} type="checkbox" name="airing" />}
+          />
+          <Box>
+            <FormAutocomplete
+              name="genreList"
+              label="Genres"
+              options={genresList}
+              getOptionLabel={(option: Genre) => option.name}
+            />
+          </Box>
+          <Box>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={formik.isSubmitting}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Form>
+      </FormikProvider>
+      <Box>
+        <pre>{JSON.stringify(animeDetail, null, 2)}</pre>
+      </Box>
     </>
   );
 };

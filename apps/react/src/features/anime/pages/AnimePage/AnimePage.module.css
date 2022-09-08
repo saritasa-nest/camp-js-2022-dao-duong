@@ -1,3 +1,9 @@
 .container {
   display: flex;
 }
+
+.detail-container {
+  max-width: var(--anime-detail-width);
+  max-height: var(--anime-page-height);
+  flex-grow: 1;
+}

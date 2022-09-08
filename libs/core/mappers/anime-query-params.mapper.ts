@@ -1,22 +1,15 @@
 import { PaginationOptionsDto } from '../dtos/pagination.dto';
 import { AnimeListQueryParams } from '../models/anime-query-params';
-import { SortDirectionDto, AnimeSortFieldDto, AnimeTypeDto } from '../dtos/anime/anime.dto';
-import { AnimeSortField, AnimeType } from '../models/anime/anime';
+import { SortDirectionDto, AnimeSortFieldDto } from '../dtos/anime/anime.dto';
+import { AnimeSortField } from '../models/anime/anime';
+
+import { ANIME_TYPE_TO_DTO_MAP } from './anime/animeDetail.mapper';
 
 export const SORT_FIELD_TO_DTO_MAP: Readonly<Record<AnimeSortField, AnimeSortFieldDto>> = {
   [AnimeSortField.EnglishTitle]: AnimeSortFieldDto.EnglishTitle,
   [AnimeSortField.Aired]: AnimeSortFieldDto.AiredStart,
   [AnimeSortField.Status]: AnimeSortFieldDto.Status,
   [AnimeSortField.None]: AnimeSortFieldDto.None,
-};
-
-export const ANIME_TYPE_TO_DTO_MAP: Readonly<Record<AnimeType, AnimeTypeDto>> = {
-  [AnimeType.Movie]: AnimeTypeDto.Movie,
-  [AnimeType.Music]: AnimeTypeDto.Music,
-  [AnimeType.Ona]: AnimeTypeDto.Ona,
-  [AnimeType.Ova]: AnimeTypeDto.Ova,
-  [AnimeType.Special]: AnimeTypeDto.Special,
-  [AnimeType.Tv]: AnimeTypeDto.Tv,
 };
 
 export namespace AnimeQueryParamsMapper {

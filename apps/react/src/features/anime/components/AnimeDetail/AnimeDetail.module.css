@@ -1,9 +1,6 @@
 .anime-detail {
   text-align: center;
-  flex: 1;
   position: relative;
-  max-width: var(--anime-detail-width);
-  max-height: var(--anime-page-height);
   padding: 0;
   overflow-y: scroll;
 }
