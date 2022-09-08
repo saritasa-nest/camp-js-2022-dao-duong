@@ -2,7 +2,7 @@ import { AnimeDetail, AnimeDetailPost } from '@js-camp/core/models/anime';
 import { fetchAnimeDetail, updateAnime } from '@js-camp/react/store/animeDetail/dispatchers';
 import { selectAnimeDetail, selectIsAnimeDetailLoading } from '@js-camp/react/store/animeDetail/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { CircularProgress } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import { FC, memo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -37,13 +37,17 @@ const EditPageComponent: FC = () => {
     );
   }
 
-  return (
-    <>
-      {animeDetail && (<div>
-        <AnimeForm animeDetail={transformToPostData(animeDetail)} onSubmit={onFormSubmit} />
-      </div>)}
-    </>
+  // Still! Fix this, add loader or sth.
+  if (animeDetail === undefined) {
+    return (
+      <Box>
+        No data
+      </Box>
+    );
+  }
 
+  return (
+    <AnimeForm animeDetail={transformToPostData(animeDetail)} onSubmit={onFormSubmit} />
   );
 };
 
