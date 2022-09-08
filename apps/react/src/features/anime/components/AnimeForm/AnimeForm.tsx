@@ -99,22 +99,18 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
             label="Airing"
             control={<Field component={Switch} type="checkbox" name="airing" />}
           />
-          <Box>
-            <FormAutocomplete
-              name="genreList"
-              label="Genres"
-              options={genresList}
-              getOptionLabel={(genre: Genre) => genre.name}
-            />
-          </Box>
-          <Box>
-            <FormAutocomplete
-              name="studioList"
-              label="Studios"
-              options={studiosList}
-              getOptionLabel={(studio: Studio) => studio.name}
-            />
-          </Box>
+          <FormAutocomplete
+            name="genreList"
+            label="Genres"
+            options={genresList}
+            getOptionLabel={(genre: Genre) => genre.name}
+          />
+          <FormAutocomplete
+            name="studioList"
+            label="Studios"
+            options={studiosList}
+            getOptionLabel={(studio: Studio) => studio.name}
+          />
           <Box>
             <Button
               type="submit"
@@ -127,9 +123,6 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
           </Box>
         </Form>
       </FormikProvider>
-      <Box>
-        <pre>{JSON.stringify(animeDetail, null, 2)}</pre>
-      </Box>
     </>
   );
 };

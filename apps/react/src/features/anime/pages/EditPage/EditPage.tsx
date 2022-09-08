@@ -22,7 +22,6 @@ const EditPageComponent: FC = () => {
 
   const onFormSubmit = (data: AnimeDetailPost) => {
     dispatch(updateAnime({ id: animeId, animeData: data }));
-    console.log(data);
   };
 
   if (isAnimeDetailLoading) {
@@ -35,7 +34,7 @@ const EditPageComponent: FC = () => {
     <div>
       <AnimeForm animeDetail={animeDetail} onSubmit={onFormSubmit} />
     </div>
-  )
-}
+  );
+};
 
 export const EditPage = memo(EditPageComponent);
