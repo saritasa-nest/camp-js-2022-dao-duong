@@ -53,4 +53,6 @@ export class AnimeDetail extends Anime {
   }
 }
 
+export type AnimeDetailPost = Omit<AnimeDetail, 'id'>;
+
 type InitArgsAnime = OmitImmerable<AnimeDetail>;
