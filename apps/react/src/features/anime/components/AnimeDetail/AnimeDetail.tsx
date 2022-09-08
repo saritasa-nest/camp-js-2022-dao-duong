@@ -45,7 +45,7 @@ const AnimeDetailComponent: FC = () => {
     setIsPopUpImageOpen(false);
   };
 
-  if (!isAnimeDetailLoading) {
+  if (isAnimeDetailLoading) {
     return (
       <Box className={styles['loader']}>
         <CircularProgress color="secondary" />
