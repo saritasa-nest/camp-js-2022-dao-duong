@@ -23,7 +23,12 @@ export const deleteAnime = createAsyncThunk(
 );
 
 export const updateAnime = createAsyncThunk(
-  'animeDetail/update',
+  'anime/update',
   (updateParams: { id: Anime['id']; animeData: AnimeDetailPost; }) =>
     AnimeService.updateAnime(updateParams.id, updateParams.animeData),
+);
+
+export const addAnime = createAsyncThunk(
+  'anime/add',
+  (anime: AnimeDetailPost) => AnimeService.addAnime(anime),
 );

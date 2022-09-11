@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { deleteAnime, fetchAnimePage, fetchNextAnimePage, updateAnime } from './dispatchers';
+import { addAnime, deleteAnime, fetchAnimePage, fetchNextAnimePage, updateAnime } from './dispatchers';
 import { initialState, animeAdapter, State } from './state';
 
 export const animeSlice = createSlice({
@@ -65,6 +65,19 @@ export const animeSlice = createSlice({
         state.error = action.error.message;
       }
       state.isLoading = false;
+    })
+    .addCase(addAnime.pending, state => {
+      state.isSubmitting = true;
+    })
+    .addCase(addAnime.fulfilled, (state, action) => {
+      animeAdapter.addOne(state as State, action.payload);
+      state.isSubmitting = false;
+    })
+    .addCase(addAnime.rejected, (state, action) => {
+      if (action.error.message) {
+        state.error = action.error.message;
+      }
+      state.isSubmitting = false;
     }),
 });
 

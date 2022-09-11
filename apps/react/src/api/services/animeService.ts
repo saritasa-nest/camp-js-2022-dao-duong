@@ -10,7 +10,10 @@ import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
 
 import { Pagination } from '@js-camp/core/models/pagination';
 
-import { AnimeDetail, AnimeDetailPost } from '@js-camp/core/models/anime/animeDetail';
+import {
+  AnimeDetail,
+  AnimeDetailPost,
+} from '@js-camp/core/models/anime/animeDetail';
 import { AnimeDetailDto } from '@js-camp/core/dtos/anime/animeDetail.dto';
 import { AnimeDetailMapper } from '@js-camp/core/mappers/anime/animeDetail.mapper';
 
@@ -34,10 +37,13 @@ export namespace AnimeService {
   export async function fetchAnimePage(
     queryParams: AnimeListQueryParams,
   ): Promise<Pagination<Anime>> {
-    const animeResponse = await http.get<PaginationDto<AnimeDto>>(URL, {
-      params: AnimeQueryParamsMapper.toDto(queryParams),
-    });
-    const animePage = PaginationMapper.fromDto(animeResponse.data, animeDto =>
+    const { data: animeResponse } = await http.get<PaginationDto<AnimeDto>>(
+      URL,
+      {
+        params: AnimeQueryParamsMapper.toDto(queryParams),
+      },
+    );
+    const animePage = PaginationMapper.fromDto(animeResponse, animeDto =>
       AnimeMapper.fromDto(animeDto));
     setNextUrl(animePage.next);
     return animePage;
@@ -71,8 +77,10 @@ export namespace AnimeService {
   export async function fetchAnimeById(
     id: AnimeDetail['id'],
   ): Promise<AnimeDetail> {
-    const animeDetailResponse = await http.get<AnimeDetailDto>(`${URL}${id}/`);
-    return AnimeDetailMapper.fromDto(animeDetailResponse.data);
+    const { data: animeDetailResponse } = await http.get<AnimeDetailDto>(
+      `${URL}${id}/`,
+    );
+    return AnimeDetailMapper.fromDto(animeDetailResponse);
   }
 
   /**
@@ -115,10 +123,31 @@ export namespace AnimeService {
    * @param animeId Id of the anime.
    * @param animeData Anime data.
    */
-  export async function updateAnime(animeId: Anime['id'], animeData: AnimeDetailPost): Promise<AnimeDetail> {
+  export async function updateAnime(
+    animeId: Anime['id'],
+    animeData: AnimeDetailPost,
+  ): Promise<AnimeDetail> {
     const updatePath = `anime/anime/${animeId}/`;
 
-    const animeUpdateResponse = await http.put<AnimeDetailDto>(updatePath, AnimeDetailMapper.toDto(animeData));
-    return AnimeDetailMapper.fromDto(animeUpdateResponse.data);
+    const { data: animeUpdateResponse } = await http.put<AnimeDetailDto>(
+      updatePath,
+      AnimeDetailMapper.toDto(animeData),
+    );
+    return AnimeDetailMapper.fromDto(animeUpdateResponse);
+  }
+
+  /**
+   * Add new anime.
+   * @param animeData Anime data.
+   */
+  export async function addAnime(
+    animeData: AnimeDetailPost,
+  ): Promise<AnimeDetail> {
+    const addPath = `anime/anime/`;
+    const { data: animeAddResponse } = await http.post<AnimeDetailDto>(
+      addPath,
+      AnimeDetailMapper.toDto(animeData),
+    );
+    return AnimeDetailMapper.fromDto(animeAddResponse);
   }
 }

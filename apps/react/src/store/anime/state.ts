@@ -14,11 +14,15 @@ export interface AnimeState {
 
   /** Whether the anime is deleting or not. */
   readonly isDeleting: boolean;
+
+  /** Whether the anime is deleting or not. */
+  readonly isSubmitting: boolean;
 }
 
 export const initialState = animeAdapter.getInitialState<AnimeState>({
   isLoading: false,
   isDeleting: false,
+  isSubmitting: false,
 });
 
 export type State = typeof initialState;

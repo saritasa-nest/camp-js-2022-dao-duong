@@ -96,6 +96,7 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
         <Form>
           <FormTextInput name="image" label="Anime Image" />
           <FormTextInput name="englishTitle" label="English Title" />
+          <FormTextInput name="japaneseTitle" label="Japansese Title" />
           <FormTextInput name="synopsis" label="synopsis" />
           <FormTextInput name="youtubeTrailerId" label="Trailer Id" />
           <Box>
