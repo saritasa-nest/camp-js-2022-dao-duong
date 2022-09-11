@@ -1,4 +1,4 @@
-import { Anime } from '@js-camp/core/models/anime';
+import { Anime, AnimeDetailPost } from '@js-camp/core/models/anime';
 import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -20,4 +20,10 @@ export const deleteAnime = createAsyncThunk(
     AnimeService.deleteAnime(id);
     return id;
   },
+);
+
+export const updateAnime = createAsyncThunk(
+  'animeDetail/update',
+  (updateParams: { id: Anime['id']; animeData: AnimeDetailPost; }) =>
+    AnimeService.updateAnime(updateParams.id, updateParams.animeData),
 );

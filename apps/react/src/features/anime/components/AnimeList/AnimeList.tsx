@@ -104,7 +104,7 @@ const AnimeListComponent: FC = () => {
     setQueryParamsToUrl(queryParams);
     dispatch(clearAnimeList());
     dispatch(fetchAnimePage(queryParams));
-  }, [queryParams]);
+  }, [queryParams, dispatch]);
 
   useEffect(() => {
     if (isLastItemVisible) {
