@@ -10,6 +10,7 @@ import { DateRangeMapper } from '../dateRange.mapper';
 import { ANIME_TYPE_FROM_DTO_MAP, ANIME_STATUS_FROM_DTO_MAP } from './anime.mapper';
 
 import { StudioMapper } from './studio.mapper';
+import { GenreMapper } from './genre.mapper';
 
 export const ANIME_TYPE_TO_DTO_MAP: Readonly<Record<AnimeType, AnimeTypeDto>> = {
   [AnimeType.Movie]: AnimeTypeDto.Movie,
@@ -122,7 +123,7 @@ export namespace AnimeDetailMapper {
       studioIdList: dto.studios,
       studioList: dto.studios_data.map(studio => StudioMapper.fromDto(studio)),
       genreIdList: dto.genres,
-      genreList: dto.genres_data.map(genre => StudioMapper.fromDto(genre)),
+      genreList: dto.genres_data.map(genre => GenreMapper.fromDto(genre)),
       youtubeTrailerId: dto.trailer_youtube_id,
       source: ANIME_SOURCE_FROM_DTO_MAP[dto.source],
       season: ANIME_SEASON_FROM_DTO_MAP[dto.season],

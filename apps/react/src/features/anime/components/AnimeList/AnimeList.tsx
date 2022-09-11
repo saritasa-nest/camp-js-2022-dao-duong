@@ -1,5 +1,5 @@
 import { FC, memo, useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
 import {
   AnimeSortDirection,
@@ -27,7 +27,7 @@ import {
 import { AnimeDetail } from '@js-camp/core/models/anime';
 import { clearAnimeList } from '@js-camp/react/store/anime/slice';
 
-import useLastItemOnScreen from '../../../../shared/hooks/useLastItemOnScreen';
+import { useLastItemOnScreen, useAppNavigate } from '../../../../shared/hooks/';
 import { AnimeListControl } from '../AnimeListControls/AnimeListControl';
 
 import { AnimeListItem } from '../AnimeListItem/AnimeListItem';
@@ -71,7 +71,7 @@ const AnimeListComponent: FC = () => {
   const animeList = useAppSelector(selectAnimeList);
   const isLoading = useAppSelector(selectIsAnimeLoading);
   const params = useParams();
-  const navigate = useNavigate();
+  const { navigateWithSearchParams } = useAppNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [queryParams, setQueryParams] = useState<AnimeListQueryParams>(
     getAnimeListParamsFromUrl(searchParams),
@@ -114,14 +114,14 @@ const AnimeListComponent: FC = () => {
 
   const onAnimeItemClick = useCallback(
     (id: AnimeDetail['id']) => {
-      navigate({ pathname: `/anime/${id}`, search: searchParams.toString() });
+      navigateWithSearchParams(`/anime/${id}`);
       setCurrentAnimeId(id);
     },
     [searchParams],
   );
 
   const onAddButtonClick = () => {
-    navigate({ pathname: `/anime/add`, search: searchParams.toString() });
+    navigateWithSearchParams('/anime/add');
   };
 
   return (

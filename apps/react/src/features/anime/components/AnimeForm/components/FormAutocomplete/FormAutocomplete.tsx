@@ -1,6 +1,7 @@
 import { AutocompleteRenderInputParams, TextField } from '@mui/material';
 import { Field } from 'formik';
 import { Autocomplete } from 'formik-mui';
+import { SyntheticEvent } from 'react';
 
 interface Props<T> {
 
@@ -15,6 +16,9 @@ interface Props<T> {
 
   /** Get the option label. */
   readonly getOptionLabel: (option: T) => string;
+
+  /** Get the option label. */
+  readonly onChange: (value: readonly T[]) => void;
 }
 
 export const FormAutocomplete = <T extends object>({
@@ -22,22 +26,30 @@ export const FormAutocomplete = <T extends object>({
   label,
   options,
   getOptionLabel,
-}: Props<T>) => (
-  <Field
-    component={Autocomplete}
-    multiple
-    name={name}
-    label={label}
-    options={options}
-    getOptionLabel={(option: T) => getOptionLabel(option)}
-    isOptionEqualToValue={(option: T, value: T) => getOptionLabel(option) === getOptionLabel(value)}
-    renderInput={(params: AutocompleteRenderInputParams) => (
-      <TextField
-        {...params}
-        variant="standard"
-        label={label}
-        placeholder={`Search for ${label}`}
-      />
-    )}
-  />
-);
+  onChange,
+}: Props<T>) => {
+  const handleAutoCompleteChange = (event: SyntheticEvent, value: T[]) => {
+    onChange(value);
+  };
+
+  return (
+    <Field
+      component={Autocomplete}
+      multiple
+      name={name}
+      label={label}
+      options={options}
+      onChange={handleAutoCompleteChange}
+      getOptionLabel={(option: T) => getOptionLabel(option)}
+      isOptionEqualToValue={(option: T, value: T) => getOptionLabel(option) === getOptionLabel(value)}
+      renderInput={(params: AutocompleteRenderInputParams) => (
+        <TextField
+          {...params}
+          variant="standard"
+          label={label}
+          placeholder={`Search for ${label}`}
+        />
+      )}
+    />
+  );
+};

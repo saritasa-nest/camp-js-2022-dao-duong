@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 
-const useLastItemOnScreen = (options: Object) => {
+export const useLastItemOnScreen = (options: Object) => {
   const itemRef = useRef(null);
   const [isLastItemVisible, setIsLastItemVisible] = useState(false);
 
@@ -22,5 +22,3 @@ const useLastItemOnScreen = (options: Object) => {
 
   return { itemRef, isLastItemVisible };
 };
-
-export default useLastItemOnScreen;

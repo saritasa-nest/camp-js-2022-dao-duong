@@ -66,6 +66,14 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
       setImageFile(event.target.files[0]);
     }
   }, []);
+
+  const onStudiosChange = (value: readonly Studio[]) => {
+    formik.setFieldValue('studioList', value);
+  };
+
+  const onGenresChange = (value: readonly Genre[]) => {
+    formik.setFieldValue('genreList', value);
+  };
   return (
     <>
       <Input type="file" onChange={onImageChange} />
@@ -118,11 +126,13 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
             name="genreList"
             label="Genres"
             options={genresList}
+            onChange={onGenresChange}
             getOptionLabel={(genre: Genre) => genre.name}
           />
           <FormAutocomplete
             name="studioList"
             label="Studios"
+            onChange={onStudiosChange}
             options={studiosList}
             getOptionLabel={(studio: Studio) => studio.name}
           />
