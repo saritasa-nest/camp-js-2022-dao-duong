@@ -1,5 +1,5 @@
-import { xml2js } from 'xml-js';
 import { S3Upload } from '@js-camp/core/interfaces/s3Upload';
+import { xml2js } from 'xml-js';
 
 import { http } from '..';
 import { CONFIG } from '../config';
@@ -37,11 +37,10 @@ export namespace S3Service {
    */
   export async function saveAnimeImage(
     image: File,
-    imageLocalUrl: string,
   ): Promise<string> {
     const params = {
       dest: 'anime_images',
-      filename: imageLocalUrl,
+      filename: image.name,
     };
     const s3DirectUpload = await http.post<S3Upload>(
       s3directUrl.toString(),
@@ -51,10 +50,10 @@ export namespace S3Service {
       s3DirectUpload.data,
       image,
     );
-    const s3RawResponse = await http.post(formAction, formData, {
+    const { data: s3RawResponse } = await http.post(formAction, formData, {
       responseType: 'text',
     });
-    const s3Response = xml2js(s3RawResponse.data, {
+    const s3Response = xml2js(s3RawResponse, {
       compact: true,
     }) as S3Response;
     return s3Response.PostResponse.Location._text;

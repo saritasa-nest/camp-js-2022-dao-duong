@@ -9,15 +9,18 @@ import {
   Studio,
 } from '@js-camp/core/models/anime';
 import { Box, Button, FormControlLabel } from '@mui/material';
-import { FC, memo, useEffect } from 'react';
+import { FC, memo, useCallback, useEffect } from 'react';
 import { Field, Form, FormikProvider, useFormik } from 'formik';
-import { Switch, TextField } from 'formik-mui';
+import { Switch, TextField, SimpleFileUpload } from 'formik-mui';
 
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { selectGenres } from '@js-camp/react/store/genres/selectors';
 import { selectStudios } from '@js-camp/react/store/studios/selectors';
 import { fetchGenres } from '@js-camp/react/store/genres/dispatchers';
 import { fetchStudios } from '@js-camp/react/store/studios/dispatchers';
+import { saveAnimeImage } from '@js-camp/react/store/animeImage/dispatchers';
+
+import { selectImageUrl } from '@js-camp/react/store/animeImage/selectors';
 
 import { FormSelect } from './components/FormSelect/FormSelect';
 import { AnimeFormSchema, defaultAnimeFormValues } from './formConfig';
@@ -36,10 +39,12 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
   const dispatch = useAppDispatch();
   const genresList = useAppSelector(selectGenres);
   const studiosList = useAppSelector(selectStudios);
-  const onFormSubmission = (values: AnimeDetailPost) => {
+  const imageUrl = useAppSelector(selectImageUrl);
+  const onFormSubmission = useCallback((values: AnimeDetailPost) => {
+    dispatch(saveAnimeImage(values.image));
     onSubmit(values);
     formik.setSubmitting(false);
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchGenres());
@@ -54,16 +59,18 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
 
   return (
     <>
+      <img src={imageUrl ?? ''} alt="" />
       <FormikProvider value={formik}>
         <Form>
-          <Field
+          <Field component={SimpleFileUpload} name="image" label="Simple File Upload" />;
+          {/* <Field
             component={TextField}
             name="image"
             type="text"
             label="Image"
             margin="normal"
             fullWidth
-          />
+          /> */}
           <Field
             component={TextField}
             type="text"

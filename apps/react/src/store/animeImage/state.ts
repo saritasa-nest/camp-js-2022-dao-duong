@@ -13,7 +13,7 @@ export interface AnimeDetailState {
   readonly isUploading: boolean;
 
   /** Image URL. */
-  imageUrl: string;
+  readonly imageUrl: string;
 }
 
 export const initialState = animeDetailAdapter.getInitialState<AnimeDetailState>({

@@ -30,5 +30,12 @@ export function tokenInterceptor(config: AxiosRequestConfig): AxiosRequestConfig
  *
  */
 function shouldInterceptWithToken(config: AxiosRequestConfig): boolean {
-  return config.baseURL?.startsWith(CONFIG.apiUrl) ?? false;
+  const s3Url = new URL(
+    'https://s3.us-west-2.amazonaws.com/camp-js-backend-files-dev',
+  ).toString();
+  const isS3Upload = config.url?.startsWith(s3Url);
+  const isAuthRequest = config.url?.startsWith(
+    new URL('auth', CONFIG.apiUrl).toString(),
+  );
+  return !isAuthRequest && !isS3Upload;
 }

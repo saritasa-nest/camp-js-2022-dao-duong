@@ -28,7 +28,9 @@ const EditPageComponent: FC = () => {
   }, []);
 
   const onFormSubmit = (data: AnimeDetailPost) => {
-    dispatch(updateAnime({ id: animeId, animeData: data }));
+    console.log(data.image);
+
+    // dispatch(updateAnime({ id: animeId, animeData: data }));
   };
 
   if (isAnimeDetailLoading) {
