@@ -8,7 +8,7 @@ import {
 
 import { MenuItem } from '@mui/material';
 import { Field } from 'formik';
-import { TextField, Select } from 'formik-mui';
+import { Select } from 'formik-mui';
 import { FC, memo } from 'react';
 
 type FormEnum =
