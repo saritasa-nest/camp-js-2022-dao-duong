@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchStudios } from './dispatchers';
-import { initialState } from './state';
+import { initialState, State, studiosAdapter } from './state';
 
 export const studiosSlice = createSlice({
   name: 'studios',
@@ -12,7 +12,7 @@ export const studiosSlice = createSlice({
       state.isLoading = true;
     })
     .addCase(fetchStudios.fulfilled, (state, action) => {
-      state.studios = action.payload;
+      studiosAdapter.setAll(state as State, action.payload);
       state.isLoading = false;
     })
     .addCase(fetchStudios.rejected, (state, action) => {

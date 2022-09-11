@@ -2,11 +2,10 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import { RootState } from '../store';
 
-/** Selects all genres from store. */
-export const selectGenres = createSelector(
-  (state: RootState) => state.genres.genres,
-  genres => genres,
-);
+import { genresAdapter } from './state';
+
+export const { selectAll: selectGenres } =
+  genresAdapter.getSelectors<RootState>(state => state.genres);
 
 /** Selects genres loading state. */
 export const selectAreGenresLoading = createSelector(

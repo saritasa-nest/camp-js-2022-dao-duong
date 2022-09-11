@@ -20,8 +20,6 @@ import { fetchGenres } from '@js-camp/react/store/genres/dispatchers';
 import { fetchStudios } from '@js-camp/react/store/studios/dispatchers';
 import { saveAnimeImage } from '@js-camp/react/store/animeImage/dispatchers';
 
-import { selectImageUrl } from '@js-camp/react/store/animeImage/selectors';
-
 import { FormSelect } from './components/FormSelect/FormSelect';
 import { AnimeFormSchema, defaultAnimeFormValues } from './formConfig';
 import { FormAutocomplete } from './components/FormAutocomplete/FormAutocomplete';
@@ -39,16 +37,12 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
   const dispatch = useAppDispatch();
   const genresList = useAppSelector(selectGenres);
   const studiosList = useAppSelector(selectStudios);
-
-  // const imageUrl = useAppSelector(selectImageUrl);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const onFormSubmission = useCallback((values: AnimeDetailPost) => {
     if (imageFile !== null) {
       dispatch(saveAnimeImage(imageFile)).then(response => {
         formik.setFieldValue('image', response.payload);
-        console.log(response.payload);
-
-        // onSubmit(values);
+        onSubmit(values);
       });
     } else {
       onSubmit(values);

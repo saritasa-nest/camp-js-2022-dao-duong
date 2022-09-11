@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchGenres } from './dispatchers';
-import { initialState } from './state';
+import { genresAdapter, initialState, State } from './state';
 
 export const genresSlice = createSlice({
   name: 'genres',
@@ -12,7 +12,7 @@ export const genresSlice = createSlice({
       state.isLoading = true;
     })
     .addCase(fetchGenres.fulfilled, (state, action) => {
-      state.genres = action.payload;
+      genresAdapter.setAll(state as State, action.payload);
       state.isLoading = false;
     })
     .addCase(fetchGenres.rejected, (state, action) => {

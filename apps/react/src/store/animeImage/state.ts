@@ -1,10 +1,5 @@
-import { AnimeDetail } from '@js-camp/core/models/anime/animeDetail';
-import { createEntityAdapter } from '@reduxjs/toolkit';
-
-export const animeDetailAdapter = createEntityAdapter<AnimeDetail>();
-
 /** Anime state. */
-export interface AnimeDetailState {
+export interface AnimeImageState {
 
   /** Error. */
   readonly error?: string;
@@ -16,9 +11,7 @@ export interface AnimeDetailState {
   readonly imageUrl: string;
 }
 
-export const initialState = animeDetailAdapter.getInitialState<AnimeDetailState>({
+export const initialState: AnimeImageState = {
   isUploading: false,
   imageUrl: '',
-});
-
-export type State = typeof initialState;
+};

@@ -139,20 +139,17 @@ export namespace AnimeDetailMapper {
       image: animeData.image,
       title_eng: animeData.englishTitle,
       title_jpn: animeData.japaneseTitle,
-      aired: {
-        start: animeData.aired.start,
-        end: animeData.aired.end,
-      },
+      aired: DateRangeMapper.toDto(animeData.aired),
       type: ANIME_TYPE_TO_DTO_MAP[animeData.type],
       status: ANIME_STATUS_TO_DTO_MAP[animeData.status],
       synopsis: animeData.synopsis,
       airing: animeData.airing,
-      studios: animeData.studioIdList,
-      genres: animeData.genreIdList,
+      studios: animeData.studioList.map(studio => studio.id),
+      genres: animeData.genreList.map(genre => genre.id),
       trailer_youtube_id: animeData.youtubeTrailerId,
       source: ANIME_SOURCE_TO_DTO_MAP[animeData.source],
       season: ANIME_SEASON_TO_DTO_MAP[animeData.season],
       rating: ANIME_RATING_TO_DTO_MAP[animeData.rating],
-    } as AnimeDetailDto;
+    } as unknown as AnimeDetailDto;
   }
 }

@@ -1,4 +1,7 @@
 import { Genre } from '@js-camp/core/models/anime';
+import { createEntityAdapter } from '@reduxjs/toolkit';
+
+export const genresAdapter = createEntityAdapter<Genre>();
 
 /** Genres state. */
 export interface GenresState {
@@ -13,7 +16,9 @@ export interface GenresState {
   readonly genres: Genre[];
 }
 
-export const initialState: GenresState = {
+export const initialState = genresAdapter.getInitialState<GenresState>({
   isLoading: false,
   genres: [],
-};
+});
+
+export type State = typeof initialState;
