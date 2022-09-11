@@ -8,10 +8,10 @@ import {
   Genre,
   Studio,
 } from '@js-camp/core/models/anime';
-import { Box, Button, FormControlLabel } from '@mui/material';
-import { FC, memo, useCallback, useEffect } from 'react';
+import { Box, Button, FormControlLabel, Input } from '@mui/material';
+import { ChangeEventHandler, FC, memo, useCallback, useEffect, useState } from 'react';
 import { Field, Form, FormikProvider, useFormik } from 'formik';
-import { Switch, TextField, SimpleFileUpload } from 'formik-mui';
+import { Switch, TextField } from 'formik-mui';
 
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { selectGenres } from '@js-camp/react/store/genres/selectors';
@@ -39,12 +39,22 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
   const dispatch = useAppDispatch();
   const genresList = useAppSelector(selectGenres);
   const studiosList = useAppSelector(selectStudios);
-  const imageUrl = useAppSelector(selectImageUrl);
+
+  // const imageUrl = useAppSelector(selectImageUrl);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const onFormSubmission = useCallback((values: AnimeDetailPost) => {
-    dispatch(saveAnimeImage(values.image));
-    onSubmit(values);
+    if (imageFile !== null) {
+      dispatch(saveAnimeImage(imageFile)).then(response => {
+        formik.setFieldValue('image', response.payload);
+        console.log(response.payload);
+
+        // onSubmit(values);
+      });
+    } else {
+      onSubmit(values);
+    }
     formik.setSubmitting(false);
-  }, [dispatch]);
+  }, [dispatch, imageFile]);
 
   useEffect(() => {
     dispatch(fetchGenres());
@@ -57,20 +67,24 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
     onSubmit: onFormSubmission,
   });
 
+  const onImageChange = useCallback<ChangeEventHandler<HTMLInputElement>>(event => {
+    if (event.target.files) {
+      setImageFile(event.target.files[0]);
+    }
+  }, []);
   return (
     <>
-      <img src={imageUrl ?? ''} alt="" />
+      <Input type="file" onChange={onImageChange} />
       <FormikProvider value={formik}>
         <Form>
-          <Field component={SimpleFileUpload} name="image" label="Simple File Upload" />;
-          {/* <Field
+          <Field
             component={TextField}
             name="image"
             type="text"
             label="Image"
             margin="normal"
             fullWidth
-          /> */}
+          />
           <Field
             component={TextField}
             type="text"

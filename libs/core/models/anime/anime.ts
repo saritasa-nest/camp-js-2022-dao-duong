@@ -48,7 +48,7 @@ export class Anime extends Immerable {
   public readonly id: number;
 
   /** Url address image. */
-  public readonly image: File;
+  public readonly image: string;
 
   /** Title in English. */
   public readonly englishTitle: string;
