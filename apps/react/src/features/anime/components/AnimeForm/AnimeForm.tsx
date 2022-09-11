@@ -76,7 +76,9 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
   const onImageChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     event => {
       if (event.target.files) {
-        setImageFile(event.target.files[0]);
+        const file = event.target.files[0];
+        setImageFile(file);
+        formik.setFieldValue('image', URL.createObjectURL(file));
       }
     },
     [],
@@ -91,10 +93,10 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
   };
   return (
     <>
+      <img src={formik.values.image} alt="Amime image" />
       <Input type="file" onChange={onImageChange} />
       <FormikProvider value={formik}>
         <Form>
-          <FormTextInput name="image" label="Anime Image" />
           <FormTextInput name="englishTitle" label="English Title" />
           <FormTextInput name="japaneseTitle" label="Japansese Title" />
           <FormTextInput name="synopsis" label="synopsis" />
