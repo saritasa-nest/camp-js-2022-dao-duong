@@ -1,13 +1,14 @@
 import { FC, memo } from 'react';
 import { Typography } from '@mui/material';
+import { AnimeStatus, AnimeType } from '@js-camp/core/models/anime/anime';
 
 interface Props {
 
   /** Anime status. */
-  readonly status: string;
+  readonly status: AnimeStatus;
 
   /** Anime type. */
-  readonly type: string;
+  readonly type: AnimeType;
 }
 
 const AnimeInfoComponent: FC<Props> = ({ status, type }) => (
