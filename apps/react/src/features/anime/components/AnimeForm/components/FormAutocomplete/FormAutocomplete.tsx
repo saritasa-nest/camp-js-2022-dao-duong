@@ -37,14 +37,14 @@ export const FormAutocomplete = <T extends object>({
   };
 
   const onInputChange = (event: SyntheticEvent, value: string) => {
+
     setSearchValue(value);
-    console.log(value);
   };
 
   const filterOptions = (optionss: Genre[]) => {
     let isMatch = false;
     const filtered = optionss.filter(option => {
-      if (option.name === searchValue) {
+      if (option.name.toLowerCase() === searchValue.toLowerCase()) {
         isMatch = true;
       }
       return option.name.toLowerCase().includes(searchValue.toLowerCase());
