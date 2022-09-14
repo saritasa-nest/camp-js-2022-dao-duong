@@ -1,15 +1,16 @@
 .anime-table {
   width: 100%;
-}
-
-.spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
 }
 
 .anime-image {
   max-width: 150px;
-  max-height: 150px;
+  height: 150px;
+}
+
+.search,
+.type {
+  display: block;
+  max-width: 40%;
+  padding-left: 20px;
 }

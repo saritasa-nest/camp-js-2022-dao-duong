@@ -17,7 +17,7 @@ const routes: Routes = [
   },
 ];
 
-/** Anime table view module. */
+/** Anime table view routing module. */
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
