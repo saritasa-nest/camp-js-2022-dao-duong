@@ -33,7 +33,9 @@ interface Props {
 const FormSelectComponent: FC<Props> = ({ name, label, dataSource }) => (
   <Field component={Select} name={name} label={label}>
     {Object.entries(dataSource).map(([key, value]) => (
-      <MenuItem key={key} value={value}>{key}</MenuItem>
+      <MenuItem key={key} value={value}>
+        {key}
+      </MenuItem>
     ))}
   </Field>
 );

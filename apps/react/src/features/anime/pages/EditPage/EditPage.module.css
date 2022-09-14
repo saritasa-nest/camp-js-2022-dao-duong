@@ -1,0 +1,10 @@
+.anime-edit {
+  text-align: center;
+}
+
+.loader {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

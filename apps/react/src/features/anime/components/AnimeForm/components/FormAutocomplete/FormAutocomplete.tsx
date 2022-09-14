@@ -1,4 +1,8 @@
-import { AutocompleteRenderInputParams, CircularProgress, TextField } from '@mui/material';
+import {
+  AutocompleteRenderInputParams,
+  CircularProgress,
+  TextField,
+} from '@mui/material';
 import { Field } from 'formik';
 import { Autocomplete } from 'formik-mui';
 import { SyntheticEvent, useState } from 'react';
@@ -52,7 +56,9 @@ export const FormAutocomplete = <T extends object>({
     <Field
       component={Autocomplete}
       multiple
-      noOptionsText={<AddOption newOption={searchValue} addOption={onAddOption}/>}
+      noOptionsText={
+        <AddOption newOption={searchValue} addOption={onAddOption} />
+      }
       name={name}
       label={label}
       loading={loading}
@@ -61,7 +67,9 @@ export const FormAutocomplete = <T extends object>({
       onInputChange={onInputChange}
       onChange={handleAutoCompleteChange}
       getOptionLabel={(option: T) => getOptionLabel(option)}
-      isOptionEqualToValue={(option: T, value: T) => getOptionLabel(option) === getOptionLabel(value)}
+      isOptionEqualToValue={(option: T, value: T) =>
+        getOptionLabel(option) === getOptionLabel(value)
+      }
       renderInput={(params: AutocompleteRenderInputParams) => (
         <TextField
           {...params}

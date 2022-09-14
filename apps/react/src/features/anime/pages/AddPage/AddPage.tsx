@@ -7,8 +7,6 @@ import { useAppNavigate } from '../../../../shared/hooks';
 
 import { AnimeForm } from '../../components/AnimeForm/AnimeForm';
 
-// import styles from './AddPage.module.css';
-
 const AddPageComponent: FC = () => {
   const dispatch = useAppDispatch();
   const { navigateWithSearchParams } = useAppNavigate();

@@ -56,15 +56,17 @@ const AnimeDetailComponent: FC = () => {
   if (animeDetail === undefined) {
     return (
       <Box className={styles['anime-detail']}>
-        <Typography variant="h4">
-          No anime match your criteria!
-        </Typography>
+        <Typography variant="h4">No anime match your criteria!</Typography>
       </Box>
     );
   }
 
   return (
-    <Container className={styles['anime-detail']} disableGutters maxWidth={false}>
+    <Container
+      className={styles['anime-detail']}
+      disableGutters
+      maxWidth={false}
+    >
       <Card className={styles['anime-detail__card']}>
         <CardHeader
           title={
@@ -83,31 +85,32 @@ const AnimeDetailComponent: FC = () => {
             <CardMedia
               component="img"
               className={styles['image']}
-              image={animeDetail.image}
+              image={animeDetail.image ?? undefined}
               alt={`${
                 animeDetail.englishTitle || animeDetail.japaneseTitle
               } image`}
             />
           </Button>
-          <Modal
-            open={isPopUpImageOpen}
-            onClose={handleModalClose}
-          >
+          <Modal open={isPopUpImageOpen} onClose={handleModalClose}>
             <Box className={styles['modal-content']}>
-              <img src={animeDetail.image} alt={`${
-                animeDetail.englishTitle || animeDetail.japaneseTitle
-              } full size image`} className={styles['popup-image']}/>
+              <img
+                src={animeDetail.image ?? undefined}
+                alt={`${
+                  animeDetail.englishTitle || animeDetail.japaneseTitle
+                } full size image`}
+                className={styles['popup-image']}
+              />
             </Box>
           </Modal>
         </Box>
         <Box className={styles['card-content']}>
           <CardContent>
-            <AnimeDetailContent animeDetail={animeDetail}/>
+            <AnimeDetailContent animeDetail={animeDetail} />
           </CardContent>
         </Box>
       </Card>
       <Box className={styles['anime-detail__controls']}>
-        <AnimeDetailControls animeId={animeDetail.id}/>
+        <AnimeDetailControls animeId={animeDetail.id} />
       </Box>
     </Container>
   );

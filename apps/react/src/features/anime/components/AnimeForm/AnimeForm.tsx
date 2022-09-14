@@ -75,7 +75,9 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
   }, []);
 
   const formik = useFormik({
-    initialValues: convertNullToUndefined(animeDetail ?? defaultAnimeFormValues),
+    initialValues: convertNullToUndefined(
+      animeDetail ?? defaultAnimeFormValues,
+    ),
     validationSchema: AnimeFormSchema,
     onSubmit: onFormSubmission,
   });

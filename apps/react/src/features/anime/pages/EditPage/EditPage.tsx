@@ -3,12 +3,14 @@ import { updateAnime } from '@js-camp/react/store/anime/dispatchers';
 import { fetchAnimeDetail } from '@js-camp/react/store/animeDetail/dispatchers';
 import { selectAnimeDetail, selectIsAnimeDetailLoading } from '@js-camp/react/store/animeDetail/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { FC, memo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAppNavigate } from '../../../../shared/hooks';
 import { AnimeForm } from '../../components/AnimeForm/AnimeForm';
+
+import styles from './EditPage.module.css';
 
 const transformToPostData = (animeDetail: AnimeDetail): AnimeDetailPost => {
   // Disable because "id" is not a part of AnimeDetailPost.
@@ -38,15 +40,18 @@ const EditPageComponent: FC = () => {
 
   if (isAnimeDetailLoading) {
     return (
-      <CircularProgress />
+      <Box className={styles['loader']}>
+        <CircularProgress color="secondary" />
+      </Box>
     );
   }
 
-  // Still! Fix this, add loader or sth.
   if (animeDetail === undefined) {
     return (
-      <Box>
-        No data
+      <Box className={styles['anime-edit']}>
+        <Typography variant="h4">
+          No anime found!
+        </Typography>
       </Box>
     );
   }

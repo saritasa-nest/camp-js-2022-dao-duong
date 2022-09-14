@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
+/** Navigation hook. */
 export const useAppNavigate = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();

@@ -50,11 +50,7 @@ const FormDateSelectComponent: FC<Props> = ({
         views={['year', 'month', 'day']}
         value={value}
         onChange={handleDateChange}
-        renderInput={params => (
-          <TextField
-            {...params}
-          />
-        )}
+        renderInput={params => <TextField {...params} />}
       />
     </Field>
   );

@@ -1,17 +1,26 @@
 import { FC, memo } from 'react';
 import { Studio, Genre } from '@js-camp/core/models/anime';
 import { addGenre } from '@js-camp/react/store/genres/dispatchers';
-import { selectAreGenresLoading, selectGenres } from '@js-camp/react/store/genres/selectors';
+import {
+  selectAreGenresLoading,
+  selectGenres,
+} from '@js-camp/react/store/genres/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { addStudio } from '@js-camp/react/store/studios/dispatchers';
-import { selectAreStudiosLoading, selectStudios } from '@js-camp/react/store/studios/selectors';
+import {
+  selectAreStudiosLoading,
+  selectStudios,
+} from '@js-camp/react/store/studios/selectors';
 
 import { FormAutocomplete } from '../FormAutocomplete/FormAutocomplete';
 
 interface Props {
 
   /** Set form field value callback. */
-  readonly setFieldValue: (field: string, value: readonly Genre[] | readonly Studio[]) => void;
+  readonly setFieldValue: (
+    field: string,
+    value: readonly Genre[] | readonly Studio[]
+  ) => void;
 }
 
 const FormAutocompletesComponent: FC<Props> = ({ setFieldValue }) => {

@@ -4,6 +4,7 @@ import { RootState } from '../store';
 
 import { genresAdapter } from './state';
 
+/** Select all genres. */
 export const { selectAll: selectGenres } =
   genresAdapter.getSelectors<RootState>(state => state.genres);
 
