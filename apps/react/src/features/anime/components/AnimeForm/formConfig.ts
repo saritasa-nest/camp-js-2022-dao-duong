@@ -3,47 +3,41 @@ import { AnimeDetailPost, AnimeStatus, AnimeType, Genre, Studio } from '@js-camp
 import { Rating, Season, Source } from '@js-camp/core/models/anime/';
 import { DateRange } from '@js-camp/core/models/dateRange';
 
-export const ERROR_MESSAGES = {
-  requiredType: 'Type is required!',
-  requiredStatus: 'Status is required!',
-  requiredSource: 'Source is required!',
-  requiredAiring: 'Airing is required!',
-  requiredRating: 'Rating is required!',
-  requiredSeason: 'Season is required!',
-  requiredSynopsis: 'Synopsis is required!',
-  requiredStudios: 'Studios is required!',
-  requiredGenres: 'Genres is required!',
-};
+const REQUIRED_MESSAGE = 'This field is required!';
 
 export const AnimeFormSchema = Yup.object().shape({
-  image: Yup.string(),
-  englishTitle: Yup.string(),
-  japaneseTitle: Yup.string(),
+  image: Yup.string().nullable(),
+  englishTitle: Yup.string().required(REQUIRED_MESSAGE),
+  japaneseTitle: Yup.string().required(REQUIRED_MESSAGE),
   aired: Yup.object().shape({
-    start: Yup.date().nullable(),
-    end: Yup.date().nullable(),
+    start: Yup.date().nullable()
+      .required(REQUIRED_MESSAGE),
+    end: Yup.date().nullable()
+      .required(REQUIRED_MESSAGE),
   }),
   type: Yup.mixed<AnimeType>().oneOf(Object.values(AnimeType))
-    .required(ERROR_MESSAGES.requiredType),
+    .required(REQUIRED_MESSAGE),
   status: Yup.mixed<AnimeStatus>().oneOf(Object.values(AnimeStatus))
-    .required(ERROR_MESSAGES.requiredStatus),
-  synopsis: Yup.string().required(ERROR_MESSAGES.requiredSynopsis),
-  airing: Yup.boolean().required(ERROR_MESSAGES.requiredAiring),
+    .required(REQUIRED_MESSAGE),
+  synopsis: Yup.string().required(REQUIRED_MESSAGE)
+    .required(REQUIRED_MESSAGE),
+  airing: Yup.boolean().required(REQUIRED_MESSAGE)
+    .required(REQUIRED_MESSAGE),
   studioIdList: Yup.array<Studio['id'][]>(),
-  studioList: Yup.array<Studio[]>(),
+  studioList: Yup.array<Studio[]>().required(REQUIRED_MESSAGE),
   genreIdList: Yup.array<Genre['id'][]>(),
-  genreList: Yup.array<Genre[]>(),
+  genreList: Yup.array<Genre[]>().required(REQUIRED_MESSAGE),
   youtubeTrailerId: Yup.string().nullable(),
   source: Yup.mixed<Source>().oneOf(Object.values(Source))
-    .required(ERROR_MESSAGES.requiredSource),
+    .required(REQUIRED_MESSAGE),
   season: Yup.mixed<Season>().oneOf(Object.values(Season))
-    .required(ERROR_MESSAGES.requiredSeason),
+    .required(REQUIRED_MESSAGE),
   rating: Yup.mixed<Rating>().oneOf(Object.values(Rating))
-    .required(ERROR_MESSAGES.requiredRating),
+    .required(REQUIRED_MESSAGE),
 });
 
 export const defaultAnimeFormValues: AnimeDetailPost = {
-  image: '',
+  image: null,
   englishTitle: '',
   japaneseTitle: '',
   aired: {
@@ -58,7 +52,7 @@ export const defaultAnimeFormValues: AnimeDetailPost = {
   studioList: [],
   genreIdList: [],
   genreList: [],
-  youtubeTrailerId: '',
+  youtubeTrailerId: null,
   source: Source.Unknown,
   season: Season.NonSeasonal,
   rating: Rating.Unknown,

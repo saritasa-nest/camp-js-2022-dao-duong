@@ -1,8 +1,9 @@
-import { Genre } from '@js-camp/core/models/anime';
-import { AutocompleteRenderInputParams, TextField } from '@mui/material';
+import { AutocompleteRenderInputParams, CircularProgress, TextField } from '@mui/material';
 import { Field } from 'formik';
 import { Autocomplete } from 'formik-mui';
 import { SyntheticEvent, useState } from 'react';
+
+import { AddOption } from '../AddOption/AddOption';
 
 interface Props<T> {
 
@@ -20,6 +21,12 @@ interface Props<T> {
 
   /** Get the option label. */
   readonly onChange: (value: readonly T[]) => void;
+
+  /** Add new option handler. */
+  readonly onAddOption: (value: string) => void;
+
+  /** Loading state. */
+  readonly loading: boolean;
 }
 
 export const FormAutocomplete = <T extends object>({
@@ -28,41 +35,28 @@ export const FormAutocomplete = <T extends object>({
   options,
   getOptionLabel,
   onChange,
+  onAddOption,
+  loading,
 }: Props<T>) => {
   const [searchValue, setSearchValue] = useState<string>('');
 
   const handleAutoCompleteChange = (event: SyntheticEvent, value: T[]) => {
-    console.log(value);
     onChange(value);
   };
 
   const onInputChange = (event: SyntheticEvent, value: string) => {
-
     setSearchValue(value);
-  };
-
-  const filterOptions = (optionss: Genre[]) => {
-    let isMatch = false;
-    const filtered = optionss.filter(option => {
-      if (option.name.toLowerCase() === searchValue.toLowerCase()) {
-        isMatch = true;
-      }
-      return option.name.toLowerCase().includes(searchValue.toLowerCase());
-    });
-    if (isMatch) {
-      return filtered;
-    }
-    return [{ name: `Create ${searchValue}` }, ...filtered];
   };
 
   return (
     <Field
       component={Autocomplete}
       multiple
-      freeSolo
+      noOptionsText={<AddOption newOption={searchValue} addOption={onAddOption}/>}
       name={name}
       label={label}
-      filterOptions={filterOptions}
+      loading={loading}
+      loadingText={<CircularProgress />}
       options={options}
       onInputChange={onInputChange}
       onChange={handleAutoCompleteChange}

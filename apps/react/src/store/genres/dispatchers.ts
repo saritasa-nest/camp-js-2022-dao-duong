@@ -1,8 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { AnimeService } from '../../api/services/animeService';
+import { GenresService } from '../../api/services/genresService';
 
 export const fetchGenres = createAsyncThunk(
   'genres/fetch',
-  () => AnimeService.fetchGenres(),
+  () => GenresService.fetchGenres(),
+);
+
+export const addGenre = createAsyncThunk(
+  'genres/add',
+  (genreName: string) => GenresService.addGenre(genreName),
 );

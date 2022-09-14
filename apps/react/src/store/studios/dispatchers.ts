@@ -1,8 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { AnimeService } from '../../api/services/animeService';
+import { StudiosService } from '../../api/services/studiosService';
 
 export const fetchStudios = createAsyncThunk(
   'studios/fetch',
-  () => AnimeService.fetchStudios(),
+  () => StudiosService.fetchStudios(),
+);
+
+export const addStudio = createAsyncThunk(
+  'studios/add',
+  (studioName: string) => StudiosService.addStudio(studioName),
 );

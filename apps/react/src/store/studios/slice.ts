@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchStudios } from './dispatchers';
+import { addStudio, fetchStudios } from './dispatchers';
 import { initialState, State, studiosAdapter } from './state';
 
 export const studiosSlice = createSlice({
@@ -16,6 +16,19 @@ export const studiosSlice = createSlice({
       state.isLoading = false;
     })
     .addCase(fetchStudios.rejected, (state, action) => {
+      if (action.error.message) {
+        state.error = action.error.message;
+      }
+      state.isLoading = false;
+    })
+    .addCase(addStudio.pending, state => {
+      state.isLoading = true;
+    })
+    .addCase(addStudio.fulfilled, (state, action) => {
+      studiosAdapter.addOne(state as State, action.payload);
+      state.isLoading = false;
+    })
+    .addCase(addStudio.rejected, (state, action) => {
       if (action.error.message) {
         state.error = action.error.message;
       }

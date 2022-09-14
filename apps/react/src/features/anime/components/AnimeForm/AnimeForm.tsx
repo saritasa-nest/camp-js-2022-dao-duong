@@ -5,8 +5,6 @@ import {
   Source,
   Rating,
   Season,
-  Genre,
-  Studio,
 } from '@js-camp/core/models/anime';
 import { Box, Button, FormControlLabel, Input } from '@mui/material';
 import {
@@ -19,18 +17,16 @@ import {
 } from 'react';
 import { Field, Form, FormikProvider, useFormik } from 'formik';
 import { Switch } from 'formik-mui';
-
-import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { selectGenres } from '@js-camp/react/store/genres/selectors';
-import { selectStudios } from '@js-camp/react/store/studios/selectors';
+import { useAppDispatch } from '@js-camp/react/store/store';
 import { fetchGenres } from '@js-camp/react/store/genres/dispatchers';
 import { fetchStudios } from '@js-camp/react/store/studios/dispatchers';
 import { saveAnimeImage } from '@js-camp/react/store/animeImage/dispatchers';
 
 import { FormSelect } from './components/FormSelect/FormSelect';
 import { AnimeFormSchema, defaultAnimeFormValues } from './formConfig';
-import { FormAutocomplete } from './components/FormAutocomplete/FormAutocomplete';
 import { FormTextInput } from './components/FormTextInput/FormTextInput';
+import { FormAutocompletes } from './components/FormAutocompletes/FormAutocompletes';
+import { FormDateSelect } from './components/FormDateSelect/FormDateSelect';
 
 interface Props {
 
@@ -41,10 +37,21 @@ interface Props {
   readonly onSubmit: (data: AnimeDetailPost) => void;
 }
 
+const convertNullToUndefined = (data: AnimeDetailPost): AnimeDetailPost => {
+  const dataMap: Record<string, undefined> = {};
+  Object.entries(data).forEach(([key, value]) => {
+    if (value === null) {
+      dataMap[key] = undefined;
+    }
+  });
+  return {
+    ...data,
+    ...dataMap,
+  };
+};
+
 const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
   const dispatch = useAppDispatch();
-  const genresList = useAppSelector(selectGenres);
-  const studiosList = useAppSelector(selectStudios);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const onFormSubmission = useCallback(
     (values: AnimeDetailPost) => {
@@ -68,7 +75,7 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
   }, []);
 
   const formik = useFormik({
-    initialValues: animeDetail ?? defaultAnimeFormValues,
+    initialValues: convertNullToUndefined(animeDetail ?? defaultAnimeFormValues),
     validationSchema: AnimeFormSchema,
     onSubmit: onFormSubmission,
   });
@@ -84,16 +91,25 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
     [],
   );
 
-  const onStudiosChange = (value: readonly Studio[]) => {
-    formik.setFieldValue('studioList', value);
+  const handleStartDateChange = (date: Date) => {
+    formik.setFieldValue('aired.start', date);
   };
 
-  const onGenresChange = (value: readonly Genre[]) => {
-    formik.setFieldValue('genreList', value);
+  const handleEndDateChange = (date: Date) => {
+    formik.setFieldValue('aired.end', date);
   };
+
+  const initialAiredStart = formik.getFieldMeta('aired.start').value ?
+    new Date(formik.getFieldMeta('aired.start').value) :
+    null;
+
+  const initialAiredEnd = formik.getFieldMeta('aired.end').value ?
+    new Date(formik.getFieldMeta('aired.end').value) :
+    null;
+
   return (
     <>
-      <img src={formik.values.image} alt="Amime image" />
+      <img src={formik.values.image ?? undefined} alt="Amime image" />
       <Input type="file" onChange={onImageChange} />
       <FormikProvider value={formik}>
         <Form>
@@ -108,24 +124,24 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
           <FormSelect name="source" label="Source" dataSource={Source} />
           <FormSelect name="rating" label="Rating" dataSource={Rating} />
           <FormSelect name="season" label="Season" dataSource={Season} />
+          <FormDateSelect
+            name="aired.start"
+            label="Aired start"
+            initialValue={initialAiredStart}
+            onDateChange={handleStartDateChange}
+          />
+          <FormDateSelect
+            name="aired.end"
+            label="Aired end"
+            initialValue={initialAiredEnd}
+            onDateChange={handleEndDateChange}
+            error={formik.errors.aired?.end}
+          />
           <FormControlLabel
             label="Airing"
             control={<Field component={Switch} type="checkbox" name="airing" />}
           />
-          <FormAutocomplete
-            name="genreList"
-            label="Genres"
-            options={genresList}
-            onChange={onGenresChange}
-            getOptionLabel={(genre: Genre) => genre.name}
-          />
-          <FormAutocomplete
-            name="studioList"
-            label="Studios"
-            onChange={onStudiosChange}
-            options={studiosList}
-            getOptionLabel={(studio: Studio) => studio.name}
-          />
+          <FormAutocompletes setFieldValue={formik.setFieldValue} />
           <Box>
             <Button
               type="submit"
