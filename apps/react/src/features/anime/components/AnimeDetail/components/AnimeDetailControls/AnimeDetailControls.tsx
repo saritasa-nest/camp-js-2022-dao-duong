@@ -22,14 +22,14 @@ const AnimeDetailControlsComponent: FC<Props> = ({ animeId }) => {
   const [searchParams] = useSearchParams();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const isDeleting = useAppSelector(selectIsAnimeDeleting);
-  const onEditButtonClick = (id: AnimeDetail['id']) => {
+  const handleEditButtonClick = (id: AnimeDetail['id']) => {
     navigate(
       { pathname: `../edit/${id}`, search: searchParams.toString() },
       { replace: true },
     );
   };
 
-  const onDeleteButtonClick = () => {
+  const handleDeleteButtonClick = () => {
     setIsDeleteModalOpen(true);
   };
 
@@ -50,7 +50,7 @@ const AnimeDetailControlsComponent: FC<Props> = ({ animeId }) => {
         aria-label="edit"
         color="primary"
         variant="contained"
-        onClick={() => onEditButtonClick(animeId)}
+        onClick={() => handleEditButtonClick(animeId)}
       >
         Edit <EditIcon />
       </Button>
@@ -58,7 +58,7 @@ const AnimeDetailControlsComponent: FC<Props> = ({ animeId }) => {
         aria-label="delete"
         color="error"
         variant="contained"
-        onClick={onDeleteButtonClick}
+        onClick={handleDeleteButtonClick}
       >
         Delete <DeleteIcon />
       </Button>

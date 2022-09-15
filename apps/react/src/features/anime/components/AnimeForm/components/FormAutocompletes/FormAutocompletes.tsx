@@ -30,19 +30,19 @@ const FormAutocompletesComponent: FC<Props> = ({ setFieldValue }) => {
   const areGenresLoading = useAppSelector(selectAreGenresLoading);
   const areStudiosLoading = useAppSelector(selectAreStudiosLoading);
 
-  const onStudiosChange = (value: readonly Studio[]) => {
+  const handleStudiosChange = (value: readonly Studio[]) => {
     setFieldValue('studioList', value);
   };
 
-  const onGenresChange = (value: readonly Genre[]) => {
+  const handleGenresChange = (value: readonly Genre[]) => {
     setFieldValue('genreList', value);
   };
 
-  const onAddGenre = (genreName: string) => {
+  const handleAddGenre = (genreName: string) => {
     dispatch(addGenre(genreName));
   };
 
-  const onAddStudio = (studioName: string) => {
+  const handleAddStudio = (studioName: string) => {
     dispatch(addStudio(studioName));
   };
   return (
@@ -51,17 +51,17 @@ const FormAutocompletesComponent: FC<Props> = ({ setFieldValue }) => {
         name="genreList"
         label="Genres"
         options={genresList}
-        onAddOption={onAddGenre}
+        onAddOption={handleAddGenre}
         loading={areGenresLoading}
-        onChange={onGenresChange}
+        onChange={handleStudiosChange}
         getOptionLabel={(genre: Genre) => genre.name}
       />
       <FormAutocomplete
         name="studioList"
         label="Studios"
         loading={areStudiosLoading}
-        onChange={onStudiosChange}
-        onAddOption={onAddStudio}
+        onChange={handleGenresChange}
+        onAddOption={handleAddStudio}
         options={studiosList}
         getOptionLabel={(studio: Studio) => studio.name}
       />
