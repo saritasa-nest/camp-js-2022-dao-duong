@@ -48,7 +48,7 @@ export const FormAutocomplete = <T extends object>({
     onChange(value);
   };
 
-  const onInputChange = (event: SyntheticEvent, value: string) => {
+  const handleInputChange = (event: SyntheticEvent, value: string) => {
     setSearchValue(value);
   };
 
@@ -57,14 +57,14 @@ export const FormAutocomplete = <T extends object>({
       component={Autocomplete}
       multiple
       noOptionsText={
-        <AddOption newOption={searchValue} addOption={onAddOption} />
+        <AddOption newOption={searchValue} onAddOption={onAddOption} />
       }
       name={name}
       label={label}
       loading={loading}
       loadingText={<CircularProgress />}
       options={options}
-      onInputChange={onInputChange}
+      onInputChange={handleInputChange}
       onChange={handleAutoCompleteChange}
       getOptionLabel={(option: T) => getOptionLabel(option)}
       isOptionEqualToValue={(option: T, value: T) =>

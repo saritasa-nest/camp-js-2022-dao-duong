@@ -7,12 +7,12 @@ interface Props {
   readonly newOption: string;
 
   /** Add option handler. */
-  readonly addOption: (value: string) => void;
+  readonly onAddOption: (value: string) => void;
 }
 
-const AddOptionComponent: FC<Props> = ({ newOption, addOption }) => {
+const AddOptionComponent: FC<Props> = ({ newOption, onAddOption }) => {
   const onAddButtonClick = () => {
-    addOption(newOption);
+    onAddOption(newOption);
   };
 
   return (
