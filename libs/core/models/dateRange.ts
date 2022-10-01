@@ -4,10 +4,10 @@ import { OmitImmerable, Immerable } from './immerable';
 export class DateRange extends Immerable {
 
   /** Anime start date. */
-  public readonly start: Date;
+  public readonly start: Date | null;
 
   /** Anime end date. */
-  public readonly end: Date;
+  public readonly end: Date | null;
 
   public constructor(data: InitArgsDateRange) {
     super();

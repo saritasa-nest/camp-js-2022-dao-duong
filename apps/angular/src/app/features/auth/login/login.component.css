@@ -1,0 +1,16 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  padding: 100px 0;
+}
+
+.login__form-field {
+  width: 100%;
+  min-width: 300px;
+}
+
+.submit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

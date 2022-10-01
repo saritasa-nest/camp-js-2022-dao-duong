@@ -31,6 +31,8 @@ export namespace ErrorService{
   export function renderInputError(error: unknown): void {
     removeAllErrorElement();
     const errorMessages = getError(error);
+
+    // Render error message detail
     const inputForm = document.querySelector<HTMLFormElement>('.form');
     assertNonNull(inputForm);
     displayErrorMessage(inputForm, errorMessages.detail);

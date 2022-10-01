@@ -1,0 +1,39 @@
+<nav class="navbar__container">
+  <mat-toolbar class="navbar" color="primary">
+    <a routerLink="/" class="navbar__link">
+      <h1 class="navbar__title">Anime</h1>
+    </a>
+    <div class="auth__buttons">
+      <button
+        *ngIf="isAuthenticated$ | async"
+        mat-raised-button
+        color="accent"
+        type="button"
+        (click)="logout()"
+        class="button_top-right"
+      >
+        Logout
+      </button>
+      <div *ngIf="(isAuthenticated$ | async) === false">
+        <a
+          routerLink="/auth/login"
+          routerLinkActive="active"
+          class="navbar__link"
+          mat-raised-button
+          color="accent"
+        >
+          Login
+        </a>
+        <a
+          routerLink="/auth/register"
+          routerLinkActive="active"
+          class="navbar__link"
+          mat-raised-button
+          color="accent"
+        >
+          Register
+        </a>
+      </div>
+    </div>
+  </mat-toolbar>
+</nav>

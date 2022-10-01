@@ -1,0 +1,137 @@
+<div class="anime-detail">
+  <mat-card *ngIf="anime$ | async as anime; else Loading">
+    <mat-card-header>
+      <mat-card-title class="anime-detail__title">{{
+        anime.englishTitle || anime.japaneseTitle
+      }}</mat-card-title>
+      <mat-card-subtitle *ngIf="anime.englishTitle">{{
+        anime.japaneseTitle
+      }}</mat-card-subtitle>
+    </mat-card-header>
+    <div class="anime-detail__content">
+      <div class="anime-detail__media">
+        <button
+        type="button" class="anime-detail__image_zoom-button"
+        (click)="onImageClick(anime.image)"
+        >
+          <img
+            [src]="anime.image"
+            [alt]="(anime.englishTitle || anime.japaneseTitle) + ' image'"
+            class="anime-detail__image"
+          />
+        </button>
+        <button
+          *ngIf="anime.youtubeTrailerId"
+          type="button"
+          mat-raised-button
+          color="primary"
+          class="anime-detail__trailer-button"
+          (click)="onTrailerButtonClick(anime.youtubeTrailerId)"
+        >
+          Trailer
+        </button>
+      </div>
+      <mat-card-content>
+        <div class="anime-detail__field">
+          <h1 class="anime-detail__field-title">Type:</h1>
+          <p>{{ anime.type }}</p>
+        </div>
+        <div class="anime-detail__field">
+          <h1 class="anime-detail__field-title">Status:</h1>
+          <p>{{ anime.status }}</p>
+        </div>
+        <div class="anime-detail__field">
+          <h1 class="anime-detail__field-title">Airing:</h1>
+          <p>{{ anime.airing ? "Yes" : "No" }}</p>
+        </div>
+        <div class="anime-detail__field">
+          <h1 class="anime-detail__field-title">Aired time:</h1>
+          <p
+            >{{ (anime.aired.start | date: "dd/MM/yyyy") ?? "" }} -
+            {{ (anime.aired.end | date: "dd/MM/yyyy") ?? "" }}</p
+          >
+        </div>
+        <div class="anime-detail__field">
+          <h1 class="anime-detail__field-title">Synopsis:</h1>
+          <p>{{ anime.synopsis }}</p>
+        </div>
+        <div class="anime-detail__field">
+          <h1 class="anime-detail__field-title">Genres:</h1>
+          <mat-chip-list
+            aria-label="List of genre"
+            class="anime-detail__genres"
+          >
+            <mat-chip
+              *ngFor="let genre of anime.genreList; trackBy: trackById"
+              >{{ genre.name }}</mat-chip
+            >
+          </mat-chip-list>
+        </div>
+        <div class="anime-detail__field">
+          <h1 class="anime-detail__field-title">Studios:</h1>
+          <mat-chip-list
+            aria-label="List of studio"
+            class="anime-detail__studios"
+          >
+            <mat-chip
+              *ngFor="let studio of anime.studioList; trackBy: trackById"
+              >{{ studio.name }}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </mat-card-content>
+    </div>
+    <div class="anime-manage">
+      <button
+        type="button"
+        class="anime-manage__button"
+        mat-raised-button
+        color="primary"
+        (click)="onEditButtonClick(anime.id)"
+      >
+        Edit <mat-icon fontIcon="edit"></mat-icon>
+      </button>
+      <button
+        type="button"
+        class="anime-manage__button"
+        mat-raised-button
+        color="warn"
+        (click)="onDeleteButtonClick()"
+      >
+        Delete <mat-icon fontIcon="delete"></mat-icon>
+      </button>
+    </div>
+  </mat-card>
+</div>
+<camp-modal
+  *ngIf="(mediaTrailerUrl$ | async) || (mediaImageUrl$ | async) || (isDelete$ | async)"
+  (closeModal)="closeModal()"
+>
+  <iframe
+    *ngIf="mediaTrailerUrl$ | async as trailer"
+    [src]="trailer"
+    title="Trailer"
+    frameborder="0"
+    allowfullscreen
+    class="modal__content anime-trailer"
+  >
+  </iframe>
+  <img
+    *ngIf="mediaImageUrl$ | async as image"
+    [src]="image"
+    alt="Anime Image"
+    class="modal__content"
+  />
+  <div *ngIf="(isDelete$ | async)" class="delete-modal">
+    <h1>Delete anime</h1>
+    <p>Would you like to delete this anime?</p>
+    <div class="delete-modal__buttons">
+      <button type="button" mat-raised-button color="primary" class="delete-modal__button" (click)="closeModal()">No</button>
+      <button type="button" mat-raised-button color="warn" class="delete-modal__button" (click)="onConfirmButtonClick()">Yes</button>
+    </div>
+  </div>
+</camp-modal>
+<ng-template #Loading>
+  <camp-spinner></camp-spinner>
+</ng-template>
+

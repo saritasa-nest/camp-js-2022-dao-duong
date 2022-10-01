@@ -1,0 +1,27 @@
+.navbar {
+  justify-content: space-between;
+  position: fixed;
+
+  /* Set navbar above the content. */
+  z-index: 1;
+  top: 0;
+}
+
+.navbar__title {
+  font-size: 2rem;
+  font-weight: normal;
+}
+
+.navbar__links {
+  font-size: 1rem;
+}
+
+.navbar__link {
+  text-decoration: none;
+  color: white;
+  margin-left: 20px;
+}
+
+.padding-right {
+  padding-right: 10px;
+}

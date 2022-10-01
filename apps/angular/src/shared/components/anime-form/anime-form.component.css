@@ -1,0 +1,9 @@
+.anime-form__field {
+  display: block;
+  padding: 5px;
+}
+
+.image {
+  width: 200px;
+  height: 100%;
+}

@@ -7,7 +7,6 @@ import { StorageService } from '../services/storageService';
 
 import { LIMIT, FIRST_PAGE, NUMBER_OF_PAGES } from './variables';
 import { PaginationLocalStorage } from './constants';
-
 import { renderTable } from './animeTable';
 
 /** Half number of pages to display. */

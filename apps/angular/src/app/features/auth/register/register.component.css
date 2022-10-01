@@ -1,0 +1,15 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  padding: 100px 0;
+}
+
+.register__form-field {
+  width: 100%;
+}
+
+.submit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

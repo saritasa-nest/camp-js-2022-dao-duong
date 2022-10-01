@@ -1,10 +1,30 @@
+import { AnimeTypeDto, AnimeStatusDto } from '../../dtos/anime/anime.dto';
+import { AnimeType, AnimeStatus } from '../../models/anime/anime';
+
 import { AnimeDetailDto } from '../../dtos/anime/animeDetail.dto';
 
 import { AnimeDetail } from '../../models/anime/animeDetail';
 
 import { DateRangeMapper } from '../dateRange.mapper';
 
+import { ANIME_TYPE_FROM_DTO_MAP, ANIME_STATUS_FROM_DTO_MAP } from './anime.mapper';
+
 import { StudioMapper } from './studio.mapper';
+
+export const ANIME_TYPE_TO_DTO_MAP: Readonly<Record<AnimeType, AnimeTypeDto>> = {
+  [AnimeType.Movie]: AnimeTypeDto.Movie,
+  [AnimeType.Music]: AnimeTypeDto.Music,
+  [AnimeType.Ona]: AnimeTypeDto.Ona,
+  [AnimeType.Ova]: AnimeTypeDto.Ova,
+  [AnimeType.Special]: AnimeTypeDto.Special,
+  [AnimeType.Tv]: AnimeTypeDto.Tv,
+};
+
+export const ANIME_STATUS_TO_DTO_MAP: Readonly<Record<AnimeStatus, AnimeStatusDto>> = {
+  [AnimeStatus.Airing]: AnimeStatusDto.Airing,
+  [AnimeStatus.Finished]: AnimeStatusDto.Finished,
+  [AnimeStatus.NotYetAired]: AnimeStatusDto.NotYetAired,
+};
 export namespace AnimeDetailMapper {
 
   /**
@@ -18,13 +38,44 @@ export namespace AnimeDetailMapper {
       englishTitle: dto.title_eng,
       japaneseTitle: dto.title_jpn,
       aired: DateRangeMapper.fromDto(dto.aired),
-      type: dto.type,
-      status: dto.status,
+      type: ANIME_TYPE_FROM_DTO_MAP[dto.type],
+      status: ANIME_STATUS_FROM_DTO_MAP[dto.status],
       synopsis: dto.synopsis,
       airing: dto.airing,
+      studioIdList: dto.studios,
       studioList: dto.studios_data.map(studio => StudioMapper.fromDto(studio)),
+      genreIdList: dto.genres,
       genreList: dto.genres_data.map(genre => StudioMapper.fromDto(genre)),
       youtubeTrailerId: dto.trailer_youtube_id,
+      source: dto.source,
+      season: dto.season,
+      rating: dto.rating,
     });
+  }
+
+  /**
+   * Maps AnimeDetailDto to AnimeDetail model.
+   * @param animeData Anime data.
+   */
+  export function toDto(animeData: AnimeDetail): AnimeDetailDto {
+    return {
+      image: animeData.image,
+      title_eng: animeData.englishTitle,
+      title_jpn: animeData.japaneseTitle,
+      aired: {
+        start: animeData.aired.start,
+        end: animeData.aired.end,
+      },
+      type: ANIME_TYPE_TO_DTO_MAP[animeData.type],
+      status: ANIME_STATUS_TO_DTO_MAP[animeData.status],
+      synopsis: animeData.synopsis,
+      airing: animeData.airing,
+      studios: animeData.studioIdList,
+      genres: animeData.genreIdList,
+      trailer_youtube_id: animeData.youtubeTrailerId,
+      source: animeData.source,
+      season: animeData.season,
+      rating: animeData.rating,
+    } as AnimeDetailDto;
   }
 }

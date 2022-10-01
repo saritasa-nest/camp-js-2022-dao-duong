@@ -1,0 +1,80 @@
+.anime-detail {
+  max-width: 70%;
+  margin: auto;
+}
+
+.anime-detail__title {
+  font-size: 24px;
+}
+
+.anime-detail__content {
+  display: flex;
+}
+
+.anime-detail__media {
+  padding-right: 40px;
+}
+
+.anime-detail__image {
+  max-width: 300px;
+}
+
+.anime-detail__trailer-button {
+  width: 100%;
+}
+
+.anime-detail__field-title {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.anime-detail__genres,
+.anime-detail__studios {
+  margin: 0;
+}
+
+.modal__content {
+  position: absolute;
+  height: 60%;
+  top: 10%;
+}
+
+.anime-trailer {
+  width: 60%;
+}
+
+.anime-manage {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.anime-manage__button {
+  margin: 10px;
+}
+
+.delete-modal {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  position: absolute;
+  top: 50%;
+  z-index: 1000;
+}
+
+.delete-modal__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-modal__button {
+  margin: 0 10px;
+}
+
+.anime-detail__image_zoom-button {
+  padding: 0;
+  border: none;
+  cursor: zoom-in;
+}

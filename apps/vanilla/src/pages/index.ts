@@ -16,6 +16,7 @@ import { PaginationLocalStorage } from '../scripts/constants';
 import { StorageService } from '../services/storageService';
 
 window.addEventListener('load', async(): Promise<void> => {
+  await Navbar.render();
   initHomepage();
   await AuthService.navigateToLoginIfNotAuthenticated();
   Navbar.render();
