@@ -1,7 +1,7 @@
 import { DateRangeDto } from '../dateRange.dto';
 
 /** Possible values for type. */
-export enum AnimeTypeDto {
+export enum Type {
   Tv = 'TV',
   Ova = 'OVA',
   Movie = 'MOVIE',
@@ -11,24 +11,10 @@ export enum AnimeTypeDto {
 }
 
 /** Possible values for status. */
-export enum AnimeStatusDto {
+export enum Status {
   Airing = 'AIRING',
   Finished = 'FINISHED',
   NotYetAired = 'NOT_YET_AIRED',
-}
-
-/** Value for sort direction. */
-export enum SortDirectionDto {
-  Ascending = '',
-  Descending = '-',
-}
-
-/** Possible value for sorting. */
-export enum AnimeSortFieldDto {
-  EnglishTitle = 'title_eng',
-  Status = 'status',
-  AiredStart = 'aired__startswith',
-  None = '',
 }
 
 /** Anime DTO. */
@@ -56,8 +42,8 @@ export interface AnimeDto {
   readonly aired: DateRangeDto;
 
   /** Anime Status. */
-  readonly status: AnimeStatusDto;
+  readonly status: Status;
 
   /** Anime type. */
-  readonly type: AnimeTypeDto;
+  readonly type: Type;
 }

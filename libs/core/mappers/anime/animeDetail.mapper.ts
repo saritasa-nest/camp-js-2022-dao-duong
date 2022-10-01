@@ -4,8 +4,6 @@ import { AnimeDetail } from '../../models/anime/animeDetail';
 
 import { DateRangeMapper } from '../dateRange.mapper';
 
-import { ANIME_TYPE_FROM_DTO_MAP, ANIME_STATUS_FROM_DTO_MAP } from './anime.mapper';
-
 import { StudioMapper } from './studio.mapper';
 export namespace AnimeDetailMapper {
 
@@ -20,8 +18,8 @@ export namespace AnimeDetailMapper {
       englishTitle: dto.title_eng,
       japaneseTitle: dto.title_jpn,
       aired: DateRangeMapper.fromDto(dto.aired),
-      type: ANIME_TYPE_FROM_DTO_MAP[dto.type],
-      status: ANIME_STATUS_FROM_DTO_MAP[dto.status],
+      type: dto.type,
+      status: dto.status,
       synopsis: dto.synopsis,
       airing: dto.airing,
       studioList: dto.studios_data.map(studio => StudioMapper.fromDto(studio)),
