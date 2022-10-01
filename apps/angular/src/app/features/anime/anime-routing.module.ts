@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from '../../../core/guards';
+
 import { AnimeComponent } from './anime.component';
 import { TableComponent } from './table/table.component';
+import { DetailComponent } from './detail/detail.component';
 
 const routes: Routes = [
   {
@@ -12,6 +15,12 @@ const routes: Routes = [
       {
         path: '',
         component: TableComponent,
+      },
+      {
+        path: 'detail/:id',
+        component: DetailComponent,
+        title: 'Anime Detail',
+        canActivate: [AuthGuard],
       },
     ],
   },

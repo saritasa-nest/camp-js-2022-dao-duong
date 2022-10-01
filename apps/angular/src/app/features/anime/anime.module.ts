@@ -9,18 +9,22 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { SharedModule } from '../../../../src/shared/shared.module';
 
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeComponent } from './anime.component';
 import { TableComponent } from './table/table.component';
+import { DetailComponent } from './detail/detail.component';
 
 /** Anime module. */
 @NgModule({
   declarations: [
     AnimeComponent,
     TableComponent,
+    DetailComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +40,8 @@ import { TableComponent } from './table/table.component';
     MatIconModule,
     MatSortModule,
     MatButtonModule,
+    MatCardModule,
+    MatChipsModule,
   ],
 })
 export class AnimeModule {}

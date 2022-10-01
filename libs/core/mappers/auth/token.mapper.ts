@@ -10,8 +10,8 @@ export namespace TokenMapper {
    */
   export function fromDto(dto: TokenDto): Token {
     return new Token({
-      accessToken: dto.access,
-      refreshToken: dto.refresh,
+      access: dto.access,
+      refresh: dto.refresh,
     });
   }
 }
