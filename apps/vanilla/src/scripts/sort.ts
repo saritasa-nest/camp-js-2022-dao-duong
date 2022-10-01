@@ -37,12 +37,13 @@ export function renderSortOptions(): void {
       const searchQuery = await StorageService.get<string>(PaginationLocalStorage.search);
       const filterType = await StorageService.get<string>(PaginationLocalStorage.type);
       StorageService.set<string>(PaginationLocalStorage.sort, sortSetting);
-      const filterType = await StorageService.get<string>(PaginationLocalStorage.type);
       assertNonNull(filterType);
       assertNonNull(searchQuery);
       assertNonNull(currentPage);
       assertNonNull(filterType);
       setDirectionState(hasSortOption(sortOption.value));
+
+      /* Get anime data */
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
         page: currentPage,
