@@ -5,3 +5,7 @@
 @import "./elements/index.css";
 
 /* You can add application-scoped global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  padding: 0;
+}

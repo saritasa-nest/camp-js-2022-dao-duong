@@ -35,9 +35,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { Router } from '@angular/router';
 
-import { AnimeType } from '@js-camp/core/utils/types/animeType';
 import { Rating, Season, Source } from '@js-camp/core/dtos/anime/animeDetail.dto';
-import { AnimeStatus } from '@js-camp/core/models/anime/anime';
+import { AnimeStatus, AnimeType } from '@js-camp/core/models/anime/anime';
 
 import { AnimeService } from '../../../core/services/';
 

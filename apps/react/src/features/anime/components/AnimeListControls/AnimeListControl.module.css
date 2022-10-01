@@ -1,0 +1,17 @@
+.anime-list-controls {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  background-color: var(--background-color);
+
+  /* Z-index = 1 to set controls above the list */
+  z-index: 1;
+}
+
+.tabs-container {
+  width: 100%;
+}
+
+.tab-item {
+  flex: 1;
+}

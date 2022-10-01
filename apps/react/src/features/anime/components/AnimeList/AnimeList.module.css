@@ -1,0 +1,18 @@
+.anime-list {
+  overflow-y: scroll;
+  height: var(--anime-page-height);
+  width: var(--anime-list-width);
+  position: relative;
+}
+
+.anime-list__loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-button {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}

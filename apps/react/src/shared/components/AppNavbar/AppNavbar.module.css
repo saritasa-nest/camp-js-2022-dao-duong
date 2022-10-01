@@ -1,0 +1,14 @@
+.login-link,
+.home-link {
+  text-decoration: none;
+  color: var(--primary-text-color);
+}
+
+.home-link {
+  display: block;
+}
+
+.menu-item {
+  text-decoration: none;
+  color: var(--primary-dark-text-color);
+}

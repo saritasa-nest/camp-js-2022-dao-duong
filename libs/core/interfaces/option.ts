@@ -1,9 +1,9 @@
 /** Interface for text - value option. */
 export interface Option {
 
-  /** Sort option text. */
+  /** Option text. */
   readonly text: string;
 
-  /** Sort option value. */
+  /** Option value. */
   readonly value: string;
 }

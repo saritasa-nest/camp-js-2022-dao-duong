@@ -17,6 +17,7 @@ export enum AnimeStatusDto {
   NotYetAired = 'NOT_YET_AIRED',
 }
 
+/** Fields by which you can sort. */
 /** Value for sort direction. */
 export enum SortDirectionDto {
   Ascending = '',

@@ -1,0 +1,21 @@
+.item {
+  width: 100%;
+  cursor: pointer;
+}
+
+.item-image {
+  display: flex;
+  align-self: flex-start;
+  align-items: center;
+  min-height: 120px;
+  margin-right: 20px;
+}
+
+.image {
+  min-width: 80px;
+  min-height: 80px;
+}
+
+.selected {
+  background-color: var(--background-light-contrast-color);
+}
