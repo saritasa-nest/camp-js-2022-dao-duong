@@ -35,7 +35,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { Router } from '@angular/router';
 
-import { Rating, Season, Source } from '@js-camp/core/dtos/anime/animeDetail.dto';
+import { RatingDto, SeasonDto, SourceDto } from '@js-camp/core/dtos/anime/animeDetail.dto';
 import { AnimeStatus, AnimeType } from '@js-camp/core/models/anime/anime';
 
 import { AnimeService } from '../../../core/services/';
@@ -95,13 +95,13 @@ export class AnimeFormComponent implements OnInit {
   public readonly animeStatusList = this.animeService.toArray(AnimeStatus);
 
   /** Anime source list. */
-  public readonly animeSourceList = this.animeService.toArray(Source);
+  public readonly animeSourceList = this.animeService.toArray(SourceDto);
 
   /** Anime season list. */
-  public readonly animeSeasonList = this.animeService.toArray(Season);
+  public readonly animeSeasonList = this.animeService.toArray(SeasonDto);
 
   /** Anime rating list. */
-  public readonly animeRatingList = this.animeService.toArray(Rating);
+  public readonly animeRatingList = this.animeService.toArray(RatingDto);
 
   public constructor(
     private readonly formBuilder: FormBuilder,

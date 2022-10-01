@@ -12,7 +12,7 @@
       <div class="anime-detail__media">
         <button
         type="button" class="anime-detail__image_zoom-button"
-        (click)="onImageClick(anime.image)"
+        (click)="onImageClick(anime.image || '')"
         >
           <img
             [src]="anime.image"

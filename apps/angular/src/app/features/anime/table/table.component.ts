@@ -14,8 +14,8 @@ import {
   AnimeSort,
   AnimeSortDirection,
   AnimeSortField,
+  AnimeType,
 } from '@js-camp/core/models/anime/anime';
-import { AnimeType } from '@js-camp/core/utils/types/animeType';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -73,11 +73,11 @@ export class TableComponent implements OnInit {
 
   /** Anime type value. */
   public readonly animeTypeList: readonly AnimeType[] = [
-    AnimeType.TV,
+    AnimeType.Tv,
     AnimeType.Movie,
     AnimeType.Music,
-    AnimeType.ONA,
-    AnimeType.OVA,
+    AnimeType.Ona,
+    AnimeType.Ova,
     AnimeType.Special,
   ];
 
@@ -136,7 +136,7 @@ export class TableComponent implements OnInit {
           limit: defaultParams.limit,
           page: currentPage,
           sort,
-          search: this.searchControl.value,
+          search: this.searchControl.value ?? '',
           type: this.filterTypeControl.value ?
             this.filterTypeControl.value.toString() :
             [],
