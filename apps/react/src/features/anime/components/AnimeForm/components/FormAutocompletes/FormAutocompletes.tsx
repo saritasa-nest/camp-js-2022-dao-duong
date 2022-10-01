@@ -53,14 +53,14 @@ const FormAutocompletesComponent: FC<Props> = ({ setFieldValue }) => {
         options={genresList}
         onAddOption={handleAddGenre}
         loading={areGenresLoading}
-        onChange={handleStudiosChange}
+        onChange={handleGenresChange}
         getOptionLabel={(genre: Genre) => genre.name}
       />
       <FormAutocomplete
         name="studioList"
         label="Studios"
         loading={areStudiosLoading}
-        onChange={handleGenresChange}
+        onChange={handleStudiosChange}
         onAddOption={handleAddStudio}
         options={studiosList}
         getOptionLabel={(studio: Studio) => studio.name}
