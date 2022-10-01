@@ -4,15 +4,15 @@ import { Immerable, OmitImmerable } from '../immerable';
 export class Token extends Immerable {
 
   /** Data of refresh token. */
-  public readonly refresh: string;
+  public readonly refreshToken: string;
 
   /** Data of access token. */
-  public readonly access: string;
+  public readonly accessToken: string;
 
   public constructor(data: TokenArgs) {
     super();
-    this.refresh = data.refresh;
-    this.access = data.access;
+    this.refreshToken = data.refreshToken;
+    this.accessToken = data.accessToken;
   }
 }
 

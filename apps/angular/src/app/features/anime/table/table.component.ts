@@ -38,7 +38,6 @@ import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
 import { AnimeService } from '../../../../core/services';
 
 const PARAMS_CHANGE_DEBOUNCE_TIME = 700;
-const INITIAL_LOADING = false;
 const defaultParams = {
   length: 0,
   page: 0,
@@ -95,12 +94,6 @@ export class TableComponent implements OnInit {
   /** Sort subject. */
   protected readonly sort$ = new BehaviorSubject<AnimeSort>(defaultParams.sort);
 
-  /** Loading subject. */
-  private readonly _isLoading$ = new BehaviorSubject<boolean>(INITIAL_LOADING);
-
-  /** Loading observer. */
-  public readonly isLoading$ = this._isLoading$.asObservable();
-
   /** Anime table column. */
   public displayedColumns = [
     'image',
@@ -145,9 +138,7 @@ export class TableComponent implements OnInit {
       }),
     );
     const animePage$ = this.params$.pipe(
-      tap(() => this._isLoading$.next(true)),
       switchMap(params => this.animeService.fetchAnime(params)),
-      tap(() => this._isLoading$.next(false)),
       shareReplay({ refCount: true, bufferSize: 1 }),
     );
 
@@ -258,13 +249,5 @@ export class TableComponent implements OnInit {
         behavior: 'smooth',
       });
     }
-  }
-
-  /**
-   * Open detail page when click on table row.
-   * @param anime Anime data.
-   */
-  public openDetailPage(anime: Anime): void {
-    this.router.navigate([`/anime/detail/${anime.id}`]);
   }
 }
