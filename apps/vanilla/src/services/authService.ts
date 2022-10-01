@@ -1,15 +1,16 @@
-import { LoginMapper } from '@js-camp/core/mappers/login.mapper';
-import { RegisterMapper } from '@js-camp/core/mappers/register.mapper';
-import { UserMapper } from '@js-camp/core/mappers/user.mapper';
-import { Login } from '@js-camp/core/models/login';
-import { Register } from '@js-camp/core/models/register';
-import { User } from '@js-camp/core/models/user';
+// Disable `require-await` to make methods async
+// for better refactoring/re-usability.
+/* eslint-disable require-await */
+import { LoginMapper } from '@js-camp/core/mappers/auth/login.mapper';
+import { RegisterMapper } from '@js-camp/core/mappers/auth/register.mapper';
+import { Login } from '@js-camp/core/models/auth/login';
+import { Register } from '@js-camp/core/models/auth/register';
 
 import { api } from '../api/api';
+
 import { Token, Url } from '../scripts/constants';
 import { navigate } from '../utils/navigate';
 
-import { ErrorService } from './errorService';
 import { StorageService } from './storageService';
 
 export namespace AuthService {
@@ -20,8 +21,8 @@ export namespace AuthService {
    */
   export async function login(loginData: Login): Promise<void> {
     const userLoginDto = LoginMapper.toDto(loginData);
-    const { data } = await api.post('/auth/login/', userLoginDto);
-    StorageService.setToken(data);
+    const loginResponse = await api.post('/auth/login/', userLoginDto);
+    StorageService.setToken(loginResponse.data);
   }
 
   /**
@@ -30,19 +31,13 @@ export namespace AuthService {
    */
   export async function register(registerData: Register): Promise<void> {
     const userRegisterDto = RegisterMapper.toDto(registerData);
-    const { data } = await api.post('/auth/register/', userRegisterDto);
-    StorageService.setToken(data);
+    const registerResponse = await api.post('/auth/register/', userRegisterDto);
+    StorageService.setToken(registerResponse.data);
   }
 
-  /** Logout service.*/
+  /** Logout service. */
   export async function logout(): Promise<void> {
-    await StorageService.clearToken();
-  }
-
-  /** Get user.*/
-  export async function getUser(): Promise<User> {
-    const { data } = await api.get('/users/profile/');
-    return UserMapper.fromDto(data);
+    StorageService.clearToken();
   }
 
   /**
@@ -54,18 +49,17 @@ export namespace AuthService {
       await api.post('/auth/token/verify/', { token: accessToken });
       return true;
     } catch (error: unknown) {
-      ErrorService.renderInputError(error);
       return false;
     }
   }
 
-  /** Check whether the user authenticated or not.*/
+  /** Check whether the user authenticated or not. */
   export async function checkIsAuthenticated(): Promise<boolean> {
-    const token = await StorageService.get<string>(Token.Access);
-    if (token === null) {
+    const accessToken = await StorageService.get<string>(Token.Access);
+    if (accessToken === null) {
       return false;
     }
-    return AuthService.verifyToken(token);
+    return AuthService.verifyToken(accessToken);
   }
 
   /** Navigate user to login if user is not authenticated.*/

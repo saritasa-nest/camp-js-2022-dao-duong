@@ -1,19 +1,25 @@
-import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
+import { AnimeService } from '../services/animeService';
+
+import { hasSortOption } from '../utils/hasSortOption';
+
+import { setDirectionState } from '../utils/setDirectionState';
+
+import { StorageService } from '../services/storageService';
+
+import { PaginationLocalStorage } from './constants';
 import { renderTable } from './animeTable';
-import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT, ACTIVE_LS, SEARCH_LS, TYPE_LS } from './variables';
-import { getAnime } from './anime';
-import { setDirectionState, hasSortOption } from './functions';
+import { SORT_DIRECTIONS, SORT_OPTIONS, LIMIT } from './variables';
 
 /** Render sort options. */
 export function renderSortOptions(): void {
   const sortOptions = document.querySelectorAll('.sort__select-element');
   const sortOption = document.querySelector<HTMLSelectElement>('.sort__option');
   const sortDirection = document.querySelector<HTMLSelectElement>('.sort__direction');
-
-  assertNonNullish(sortOption);
-  assertNonNullish(sortDirection);
+  assertNonNull(sortOption);
+  assertNonNull(sortDirection);
   sortOption.innerHTML = ``;
   sortDirection.innerHTML = ``;
   SORT_OPTIONS.forEach(option => {
@@ -27,24 +33,22 @@ export function renderSortOptions(): void {
   sortOptions.forEach(element => {
     element.addEventListener('change', async() => {
       const sortSetting = sortDirection.value + sortOption.value;
-      localStorage.setItem('sort', sortSetting);
-
+      const currentPage = await StorageService.get<number>(PaginationLocalStorage.active);
+      const searchQuery = await StorageService.get<string>(PaginationLocalStorage.search);
+      const filterType = await StorageService.get<string>(PaginationLocalStorage.type);
+      StorageService.set<string>(PaginationLocalStorage.sort, sortSetting);
+      assertNonNull(searchQuery);
+      assertNonNull(currentPage);
+      assertNonNull(filterType);
       setDirectionState(hasSortOption(sortOption.value));
-      const currentPage = localStorage.getItem(ACTIVE_LS);
-      const searchQuery = localStorage.getItem(SEARCH_LS);
-      const filterType = localStorage.getItem(TYPE_LS);
-      assertNonNullish(filterType);
-      assertNonNullish(searchQuery);
-      assertNonNullish(currentPage);
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
-        page: parseInt(currentPage, 10),
+        page: currentPage,
         ordering: sortSetting,
         type: filterType,
         search: searchQuery,
       };
-      const animeList = await getAnime(paginationConfig);
-
+      const animeList = await AnimeService.getAnime(paginationConfig);
       renderTable(animeList);
     });
   });

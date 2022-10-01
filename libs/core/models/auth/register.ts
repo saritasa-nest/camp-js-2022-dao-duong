@@ -1,13 +1,13 @@
 /** Login user model. */
-export interface Register{
+export interface Register {
 
-  /** User email.*/
+  /** User email. */
   readonly email: string;
 
-  /** User first name.*/
+  /** User first name. */
   readonly firstName: string;
 
-  /** User last name.*/
+  /** User last name. */
   readonly lastName: string;
 
   /** User password. */

@@ -1,24 +1,27 @@
-import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 
-import { LIMIT, FIRST_PAGE, NUMBER_OF_PAGES, ACTIVE_LS, SEARCH_LS, SORT_LS, TYPE_LS } from './variables';
+import { AnimeService } from '../services/animeService';
+
+import { StorageService } from '../services/storageService';
+
+import { LIMIT, FIRST_PAGE, NUMBER_OF_PAGES } from './variables';
+import { PaginationLocalStorage } from './constants';
+
 import { renderTable } from './animeTable';
 
-import { getAnime } from './anime';
-
-/** Half number of pages to display.*/
+/** Half number of pages to display. */
 const HALF_NUMBER_OF_PAGES = Math.floor(NUMBER_OF_PAGES / 2);
 
 /**
  * Render pagination.
- * @param displayPages Number of pages to display.
+ * @param displayPages Pages number  to display.
  */
-export function renderPagination(displayPages: number): void {
-  const pageValueFromStorage = localStorage.getItem(ACTIVE_LS);
-  assertNonNullish(pageValueFromStorage);
-  const currentPage = parseInt(pageValueFromStorage, 10);
+export async function renderPagination(displayPages: number): Promise<void> {
+  const currentPage = await StorageService.get<number>(PaginationLocalStorage.active);
+  assertNonNull(currentPage);
   const wrapper = document.querySelector<HTMLDivElement>('.pagination');
-  assertNonNullish(wrapper);
+  assertNonNull(wrapper);
   wrapper.innerHTML = ``;
   let firstDisplayPage = (currentPage - HALF_NUMBER_OF_PAGES);
   let lastDisplayPage = (currentPage + HALF_NUMBER_OF_PAGES);
@@ -61,14 +64,14 @@ export function renderPagination(displayPages: number): void {
   paginateButton.forEach(element => {
     element.addEventListener('click', async() => {
       const currentIndex = element.getAttribute('index');
-      assertNonNullish(currentIndex);
-      localStorage.setItem(ACTIVE_LS, currentIndex);
-      const sortSetting = localStorage.getItem(SORT_LS);
-      const filterType = localStorage.getItem(TYPE_LS);
-      const searchQuery = localStorage.getItem(SEARCH_LS);
-      assertNonNullish(sortSetting);
-      assertNonNullish(filterType);
-      assertNonNullish(searchQuery);
+      assertNonNull(currentIndex);
+      StorageService.set(PaginationLocalStorage.active, parseInt(currentIndex, 10));
+      const sortSetting = await StorageService.get<string>(PaginationLocalStorage.sort);
+      const searchQuery = await StorageService.get<string>(PaginationLocalStorage.search);
+      const filterType = await StorageService.get<string>(PaginationLocalStorage.type);
+      assertNonNull(filterType);
+      assertNonNull(sortSetting);
+      assertNonNull(searchQuery);
 
       const paginationConfig: PaginationConfig = {
         limit: LIMIT,
@@ -77,8 +80,7 @@ export function renderPagination(displayPages: number): void {
         type: filterType,
         search: searchQuery,
       };
-      const animeList = await getAnime(paginationConfig);
-
+      const animeList = await AnimeService.getAnime(paginationConfig);
       renderTable(animeList);
     });
   });

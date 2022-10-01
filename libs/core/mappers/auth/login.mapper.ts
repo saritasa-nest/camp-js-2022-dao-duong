@@ -1,5 +1,5 @@
-import { LoginDto } from '../dtos/login.dto';
-import { Login } from '../models/login';
+import { LoginDto } from '../../dtos/auth/login.dto';
+import { Login } from '../../models/auth/login';
 
 export namespace LoginMapper {
 

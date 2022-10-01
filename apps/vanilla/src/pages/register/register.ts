@@ -1,4 +1,4 @@
-import { Register } from '@js-camp/core/models/register';
+import { Register } from '@js-camp/core/models/auth/register';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Url } from '../../scripts/constants';
@@ -53,7 +53,7 @@ registerForm.addEventListener('submit', async event => {
 /**
  * Validate password.
  * @param password Password to validate.
- * @param confirmPassword Password to validate.
+ * @param confirmPassword Confirm password to validate.
  */
 function validateConfirmPassword(password: string, confirmPassword: string): boolean {
   return (password === confirmPassword);

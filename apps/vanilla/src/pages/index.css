@@ -23,6 +23,8 @@
 
 .pagination__button {
   width: 3rem;
+  background-color: var(--primary-contrast-background-color);
+  color: var(--primary-text-color);
 }
 
 .pagination__button-active {
@@ -32,4 +34,5 @@
 
 .search {
   display: flex;
+  align-items: center;
 }

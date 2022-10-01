@@ -1,20 +1,21 @@
-import { User } from '@js-camp/core/models/user';
+import { User } from '@js-camp/core/models/user/user';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { Navbar } from '../../namespaces/navbar';
 
 import { AuthService } from '../../services/authService';
+import { UserService } from '../../services/userService';
 import { convertDate } from '../../utils/convertDate';
 
 window.addEventListener('load', async(): Promise<void> => {
   await AuthService.navigateToLoginIfNotAuthenticated();
-  Navbar.renderNavbar();
+  await Navbar.render();
   renderUserProfile();
 });
 
 /** Render user profile. */
 export async function renderUserProfile(): Promise<void> {
-  const user = await AuthService.getUser();
+  const user = await UserService.getUser();
   renderDetail(user);
   renderAvatar(user.avatar);
 }

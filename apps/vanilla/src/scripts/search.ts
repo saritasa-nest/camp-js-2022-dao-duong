@@ -1,34 +1,38 @@
-import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
-import { assertNonNullish } from '@js-camp/core/utils/assertNonNullish';
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
-import { getAnime } from './anime';
+import { AnimeService } from '../services/animeService';
+
+import { StorageService } from '../services/storageService';
+
+import { PaginationLocalStorage } from './constants';
 import { renderTable } from './animeTable';
 
-import { FIRST_PAGE, LIMIT, SEARCH_LS, SORT_LS, TYPE_LS } from './variables';
+import { FIRST_PAGE, LIMIT } from './variables';
 
 /** Search feature. */
 export function initSearch(): void {
+  const searchFormElement = document.querySelector<HTMLFormElement>('.search');
   const searchInputElement = document.querySelector<HTMLInputElement>('.search__input');
-  const searchButtonElement = document.querySelector<HTMLButtonElement>('.search__button');
-  const filterType = localStorage.getItem(TYPE_LS);
-  assertNonNullish(searchInputElement);
-  assertNonNullish(searchButtonElement);
-  assertNonNullish(filterType);
+  assertNonNull(searchInputElement);
+  assertNonNull(searchFormElement);
 
-  searchButtonElement.addEventListener('click', async() => {
-    localStorage.setItem(SEARCH_LS, searchInputElement.value);
-    const orderingOptions = localStorage.getItem(SORT_LS);
-    assertNonNullish(orderingOptions);
+  searchFormElement.addEventListener('submit', async event => {
+    event.preventDefault();
+    StorageService.set(PaginationLocalStorage.active, FIRST_PAGE);
+    StorageService.set<string>(PaginationLocalStorage.search, searchInputElement.value);
+    const orderingOptions = await StorageService.get<string>(PaginationLocalStorage.sort);
+    const filterType = await StorageService.get<string>(PaginationLocalStorage.type);
+    assertNonNull(filterType);
+    assertNonNull(orderingOptions);
 
-    const paginationConfig: PaginationConfig = {
+    const paginationConfig = {
       limit: LIMIT,
       page: FIRST_PAGE,
       ordering: orderingOptions,
       type: filterType,
       search: searchInputElement.value,
     };
-    const animeList = await getAnime(paginationConfig);
-
+    const animeList = await AnimeService.getAnime(paginationConfig);
     renderTable(animeList);
   });
 }

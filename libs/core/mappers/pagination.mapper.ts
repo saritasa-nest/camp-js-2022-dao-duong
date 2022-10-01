@@ -24,6 +24,7 @@ export namespace PaginationMapper {
    */
   export function toDto(config: PaginationConfig): PaginationOptionsDto {
     const offset = (config.limit * (config.page - 1)).toString();
+
     return {
       limit: config.limit.toString(),
       offset,
