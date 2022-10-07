@@ -7,6 +7,8 @@ import { StorageService } from '../services/storageService';
 import { convertDate } from '../utils/convertDate';
 import { navigate } from '../utils/navigate';
 
+import { CLICKED_ANIME, Url } from './constants';
+
 import { renderPagination } from './pagination';
 import { LIMIT } from './variables';
 
@@ -45,7 +47,7 @@ export function renderTable(animeList: Pagination<Anime>): void {
       </tbody>
     </table>
   `;
-  const totalPages = Math.ceil(animeList.count / LIMIT);
+  const totalPages = Math.ceil((animeList.count - LIMIT) / LIMIT);
   renderPagination(totalPages);
   handleAnimeClick();
 }

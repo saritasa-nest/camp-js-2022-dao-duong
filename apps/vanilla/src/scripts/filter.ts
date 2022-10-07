@@ -2,6 +2,8 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { AnimeService } from '../services/animeService';
 
+import { StorageService } from '../services/storageService';
+
 import { renderTable } from './animeTable';
 
 import { FIRST_PAGE, LIMIT, FILTERING_TYPES } from './variables';
@@ -16,13 +18,12 @@ export function renderFilterOptions(): void {
     filterElement.innerHTML += `<option value="${type.value}" class="type">${type.text}</option>`;
   });
   filterElement.addEventListener('change', async() => {
-    localStorage.setItem(PaginationLocalStorage.active, FIRST_PAGE.toString());
-    localStorage.setItem(PaginationLocalStorage.type, filterElement.value);
-    const sortSetting = localStorage.getItem(PaginationLocalStorage.sort);
-    const searchQuery = localStorage.getItem(PaginationLocalStorage.search);
+    StorageService.set(PaginationLocalStorage.active, FIRST_PAGE);
+    StorageService.set(PaginationLocalStorage.type, filterElement.value);
+    const sortSetting = await StorageService.get<string>(PaginationLocalStorage.sort);
+    const searchQuery = await StorageService.get<string>(PaginationLocalStorage.search);
     assertNonNull(sortSetting);
     assertNonNull(searchQuery);
-
     const paginationConfig = {
       limit: LIMIT,
       page: FIRST_PAGE,

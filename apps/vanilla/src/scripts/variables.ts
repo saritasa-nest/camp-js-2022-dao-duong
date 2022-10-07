@@ -9,6 +9,9 @@ export const DEFAULT_SORT = '';
 /** Default search value. */
 export const DEFAULT_SEARCH = '';
 
+/** Default search value. */
+export const DEFAULT_TYPE = '';
+
 /** Number of pages to display. */
 export const NUMBER_OF_PAGES = 9;
 
