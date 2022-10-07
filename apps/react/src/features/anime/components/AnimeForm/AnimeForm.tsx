@@ -55,18 +55,17 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const onFormSubmission = useCallback(
     (values: AnimeDetailPost) => {
-      if (imageFile !== null) {
-        dispatch(saveAnimeImage(imageFile)).then(response => {
-          if (typeof response.payload === 'string') {
-            onSubmit({ ...values, image: response.payload });
-          }
-        });
-      } else {
-        onSubmit(values);
-      }
-      formik.setSubmitting(false);
-    },
-    [dispatch, imageFile],
+        if (imageFile !== null) {
+          dispatch(saveAnimeImage(imageFile)).then(response => {
+            if (typeof response.payload === 'string') {
+              onSubmit({ ...values, image: response.payload });
+            }
+          });
+        } else {
+          onSubmit(values);
+        }
+        formik.setSubmitting(false);
+      }, [dispatch, imageFile],
   );
 
   useEffect(() => {
@@ -146,10 +145,11 @@ const AnimeFormComponent: FC<Props> = ({ animeDetail, onSubmit }) => {
           <FormAutocompletes setFieldValue={formik.setFieldValue} />
           <Box>
             <Button
-              type="submit"
+              type="button"
               variant="contained"
               color="primary"
               disabled={formik.isSubmitting}
+              onClick={() => onFormSubmission(formik.values)}
             >
               Submit
             </Button>

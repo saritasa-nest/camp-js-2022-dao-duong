@@ -138,7 +138,7 @@ export class TableComponent implements OnInit {
           sort,
           search: this.searchControl.value ?? '',
           type: this.filterTypeControl.value ?
-            this.filterTypeControl.value.toString() :
+            this.filterTypeControl.value :
             [],
         };
         return params;
