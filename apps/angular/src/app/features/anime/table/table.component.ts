@@ -30,12 +30,15 @@ import {
   switchMap,
   tap,
   take,
-  shareReplay,
+  catchError,
+  of,
 } from 'rxjs';
 
 import { AnimeListQueryParams } from '@js-camp/core/models/anime-query-params';
+import { Pagination } from '@js-camp/core/models/pagination';
+import { HttpRequestState } from '@js-camp/core/interfaces/httpRequestState';
 
-import { AnimeService } from '../../../../core/services';
+import { AnimeService, ErrorService } from '../../../../core/services';
 
 const PARAMS_CHANGE_DEBOUNCE_TIME = 700;
 const INITIAL_LOADING = false;
@@ -60,16 +63,13 @@ const defaultParams = {
 })
 export class TableComponent implements OnInit {
   /** Anime list observer. */
-  public readonly animeList$: Observable<readonly Anime[]>;
+  public readonly animeList$: Observable<HttpRequestState<Pagination<Anime>>>;
 
   /** Anime list observer. */
   public readonly params$: Observable<AnimeListQueryParams>;
 
   /** Initial page size value. */
   public readonly pageSize = defaultParams.limit;
-
-  /** Total length of anime list. */
-  public readonly length$: Observable<number>;
 
   /** Anime type value. */
   public readonly animeTypeList: readonly AnimeType[] = [
@@ -117,6 +117,7 @@ export class TableComponent implements OnInit {
     private readonly animeService: AnimeService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
+    private readonly errorService: ErrorService,
     @Inject(DOCUMENT) private document: Document,
   ) {
     this.window = this.document.defaultView;
@@ -131,28 +132,25 @@ export class TableComponent implements OnInit {
         this.sort$,
       ),
       debounceTime(PARAMS_CHANGE_DEBOUNCE_TIME),
-      map(([currentPage, _search, _filter, sort]) => {
-        const params = {
-          limit: defaultParams.limit,
-          page: currentPage,
-          sort,
-          search: this.searchControl.value,
-          type: this.filterTypeControl.value ?
-            this.filterTypeControl.value.toString() :
-            [],
-        };
-        return params;
-      }),
+      map(([currentPage, search, filter, sort]) => ({
+        limit: defaultParams.limit,
+        page: currentPage,
+        sort,
+        search,
+        type: filter ? filter.toString() : [],
+      })),
     );
-    const animePage$ = this.params$.pipe(
-      tap(() => this._isLoading$.next(true)),
-      switchMap(params => this.animeService.fetchAnime(params)),
-      tap(() => this._isLoading$.next(false)),
-      shareReplay({ refCount: true, bufferSize: 1 }),
+    this.animeList$ = this.params$.pipe(
+      switchMap(params =>
+        this.animeService.fetchAnime(params).pipe(
+          map(value => ({ isLoading: false, value })),
+          catchError((error: unknown) => of({
+            isLoading: false,
+            error: this.errorService.getError(error),
+          })),
+          startWith({ isLoading: true }),
+        )),
     );
-
-    this.animeList$ = animePage$.pipe(map(({ results }) => results));
-    this.length$ = animePage$.pipe(map(({ count }) => count));
   }
 
   /** @inheritdoc */
